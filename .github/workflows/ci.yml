@@ -1,0 +1,139 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  LANG: C.UTF-8
+  LC_ALL: C.UTF-8
+  FLUTTER_VERSION: 3.47.6
+
+jobs:
+  server:
+    name: Сервер — тесты, линтеры, покрытие
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: "21"
+      - uses: gradle/actions/setup-gradle@v5
+      - name: Tesseract для OCR-тестов
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends tesseract-ocr tesseract-ocr-rus tesseract-ocr-eng
+          libdir="/usr/lib/$(uname -m)-linux-gnu"
+          sudo ln -sf "$libdir/liblept.so.5" "$libdir/libleptonica.so"
+          sudo ln -sf "$libdir/libtesseract.so.5" "$libdir/libtesseract.so"
+      - name: Сборка и проверки
+        working-directory: server
+        run: ./gradlew check koverXmlReport
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: server-reports
+          path: |
+            server/build/reports
+            server/build/test-results
+
+  app:
+    name: Клиент — формат, анализ, тесты, покрытие
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v5
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+          cache: true
+      - name: Зависимости и генерация кода
+        working-directory: app
+        run: |
+          flutter pub get
+          flutter gen-l10n
+          dart run build_runner build --delete-conflicting-outputs
+      - name: Формат
+        working-directory: app
+        run: dart format --output=none --set-exit-if-changed lib test tool
+      - name: Анализатор
+        working-directory: app
+        run: flutter analyze --fatal-infos
+      - name: Тесты и покрытие
+        working-directory: app
+        run: |
+          flutter test --coverage
+          dart run tool/check_coverage.dart 90
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: app-coverage
+          path: app/coverage
+
+  e2e:
+    name: E2E — прокликивание приложения и админки
+    needs: [server, app]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: "21"
+      - uses: gradle/actions/setup-gradle@v5
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+          cache: true
+      - uses: actions/setup-node@v5
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: e2e/package-lock.json
+      - name: Инструменты
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends apache2-utils
+      - name: Браузер для Playwright
+        working-directory: e2e
+        run: |
+          npm ci --no-audit --no-fund
+          npx playwright install --with-deps chromium
+      - name: Типы и формат E2E
+        working-directory: e2e
+        run: |
+          npm run typecheck
+          npm run format:check
+      - name: Полный стек и сценарии
+        run: ./scripts/e2e.sh
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: e2e-report
+          path: |
+            e2e/playwright-report
+            e2e/screenshots
+            e2e/test-results
+
+  dependency-review:
+    name: Проверка зависимостей
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/dependency-review-action@v4
+        with:
+          fail-on-severity: high
