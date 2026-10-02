@@ -1,0 +1,89 @@
+# Норма рядом
+
+Мобильное приложение-гид по питанию вне дома: пользователь задаёт свою норму КБЖУ, а приложение подбирает, что заказать в заведениях рядом, чтобы в неё уложиться, честно показывает, насколько цифрам можно доверять, и записывает приём пищи в дневник.
+
+Курсовой проект. Подробности: [архитектура и решения](docs/decisions.md), [матрица «ТЗ → код → тест»](docs/requirements-matrix.md), [отчёт о проверках](docs/testing.md).
+
+| Онбординг и норма | Подбор рядом | Набор и замена блюда | Дневник |
+|---|---|---|---|
+| ![](docs/screenshots/app-01-norm.png) | ![](docs/screenshots/app-05-nearby-results.png) | ![](docs/screenshots/app-08-combo-replaced.png) | ![](docs/screenshots/app-09-diary.png) |
+
+## Состав
+
+| Часть | Технологии |
+|---|---|
+| `server/` | Kotlin 2.3, JDK 21, Spring Boot 4.1 (Web MVC, Validation, JDBC, Flyway, Security, Cache, Actuator), springdoc-openapi, Caffeine, AWS SDK S3, Tesseract (tess4j) |
+| `app/` | Flutter 3.47, Riverpod, go_router, dio, drift (SQLite), freezed + json_serializable, flutter_map, geolocator, image_picker, gen-l10n |
+| Данные | PostgreSQL 16 + PostGIS 3.4; S3-совместимое хранилище SeaweedFS для фото меню |
+| `contract/` | OpenAPI-контракт сервера и общие контрольные примеры расчёта нормы для сервера и клиента |
+| `e2e/` | Playwright: прокликивание веб-сборки приложения и админки против настоящего бэкенда |
+
+```
+Flutter (норма и дневник — только на устройстве)
+        │  HTTPS, JSON, без идентификатора пользователя
+Spring Boot монолит
+  catalog        сети, точки, меню, импорт CSV, демо-каталог
+  geo            точки рядом (PostGIS, GiST-индекс)
+  optimizer      алгоритм подбора без зависимостей от фреймворка
+  recommendation подбор у заведения и рядом, замена блюда, цвета карты, пометки блюд, кэш
+  intake         фото меню (S3 + OCR), очередь модерации, жалобы
+  admin          веб-админка: импорт, модерация, жалобы
+  web            Problem Details (RFC 9457) для API
+        │
+PostgreSQL + PostGIS · SeaweedFS (S3) · Caffeine
+```
+
+## Быстрый старт
+
+Нужны Docker, JDK 21 и Flutter 3.47.
+
+1. Создайте `.env` по образцу `.env.example`. Хеш пароля администратора — bcrypt, например:
+   ```bash
+   htpasswd -nbBC 10 "" 'ваш-пароль' | tr -d ':\n'
+   ```
+   В `.env` значение хеша берите в одинарные кавычки: `ADMIN_PASSWORD_HASH='$2y$10$...'`.
+2. Соберите и поднимите сервер с базой и хранилищем (профиль `demo` загружает демо-каталог):
+   ```bash
+   (cd server && ./gradlew bootJar)
+   docker compose up -d --build --wait
+   ```
+   - API: http://localhost:8080/api/v1, Swagger: http://localhost:8080/swagger-ui.html
+   - Админка: http://localhost:8080/admin
+3. Запустите приложение:
+   ```bash
+   cd app
+   flutter pub get
+   dart run build_runner build --delete-conflicting-outputs
+   flutter run --dart-define=API_BASE_URL=http://10.0.2.2:8080
+   ```
+   Для веба: `flutter run -d chrome --dart-define=API_BASE_URL=http://localhost:8080` и `CORS_ALLOWED_ORIGINS` с адресом страницы.
+
+Переменные клиента (`--dart-define`): `API_BASE_URL`, `TILE_URL_TEMPLATE` (тайлы карты; пустое значение отключает подложку), `SEARCH_RADIUS_METERS`.
+
+## Проверки
+
+```bash
+cd server && LANG=C.UTF-8 ./gradlew check          # тесты, ktlint, detekt, порог покрытия Kover
+cd app && flutter analyze --fatal-infos && flutter test --coverage && dart run tool/check_coverage.dart 90
+./scripts/e2e.sh                                    # весь стек в Docker + прокликивание в браузере
+```
+
+Интеграционные тесты сервера поднимают PostGIS и SeaweedFS через Testcontainers — нужен Docker. Для OCR-тестов нужен Tesseract с русским языком (`tesseract-ocr tesseract-ocr-rus`, см. `.github/workflows/ci.yml`). Имена тестов на русском, поэтому JVM нужна UTF-8 локаль (`LANG=C.UTF-8`).
+
+Контракт API: `contract/openapi.json` сверяется с сервером в тесте; после осознанного изменения API обновите его командой
+`./gradlew test --tests '*OpenApiContractIT' -PupdateContract=true`.
+
+## Демо-данные
+
+Профиль `demo` загружает 6 вымышленных сетей (136 блюд, 25 точек в центре Москвы) через тот же импорт CSV, что и админка (`server/src/main/resources/demo`). Названия и цифры придуманы для демонстрации: реальные таблицы КБЖУ сетей нужно собрать с их сайтов (раздел 5.4 документа) и загрузить через админку.
+
+## Структура репозитория
+
+```
+server/     бэкенд (Kotlin, Spring Boot)
+app/        мобильный клиент (Flutter)
+contract/   OpenAPI-контракт и контрольные примеры нормы
+e2e/        сквозные сценарии Playwright
+scripts/    запуск полного E2E
+docs/       решения, матрица требований, отчёт о проверках, скриншоты
+```

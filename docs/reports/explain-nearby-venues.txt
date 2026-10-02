@@ -1,0 +1,18 @@
+Limit  (cost=550.00..550.01 rows=1 width=16) (actual time=0.268..0.271 rows=23 loops=1)
+  Buffers: shared hit=37
+  ->  Sort  (cost=550.00..550.01 rows=1 width=16) (actual time=0.266..0.268 rows=23 loops=1)
+        Sort Key: (st_distance(location, '0101000020E6100000696FF085C9C442400E2DB29DEFDF4B40'::geography, true))
+        Sort Method: quicksort  Memory: 25kB
+        Buffers: shared hit=37
+        ->  Bitmap Heap Scan on venue v  (cost=4.55..549.99 rows=1 width=16) (actual time=0.063..0.255 rows=23 loops=1)
+              Filter: (is_active AND st_dwithin(location, '0101000020E6100000696FF085C9C442400E2DB29DEFDF4B40'::geography, '1000'::double precision, true))
+              Rows Removed by Filter: 13
+              Heap Blocks: exact=34
+              Buffers: shared hit=37
+              ->  Bitmap Index Scan on venue_location_gix  (cost=0.00..4.54 rows=36 width=0) (actual time=0.028..0.028 rows=36 loops=1)
+                    Index Cond: (location && _st_expand('0101000020E6100000696FF085C9C442400E2DB29DEFDF4B40'::geography, '1000'::double precision))
+                    Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=48
+Planning Time: 0.643 ms
+Execution Time: 0.316 ms
