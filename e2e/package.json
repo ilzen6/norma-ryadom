@@ -1,0 +1,17 @@
+{
+  "name": "norma-ryadom-e2e",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "playwright test",
+    "typecheck": "tsc --noEmit",
+    "format:check": "prettier --check \"tests/**/*.ts\" playwright.config.ts"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.10.2",
+    "@playwright/test": "1.56.1",
+    "@types/node": "22.18.8",
+    "prettier": "3.6.2",
+    "typescript": "5.9.3"
+  }
+}
