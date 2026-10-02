@@ -81,6 +81,14 @@ def classify(properties, kind):
     if kind == "line":
         highway = properties.get("highway")
         if highway in ROAD_CLASSES and properties.get("area") != "yes":
+            if highway == "service" and properties.get("service"):
+                return None
+            if highway in ("footway", "cycleway") and (
+                properties.get("footway") in ("sidewalk", "crossing") or properties.get("indoor") == "yes"
+            ):
+                return None
+            if properties.get("tunnel") == "yes" or properties.get("layer", "0").startswith("-"):
+                return None
             return "road:" + ROAD_CLASSES[highway]
         if properties.get("railway") in ("rail", "light_rail") and not properties.get("service"):
             return "rail"
@@ -112,14 +120,15 @@ def main():
         clipped = geometry.intersection(frame)
         if target in ("water", "green", "buildings"):
             tolerance = 0.00002 if target == "buildings" else 0.00004
+            minimum = 1.2e-8 if target == "buildings" else 2e-8
             for polygon in polygon_parts(clipped):
                 simple = polygon.simplify(tolerance, preserve_topology=True)
-                if not simple.is_empty and simple.area >= tolerance * tolerance * 4:
+                if not simple.is_empty and simple.area >= minimum:
                     {"water": water, "green": green, "buildings": buildings}[target].extend(polygon_parts(simple))
             continue
         for line in line_parts(clipped):
             simple = line.simplify(0.00002)
-            if simple.length > 0:
+            if simple.length > (0.0004 if target == "road:path" else 0):
                 if target == "rail":
                     rail.append(simple)
                 else:
