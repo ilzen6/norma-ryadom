@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:norma_ryadom/domain/models/catalog.dart';
@@ -59,6 +61,8 @@ void main() {
     expect(find.text('Чем заменить'), findsOneWidget);
     expect(harness.combos.replaceRequests.single.$1, [1, 2]);
     expect(harness.combos.replaceRequests.single.$2, 1);
+    expect(harness.combos.replaceTargets.single, TestData.lunchTarget.copyWith(kcal: 650));
+    expect(harness.combos.requestedVenues.single, TestData.venue.id);
     await tester.tap(find.text('Сок яблочный'));
     await tester.pumpAndSettle();
 
@@ -93,5 +97,32 @@ void main() {
     expect(entry.venueName, 'Гриль Хаус, Москва-Сити');
     expect(entry.intake.kcal, 470);
     expect(find.text('Съедено'), findsOneWidget);
+  });
+
+  testWidgets('двойное нажатие «Записать в дневник» сохраняет набор один раз', (tester) async {
+    final harness = await openCombo(tester);
+    final gate = Completer<void>();
+    harness.diary.gate = gate;
+
+    await tester.tap(find.byKey(const Key('eat-combo')));
+    await tester.pump();
+    expect(tester.widget<ButtonStyleButton>(find.byKey(const Key('eat-combo'))).onPressed, isNull);
+    await tester.tap(find.byKey(const Key('eat-combo')), warnIfMissed: false);
+    gate.complete();
+    await tester.pumpAndSettle();
+
+    expect(harness.diary.entries, hasLength(1));
+  });
+
+  testWidgets('сообщает об ошибке записи и остаётся на экране набора', (tester) async {
+    final harness = await openCombo(tester);
+    harness.diary.writeError = Exception('disk full');
+
+    await tester.tap(find.byKey(const Key('eat-combo')));
+    await tester.pumpAndSettle();
+
+    expect(harness.diary.entries, isEmpty);
+    expect(find.text('Что-то пошло не так. Повторите попытку.'), findsOneWidget);
+    expect(find.text('Попадание в цель'), findsOneWidget);
   });
 }

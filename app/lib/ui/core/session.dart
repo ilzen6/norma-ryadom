@@ -21,6 +21,17 @@ class ProfileController extends AsyncNotifier<UserProfile?> {
     state = AsyncData(profile);
   }
 
+  Future<AppFailure?> setLocationConsent({required bool consent}) async {
+    final profile = state.value;
+    if (profile == null) return null;
+    if (consent) {
+      final location = await ref.read(locationServiceProvider).currentLocation();
+      if (location case Err(:final failure)) return failure;
+    }
+    await save(profile.copyWith(locationConsent: consent));
+    return null;
+  }
+
   Future<void> deleteAllData() async {
     await ref.read(profileRepositoryProvider).deleteAllData();
     ref.invalidate(mealSelectionProvider);
@@ -49,6 +60,23 @@ class MealSelection {
       );
 }
 
+final currentDayProvider = NotifierProvider<CurrentDayController, DateTime>(CurrentDayController.new);
+
+class CurrentDayController extends Notifier<DateTime> {
+  @override
+  DateTime build() => _today();
+
+  void refresh() {
+    final today = _today();
+    if (today != state) state = today;
+  }
+
+  DateTime _today() {
+    final now = ref.read(clockProvider)();
+    return DateTime(now.year, now.month, now.day);
+  }
+}
+
 final mealSelectionProvider = NotifierProvider<MealSelectionController, MealSelection>(MealSelectionController.new);
 
 class MealSelectionController extends Notifier<MealSelection> {
@@ -58,6 +86,7 @@ class MealSelectionController extends Notifier<MealSelection> {
 
   @override
   MealSelection build() {
+    ref.watch(currentDayProvider);
     final hour = ref.read(clockProvider)().hour;
     final meal = switch (hour) {
       < _breakfastUntil => MealType.breakfast,
@@ -111,7 +140,7 @@ class LocationController extends AsyncNotifier<ResolvedLocation> {
 }
 
 final todayProvider = StreamProvider<List<DiaryEntry>>((ref) {
-  final today = ref.watch(clockProvider)();
+  final today = ref.watch(currentDayProvider);
   return ref.watch(diaryRepositoryProvider).watchDay(today);
 });
 

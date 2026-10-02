@@ -91,7 +91,11 @@ class OnboardingController extends Notifier<OnboardingState> {
     );
   }
 
-  void setSex(Sex sex) => state = state.copyWith(sex: sex);
+  void setSex(Sex sex) {
+    final manualNorm = state.manualNorm;
+    final keepsNorm = manualNorm == null || ref.read(normCalculatorProvider).isSafeManualNorm(sex, manualNorm);
+    state = state.copyWith(sex: sex, manualNorm: keepsNorm ? manualNorm : null);
+  }
 
   void setActivity(ActivityLevel activity) => state = state.copyWith(activity: activity);
 
@@ -141,10 +145,18 @@ class OnboardingController extends Notifier<OnboardingState> {
 
   Future<bool> complete() async {
     final profile = state.toProfile();
-    if (profile == null || state.saving) return false;
+    if (profile == null || state.saving || !_manualNormIsSafe(profile)) return false;
     state = state.copyWith(saving: true);
-    await ref.read(profileProvider.notifier).save(profile);
-    if (ref.mounted) state = state.copyWith(saving: false);
-    return true;
+    try {
+      await ref.read(profileProvider.notifier).save(profile);
+      return true;
+    } finally {
+      if (ref.mounted) state = state.copyWith(saving: false);
+    }
+  }
+
+  bool _manualNormIsSafe(UserProfile profile) {
+    final manualNorm = profile.manualNorm;
+    return manualNorm == null || ref.read(normCalculatorProvider).isSafeManualNorm(profile.sex, manualNorm);
   }
 }

@@ -5,6 +5,7 @@ import 'package:norma_ryadom/domain/models/diary.dart';
 import 'package:norma_ryadom/domain/models/meal.dart';
 import 'package:norma_ryadom/domain/models/nutrition_norm.dart';
 import 'package:norma_ryadom/ui/core/theme.dart';
+import 'package:norma_ryadom/ui/venue/venue_screen.dart';
 import 'package:norma_ryadom/utils/result.dart';
 
 import '../support/fakes.dart';
@@ -42,15 +43,18 @@ void main() {
     expect(colorOf('Блинная'), AppColors.compromise);
     expect(colorOf('Пицца'), AppColors.none);
     expect(colorOf('Кафе без меню'), AppColors.noData);
-    expect(find.text('есть набор под цель'), findsOneWidget);
+    expect(find.textContaining(RegExp(r'^\W*есть набор под цель$'), findRichText: true), findsOneWidget);
 
     await tester.tap(find.byKey(const Key('map-show-all')));
     await tester.pumpAndSettle();
     expect(harness.venues.includeWithoutMenuRequests, [false, true]);
 
+    expect(find.text('есть набор под цель · Пресненская наб., 2 · 100 м'), findsOneWidget);
+
     await tester.tap(find.text('Зелёный бар'));
     await tester.pumpAndSettle();
-    expect(find.byKey(const Key('build-here')), findsNothing);
+    expect(find.byType(VenueScreen), findsOneWidget);
+    expect(tester.widget<VenueScreen>(find.byType(VenueScreen)).venueId, 1);
   });
 
   testWidgets('карта честно показывает пустую выдачу и ошибку', (tester) async {
@@ -134,10 +138,29 @@ void main() {
 
     await tester.tap(find.text('25 лет · 165 см · 62 кг'));
     await tester.pumpAndSettle();
-    await tester.enterText(find.byKey(const Key('weight-field')), '60');
+    await tester.enterText(find.byKey(const Key('weight-field')), '60,5');
     await tester.tap(find.byKey(const Key('profile-save')));
     await tester.pumpAndSettle();
-    expect(harness.profiles.profile?.weightKg, 60);
-    expect(find.text('25 лет · 165 см · 60 кг'), findsOneWidget);
+    expect(harness.profiles.profile?.weightKg, 60.5);
+    expect(find.text('25 лет · 165 см · 60,5 кг'), findsOneWidget);
+  });
+
+  testWidgets('профиль включает геолокацию только после разрешения системы', (tester) async {
+    final harness = TestHarness(profile: TestData.profile.copyWith(locationConsent: false))
+      ..location.result = const Err(AppFailure.locationDenied);
+    await harness.pump(tester);
+    await openTab(tester, 'Профиль');
+    final callsBefore = harness.location.calls;
+
+    await tester.tap(find.byKey(const Key('location-consent')));
+    await tester.pumpAndSettle();
+    expect(harness.location.calls, callsBefore + 1);
+    expect(harness.profiles.profile?.locationConsent, isFalse);
+    expect(find.textContaining('Нет доступа к геолокации'), findsOneWidget);
+
+    harness.location.result = const Ok(TestData.deviceLocation);
+    await tester.tap(find.byKey(const Key('location-consent')));
+    await tester.pumpAndSettle();
+    expect(harness.profiles.profile?.locationConsent, isTrue);
   });
 }

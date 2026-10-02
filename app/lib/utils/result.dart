@@ -24,5 +24,6 @@ enum AppFailure {
   serviceUnavailable,
   locationDenied,
   locationUnavailable,
+  photoAccessDenied,
   unexpected,
 }

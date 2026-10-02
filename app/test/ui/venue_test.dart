@@ -135,7 +135,7 @@ void main() {
 
   testWidgets('ничего не отправляет, если пользователь не выбрал фото', (tester) async {
     final harness = await openVenue(tester);
-    harness.picker.photo = null;
+    harness.picker.result = const Ok(null);
 
     await tester.tap(find.byKey(const Key('upload-photo')));
     await tester.pumpAndSettle();
@@ -153,5 +153,49 @@ void main() {
     expect(find.text('Повторить'), findsOneWidget);
   });
 
-  test('предпочтение цены по умолчанию - любая', () => expect(PricePreference.values.first, PricePreference.any));
+  testWidgets('объясняет, что нет доступа к камере или галерее', (tester) async {
+    final harness = await openVenue(tester);
+    harness.picker.result = const Err(AppFailure.photoAccessDenied);
+
+    await tester.tap(find.byKey(const Key('upload-photo')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('upload-from-gallery')));
+    await tester.pumpAndSettle();
+
+    expect(harness.feedback.photos, isEmpty);
+    expect(find.text('Нет доступа к камере или галерее. Разрешите доступ в настройках телефона.'), findsOneWidget);
+  });
+
+  testWidgets('не отправляет фото второй раз, пока идёт загрузка', (tester) async {
+    final harness = await openVenue(tester);
+    final gate = Completer<void>();
+    harness.feedback.gate = gate;
+
+    await tester.tap(find.byKey(const Key('upload-photo')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('upload-from-gallery')));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
+
+    expect(tester.widget<IconButton>(find.byKey(const Key('upload-photo'))).onPressed, isNull);
+    await tester.tap(find.byKey(const Key('upload-photo')), warnIfMissed: false);
+    await tester.pump(const Duration(milliseconds: 500));
+    expect(find.byKey(const Key('upload-from-gallery')), findsNothing);
+
+    gate.complete();
+    await tester.pumpAndSettle();
+    expect(harness.feedback.photos, hasLength(1));
+    expect(tester.widget<IconButton>(find.byKey(const Key('upload-photo'))).onPressed, isNotNull);
+  });
+
+  testWidgets('подбирает в заведении по текущей цели и выбранной цене', (tester) async {
+    final harness = await openVenue(tester);
+
+    await tester.tap(find.byKey(const Key('build-here')));
+    await tester.pumpAndSettle();
+
+    expect(harness.combos.requestedVenues.single, 7);
+    expect(harness.combos.requestedTargets.single.kcal, 630);
+    expect(harness.combos.requestedPrices.single, PricePreference.any);
+  });
 }

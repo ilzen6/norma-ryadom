@@ -6,6 +6,7 @@ import '../../domain/models/district.dart';
 import '../../routing/routes.dart';
 import '../core/formatting.dart';
 import '../core/l10n_extensions.dart';
+import '../core/messages.dart';
 import '../core/session.dart';
 import '../core/widgets/state_views.dart';
 
@@ -32,7 +33,7 @@ class ProfileScreen extends ConsumerWidget {
           children: [
             Card(
               child: ListTile(
-                title: Text(l10n.profileParams(profile.age, profile.heightCm, Formatting.integer(profile.weightKg))),
+                title: Text(l10n.profileParams(profile.age, profile.heightCm, Formatting.decimal(profile.weightKg))),
                 subtitle: Text('${l10n.activity(profile.activity)} · ${l10n.goal(profile.goal)}'),
                 trailing: const Icon(Icons.edit),
                 onTap: () => context.push(Routes.profileEdit),
@@ -59,7 +60,8 @@ class ProfileScreen extends ConsumerWidget {
               title: Text(l10n.profileLocationConsent),
               value: profile.locationConsent,
               onChanged: (consent) async {
-                await controller.save(profile.copyWith(locationConsent: consent));
+                final failure = await controller.setLocationConsent(consent: consent);
+                if (failure != null && context.mounted) showMessage(context, l10n.failure(failure));
               },
             ),
             DropdownButtonFormField<District>(

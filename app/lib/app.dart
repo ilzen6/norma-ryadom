@@ -4,13 +4,38 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'l10n/generated/app_localizations.dart';
 import 'routing/app_router.dart';
+import 'ui/core/session.dart';
 import 'ui/core/theme.dart';
 
-class NormaRyadomApp extends ConsumerWidget {
+class NormaRyadomApp extends ConsumerStatefulWidget {
   const NormaRyadomApp({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) => MaterialApp.router(
+  ConsumerState<NormaRyadomApp> createState() => _NormaRyadomAppState();
+}
+
+class _NormaRyadomAppState extends ConsumerState<NormaRyadomApp> {
+  late final AppLifecycleListener _lifecycle;
+
+  void _refreshSession() {
+    ref.read(currentDayProvider.notifier).refresh();
+    ref.invalidate(locationProvider);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _lifecycle = AppLifecycleListener(onResume: _refreshSession);
+  }
+
+  @override
+  void dispose() {
+    _lifecycle.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => MaterialApp.router(
     onGenerateTitle: (context) => AppLocalizations.of(context).appTitle,
     theme: buildTheme(),
     locale: const Locale('ru'),

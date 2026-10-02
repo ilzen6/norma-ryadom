@@ -10,7 +10,9 @@ import '../core/l10n_extensions.dart';
 import '../core/messages.dart';
 import '../core/session.dart';
 import '../core/theme.dart';
+import '../core/widgets/busy_action.dart';
 import '../core/widgets/combo_card.dart';
+import '../core/widgets/nutrients_text.dart';
 import '../core/widgets/state_views.dart';
 import '../core/widgets/trust_badge.dart';
 import '../home/home_view_model.dart';
@@ -33,11 +35,15 @@ class VenueScreen extends ConsumerWidget {
       appBar: AppBar(
         title: Text(title),
         actions: [
-          IconButton(
-            key: const Key('upload-photo'),
-            tooltip: l10n.uploadMenuPhoto,
-            icon: const Icon(Icons.photo_camera),
-            onPressed: () => _uploadPhoto(context, ref),
+          BusyAction<PhotoSource>(
+            prepare: () => _choosePhotoSource(context),
+            run: (source) => _uploadPhoto(context, ref, source),
+            builder: (context, onPressed, busy) => IconButton(
+              key: const Key('upload-photo'),
+              tooltip: l10n.uploadMenuPhoto,
+              icon: BusyAction.icon(Icons.photo_camera, busy: busy),
+              onPressed: onPressed,
+            ),
           ),
         ],
       ),
@@ -58,9 +64,9 @@ class VenueScreen extends ConsumerWidget {
     );
   }
 
-  Future<void> _uploadPhoto(BuildContext context, WidgetRef ref) async {
+  Future<PhotoSource?> _choosePhotoSource(BuildContext context) {
     final l10n = context.l10n;
-    final source = await showModalBottomSheet<PhotoSource>(
+    return showModalBottomSheet<PhotoSource>(
       context: context,
       builder: (sheetContext) => SafeArea(
         child: Column(
@@ -81,7 +87,11 @@ class VenueScreen extends ConsumerWidget {
         ),
       ),
     );
+  }
+
+  Future<void> _uploadPhoto(BuildContext context, WidgetRef ref, PhotoSource? source) async {
     if (source == null) return;
+    final l10n = context.l10n;
     final result = await ref.read(feedbackActionsProvider).sendMenuPhoto(venueId, source);
     if (!context.mounted) return;
     final message = switch (result) {
@@ -168,13 +178,11 @@ class _MenuItemCard extends ConsumerWidget {
                 if (assessment != null) _VerdictChip(verdict: assessment.verdict),
               ],
             ),
-            Text(
-              l10n.comboTotals(
-                nutrients.kcal.round(),
-                nutrients.protein.round(),
-                nutrients.fat.round(),
-                nutrients.carbs.round(),
-              ),
+            NutrientsText(
+              kcal: nutrients.kcal,
+              protein: nutrients.protein,
+              fat: nutrients.fat,
+              carbs: nutrients.carbs,
             ),
             Text(l10n.priceOf(item.priceMinor)),
             TrustBadge(kind: item.source.kind, source: item.source),
@@ -185,10 +193,17 @@ class _MenuItemCard extends ConsumerWidget {
               ),
             Align(
               alignment: Alignment.centerRight,
-              child: TextButton(
-                key: Key('report-${item.id}'),
-                onPressed: () => _report(context, ref),
-                child: Text(l10n.reportNumbers),
+              child: BusyAction<String>(
+                prepare: () => showDialog<String>(
+                  context: context,
+                  builder: (_) => _ReportDialog(dishName: item.name),
+                ),
+                run: (reason) => _report(context, ref, reason),
+                builder: (context, onPressed, busy) => TextButton(
+                  key: Key('report-${item.id}'),
+                  onPressed: onPressed,
+                  child: Text(l10n.reportNumbers),
+                ),
               ),
             ),
           ],
@@ -211,13 +226,9 @@ class _MenuItemCard extends ConsumerWidget {
     };
   }
 
-  Future<void> _report(BuildContext context, WidgetRef ref) async {
-    final l10n = context.l10n;
-    final reason = await showDialog<String>(
-      context: context,
-      builder: (_) => _ReportDialog(dishName: item.name),
-    );
+  Future<void> _report(BuildContext context, WidgetRef ref, String? reason) async {
     if (reason == null) return;
+    final l10n = context.l10n;
     final result = await ref.read(feedbackActionsProvider).reportItem(item.id, reason);
     if (!context.mounted) return;
     final message = switch (result) {

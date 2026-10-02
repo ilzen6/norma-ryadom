@@ -3,10 +3,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../domain/models/diary.dart';
 import '../../domain/models/meal.dart';
-import '../../data/providers.dart';
+import '../../utils/result.dart';
 import '../core/formatting.dart';
 import '../core/l10n_extensions.dart';
 import '../core/session.dart';
+import '../core/messages.dart';
+import '../core/widgets/busy_action.dart';
+import '../core/widgets/nutrients_text.dart';
 import '../core/widgets/nutrient_progress.dart';
 import '../core/widgets/state_views.dart';
 import 'diary_view_model.dart';
@@ -28,7 +31,7 @@ class DiaryScreen extends ConsumerWidget {
     final eaten = summary.eaten;
     final norm = summary.norm;
     return Scaffold(
-      appBar: AppBar(title: Text('${l10n.diaryTitle}, ${Formatting.date(ref.read(clockProvider)())}')),
+      appBar: AppBar(title: Text('${l10n.diaryTitle}, ${Formatting.date(ref.watch(currentDayProvider))}')),
       body: SafeArea(
         child: ListView(
           padding: const EdgeInsets.all(16),
@@ -50,11 +53,19 @@ class DiaryScreen extends ConsumerWidget {
                   leading: Icon(entry.favorite ? Icons.star : Icons.history),
                   title: Text(entry.title),
                   subtitle: Text(l10n.kcalValue(entry.intake.kcal.round())),
-                  trailing: IconButton(
-                    tooltip: l10n.diaryAddAgain(entry.title),
-                    icon: const Icon(Icons.add_circle_outline),
-                    onPressed: () =>
-                        ref.read(diaryActionsProvider).addAgain(entry, ref.read(mealSelectionProvider).meal),
+                  trailing: BusyAction<void>(
+                    run: (_) async {
+                      final meal = ref.read(mealSelectionProvider).meal;
+                      final result = await ref.read(diaryActionsProvider).addAgain(entry, meal);
+                      if (result case Err(:final failure) when context.mounted) {
+                        showMessage(context, l10n.failure(failure));
+                      }
+                    },
+                    builder: (context, onPressed, busy) => IconButton(
+                      tooltip: l10n.diaryAddAgain(entry.title),
+                      icon: BusyAction.icon(Icons.add_circle_outline, busy: busy),
+                      onPressed: onPressed,
+                    ),
                   ),
                 ),
             ],
@@ -79,16 +90,12 @@ class DiaryScreen extends ConsumerWidget {
           key: Key('diary-entry-${entry.id}'),
           child: ListTile(
             title: Text(entry.title),
-            subtitle: Text(
-              [
-                if (entry.venueName != null) entry.venueName,
-                l10n.comboTotals(
-                  entry.intake.kcal.round(),
-                  entry.intake.protein.round(),
-                  entry.intake.fat.round(),
-                  entry.intake.carbs.round(),
-                ),
-              ].join(' · '),
+            subtitle: NutrientsText(
+              prefix: entry.venueName,
+              kcal: entry.intake.kcal,
+              protein: entry.intake.protein,
+              fat: entry.intake.fat,
+              carbs: entry.intake.carbs,
             ),
             trailing: Row(
               mainAxisSize: MainAxisSize.min,

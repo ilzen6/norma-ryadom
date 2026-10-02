@@ -50,8 +50,14 @@ class AppDatabase extends _$AppDatabase {
   @override
   int get schemaVersion => 1;
 
-  Future<void> deleteEverything() => transaction(() async {
-    await delete(diaryRecords).go();
-    await delete(profileRecords).go();
-  });
+  @override
+  MigrationStrategy get migration => MigrationStrategy(beforeOpen: (_) => customStatement('PRAGMA secure_delete = ON'));
+
+  Future<void> deleteEverything() async {
+    await transaction(() async {
+      await delete(diaryRecords).go();
+      await delete(profileRecords).go();
+    });
+    await customStatement('VACUUM');
+  }
 }

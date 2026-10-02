@@ -114,7 +114,15 @@ void main() {
     );
 
     expect((result as Ok<ComboSearchResult>).value.appliedTarget.kcal, 650);
-    final body = adapter.requests.single.data as Map<String, dynamic>;
+    final request = adapter.requests.single;
+    final body = request.data as Map<String, dynamic>;
+    expect(body.keys, unorderedEquals(['target', 'location', 'preferCheaper', 'limit']));
+    expect(
+      (body['target'] as Map<String, dynamic>).keys,
+      unorderedEquals(['kcal', 'kcalTolerance', 'minProtein', 'maxFat', 'maxCarbs', 'excludeTags']),
+    );
+    expect(request.queryParameters, isEmpty);
+    expect(request.headers.keys.map((key) => key.toLowerCase()), isNot(contains('authorization')));
     expect(body['preferCheaper'], isTrue);
     expect(body['location'], {'lat': 55.75, 'lon': 37.54, 'radiusMeters': 1500});
     expect((body['target'] as Map<String, dynamic>)['excludeTags'], ['pork']);
@@ -182,7 +190,7 @@ void main() {
     expect(adapter.requests.single.queryParameters['minProtein'], 27.7);
   });
 
-  test('репозиторий заведений кэширует меню для той же цели', () async {
+  test('репозиторий заведений каждый раз берёт свежее меню, чтобы не показывать снятые блюда', () async {
     var calls = 0;
     api = apiWith((_) {
       calls++;
@@ -192,9 +200,16 @@ void main() {
 
     await repository.menu(7, TestData.lunchTarget);
     await repository.menu(7, TestData.lunchTarget);
-    await repository.menu(7, TestData.lunchTarget.copyWith(kcal: 500));
 
     expect(calls, 2);
+  });
+
+  test('неожиданный формат ответа превращает в ошибку, а не в падение', () async {
+    api = apiWith((_) => json({'venue': venueJson, 'items': 'not-a-list'}));
+
+    final result = await api.venueMenu(7, null);
+
+    expect((result as Err<VenueMenu>).failure, AppFailure.unexpected);
   });
 
   test('модели переживают неизвестные значения перечислений', () {

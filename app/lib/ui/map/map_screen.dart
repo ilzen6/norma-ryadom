@@ -6,6 +6,7 @@ import 'package:latlong2/latlong.dart';
 
 import '../../data/providers.dart';
 import '../../domain/models/catalog.dart';
+import '../../l10n/generated/app_localizations.dart';
 import '../../routing/routes.dart';
 import '../../utils/result.dart';
 import '../core/l10n_extensions.dart';
@@ -25,16 +26,18 @@ class MapScreen extends ConsumerWidget {
       appBar: AppBar(
         title: Text(l10n.navMap),
         actions: [
-          Row(
-            children: [
-              Text(l10n.mapShowAll),
-              Switch(
-                key: const Key('map-show-all'),
-                value: ref.watch(mapCoverageProvider) == MapCoverage.all,
-                onChanged: (all) =>
-                    ref.read(mapCoverageProvider.notifier).set(all ? MapCoverage.all : MapCoverage.withMenu),
-              ),
-            ],
+          MergeSemantics(
+            child: Row(
+              children: [
+                Text(l10n.mapShowAll),
+                Switch(
+                  key: const Key('map-show-all'),
+                  value: ref.watch(mapCoverageProvider) == MapCoverage.all,
+                  onChanged: (all) =>
+                      ref.read(mapCoverageProvider.notifier).set(all ? MapCoverage.all : MapCoverage.withMenu),
+                ),
+              ],
+            ),
           ),
         ],
       ),
@@ -53,11 +56,27 @@ class MapScreen extends ConsumerWidget {
   }
 }
 
-Color fitColor(NearbyVenue venue) => switch (venue.fit) {
-  _ when !venue.hasMenu => AppColors.noData,
-  FitLevel.good => AppColors.good,
-  FitLevel.compromise => AppColors.compromise,
-  _ => AppColors.none,
+enum _FitMark { good, compromise, none, noData }
+
+_FitMark _markOf(NearbyVenue venue) => switch (venue.fit) {
+  _ when !venue.hasMenu => _FitMark.noData,
+  FitLevel.good => _FitMark.good,
+  FitLevel.compromise => _FitMark.compromise,
+  _ => _FitMark.none,
+};
+
+Color _colorOf(_FitMark mark) => switch (mark) {
+  _FitMark.good => AppColors.good,
+  _FitMark.compromise => AppColors.compromise,
+  _FitMark.none => AppColors.none,
+  _FitMark.noData => AppColors.noData,
+};
+
+String _labelOf(AppLocalizations l10n, _FitMark mark) => switch (mark) {
+  _FitMark.good => l10n.mapLegendGood,
+  _FitMark.compromise => l10n.mapLegendCompromise,
+  _FitMark.none => l10n.mapLegendNone,
+  _FitMark.noData => l10n.mapLegendNoData,
 };
 
 class _MapBody extends ConsumerWidget {
@@ -72,59 +91,68 @@ class _MapBody extends ConsumerWidget {
     final tiles = ref.watch(appConfigProvider).tileUrlTemplate;
     if (location == null) return const LoadingView();
     final center = LatLng(location.lat, location.lon);
-    return Column(
+    return ListView(
+      key: const Key('map-venue-list'),
       children: [
         SizedBox(
           height: 320,
-          child: FlutterMap(
-            options: MapOptions(initialCenter: center, initialZoom: 15),
-            children: [
-              if (tiles.isNotEmpty) TileLayer(urlTemplate: tiles, userAgentPackageName: 'ru.normaryadom.app'),
-              MarkerLayer(
-                markers: [
-                  Marker(
-                    point: center,
-                    width: 24,
-                    height: 24,
-                    child: const Icon(Icons.my_location, color: AppColors.brand),
-                  ),
-                  for (final venue in venues)
+          child: Semantics(
+            container: true,
+            label: l10n.mapAreaLabel(venues.length),
+            child: FlutterMap(
+              options: MapOptions(initialCenter: center, initialZoom: 15),
+              children: [
+                if (tiles.isNotEmpty)
+                  TileLayer(urlTemplate: tiles, userAgentPackageName: 'ru.normaryadom.norma_ryadom'),
+                MarkerLayer(
+                  markers: [
                     Marker(
-                      point: LatLng(venue.venue.lat, venue.venue.lon),
-                      width: 48,
-                      height: 48,
-                      child: IconButton(
-                        tooltip: venue.venue.name,
-                        icon: Icon(Icons.location_on, color: fitColor(venue), size: 36),
-                        onPressed: () => context.push(Routes.venue(venue.venue.id)),
-                      ),
+                      point: center,
+                      width: 24,
+                      height: 24,
+                      child: const Icon(Icons.my_location, color: AppColors.brand),
                     ),
-                ],
-              ),
-              if (tiles.isNotEmpty) RichAttributionWidget(attributions: [TextSourceAttribution(l10n.mapAttribution)]),
-            ],
+                    for (final venue in venues)
+                      Marker(
+                        point: LatLng(venue.venue.lat, venue.venue.lon),
+                        width: 48,
+                        height: 48,
+                        child: IconButton(
+                          tooltip: '${venue.venue.name}, ${_labelOf(l10n, _markOf(venue))}',
+                          icon: Icon(Icons.location_on, color: _colorOf(_markOf(venue)), size: 36),
+                          onPressed: () => context.push(Routes.venue(venue.venue.id)),
+                        ),
+                      ),
+                  ],
+                ),
+                if (tiles.isNotEmpty) RichAttributionWidget(attributions: [TextSourceAttribution(l10n.mapAttribution)]),
+              ],
+            ),
           ),
         ),
         const _Legend(),
-        Expanded(
-          child: venues.isEmpty
-              ? MessageView(message: l10n.mapEmpty, icon: Icons.location_off)
-              : ListView.builder(
-                  key: const Key('map-venue-list'),
-                  itemCount: venues.length,
-                  itemBuilder: (context, index) {
-                    final venue = venues[index];
-                    return ListTile(
-                      key: Key('map-venue-${venue.venue.id}'),
-                      leading: Icon(Icons.circle, color: fitColor(venue)),
-                      title: Text(venue.venue.name),
-                      subtitle: Text('${venue.venue.address} · ${l10n.distanceMeters(venue.distanceMeters)}'),
-                      onTap: () => context.push(Routes.venue(venue.venue.id)),
-                    );
-                  },
-                ),
-        ),
+        if (venues.isEmpty) MessageView(message: l10n.mapEmpty, icon: Icons.location_off),
+        for (final venue in venues) _VenueTile(venue: venue),
       ],
+    );
+  }
+}
+
+class _VenueTile extends StatelessWidget {
+  const _VenueTile({required this.venue});
+
+  final NearbyVenue venue;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final mark = _markOf(venue);
+    return ListTile(
+      key: Key('map-venue-${venue.venue.id}'),
+      leading: Icon(Icons.circle, color: _colorOf(mark)),
+      title: Text(venue.venue.name),
+      subtitle: Text('${_labelOf(l10n, mark)} · ${venue.venue.address} · ${l10n.distanceMeters(venue.distanceMeters)}'),
+      onTap: () => context.push(Routes.venue(venue.venue.id)),
     );
   }
 }
@@ -135,12 +163,7 @@ class _Legend extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final items = [
-      (AppColors.good, l10n.mapLegendGood),
-      (AppColors.compromise, l10n.mapLegendCompromise),
-      (AppColors.none, l10n.mapLegendNone),
-      (AppColors.noData, l10n.mapLegendNoData),
-    ];
+    final items = [for (final mark in _FitMark.values) (_colorOf(mark), _labelOf(l10n, mark))];
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Wrap(
@@ -148,13 +171,19 @@ class _Legend extends StatelessWidget {
         runSpacing: 4,
         children: [
           for (final (color, label) in items)
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(Icons.circle, size: 12, color: color),
-                const SizedBox(width: 4),
-                Text(label),
-              ],
+            Text.rich(
+              TextSpan(
+                children: [
+                  WidgetSpan(
+                    alignment: PlaceholderAlignment.middle,
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 4),
+                      child: Icon(Icons.circle, size: 12, color: color),
+                    ),
+                  ),
+                  TextSpan(text: label),
+                ],
+              ),
             ),
         ],
       ),

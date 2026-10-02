@@ -82,6 +82,7 @@ extension MealLabels on AppLocalizations {
     AppFailure.serviceUnavailable => errorUnavailable,
     AppFailure.locationDenied => errorLocationDenied,
     AppFailure.locationUnavailable => errorLocationUnavailable,
+    AppFailure.photoAccessDenied => errorPhotoAccessDenied,
     AppFailure.unexpected => errorUnexpected,
   };
 }

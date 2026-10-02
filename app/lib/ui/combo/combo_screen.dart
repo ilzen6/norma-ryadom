@@ -4,9 +4,12 @@ import 'package:go_router/go_router.dart';
 
 import '../../domain/models/combo.dart';
 import '../../routing/routes.dart';
+import '../../utils/result.dart';
 import '../core/l10n_extensions.dart';
 import '../core/messages.dart';
 import '../core/theme.dart';
+import '../core/widgets/busy_action.dart';
+import '../core/widgets/nutrients_text.dart';
 import '../core/widgets/state_views.dart';
 import '../core/widgets/trust_badge.dart';
 import '../diary/diary_view_model.dart';
@@ -67,16 +70,24 @@ class ComboScreen extends ConsumerWidget {
       bottomNavigationBar: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16),
-          child: FilledButton.icon(
-            key: const Key('eat-combo'),
-            icon: const Icon(Icons.check),
-            label: Text(l10n.eatCombo),
-            onPressed: () async {
-              await ref.read(diaryActionsProvider).addCombo(selected);
+          child: BusyAction<void>(
+            run: (_) async {
+              final result = await ref.read(diaryActionsProvider).addCombo(selected);
               if (!context.mounted) return;
-              showMessage(context, l10n.addedToDiary);
-              context.go(Routes.diary);
+              switch (result) {
+                case Ok():
+                  showMessage(context, l10n.addedToDiary);
+                  context.go(Routes.diary);
+                case Err(:final failure):
+                  showMessage(context, l10n.failure(failure));
+              }
             },
+            builder: (context, onPressed, busy) => FilledButton.icon(
+              key: const Key('eat-combo'),
+              icon: BusyAction.icon(Icons.check, busy: busy),
+              label: Text(l10n.eatCombo),
+              onPressed: onPressed,
+            ),
           ),
         ),
       ),
@@ -100,13 +111,11 @@ class _DishTile extends ConsumerWidget {
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              l10n.comboTotals(
-                nutrients.kcal.round(),
-                nutrients.protein.round(),
-                nutrients.fat.round(),
-                nutrients.carbs.round(),
-              ),
+            NutrientsText(
+              kcal: nutrients.kcal,
+              protein: nutrients.protein,
+              fat: nutrients.fat,
+              carbs: nutrients.carbs,
             ),
             TrustBadge(kind: dish.sourceKind),
           ],
@@ -148,13 +157,11 @@ class _Replacements extends ConsumerWidget {
             for (final option in options)
               ListTile(
                 title: Text(_newDishName(ref, option)),
-                subtitle: Text(
-                  l10n.comboTotals(
-                    option.combo.totals.kcal.round(),
-                    option.combo.totals.protein.round(),
-                    option.combo.totals.fat.round(),
-                    option.combo.totals.carbs.round(),
-                  ),
+                subtitle: NutrientsText(
+                  kcal: option.combo.totals.kcal,
+                  protein: option.combo.totals.protein,
+                  fat: option.combo.totals.fat,
+                  carbs: option.combo.totals.carbs,
                 ),
                 onTap: () => controller.choose(option),
               ),

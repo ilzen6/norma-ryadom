@@ -46,7 +46,7 @@ class BodyParametersForm extends ConsumerWidget {
         _NumberField(
           fieldKey: const Key('weight-field'),
           label: l10n.weightLabel,
-          initial: state.weightKg == null ? null : Formatting.integer(state.weightKg ?? 0),
+          initial: state.weightKg == null ? null : Formatting.decimal(state.weightKg ?? 0),
           range: OnboardingState.weightRange,
           decimal: true,
           onChanged: (text) => controller.setBodyField(BodyField.weight, text),

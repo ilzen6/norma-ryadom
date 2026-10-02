@@ -6,6 +6,7 @@ import '../domain/models/profile.dart';
 import '../ui/combo/combo_screen.dart';
 import '../ui/core/l10n_extensions.dart';
 import '../ui/core/session.dart';
+import '../ui/core/system_screens.dart';
 import '../ui/diary/diary_screen.dart';
 import '../ui/home/home_screen.dart';
 import '../ui/map/map_screen.dart';
@@ -15,9 +16,10 @@ import '../ui/profile/profile_screen.dart';
 import '../ui/venue/venue_screen.dart';
 import 'routes.dart';
 
-enum ProfileGate { loading, missing, present }
+enum ProfileGate { loading, failed, missing, present }
 
 ProfileGate _gateOf(AsyncValue<UserProfile?> profile) => switch (profile) {
+  AsyncValue(hasValue: false, hasError: true) => ProfileGate.failed,
   AsyncValue(hasValue: false) => ProfileGate.loading,
   AsyncValue(value: null) => ProfileGate.missing,
   _ => ProfileGate.present,
@@ -32,14 +34,18 @@ final routerProvider = Provider<GoRouter>((ref) {
     refreshListenable: gate,
     redirect: (context, state) {
       final onboarding = state.matchedLocation == Routes.onboarding;
+      final dataError = state.matchedLocation == Routes.dataError;
       return switch (gate.value) {
         ProfileGate.loading => null,
+        ProfileGate.failed => dataError ? null : Routes.dataError,
         ProfileGate.missing => onboarding ? null : Routes.onboarding,
-        ProfileGate.present => onboarding ? Routes.home : null,
+        ProfileGate.present => onboarding || dataError ? Routes.home : null,
       };
     },
+    errorBuilder: (_, _) => const NotFoundScreen(),
     routes: [
       GoRoute(path: Routes.onboarding, builder: (_, _) => const OnboardingScreen()),
+      GoRoute(path: Routes.dataError, builder: (_, _) => const DataErrorScreen()),
       StatefulShellRoute.indexedStack(
         builder: (_, _, shell) => _MainShell(shell: shell),
         branches: [
@@ -65,7 +71,10 @@ final routerProvider = Provider<GoRouter>((ref) {
       ),
       GoRoute(
         path: '/venue/:id',
-        builder: (_, state) => VenueScreen(venueId: int.parse(state.pathParameters['id'] ?? '0')),
+        builder: (_, state) => switch (int.tryParse(state.pathParameters['id'] ?? '')) {
+          final venueId? when venueId > 0 => VenueScreen(venueId: venueId),
+          _ => const NotFoundScreen(),
+        },
       ),
       GoRoute(path: Routes.combo, builder: (_, _) => const ComboScreen()),
     ],

@@ -1,8 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:norma_ryadom/data/services/norma_api.dart';
 import 'package:norma_ryadom/domain/models/combo.dart';
 import 'package:norma_ryadom/domain/models/diary.dart';
+import 'package:norma_ryadom/domain/models/district.dart';
+import 'package:norma_ryadom/domain/models/geo_location.dart';
 import 'package:norma_ryadom/domain/models/meal.dart';
 import 'package:norma_ryadom/domain/models/nutrition_norm.dart';
 import 'package:norma_ryadom/utils/result.dart';
@@ -57,6 +61,7 @@ void main() {
     expect(find.text('167 м'), findsOneWidget);
     expect(harness.combos.requestedPrices.single, PricePreference.cheaper);
     expect(harness.combos.requestedTargets.single.excludeTags, isEmpty);
+    expect(harness.combos.requestedLocations.single, TestData.deviceLocation);
     await tapVisible(tester, find.text('Боул с курицей + Морс'));
     expect(find.text('Попадание в цель'), findsOneWidget);
   });
@@ -109,9 +114,35 @@ void main() {
   });
 
   testWidgets('при отказе в геолокации ищет от выбранного района и предупреждает', (tester) async {
-    final harness = TestHarness(profile: TestData.profile)..location.result = const Err(AppFailure.locationUnavailable);
+    final harness = TestHarness(profile: TestData.profile.copyWith(district: District.arbat))
+      ..location.result = const Err(AppFailure.locationUnavailable);
     await harness.pump(tester);
 
     expect(find.text('Не удалось определить местоположение — используем выбранный район.'), findsOneWidget);
+    await tester.tap(find.byKey(const Key('find-nearby')));
+    await tester.pumpAndSettle();
+    final location = harness.combos.requestedLocations.single;
+    expect(
+      (location.lat, location.lon, location.source),
+      (District.arbat.lat, District.arbat.lon, LocationSource.district),
+    );
+  });
+
+  testWidgets('не показывает устаревший результат, если цель сменилась во время поиска', (tester) async {
+    final gate = Completer<void>();
+    final harness = TestHarness(profile: TestData.profile)
+      ..combos.nearbyResult = Ok(ComboSearchResult(appliedTarget: TestData.lunchTarget, options: options))
+      ..combos.gate = gate;
+    await harness.pump(tester);
+
+    await tester.tap(find.byKey(const Key('find-nearby')));
+    await tester.pump();
+    await tester.tap(find.byKey(const Key('meal-dinner')));
+    await tester.pump();
+    gate.complete();
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const Key('search-results')), findsNothing);
+    expect(find.text('Выберите приём пищи и нажмите «Подобрать рядом»'), findsOneWidget);
   });
 }

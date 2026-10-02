@@ -5,8 +5,9 @@ import '../../data/repositories/feedback_repository.dart';
 import '../../data/services/photo_picker_service.dart';
 import '../../domain/models/catalog.dart';
 import '../../domain/models/combo.dart';
+import '../../data/services/norma_api.dart';
+import '../../domain/models/meal.dart';
 import '../../utils/result.dart';
-import '../combo/selected_combo.dart';
 import '../core/session.dart';
 import '../home/home_view_model.dart';
 
@@ -20,41 +21,14 @@ final venueComboProvider = NotifierProvider.autoDispose.family<VenueComboControl
   VenueComboController.new,
 );
 
-class VenueComboController extends Notifier<NearbySearchState> {
+class VenueComboController extends ComboSearchController {
   VenueComboController(this.venueId);
 
   final int venueId;
 
   @override
-  NearbySearchState build() {
-    ref.watch(currentTargetProvider);
-    return const SearchIdle();
-  }
-
-  Future<void> search() async {
-    final target = ref.read(currentTargetProvider);
-    if (target == null || state is SearchRunning) return;
-    state = const SearchRunning();
-    final selection = ref.read(mealSelectionProvider);
-    final result = await ref
-        .read(comboRepositoryProvider)
-        .atVenue(venueId: venueId, target: target, price: selection.price);
-    if (!ref.mounted) return;
-    state = switch (result) {
-      Ok(:final value) => SearchDone(value),
-      Err(:final failure) => SearchFailed(failure),
-    };
-  }
-
-  void open(ComboOption option) {
-    final current = state;
-    if (current is! SearchDone) return;
-    final target = current.result.appliedTarget;
-    final selection = ref.read(mealSelectionProvider);
-    ref
-        .read(selectedComboProvider.notifier)
-        .select(SelectedCombo(option: option, target: target, meal: selection.meal, price: selection.price));
-  }
+  Future<Result<ComboSearchResult>> find(MealTarget target, PricePreference price) =>
+      ref.read(comboRepositoryProvider).atVenue(venueId: venueId, target: target, price: price);
 }
 
 enum FeedbackOutcome { sent, cancelled }
@@ -70,7 +44,13 @@ class FeedbackActions {
   final FeedbackRepository _feedback;
 
   Future<Result<FeedbackOutcome>> sendMenuPhoto(int venueId, PhotoSource source) async {
-    final photo = await _picker.pick(source);
+    final PickedPhoto? photo;
+    switch (await _picker.pick(source)) {
+      case Err(:final failure):
+        return Err(failure);
+      case Ok(:final value):
+        photo = value;
+    }
     if (photo == null) return const Ok(FeedbackOutcome.cancelled);
     return switch (await _feedback.sendMenuPhoto(venueId, photo)) {
       Ok() => const Ok(FeedbackOutcome.sent),

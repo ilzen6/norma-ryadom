@@ -19,7 +19,6 @@ class RemoteVenueRepository implements VenueRepository {
 
   final NormaApi _api;
   final int radiusMeters;
-  final Map<(int, MealTarget), VenueMenu> _menus = {};
 
   @override
   Future<Result<List<NearbyVenue>>> nearby({
@@ -34,11 +33,5 @@ class RemoteVenueRepository implements VenueRepository {
   );
 
   @override
-  Future<Result<VenueMenu>> menu(int venueId, MealTarget target) async {
-    final cached = _menus[(venueId, target)];
-    if (cached != null) return Ok(cached);
-    final result = await _api.venueMenu(venueId, target);
-    if (result case Ok(:final value)) _menus[(venueId, target)] = value;
-    return result;
-  }
+  Future<Result<VenueMenu>> menu(int venueId, MealTarget target) => _api.venueMenu(venueId, target);
 }

@@ -206,6 +206,23 @@
       }
     }
   },
+  "comboTotalsSpoken": "{kcal} килокалорий, белки {protein} г, жиры {fat} г, углеводы {carbs} г",
+  "@comboTotalsSpoken": {
+    "placeholders": {
+      "kcal": {
+        "type": "int"
+      },
+      "protein": {
+        "type": "int"
+      },
+      "fat": {
+        "type": "int"
+      },
+      "carbs": {
+        "type": "int"
+      }
+    }
+  },
   "price": "{rubles} ₽",
   "@price": {
     "placeholders": {
@@ -316,6 +333,14 @@
   "addedToDiary": "Записано в дневник",
   "openVenue": "Открыть заведение",
   "mapShowAll": "Показать все",
+  "mapAreaLabel": "Карта: {count, plural, one{{count} заведение} few{{count} заведения} other{{count} заведений}} рядом, список ниже",
+  "@mapAreaLabel": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "mapLegendGood": "есть набор под цель",
   "mapLegendCompromise": "компромисс",
   "mapLegendNone": "нет подходящего",
@@ -468,6 +493,10 @@
   "errorUnavailable": "Сервис временно недоступен. Попробуйте позже.",
   "errorLocationDenied": "Нет доступа к геолокации — выберите район вручную в профиле.",
   "errorLocationUnavailable": "Не удалось определить местоположение — используем выбранный район.",
+  "errorPhotoAccessDenied": "Нет доступа к камере или галерее. Разрешите доступ в настройках телефона.",
+  "goHome": "На главную",
+  "dataErrorText": "Не удалось прочитать данные на устройстве. Попробуйте ещё раз или сбросьте данные и заполните профиль заново.",
+  "dataErrorReset": "Сбросить данные",
   "errorUnexpected": "Что-то пошло не так. Повторите попытку.",
   "kcalValue": "{kcal} ккал",
   "@kcalValue": {

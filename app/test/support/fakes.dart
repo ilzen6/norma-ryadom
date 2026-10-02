@@ -21,9 +21,14 @@ class InMemoryProfileRepository implements ProfileRepository {
 
   UserProfile? profile;
   bool deleted = false;
+  Exception? loadError;
 
   @override
-  Future<UserProfile?> load() async => profile;
+  Future<UserProfile?> load() async {
+    final error = loadError;
+    if (error != null) throw error;
+    return profile;
+  }
 
   @override
   Future<void> save(UserProfile profile) async => this.profile = profile;
@@ -31,6 +36,7 @@ class InMemoryProfileRepository implements ProfileRepository {
   @override
   Future<void> deleteAllData() async {
     profile = null;
+    loadError = null;
     deleted = true;
   }
 }
@@ -39,6 +45,8 @@ class InMemoryDiaryRepository implements DiaryRepository {
   final List<DiaryEntry> entries = [];
   final _changes = StreamController<void>.broadcast();
   int _nextId = 1;
+  Exception? writeError;
+  Completer<void>? gate;
 
   @override
   Stream<List<DiaryEntry>> watchDay(DateTime day) => _watch(
@@ -58,6 +66,9 @@ class InMemoryDiaryRepository implements DiaryRepository {
 
   @override
   Future<void> add(NewDiaryEntry entry, DateTime now) async {
+    final error = writeError;
+    if (error != null) throw error;
+    await gate?.future;
     entries.add(
       DiaryEntry(
         id: _nextId++,
@@ -99,7 +110,11 @@ class FakeComboRepository implements ComboRepository {
   Result<ComboSearchResult> replaceResult = const Ok(ComboSearchResult(appliedTarget: TestData.lunchTarget));
   final List<MealTarget> requestedTargets = [];
   final List<PricePreference> requestedPrices = [];
+  final List<GeoLocation> requestedLocations = [];
+  final List<int> requestedVenues = [];
   final List<(List<int>, int)> replaceRequests = [];
+  final List<MealTarget> replaceTargets = [];
+  Completer<void>? gate;
 
   @override
   Future<Result<ComboSearchResult>> nearby({
@@ -109,7 +124,10 @@ class FakeComboRepository implements ComboRepository {
   }) async {
     requestedTargets.add(target);
     requestedPrices.add(price);
-    return nearbyResult;
+    requestedLocations.add(location);
+    final result = nearbyResult;
+    await gate?.future;
+    return result;
   }
 
   @override
@@ -119,6 +137,8 @@ class FakeComboRepository implements ComboRepository {
     required PricePreference price,
   }) async {
     requestedTargets.add(target);
+    requestedPrices.add(price);
+    requestedVenues.add(venueId);
     return venueResult;
   }
 
@@ -131,6 +151,8 @@ class FakeComboRepository implements ComboRepository {
     required PricePreference price,
   }) async {
     replaceRequests.add((dishIds, replaceIndex));
+    replaceTargets.add(target);
+    requestedVenues.add(venueId);
     return replaceResult;
   }
 }
@@ -159,10 +181,12 @@ class FakeFeedbackRepository implements FeedbackRepository {
   Result<void> reportResult = const Ok(null);
   final List<(int, String)> reports = [];
   final List<(int, PickedPhoto)> photos = [];
+  Completer<void>? gate;
 
   @override
   Future<Result<SubmissionReceipt>> sendMenuPhoto(int venueId, PickedPhoto photo) async {
     photos.add((venueId, photo));
+    await gate?.future;
     return photoResult;
   }
 
@@ -187,13 +211,13 @@ class FakeLocationService implements LocationService {
 }
 
 class FakePhotoPicker implements PhotoPickerService {
-  PickedPhoto? photo = const PickedPhoto(bytes: [0x89, 0x50, 0x4E, 0x47], fileName: 'menu.png');
+  Result<PickedPhoto?> result = const Ok(PickedPhoto(bytes: [0x89, 0x50, 0x4E, 0x47], fileName: 'menu.png'));
   final List<PhotoSource> sources = [];
 
   @override
-  Future<PickedPhoto?> pick(PhotoSource source) async {
+  Future<Result<PickedPhoto?>> pick(PhotoSource source) async {
     sources.add(source);
-    return photo;
+    return result;
   }
 }
 

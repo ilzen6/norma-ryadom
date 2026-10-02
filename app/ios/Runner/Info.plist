@@ -12,6 +12,10 @@
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>ru</string>
+	</array>
 	<key>CFBundleDisplayName</key>
 	<string>Норма рядом</string>
 	<key>CFBundleExecutable</key>

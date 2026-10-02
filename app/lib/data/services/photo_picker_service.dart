@@ -1,4 +1,7 @@
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+
+import '../../utils/result.dart';
 
 class PickedPhoto {
   const PickedPhoto({required this.bytes, required this.fileName});
@@ -10,7 +13,7 @@ class PickedPhoto {
 enum PhotoSource { camera, gallery }
 
 abstract interface class PhotoPickerService {
-  Future<PickedPhoto?> pick(PhotoSource source);
+  Future<Result<PickedPhoto?>> pick(PhotoSource source);
 }
 
 class DevicePhotoPickerService implements PhotoPickerService {
@@ -22,14 +25,18 @@ class DevicePhotoPickerService implements PhotoPickerService {
   final ImagePicker _picker;
 
   @override
-  Future<PickedPhoto?> pick(PhotoSource source) async {
-    final file = await _picker.pickImage(
-      source: source == PhotoSource.camera ? ImageSource.camera : ImageSource.gallery,
-      maxWidth: _maxDimension,
-      maxHeight: _maxDimension,
-      imageQuality: _quality,
-    );
-    if (file == null) return null;
-    return PickedPhoto(bytes: await file.readAsBytes(), fileName: file.name);
+  Future<Result<PickedPhoto?>> pick(PhotoSource source) async {
+    try {
+      final file = await _picker.pickImage(
+        source: source == PhotoSource.camera ? ImageSource.camera : ImageSource.gallery,
+        maxWidth: _maxDimension,
+        maxHeight: _maxDimension,
+        imageQuality: _quality,
+      );
+      if (file == null) return const Ok(null);
+      return Ok(PickedPhoto(bytes: await file.readAsBytes(), fileName: file.name));
+    } on PlatformException {
+      return const Err(AppFailure.photoAccessDenied);
+    }
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../domain/models/combo.dart';
 import '../l10n_extensions.dart';
+import 'nutrients_text.dart';
 import 'trust_badge.dart';
 
 class ComboCard extends StatelessWidget {
@@ -36,8 +37,11 @@ class ComboCard extends StatelessWidget {
               const SizedBox(height: 4),
               Text(combo.dishes.map((dish) => dish.name).join(' + '), style: textTheme.bodyLarge),
               const SizedBox(height: 8),
-              Text(
-                l10n.comboTotals(totals.kcal.round(), totals.protein.round(), totals.fat.round(), totals.carbs.round()),
+              NutrientsText(
+                kcal: totals.kcal,
+                protein: totals.protein,
+                fat: totals.fat,
+                carbs: totals.carbs,
                 style: textTheme.titleSmall,
               ),
               const SizedBox(height: 4),

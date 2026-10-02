@@ -128,11 +128,16 @@ class NormaApi {
   };
 
   Future<Result<T>> _call<T, B>(Future<Response<B>> Function() request, T Function(B body) parse) async {
+    final Response<B> response;
     try {
-      final response = await request();
-      return Ok(parse(response.data as B));
+      response = await request();
     } on DioException catch (error) {
       return Err(failureOf(error));
+    }
+    try {
+      return Ok(parse(response.data as B));
+    } on Object {
+      return const Err(AppFailure.unexpected);
     }
   }
 
