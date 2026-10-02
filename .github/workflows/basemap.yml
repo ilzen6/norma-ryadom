@@ -1,0 +1,37 @@
+name: Basemap
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "tool/basemap/**"
+      - ".github/workflows/basemap.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  basemap:
+    name: Подложка карты из OpenStreetMap
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Сборка подложки
+        run: |
+          pip install shapely==2.1.2
+          python tool/basemap/build_basemap.py "$RUNNER_TEMP/basemap.json"
+          ls -la "$RUNNER_TEMP/basemap.json"
+      - name: Публикация в ветку basemap-data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout --orphan basemap-data
+          git rm -rf --quiet .
+          cp "$RUNNER_TEMP/basemap.json" basemap.json
+          git add basemap.json
+          git commit -m "chore: basemap from OpenStreetMap"
+          git push -f origin basemap-data
