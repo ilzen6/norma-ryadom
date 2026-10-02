@@ -3,6 +3,11 @@ name: Release
 on:
   push:
     tags: ["v*"]
+    branches: [main]
+    paths:
+      - "app/**"
+      - "server/src/main/**"
+      - ".github/workflows/release.yml"
   workflow_dispatch:
 
 permissions:
