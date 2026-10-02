@@ -1,0 +1,481 @@
+{
+  "@@locale": "ru",
+  "appTitle": "Норма рядом",
+  "@appTitle": {
+    "description": "Название приложения"
+  },
+  "next": "Далее",
+  "back": "Назад",
+  "done": "Готово",
+  "cancel": "Отмена",
+  "save": "Сохранить",
+  "retry": "Повторить",
+  "close": "Закрыть",
+  "send": "Отправить",
+  "onboardingBodyTitle": "Параметры и цель",
+  "onboardingPreferencesTitle": "Предпочтения в еде",
+  "onboardingLocationTitle": "Где искать заведения",
+  "onboardingStep": "Шаг {current} из {total}",
+  "@onboardingStep": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "sexLabel": "Пол",
+  "sexFemale": "Женский",
+  "sexMale": "Мужской",
+  "ageLabel": "Возраст, лет",
+  "heightLabel": "Рост, см",
+  "weightLabel": "Вес, кг",
+  "fieldOutOfRange": "Допустимо от {min} до {max}",
+  "@fieldOutOfRange": {
+    "placeholders": {
+      "min": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "activityLabel": "Активность",
+  "activitySedentary": "Сидячий образ жизни",
+  "activityLight": "Лёгкая: 1–3 тренировки в неделю",
+  "activityModerate": "Умеренная: 3–5 тренировок",
+  "activityHigh": "Высокая: 6–7 тренировок",
+  "activityVeryHigh": "Очень высокая: физический труд и спорт",
+  "goalLabel": "Цель",
+  "goalLose": "Снижение веса",
+  "goalMaintain": "Поддержание",
+  "goalGain": "Набор массы",
+  "normTitle": "Ваша дневная норма",
+  "normExplanation": "Базовый обмен по формуле Миффлина — Сан Жеора: {bmr} ккал. С учётом активности: {tdee} ккал. С учётом цели: {kcal} ккал.",
+  "@normExplanation": {
+    "placeholders": {
+      "bmr": {
+        "type": "int"
+      },
+      "tdee": {
+        "type": "int"
+      },
+      "kcal": {
+        "type": "int"
+      }
+    }
+  },
+  "normSafeMinimum": "Норма поднята до безопасного минимума {kcal} ккал.",
+  "@normSafeMinimum": {
+    "placeholders": {
+      "kcal": {
+        "type": "int"
+      }
+    }
+  },
+  "normMacros": "Белки {protein} г · Жиры {fat} г · Углеводы {carbs} г",
+  "@normMacros": {
+    "placeholders": {
+      "protein": {
+        "type": "int"
+      },
+      "fat": {
+        "type": "int"
+      },
+      "carbs": {
+        "type": "int"
+      }
+    }
+  },
+  "normEditManually": "Изменить вручную",
+  "normUseCalculated": "Вернуть расчётную",
+  "normManualHint": "Норма задана вручную",
+  "normBelowSafeMinimum": "Не меньше {kcal} ккал — это безопасный минимум",
+  "@normBelowSafeMinimum": {
+    "placeholders": {
+      "kcal": {
+        "type": "int"
+      }
+    }
+  },
+  "kcalLabel": "Калории, ккал",
+  "proteinLabel": "Белки, г",
+  "fatLabel": "Жиры, г",
+  "carbsLabel": "Углеводы, г",
+  "disclaimer": "Не является медицинской рекомендацией. Цифры заведений могут отличаться от фактических.",
+  "preferencesHint": "Отметьте, что исключить. Эти настройки хранятся только на телефоне.",
+  "preferenceNoPork": "Без свинины",
+  "preferenceVegetarian": "Вегетарианское",
+  "preferenceNoNuts": "Без орехов",
+  "preferenceNoMilk": "Без молока",
+  "preferenceNoGluten": "Без глютена",
+  "locationHint": "Геолокация нужна, чтобы найти заведения рядом. Координаты не сохраняются на сервере.",
+  "locationAllow": "Разрешить геолокацию",
+  "locationAllowed": "Геолокация разрешена",
+  "locationDistrictLabel": "Или выберите район",
+  "districtMoscowCity": "Москва-Сити",
+  "districtTverskaya": "Тверская",
+  "districtArbat": "Арбат",
+  "districtChistyePrudy": "Чистые пруды",
+  "districtKurskaya": "Курская",
+  "districtBelorusskaya": "Белорусская",
+  "start": "Начать",
+  "navHome": "Что взять",
+  "navMap": "Карта",
+  "navDiary": "Дневник",
+  "navProfile": "Профиль",
+  "remainingTitle": "Осталось на сегодня",
+  "remainingSummary": "{kcal} ккал, белок {protein} г",
+  "@remainingSummary": {
+    "placeholders": {
+      "kcal": {
+        "type": "int"
+      },
+      "protein": {
+        "type": "int"
+      }
+    }
+  },
+  "overNorm": "Норма на сегодня уже набрана",
+  "mealBreakfast": "Завтрак",
+  "mealLunch": "Обед",
+  "mealDinner": "Ужин",
+  "mealSnack": "Перекус",
+  "targetSummary": "≈ {kcal} ккал ± {tolerance} · белок от {protein} г · жиры до {fat} г · углеводы до {carbs} г",
+  "@targetSummary": {
+    "placeholders": {
+      "kcal": {
+        "type": "int"
+      },
+      "tolerance": {
+        "type": "int"
+      },
+      "protein": {
+        "type": "int"
+      },
+      "fat": {
+        "type": "int"
+      },
+      "carbs": {
+        "type": "int"
+      }
+    }
+  },
+  "editTarget": "Изменить цель",
+  "targetSheetTitle": "Цель приёма пищи",
+  "toleranceLabel": "Допуск по калориям, ккал",
+  "resetTarget": "По норме",
+  "preferCheaper": "Подешевле",
+  "findNearby": "Подобрать рядом",
+  "locationFromDevice": "Рядом с вами",
+  "locationFromDistrict": "Район: {district}",
+  "@locationFromDistrict": {
+    "placeholders": {
+      "district": {
+        "type": "String"
+      }
+    }
+  },
+  "noCombosNearby": "Рядом нет наборов под эту цель. Попробуйте увеличить допуск или выбрать другой приём пищи.",
+  "searchPrompt": "Выберите приём пищи и нажмите «Подобрать рядом»",
+  "distanceMeters": "{meters} м",
+  "@distanceMeters": {
+    "placeholders": {
+      "meters": {
+        "type": "int"
+      }
+    }
+  },
+  "comboTotals": "{kcal} ккал · Б {protein} · Ж {fat} · У {carbs}",
+  "@comboTotals": {
+    "placeholders": {
+      "kcal": {
+        "type": "int"
+      },
+      "protein": {
+        "type": "int"
+      },
+      "fat": {
+        "type": "int"
+      },
+      "carbs": {
+        "type": "int"
+      }
+    }
+  },
+  "price": "{rubles} ₽",
+  "@price": {
+    "placeholders": {
+      "rubles": {
+        "type": "String"
+      }
+    }
+  },
+  "priceUnknown": "цена не указана",
+  "trustVerified": "данные сети",
+  "trustFromMenu": "из меню заведения",
+  "trustEstimate": "оценка",
+  "trustUnknown": "источник не указан",
+  "trustVerifiedAt": "проверено {date}",
+  "@trustVerifiedAt": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "trustEstimateRange": "≈ {low}–{high} ккал",
+  "@trustEstimateRange": {
+    "placeholders": {
+      "low": {
+        "type": "int"
+      },
+      "high": {
+        "type": "int"
+      }
+    }
+  },
+  "comboTitle": "Набор",
+  "comboChecks": "Попадание в цель",
+  "checkKcal": "Калории {value} из {goal}",
+  "@checkKcal": {
+    "placeholders": {
+      "value": {
+        "type": "int"
+      },
+      "goal": {
+        "type": "int"
+      }
+    }
+  },
+  "checkProtein": "Белок {value} г, нужно от {goal} г",
+  "@checkProtein": {
+    "placeholders": {
+      "value": {
+        "type": "int"
+      },
+      "goal": {
+        "type": "int"
+      }
+    }
+  },
+  "checkFat": "Жиры {value} г, цель до {goal} г",
+  "@checkFat": {
+    "placeholders": {
+      "value": {
+        "type": "int"
+      },
+      "goal": {
+        "type": "int"
+      }
+    }
+  },
+  "checkCarbs": "Углеводы {value} г, цель до {goal} г",
+  "@checkCarbs": {
+    "placeholders": {
+      "value": {
+        "type": "int"
+      },
+      "goal": {
+        "type": "int"
+      }
+    }
+  },
+  "checkOk": "в цели",
+  "checkAbove": "больше на {amount}",
+  "@checkAbove": {
+    "placeholders": {
+      "amount": {
+        "type": "int"
+      }
+    }
+  },
+  "checkBelow": "меньше на {amount}",
+  "@checkBelow": {
+    "placeholders": {
+      "amount": {
+        "type": "int"
+      }
+    }
+  },
+  "replaceDish": "Заменить",
+  "replaceDishTooltip": "Заменить «{dish}»",
+  "@replaceDishTooltip": {
+    "placeholders": {
+      "dish": {
+        "type": "String"
+      }
+    }
+  },
+  "replacementsTitle": "Чем заменить",
+  "noReplacements": "Подходящей замены нет — остальные блюда не дают уложиться в цель",
+  "eatCombo": "Записать в дневник",
+  "addedToDiary": "Записано в дневник",
+  "openVenue": "Открыть заведение",
+  "mapShowAll": "Показать все",
+  "mapLegendGood": "есть набор под цель",
+  "mapLegendCompromise": "компромисс",
+  "mapLegendNone": "нет подходящего",
+  "mapLegendNoData": "нет данных о меню",
+  "mapEmpty": "Рядом нет заведений с меню",
+  "mapVenueSemantics": "{name}, {distance}",
+  "@mapVenueSemantics": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "distance": {
+        "type": "String"
+      }
+    }
+  },
+  "mapAttribution": "© участники OpenStreetMap",
+  "venueBuildHere": "Собрать {meal} здесь",
+  "@venueBuildHere": {
+    "placeholders": {
+      "meal": {
+        "type": "String"
+      }
+    }
+  },
+  "venueMenu": "Меню",
+  "venueMenuEmpty": "Меню этого заведения пока не загружено",
+  "verdictFits": "подходит",
+  "verdictPartial": "можно, но…",
+  "verdictNotFits": "не подходит",
+  "reasonExcludedTag": "есть {tag}",
+  "@reasonExcludedTag": {
+    "placeholders": {
+      "tag": {
+        "type": "String"
+      }
+    }
+  },
+  "reasonKcalAbove": "калорий больше цели на {amount}",
+  "@reasonKcalAbove": {
+    "placeholders": {
+      "amount": {
+        "type": "int"
+      }
+    }
+  },
+  "reasonFatAbove": "жиры больше цели на {amount} г",
+  "@reasonFatAbove": {
+    "placeholders": {
+      "amount": {
+        "type": "int"
+      }
+    }
+  },
+  "reasonCarbsAbove": "углеводы больше цели на {amount} г",
+  "@reasonCarbsAbove": {
+    "placeholders": {
+      "amount": {
+        "type": "int"
+      }
+    }
+  },
+  "reasonLowProtein": "мало белка",
+  "reasonEstimated": "цифры — оценка",
+  "tagPork": "свинина",
+  "tagMeat": "мясо",
+  "tagFish": "рыба",
+  "tagSeafood": "морепродукты",
+  "tagNuts": "орехи",
+  "tagMilk": "молоко",
+  "tagGluten": "глютен",
+  "tagOther": "исключённый продукт",
+  "reportNumbers": "Цифры не совпадают",
+  "reportTitle": "Что не так с «{dish}»?",
+  "@reportTitle": {
+    "placeholders": {
+      "dish": {
+        "type": "String"
+      }
+    }
+  },
+  "reportReasonLabel": "Например: на стенде 520 ккал",
+  "reportSent": "Спасибо! Блюдо проверим",
+  "reportReasonRequired": "Опишите, что не совпадает",
+  "uploadMenuPhoto": "Сфотографировать меню",
+  "uploadFromCamera": "Камера",
+  "uploadFromGallery": "Из галереи",
+  "photoSent": "Спасибо! Фото отправлено на проверку",
+  "diaryTitle": "Сегодня",
+  "diaryEmpty": "Пока ничего не записано",
+  "diaryEaten": "Съедено",
+  "diaryQuickAdd": "Быстро добавить",
+  "diaryAddAgain": "Добавить снова «{title}»",
+  "@diaryAddAgain": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "diaryRemove": "Удалить запись «{title}»",
+  "@diaryRemove": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "diaryFavorite": "В избранное",
+  "diaryUnfavorite": "Убрать из избранного",
+  "progressValue": "{eaten} из {norm}",
+  "@progressValue": {
+    "placeholders": {
+      "eaten": {
+        "type": "int"
+      },
+      "norm": {
+        "type": "int"
+      }
+    }
+  },
+  "profileTitle": "Профиль",
+  "profileParams": "{age} лет · {height} см · {weight} кг",
+  "@profileParams": {
+    "placeholders": {
+      "age": {
+        "type": "int"
+      },
+      "height": {
+        "type": "int"
+      },
+      "weight": {
+        "type": "String"
+      }
+    }
+  },
+  "profileEdit": "Изменить параметры",
+  "profileLocationConsent": "Использовать геолокацию",
+  "profileDeleteAll": "Удалить все данные",
+  "profileDeleteConfirmTitle": "Удалить все данные?",
+  "profileDeleteConfirmText": "Профиль, норма и дневник будут удалены с этого устройства. Отменить нельзя.",
+  "delete": "Удалить",
+  "profilePrivacy": "Профиль и дневник хранятся только на этом устройстве. На сервер уходят лишь цель приёма пищи и координаты поиска — без имени и идентификатора.",
+  "errorOffline": "Нет связи с сервером. Проверьте интернет и повторите.",
+  "errorNotFound": "Заведение не найдено — возможно, оно закрылось.",
+  "errorInvalid": "Сервер не принял запрос. Проверьте цель приёма пищи.",
+  "errorRateLimited": "Слишком много запросов. Попробуйте чуть позже.",
+  "errorUnsupportedPhoto": "Подходят только фото JPEG и PNG.",
+  "errorPhotoTooLarge": "Фото слишком большое.",
+  "errorUnavailable": "Сервис временно недоступен. Попробуйте позже.",
+  "errorLocationDenied": "Нет доступа к геолокации — выберите район вручную в профиле.",
+  "errorLocationUnavailable": "Не удалось определить местоположение — используем выбранный район.",
+  "errorUnexpected": "Что-то пошло не так. Повторите попытку.",
+  "kcalValue": "{kcal} ккал",
+  "@kcalValue": {
+    "placeholders": {
+      "kcal": {
+        "type": "int"
+      }
+    }
+  },
+  "comboTrustLabel": "Достоверность набора:"
+}
