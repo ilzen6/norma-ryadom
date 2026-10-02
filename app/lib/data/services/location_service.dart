@@ -7,6 +7,15 @@ abstract interface class LocationService {
   Future<Result<GeoLocation>> currentLocation();
 }
 
+class DemoLocationService implements LocationService {
+  const DemoLocationService();
+
+  static const moscowCity = GeoLocation(lat: 55.7495, lon: 37.5374, source: LocationSource.device);
+
+  @override
+  Future<Result<GeoLocation>> currentLocation() async => const Ok(moscowCity);
+}
+
 class DeviceLocationService implements LocationService {
   const DeviceLocationService();
 

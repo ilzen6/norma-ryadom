@@ -27,6 +27,7 @@ class ProfileScreen extends ConsumerWidget {
       );
     }
     final controller = ref.read(profileProvider.notifier);
+    final demoServer = ref.watch(appConfigProvider).demoServer;
     return Scaffold(
       appBar: AppBar(title: Text(l10n.profileTitle)),
       body: SafeArea(
@@ -83,12 +84,14 @@ class ProfileScreen extends ConsumerWidget {
                 key: const Key('server-settings'),
                 leading: const Icon(Icons.dns_outlined),
                 title: Text(l10n.serverTitle),
-                subtitle: Text(ref.watch(serverAddressProvider)),
-                trailing: const Icon(Icons.edit),
-                onTap: () async {
-                  final saved = await showDialog<String>(context: context, builder: (_) => const ServerDialog());
-                  if (saved != null && context.mounted) showMessage(context, l10n.serverSaved);
-                },
+                subtitle: Text(demoServer ? l10n.serverBuiltIn : ref.watch(serverAddressProvider)),
+                trailing: demoServer ? null : const Icon(Icons.edit),
+                onTap: demoServer
+                    ? null
+                    : () async {
+                        final saved = await showDialog<String>(context: context, builder: (_) => const ServerDialog());
+                        if (saved != null && context.mounted) showMessage(context, l10n.serverSaved);
+                      },
               ),
             ),
             const SizedBox(height: 16),

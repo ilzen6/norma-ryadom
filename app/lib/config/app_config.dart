@@ -4,6 +4,7 @@ class AppConfig {
     required this.tileUrlTemplate,
     required this.searchRadiusMeters,
     this.allowCleartextServer = false,
+    this.demoServer = false,
   });
 
   factory AppConfig.fromEnvironment() => const AppConfig(
@@ -14,6 +15,7 @@ class AppConfig {
     ),
     searchRadiusMeters: int.fromEnvironment('SEARCH_RADIUS_METERS', defaultValue: 1500),
     allowCleartextServer: String.fromEnvironment('FLUTTER_APP_FLAVOR') == demoFlavor,
+    demoServer: bool.fromEnvironment('DEMO_SERVER'),
   );
 
   static const demoFlavor = 'demo';
@@ -22,4 +24,5 @@ class AppConfig {
   final String tileUrlTemplate;
   final int searchRadiusMeters;
   final bool allowCleartextServer;
+  final bool demoServer;
 }

@@ -1,9 +1,11 @@
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../config/app_config.dart';
 import '../domain/nutrition/meal_planner.dart';
 import '../domain/nutrition/norm_calculator.dart';
 import '../utils/result.dart';
+import 'demo/demo_server.dart';
 import 'local/app_database.dart';
 import 'repositories/combo_repository.dart';
 import 'repositories/diary_repository.dart';
@@ -54,7 +56,18 @@ final serverProbeProvider = Provider<ServerProbe>(
       (address) => NormaApi(NormaApi.createDio(address)).health(),
 );
 
-final normaApiProvider = Provider<NormaApi>((ref) => NormaApi(NormaApi.createDio(ref.watch(serverAddressProvider))));
+final demoCatalogLoaderProvider = Provider<Future<String> Function()>(
+  (ref) =>
+      () => rootBundle.loadString('assets/demo/catalog.json'),
+);
+
+final normaApiProvider = Provider<NormaApi>((ref) {
+  final dio = NormaApi.createDio(ref.watch(serverAddressProvider));
+  if (ref.watch(appConfigProvider).demoServer) {
+    dio.httpClientAdapter = DemoServerAdapter(ref.watch(demoCatalogLoaderProvider));
+  }
+  return NormaApi(dio);
+});
 
 final profileRepositoryProvider = Provider<ProfileRepository>(
   (ref) => LocalProfileRepository(ref.watch(databaseProvider)),
@@ -76,6 +89,8 @@ final feedbackRepositoryProvider = Provider<FeedbackRepository>(
   (ref) => RemoteFeedbackRepository(ref.watch(normaApiProvider)),
 );
 
-final locationServiceProvider = Provider<LocationService>((ref) => const DeviceLocationService());
+final locationServiceProvider = Provider<LocationService>(
+  (ref) => ref.watch(appConfigProvider).demoServer ? const DemoLocationService() : const DeviceLocationService(),
+);
 
 final photoPickerProvider = Provider<PhotoPickerService>((ref) => DevicePhotoPickerService());

@@ -58,6 +58,7 @@
 | Избранное и история, «добавить снова» | `LocalDiaryRepository.watchQuickAdd`, `DiaryActions.addAgain` | `local_repositories_test.dart` «быстрое добавление…», `ui/tabs_test.dart` |
 | Дневник и профиль только на устройстве | `LocalProfileRepository`, `LocalDiaryRepository` (drift) | `local_repositories_test.dart` |
 | Удаление всех данных одной кнопкой | `ProfileController.deleteAllData` | `local_repositories_test.dart` «удаляет все данные…», `ui/tabs_test.dart` «профиль удаляет все данные…» |
+| Демо-версия без сервера (веб, iPhone): встроенный каталог и подбор по тем же правилам | `app/lib/data/demo/`, `tool/build_demo_catalog.dart` | `data/demo/demo_contract_test.dart` (эталон `DemoComboContractTest`), `data/demo/demo_server_test.dart`, `ui/demo_mode_test.dart`, E2E «сценарий защиты» на демо-сборке |
 | Адрес сервера задаётся в приложении с проверкой связи; HTTP только в демо-сборке | `ServerAddress`, `ServerSettings`, `LocalSettingsRepository`, flavors `demo`/`store` | `domain/server_address_test.dart`, `ui/server_settings_test.dart`, `data/local_repositories_test.dart` |
 
 ## Алгоритм подбора (11)
