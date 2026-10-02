@@ -82,7 +82,7 @@ object RecommendationMapper {
             distanceMeters = option.distanceMeters?.roundToInt(),
             combo =
                 ComboResponse(
-                    dishes = combo.dishes.map(::dish),
+                    dishes = combo.dishes.sortedBy { it.category.ordinal }.map(::dish),
                     totals = nutrients(combo.totals),
                     priceMinor = combo.priceMinor,
                     sourceKind = combo.sourceKind,

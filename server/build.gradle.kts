@@ -122,3 +122,11 @@ kover {
 tasks.named("check") {
     dependsOn("koverVerify")
 }
+
+tasks.bootJar {
+    archiveFileName = "norma-ryadom-server.jar"
+}
+
+tasks.jar {
+    enabled = false
+}
