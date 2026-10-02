@@ -85,10 +85,11 @@
 |---|---|---|
 | Импорт CSV меню сети (уровень A) с источником и датой | `CatalogImportService`, `MenuCsvParser` | `CatalogImportIT`, `MenuCsvParserTest`, E2E админки |
 | Блюдо пропало с сайта сети → снимается из подбора | `MenuItemRepository.withdrawChainItemsExcept` | `CatalogImportIT` «при повторном импорте…снимает пропавшие…» |
-| Импорт точек сети | `VenueCsvParser`, `VenueRepository.upsertForChain` | `VenueCsvParserTest`, `CatalogImportIT`, E2E админки |
+| Импорт точек сети; точки, пропавшие из файла, закрываются | `VenueCsvParser`, `VenueRepository.upsertForChain`, `deactivateChainVenuesExcept` | `VenueCsvParserTest`, `CatalogImportIT`, E2E админки |
+| CSV только в UTF-8 (с BOM или без) | `CsvEncoding` | `CatalogImportIT` |
 | Фото меню → хранилище → OCR → очередь модерации | `MenuPhotoService`, `S3PhotoStorage`, `TesseractTextRecognizer`, `MenuOcrProcessor` | `intake/MenuPhotoApiIT` (реальный Tesseract и S3), E2E «модератор видит фото меню с распознанным текстом…» |
 | Модерация: перенос строк в меню заведения (уровень B) или отклонение | `ModerationService` | `admin/AdminWebIT`, E2E админки |
-| Жалоба «цифры не совпадают»; три жалобы → перепроверка | `ItemReportService`, `ReviewService` | `intake/ItemReportApiIT`, `AdminWebIT` «модератор разбирает жалобы…», E2E |
+| Жалоба «цифры не совпадают»; три жалобы разных людей → перепроверка | `ItemReportService`, `ReporterFingerprint`, `MenuItemService`, `ReviewService` | `intake/ItemReportApiIT` (дубли, параллельные жалобы, кэш), `AdminWebIT` «модератор разбирает жалобы…», E2E |
 | Соусы — отдельные позиции | категория `sauce` | `MenuCsvParserTest`, `MealRulesTest` |
 | Цена в копейках, `GEOGRAPHY`, массив тегов + GIN, частичные индексы | `V1__catalog_and_intake.sql` | `CatalogImportIT`, `NearbyVenueRepositoryIT` |
 
@@ -99,7 +100,8 @@
 | `GET /api/v1/venues`, `GET /venues/{id}/menu`, `POST /combos/search`, `POST /combos/replace`, `POST /venues/{id}/menu-photos`, `POST /items/{id}/reports`, `/admin/**` под авторизацией | `recommendation/api`, `intake/api`, `admin` | `VenueApiIT`, `ComboApiIT`, `MenuPhotoApiIT`, `ItemReportApiIT`, `AdminWebIT` |
 | Описание в Swagger | springdoc, `contract/openapi.json` | `contract/OpenApiContractIT` |
 | Валидация: калории 100–2000, радиус до 5 км, ≤ 20 тегов | `MealTargetRequest`, `LocationRequest`, `VenueController` | `VenueApiIT` «проверяет координаты…», `ComboApiIT` «требует ровно одну область…» |
-| Фото: до 8 МБ, проверка типа, лимит запросов на IP | `MenuPhotoService`, `PhotoFormat`, `RateLimiter` | `MenuPhotoApiIT`, `PhotoFormatTest`, `RateLimiterTest` |
+| Фото: до 8 МБ и 24 млн пикселей, проверка типа, без EXIF, лимит запросов на IP | `PhotoSanitizer`, `PhotoFormat`, `RateLimiter`, `ClientKey` | `MenuPhotoApiIT`, `HttpEdgeIT`, `PhotoFormatTest`, `RateLimiterTest`, `ClientKeyTest` |
+| Защита входа в админку от перебора | `AdminLoginRateLimitFilter` | `AdminWebIT` |
 | Объяснение для каждого показателя: значение, цель, отклонение | `MetricCheckResponse` | `ComboApiIT`, `MealRulesTest` |
 
 ## Обратный список: есть в коде, нет в документе

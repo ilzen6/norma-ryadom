@@ -19,6 +19,7 @@ export ADMIN_USERNAME="${ADMIN_USERNAME:-admin}"
 export ADMIN_PASSWORD="${ADMIN_PASSWORD:-$(secret)}"
 export CORS_ALLOWED_ORIGINS="http://localhost:${web_port}"
 export SPRING_PROFILES_ACTIVE=demo
+export TRUSTED_PROXIES_REGEX='172\.(1[6-9]|2[0-9]|3[0-1])\.\d{1,3}\.\d{1,3}|192\.168\.\d{1,3}\.\d{1,3}'
 
 if [[ -z "${ADMIN_PASSWORD_HASH:-}" ]]; then
   ADMIN_PASSWORD_HASH="$(printf '%s' "$ADMIN_PASSWORD" | htpasswd -niBC 10 "" | tr -d ':\n')"

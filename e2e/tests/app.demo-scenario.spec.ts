@@ -53,7 +53,7 @@ test('сценарий защиты: от нормы до записи обед�
 
   await test.step('подбор рядом: несколько вариантов в разных сетях', async () => {
     await button(page, 'Подобрать рядом').click();
-    const options = page.locator('flt-semantics[role="button"]').filter({ hasText: /ккал · Б/ });
+    const options = page.locator('flt-semantics[role="button"]').filter({ hasText: /килокалорий, белки/ });
     await expect(options.first()).toBeVisible();
     expect(await options.count()).toBeGreaterThanOrEqual(3);
     await expect(allText(page, /свин|ветчин|рёбрышки|бужени|пепперони|карбонара/i)).toHaveCount(0);
@@ -66,7 +66,7 @@ test('сценарий защиты: от нормы до записи обед�
     await expect(text(page, /Калории \d+ из \d+/)).toBeVisible();
     await expect(text(page, /Белок \d+ г, нужно от \d+ г/)).toBeVisible();
     await screenshot(page, 'app-06-combo');
-    const before = await semanticTexts(page, /ккал · Б/);
+    const before = await semanticTexts(page, /килокалорий, белки/);
     await page
       .getByRole('button', { name: /^Заменить «/ })
       .last()
@@ -75,11 +75,11 @@ test('сценарий защиты: от нормы до записи обед�
     await screenshot(page, 'app-07-replacements');
     const replacement = page
       .locator('flt-semantics[role="button"]')
-      .filter({ hasText: /ккал · Б/ })
+      .filter({ hasText: /килокалорий, белки/ })
       .last();
     await replacement.click();
     await expect(text(page, 'Чем заменить')).toBeHidden();
-    const after = await semanticTexts(page, /ккал · Б/);
+    const after = await semanticTexts(page, /килокалорий, белки/);
     expect(before.length).toBeGreaterThan(0);
     expect(after).not.toEqual(before);
     await screenshot(page, 'app-08-combo-replaced');
@@ -117,7 +117,7 @@ test('сценарий защиты: от нормы до записи обед�
     await expect(
       page
         .locator('flt-semantics[role="button"]')
-        .filter({ hasText: /ккал · Б/ })
+        .filter({ hasText: /килокалорий, белки/ })
         .first(),
     ).toBeVisible();
     await screenshot(page, 'app-12-venue-combos');

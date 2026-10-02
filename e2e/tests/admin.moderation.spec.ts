@@ -19,12 +19,16 @@ async function expectAccessible(page: Page): Promise<void> {
   expect(results.violations.map((violation) => `${violation.id}: ${violation.help}`)).toEqual([]);
 }
 
-async function firstVenueId(request: APIRequestContext): Promise<number> {
-  const response = await request.get('/api/v1/venues?lat=55.7495&lon=37.5374&radius=1000');
+const kurskaya = { lat: 55.76, lon: 37.6583 };
+const pizzaKurskaya = 'Пицца Квадрат, Курская';
+const porkPizza = 'Пицца Пепперони, кусок';
+
+async function venueId(request: APIRequestContext, name: string): Promise<number> {
+  const response = await request.get(`/api/v1/venues?lat=${kurskaya.lat}&lon=${kurskaya.lon}&radius=500`);
   expect(response.ok()).toBeTruthy();
-  const body = (await response.json()) as { venues: { venue: { id: number } }[] };
-  const venue = body.venues[0];
-  if (!venue) throw new Error('В демо-данных нет заведений рядом с Москва-Сити');
+  const body = (await response.json()) as { venues: { venue: { id: number; name: string } }[] };
+  const venue = body.venues.find((entry) => entry.venue.name === name);
+  if (!venue) throw new Error(`В демо-данных нет заведения «${name}»`);
   return venue.venue.id;
 }
 
@@ -68,19 +72,19 @@ test('администратор заводит сеть, загружает м�
   await expect(page.getByTestId('upserted')).toHaveText('3');
   await page.getByLabel('Файл точек').setInputFiles('fixtures/e2e-chain-venues.csv');
   await page.getByRole('button', { name: 'Загрузить точки' }).click();
-  await expect(page.getByTestId('venue-table')).toContainText('Столовая E2E, Сити');
+  await expect(page.getByTestId('venue-table')).toContainText('Столовая E2E, Невский');
   await expect(page.getByTestId('menu-table')).toContainText('Котлета индейки с гречкой');
   await expectAccessible(page);
   await page.screenshot({ path: 'screenshots/admin-03-chain.png', fullPage: true });
 
-  const nearby = await request.get('/api/v1/venues?lat=55.7499&lon=37.5381&radius=200');
+  const nearby = await request.get('/api/v1/venues?lat=59.9357&lon=30.3256&radius=200');
   const body = (await nearby.json()) as { venues: { venue: { name: string }; hasMenu: boolean }[] };
-  expect(body.venues.find((venue) => venue.venue.name === 'Столовая E2E, Сити')?.hasMenu).toBe(true);
+  expect(body.venues.find((venue) => venue.venue.name === 'Столовая E2E, Невский')?.hasMenu).toBe(true);
 });
 
 test('модератор видит фото меню с распознанным текстом и переносит блюда в меню', async ({ page, request }) => {
-  const venueId = await firstVenueId(request);
-  const upload = await request.post(`/api/v1/venues/${venueId}/menu-photos`, {
+  const venue = await venueId(request, pizzaKurskaya);
+  const upload = await request.post(`/api/v1/venues/${venue}/menu-photos`, {
     multipart: {
       photo: { name: 'menu.png', mimeType: 'image/png', buffer: readFileSync('fixtures/menu-photo.png') },
     },
@@ -109,22 +113,31 @@ test('модератор видит фото меню с распознанны�
   await page.getByRole('button', { name: 'Подтвердить и добавить в меню' }).click();
   await expect(page.getByTestId('approved-items')).toHaveText('1');
 
-  const menu = await request.get(`/api/v1/venues/${venueId}/menu`);
+  const menu = await request.get(`/api/v1/venues/${venue}/menu`);
   const items = ((await menu.json()) as { items: { name: string; source: { kind: string } }[] }).items;
   expect(items.find((item) => item.name === dishName)?.source.kind).toBe('B');
 });
 
 test('после трёх жалоб блюдо уходит на перепроверку, модератор исправляет цифры', async ({ page, request }) => {
-  const venueId = await firstVenueId(request);
-  const menu = await request.get(`/api/v1/venues/${venueId}/menu`);
+  const venue = await venueId(request, pizzaKurskaya);
+  const menu = await request.get(`/api/v1/venues/${venue}/menu`);
   const items = ((await menu.json()) as { items: { id: number; name: string }[] }).items;
-  const item = items.at(-1);
-  if (!item) throw new Error('Меню пустое');
-  for (const reason of ['На стенде другие цифры', 'Калорий явно больше', 'Порция меньше заявленной']) {
-    const report = await request.post(`/api/v1/items/${item.id}/reports`, { data: { reason } });
+  const item = items.find((entry) => entry.name === porkPizza);
+  if (!item) throw new Error(`В меню нет блюда «${porkPizza}»`);
+  const repeated = await request.post(`/api/v1/items/${item.id}/reports`, {
+    data: { reason: 'Повтор от того же человека' },
+    headers: { 'X-Forwarded-For': '203.0.113.10' },
+  });
+  expect(repeated.status()).toBe(204);
+  const reasons = ['На стенде другие цифры', 'Калорий явно больше', 'Порция меньше заявленной'];
+  for (const [index, reason] of reasons.entries()) {
+    const report = await request.post(`/api/v1/items/${item.id}/reports`, {
+      data: { reason },
+      headers: { 'X-Forwarded-For': `203.0.113.${10 + index}` },
+    });
     expect(report.status()).toBe(204);
   }
-  const afterReports = await request.get(`/api/v1/venues/${venueId}/menu`);
+  const afterReports = await request.get(`/api/v1/venues/${venue}/menu`);
   const visible = ((await afterReports.json()) as { items: { id: number }[] }).items.map((entry) => entry.id);
   expect(visible).not.toContain(item.id);
 
@@ -132,6 +145,8 @@ test('после трёх жалоб блюдо уходит на перепро
   await page.getByRole('link', { name: 'Жалобы' }).click();
   const card = page.locator(`[data-item-id="${item.id}"]`);
   await expect(card).toContainText('Калорий явно больше');
+  await expect(card).toContainText('Повтор от того же человека');
+  await expect(card).not.toContainText('На стенде другие цифры');
   await expectAccessible(page);
   await page.screenshot({ path: 'screenshots/admin-05-reviews.png', fullPage: true });
   await card.getByLabel('Ккал').fill('300');
@@ -141,7 +156,7 @@ test('после трёх жалоб блюдо уходит на перепро
   await card.getByRole('button', { name: 'Исправить цифры' }).click();
   await expect(page.getByTestId('resolved')).toBeVisible();
 
-  const restored = await request.get(`/api/v1/venues/${venueId}/menu`);
+  const restored = await request.get(`/api/v1/venues/${venue}/menu`);
   const fixed = ((await restored.json()) as { items: { id: number; nutrients: { kcal: number } }[] }).items.find(
     (entry) => entry.id === item.id,
   );

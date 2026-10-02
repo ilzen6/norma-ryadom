@@ -45,6 +45,8 @@ PostgreSQL + PostGIS · SeaweedFS (S3) · Caffeine
    В `.env` значение хеша берите в одинарные кавычки: `ADMIN_PASSWORD_HASH='$2y$10$...'`.
    `REPORTER_KEY` — случайная строка (например, `openssl rand -hex 32`): ключ HMAC, которым обезличивается
    адрес автора жалобы, чтобы один человек не мог отправить несколько жалоб на одно блюдо.
+   `TRUSTED_PROXIES_REGEX` задают, только если сервер стоит за обратным прокси: регулярное выражение адресов прокси,
+   от которых принимается `X-Forwarded-For`. По умолчанию заголовок игнорируется.
 2. Соберите и поднимите сервер с базой и хранилищем (профиль `demo` загружает демо-каталог):
    ```bash
    (cd server && ./gradlew bootJar)
@@ -63,6 +65,9 @@ PostgreSQL + PostGIS · SeaweedFS (S3) · Caffeine
    Для веба: `flutter run -d chrome --dart-define=API_BASE_URL=http://localhost:8080` и `CORS_ALLOWED_ORIGINS` с адресом страницы.
 
 Переменные клиента (`--dart-define`): `API_BASE_URL`, `TILE_URL_TEMPLATE` (тайлы карты; пустое значение отключает подложку), `SEARCH_RADIUS_METERS`.
+Публичные тайлы OpenStreetMap допустимы только для разработки и демонстрации (правила tile.openstreetmap.org запрещают
+нагрузку от приложений); для выпуска нужен собственный или коммерческий сервер тайлов. Приложение представляется серверу
+тайлов идентификатором `ru.normaryadom.norma_ryadom`.
 
 ## Проверки
 
