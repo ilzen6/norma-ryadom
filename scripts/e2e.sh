@@ -34,6 +34,8 @@ cleanup() {
   if [[ $status -ne 0 ]]; then
     mkdir -p "$root/e2e/test-results"
     compose logs --no-color > "$root/e2e/test-results/compose.log" 2>&1 || true
+    compose ps -a >&2 || true
+    tail -n 80 "$root/e2e/test-results/compose.log" >&2 || true
   fi
   if [[ "${KEEP_STACK:-false}" != "true" ]]; then
     compose down -v --remove-orphans >/dev/null 2>&1 || true

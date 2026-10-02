@@ -15,5 +15,5 @@ USER app
 ENV TESSDATA_PATH=/usr/share/tesseract-ocr/5/tessdata
 EXPOSE 8080
 HEALTHCHECK --interval=15s --timeout=3s --start-period=60s --retries=5 \
-    CMD wget -q -O /dev/null http://localhost:8080/actuator/health/liveness || exit 1
+    CMD wget -q -O /dev/null http://127.0.0.1:8080/actuator/health/liveness || exit 1
 ENTRYPOINT ["java", "-XX:MaxRAMPercentage=75", "-jar", "/app/app.jar"]

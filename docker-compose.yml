@@ -34,7 +34,7 @@ services:
     volumes:
       - storage-data:/data
     healthcheck:
-      test: ["CMD-SHELL", "wget -q -S -O /dev/null http://localhost:8333/ 2>&1 | grep -q '403'"]
+      test: ["CMD-SHELL", "wget -q -S -O /dev/null http://127.0.0.1:8333/ 2>&1 | grep -q '403'"]
       interval: 5s
       timeout: 3s
       retries: 30
