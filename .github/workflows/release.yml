@@ -1,0 +1,54 @@
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  FLUTTER_VERSION: 3.47.6
+
+jobs:
+  demo-apk:
+    name: Демо-APK для установки на телефон
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: "21"
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+          cache: true
+      - name: Генерация кода
+        working-directory: app
+        run: |
+          flutter pub get
+          flutter gen-l10n
+          dart run build_runner build --delete-conflicting-outputs
+      - name: Тесты клиента
+        working-directory: app
+        run: flutter test
+      - name: Сборка APK
+        working-directory: app
+        run: |
+          flutter build apk --release --flavor demo --dart-define=API_BASE_URL=http://127.0.0.1:8080
+          cp build/app/outputs/flutter-apk/app-demo-release.apk "$RUNNER_TEMP/norma-ryadom-demo.apk"
+      - name: Публикация
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_type == 'tag' && github.ref_name || format('demo-{0}', github.run_number) }}
+          name: ${{ github.ref_type == 'tag' && github.ref_name || format('Демо-сборка {0}', github.run_number) }}
+          target_commitish: ${{ github.sha }}
+          prerelease: ${{ github.ref_type != 'tag' }}
+          files: ${{ runner.temp }}/norma-ryadom-demo.apk
+          body: |
+            Демо-сборка «Норма рядом» для Android.
+            Установка и подключение к серверу — docs/install-phone.md.

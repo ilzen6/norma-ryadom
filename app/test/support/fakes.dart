@@ -4,6 +4,7 @@ import 'package:norma_ryadom/data/repositories/combo_repository.dart';
 import 'package:norma_ryadom/data/repositories/diary_repository.dart';
 import 'package:norma_ryadom/data/repositories/feedback_repository.dart';
 import 'package:norma_ryadom/data/repositories/profile_repository.dart';
+import 'package:norma_ryadom/data/repositories/settings_repository.dart';
 import 'package:norma_ryadom/data/repositories/venue_repository.dart';
 import 'package:norma_ryadom/data/services/location_service.dart';
 import 'package:norma_ryadom/data/services/norma_api.dart';
@@ -101,6 +102,26 @@ class InMemoryDiaryRepository implements DiaryRepository {
     await for (final _ in _changes.stream) {
       yield query();
     }
+  }
+}
+
+class InMemorySettingsRepository implements SettingsRepository {
+  String? address;
+
+  @override
+  Future<String?> serverAddress() async => address;
+
+  @override
+  Future<void> saveServerAddress(String address) async => this.address = address;
+}
+
+class FakeServerProbe {
+  Result<void> result = const Ok(null);
+  final List<String> checked = [];
+
+  Future<Result<void>> call(String address) async {
+    checked.add(address);
+    return result;
   }
 }
 

@@ -1,9 +1,12 @@
+import 'dart:convert';
+
 import 'package:drift/drift.dart' show driftRuntimeOptions;
 import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:norma_ryadom/data/local/app_database.dart';
 import 'package:norma_ryadom/data/repositories/diary_repository.dart';
 import 'package:norma_ryadom/data/repositories/profile_repository.dart';
+import 'package:norma_ryadom/data/repositories/settings_repository.dart';
 import 'package:norma_ryadom/domain/models/diary.dart';
 import 'package:norma_ryadom/domain/models/diet_preference.dart';
 import 'package:norma_ryadom/domain/models/district.dart';
@@ -87,6 +90,40 @@ void main() {
 
   test('формирует ключ дня с ведущими нулями', () {
     expect(LocalDiaryRepository.dayKey(DateTime(2026, 3, 7, 23, 59)), '2026-03-07');
+  });
+
+  test('сохраняет адрес сервера и перезаписывает его', () async {
+    final repository = LocalSettingsRepository(database);
+
+    expect(await repository.serverAddress(), isNull);
+    await repository.saveServerAddress('http://192.168.1.5:8080');
+    await repository.saveServerAddress('https://norma.example.ru');
+
+    expect(await repository.serverAddress(), 'https://norma.example.ru');
+  });
+
+  test('обновляет базу первой версии, не теряя профиль', () async {
+    final legacy = AppDatabase(
+      NativeDatabase.memory(
+        setup: (raw) {
+          raw
+            ..execute('CREATE TABLE profile_records (id INTEGER NOT NULL PRIMARY KEY, json TEXT NOT NULL)')
+            ..execute(
+              'CREATE TABLE diary_records (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, day TEXT NOT NULL, '
+              'meal TEXT NOT NULL, title TEXT NOT NULL, venue_name TEXT NULL, kcal REAL NOT NULL, '
+              'protein REAL NOT NULL, fat REAL NOT NULL, carbs REAL NOT NULL, created_at INTEGER NOT NULL, '
+              'favorite INTEGER NOT NULL DEFAULT 0 CHECK (favorite IN (0, 1)))',
+            )
+            ..execute('INSERT INTO profile_records (id, json) VALUES (1, ?)', [jsonEncode(TestData.profile.toJson())])
+            ..userVersion = 1;
+        },
+      ),
+    );
+    addTearDown(legacy.close);
+
+    expect(await LocalProfileRepository(legacy).load(), TestData.profile);
+    await LocalSettingsRepository(legacy).saveServerAddress('https://norma.example.ru');
+    expect(await LocalSettingsRepository(legacy).serverAddress(), 'https://norma.example.ru');
   });
 }
 

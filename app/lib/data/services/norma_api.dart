@@ -118,6 +118,8 @@ class NormaApi {
   Future<Result<void>> reportItem(int itemId, String reason) =>
       _call(() => _dio.post<void>('/api/v1/items/$itemId/reports', data: {'reason': reason}), (_) {});
 
+  Future<Result<void>> health() => _call(() => _dio.get<void>('/actuator/health'), (_) {});
+
   Map<String, Object> _targetQuery(MealTarget target) => {
     'kcal': target.kcal,
     'kcalTolerance': target.kcalTolerance,

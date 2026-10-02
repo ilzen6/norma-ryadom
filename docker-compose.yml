@@ -71,7 +71,7 @@ services:
       TRUSTED_PROXIES_REGEX: ${TRUSTED_PROXIES_REGEX:-}
       CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS:-http://localhost:8090}
     ports:
-      - "127.0.0.1:8080:8080"
+      - "${SERVER_BIND:-127.0.0.1}:8080:8080"
 
 volumes:
   db-data:

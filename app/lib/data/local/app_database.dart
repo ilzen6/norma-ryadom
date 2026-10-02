@@ -36,7 +36,16 @@ class DiaryRecords extends Table {
   BoolColumn get favorite => boolean().withDefault(const Constant(false))();
 }
 
-@DriftDatabase(tables: [ProfileRecords, DiaryRecords])
+class SettingRecords extends Table {
+  TextColumn get key => text()();
+
+  TextColumn get value => text()();
+
+  @override
+  Set<Column<Object>> get primaryKey => {key};
+}
+
+@DriftDatabase(tables: [ProfileRecords, DiaryRecords, SettingRecords])
 class AppDatabase extends _$AppDatabase {
   AppDatabase(super.executor);
 
@@ -48,10 +57,15 @@ class AppDatabase extends _$AppDatabase {
   );
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
 
   @override
-  MigrationStrategy get migration => MigrationStrategy(beforeOpen: (_) => customStatement('PRAGMA secure_delete = ON'));
+  MigrationStrategy get migration => MigrationStrategy(
+    onUpgrade: (migrator, from, to) async {
+      if (from < 2) await migrator.createTable(settingRecords);
+    },
+    beforeOpen: (_) => customStatement('PRAGMA secure_delete = ON'),
+  );
 
   Future<void> deleteEverything() async {
     await transaction(() async {

@@ -3,11 +3,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../config/app_config.dart';
 import '../domain/nutrition/meal_planner.dart';
 import '../domain/nutrition/norm_calculator.dart';
+import '../utils/result.dart';
 import 'local/app_database.dart';
 import 'repositories/combo_repository.dart';
 import 'repositories/diary_repository.dart';
 import 'repositories/feedback_repository.dart';
 import 'repositories/profile_repository.dart';
+import 'repositories/settings_repository.dart';
 import 'repositories/venue_repository.dart';
 import 'services/location_service.dart';
 import 'services/norma_api.dart';
@@ -27,9 +29,32 @@ final databaseProvider = Provider<AppDatabase>((ref) {
   return database;
 });
 
-final normaApiProvider = Provider<NormaApi>(
-  (ref) => NormaApi(NormaApi.createDio(ref.watch(appConfigProvider).apiBaseUrl)),
+final settingsRepositoryProvider = Provider<SettingsRepository>(
+  (ref) => LocalSettingsRepository(ref.watch(databaseProvider)),
 );
+
+final initialServerAddressProvider = Provider<String?>((ref) => null);
+
+final serverAddressProvider = NotifierProvider<ServerAddressController, String>(ServerAddressController.new);
+
+class ServerAddressController extends Notifier<String> {
+  @override
+  String build() => ref.watch(initialServerAddressProvider) ?? ref.watch(appConfigProvider).apiBaseUrl;
+
+  Future<void> save(String address) async {
+    await ref.read(settingsRepositoryProvider).saveServerAddress(address);
+    state = address;
+  }
+}
+
+typedef ServerProbe = Future<Result<void>> Function(String address);
+
+final serverProbeProvider = Provider<ServerProbe>(
+  (ref) =>
+      (address) => NormaApi(NormaApi.createDio(address)).health(),
+);
+
+final normaApiProvider = Provider<NormaApi>((ref) => NormaApi(NormaApi.createDio(ref.watch(serverAddressProvider))));
 
 final profileRepositoryProvider = Provider<ProfileRepository>(
   (ref) => LocalProfileRepository(ref.watch(databaseProvider)),

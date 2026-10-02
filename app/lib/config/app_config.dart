@@ -1,5 +1,10 @@
 class AppConfig {
-  const AppConfig({required this.apiBaseUrl, required this.tileUrlTemplate, required this.searchRadiusMeters});
+  const AppConfig({
+    required this.apiBaseUrl,
+    required this.tileUrlTemplate,
+    required this.searchRadiusMeters,
+    this.allowCleartextServer = false,
+  });
 
   factory AppConfig.fromEnvironment() => const AppConfig(
     apiBaseUrl: String.fromEnvironment('API_BASE_URL', defaultValue: 'http://10.0.2.2:8080'),
@@ -8,9 +13,13 @@ class AppConfig {
       defaultValue: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
     ),
     searchRadiusMeters: int.fromEnvironment('SEARCH_RADIUS_METERS', defaultValue: 1500),
+    allowCleartextServer: String.fromEnvironment('FLUTTER_APP_FLAVOR') == demoFlavor,
   );
+
+  static const demoFlavor = 'demo';
 
   final String apiBaseUrl;
   final String tileUrlTemplate;
   final int searchRadiusMeters;
+  final bool allowCleartextServer;
 }

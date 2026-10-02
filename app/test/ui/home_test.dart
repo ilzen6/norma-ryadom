@@ -83,8 +83,8 @@ void main() {
 
     await tester.tap(find.byKey(const Key('find-nearby')));
     await tester.pumpAndSettle();
-    await scrollTo(tester, find.text('Нет связи с сервером. Проверьте интернет и повторите.'));
-    expect(find.text('Нет связи с сервером. Проверьте интернет и повторите.'), findsOneWidget);
+    await scrollTo(tester, find.text('Нет связи с сервером. Проверьте интернет и адрес сервера в профиле.'));
+    expect(find.text('Нет связи с сервером. Проверьте интернет и адрес сервера в профиле.'), findsOneWidget);
 
     harness.combos.nearbyResult = Ok(ComboSearchResult(appliedTarget: TestData.lunchTarget, options: options));
     await tapVisible(tester, find.text('Повторить'));

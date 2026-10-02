@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../data/providers.dart';
 import '../../domain/models/district.dart';
 import '../../routing/routes.dart';
 import '../core/formatting.dart';
@@ -9,6 +10,7 @@ import '../core/l10n_extensions.dart';
 import '../core/messages.dart';
 import '../core/session.dart';
 import '../core/widgets/state_views.dart';
+import 'server_dialog.dart';
 
 class ProfileScreen extends ConsumerWidget {
   const ProfileScreen({super.key});
@@ -75,6 +77,19 @@ class ProfileScreen extends ConsumerWidget {
                 if (district == null) return;
                 await controller.save(profile.copyWith(district: district));
               },
+            ),
+            Card(
+              child: ListTile(
+                key: const Key('server-settings'),
+                leading: const Icon(Icons.dns_outlined),
+                title: Text(l10n.serverTitle),
+                subtitle: Text(ref.watch(serverAddressProvider)),
+                trailing: const Icon(Icons.edit),
+                onTap: () async {
+                  final saved = await showDialog<String>(context: context, builder: (_) => const ServerDialog());
+                  if (saved != null && context.mounted) showMessage(context, l10n.serverSaved);
+                },
+              ),
             ),
             const SizedBox(height: 16),
             Text(l10n.profilePrivacy, style: Theme.of(context).textTheme.bodySmall),

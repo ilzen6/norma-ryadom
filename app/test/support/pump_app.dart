@@ -20,12 +20,22 @@ class TestHarness {
   final feedback = FakeFeedbackRepository();
   final location = FakeLocationService();
   final picker = FakePhotoPicker();
+  final settings = InMemorySettingsRepository();
+  final probe = FakeServerProbe();
+  bool allowCleartextServer = false;
   DateTime now = DateTime(2026, 10, 2, 13, 5);
 
   List<Override> get overrides => [
     appConfigProvider.overrideWithValue(
-      const AppConfig(apiBaseUrl: 'http://test', tileUrlTemplate: '', searchRadiusMeters: 1500),
+      AppConfig(
+        apiBaseUrl: 'http://test',
+        tileUrlTemplate: '',
+        searchRadiusMeters: 1500,
+        allowCleartextServer: allowCleartextServer,
+      ),
     ),
+    settingsRepositoryProvider.overrideWithValue(settings),
+    serverProbeProvider.overrideWithValue(probe.call),
     clockProvider.overrideWithValue(() => now),
     profileRepositoryProvider.overrideWithValue(profiles),
     diaryRepositoryProvider.overrideWithValue(diary),
