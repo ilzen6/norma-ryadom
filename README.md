@@ -64,6 +64,8 @@ PostgreSQL + PostGIS · SeaweedFS (S3) · Caffeine
    ```
    Для веба: `flutter run -d chrome --dart-define=API_BASE_URL=http://localhost:8080` и `CORS_ALLOWED_ORIGINS` с адресом страницы.
 
+Готовый APK для Android собирается в CI (артефакт `norma-ryadom-apk`) и ходит на `http://127.0.0.1:8080`: перед запуском выполните `adb reverse tcp:8080 tcp:8080`. Сценарий защиты — `docs/demo.md`, схемы и график производительности — `docs/architecture.md`.
+
 Переменные клиента (`--dart-define`): `API_BASE_URL`, `TILE_URL_TEMPLATE` (тайлы карты; пустое значение отключает подложку), `SEARCH_RADIUS_METERS`.
 Публичные тайлы OpenStreetMap допустимы только для разработки и демонстрации (правила tile.openstreetmap.org запрещают
 нагрузку от приложений); для выпуска нужен собственный или коммерческий сервер тайлов. Приложение представляется серверу

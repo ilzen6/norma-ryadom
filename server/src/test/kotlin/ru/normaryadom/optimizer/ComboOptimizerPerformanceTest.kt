@@ -28,21 +28,34 @@ class ComboOptimizerPerformanceTest {
     }
 
     @Test
-    fun `записывает время подбора в зависимости от размера меню для отчёта`() {
+    fun `записывает медиану и 90-й перцентиль времени подбора по пяти меню каждого размера`() {
         val criteria = MenuTestData.criteria(MenuTestData.target(kcal = 650.0, tolerance = 65.0, minProtein = 30.0))
         val rows =
             listOf(25, 50, 100, 150, 200, 250).map { size ->
-                val menu = randomMenu(size, seed = size.toLong())
-                repeat(WARMUP_RUNS) { optimizer.bestCombos(menu, criteria, 5) }
-                size to medianOf(MEASURED_RUNS) { optimizer.bestCombos(menu, criteria, 5) }
+                val timings =
+                    (1..MENUS_PER_SIZE)
+                        .flatMap { seed ->
+                            val menu = randomMenu(size, seed = size * SEED_STRIDE + seed.toLong())
+                            repeat(WARMUP_RUNS) { optimizer.bestCombos(menu, criteria, 5) }
+                            List(MEASURED_RUNS) { measureTime { optimizer.bestCombos(menu, criteria, 5) } }
+                        }.sorted()
+                TimingRow(size, timings[timings.size / 2], timings[timings.size * P90 / 100])
             }
         val report = Path.of("build", "reports", "performance", "optimizer-timing.csv")
         Files.createDirectories(report.parent)
-        val lines = rows.joinToString("\n") { (size, time) -> "$size;${time.inWholeMicroseconds / 1000.0}" }
-        Files.writeString(report, "menu_size;median_ms\n$lines")
+        val lines = rows.joinToString("\n") { "${it.size};${it.median.millis()};${it.p90.millis()}" }
+        Files.writeString(report, "menu_size;median_ms;p90_ms\n$lines")
 
-        assertThat(rows.map { it.second }).allSatisfy { assertThat(it).isLessThan(BUDGET) }
+        assertThat(rows.map { it.p90 }).allSatisfy { assertThat(it).isLessThan(BUDGET) }
     }
+
+    private fun Duration.millis(): Double = inWholeMicroseconds / MICROS_PER_MILLI
+
+    private data class TimingRow(
+        val size: Int,
+        val median: Duration,
+        val p90: Duration,
+    )
 
     private fun medianOf(
         runs: Int,
@@ -74,6 +87,10 @@ class ComboOptimizerPerformanceTest {
     private companion object {
         const val WARMUP_RUNS = 5
         const val MEASURED_RUNS = 9
+        const val MENUS_PER_SIZE = 5
+        const val SEED_STRIDE = 1000L
+        const val P90 = 90
+        const val MICROS_PER_MILLI = 1000.0
         val BUDGET = 100.milliseconds
     }
 }
