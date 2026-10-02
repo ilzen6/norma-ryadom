@@ -5,6 +5,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/models/nutrition_norm.dart';
 import '../../domain/nutrition/norm_calculator.dart';
 import '../core/l10n_extensions.dart';
+import '../core/theme.dart';
+import '../core/widgets/visuals.dart';
 import 'onboarding_view_model.dart';
 
 class NormCard extends ConsumerStatefulWidget {
@@ -62,32 +64,56 @@ class _NormCardState extends ConsumerState<NormCard> {
     if (calculation == null) return const SizedBox.shrink();
     final norm = state.manualNorm ?? calculation.norm;
     final textTheme = Theme.of(context).textTheme;
-    return Card(
+    final palette = context.palette;
+    return Panel(
       key: const Key('norm-card'),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(l10n.normTitle, style: textTheme.titleMedium),
-            const SizedBox(height: 8),
-            Text(l10n.kcalValue(norm.kcal), key: const Key('norm-kcal'), style: textTheme.headlineMedium),
-            Text(l10n.normMacros(norm.protein, norm.fat, norm.carbs)),
-            const SizedBox(height: 8),
-            if (state.manualNorm == null)
-              Text(
-                l10n.normExplanation(calculation.bmr.round(), calculation.tdee.round(), calculation.norm.kcal),
-                style: textTheme.bodySmall,
-              )
-            else
-              Text(l10n.normManualHint, style: textTheme.bodySmall),
-            if (calculation.limitedBySafeMinimum && state.manualNorm == null)
-              Text(l10n.normSafeMinimum(NormCalculator.safeMinimumKcal(state.sex)), style: textTheme.bodySmall),
-            if (_editing) _manualForm(context) else _actions(context, norm),
-            const SizedBox(height: 8),
-            Text(l10n.disclaimer, style: textTheme.bodySmall),
-          ],
-        ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Eyebrow(l10n.normTitle),
+          const SizedBox(height: 10),
+          Text(
+            l10n.kcalValue(norm.kcal),
+            key: const Key('norm-kcal'),
+            style: textTheme.displaySmall?.copyWith(fontFeatures: AppFonts.tabular),
+          ),
+          const SizedBox(height: 14),
+          MacroSplitBar(
+            protein: norm.protein.toDouble(),
+            fat: norm.fat.toDouble(),
+            carbs: norm.carbs.toDouble(),
+            height: 10,
+          ),
+          const SizedBox(height: 10),
+          Text(l10n.normMacros(norm.protein, norm.fat, norm.carbs), style: textTheme.titleSmall),
+          const SizedBox(height: 14),
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(14),
+            decoration: BoxDecoration(
+              color: palette.surfaceMuted,
+              borderRadius: BorderRadius.circular(AppRadii.control),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (state.manualNorm == null)
+                  Text(
+                    l10n.normExplanation(calculation.bmr.round(), calculation.tdee.round(), calculation.norm.kcal),
+                    style: textTheme.bodySmall,
+                  )
+                else
+                  Text(l10n.normManualHint, style: textTheme.bodySmall),
+                if (calculation.limitedBySafeMinimum && state.manualNorm == null)
+                  Text(l10n.normSafeMinimum(NormCalculator.safeMinimumKcal(state.sex)), style: textTheme.bodySmall),
+              ],
+            ),
+          ),
+          const SizedBox(height: 8),
+          if (_editing) _manualForm(context) else _actions(context, norm),
+          const SizedBox(height: 4),
+          Text(l10n.disclaimer, style: textTheme.bodySmall),
+        ],
       ),
     );
   }

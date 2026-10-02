@@ -88,7 +88,7 @@ void main() {
         hasFocusAction: true,
       ),
     );
-    expect(find.bySemanticsLabel(RegExp('нет данных о меню ·')), findsOneWidget);
+    expect(find.semantics.byLabel(RegExp('нет данных о меню ·')), findsOne);
     handle.dispose();
   });
 
@@ -133,7 +133,7 @@ void main() {
       );
     await harness.pump(tester);
     await tapVisible(tester, find.byKey(const Key('find-nearby')));
-    await tapVisible(tester, find.text('Куриная грудка гриль + Рис с овощами'));
+    await tapVisible(tester, find.bySemanticsLabel(RegExp(r'Куриная грудка гриль \+ Рис с овощами')));
     await scrollTo(tester, find.text('Попадание в цель'));
     expect(find.text('Попадание в цель'), findsOneWidget);
     await tester.tap(find.byType(BackButton));

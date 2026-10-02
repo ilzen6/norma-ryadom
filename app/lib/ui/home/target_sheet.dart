@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/models/meal.dart';
 import '../core/l10n_extensions.dart';
 import '../core/session.dart';
+import '../core/theme.dart';
 
 class TargetSheet extends ConsumerStatefulWidget {
   const TargetSheet({super.key, required this.initial});
@@ -51,7 +52,12 @@ class _TargetSheetState extends ConsumerState<TargetSheet> {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     return Padding(
-      padding: EdgeInsets.only(left: 16, right: 16, top: 16, bottom: MediaQuery.viewInsetsOf(context).bottom + 16),
+      padding: EdgeInsets.only(
+        left: 20,
+        right: 20,
+        top: 0,
+        bottom: MediaQuery.viewInsetsOf(context).bottom + MediaQuery.paddingOf(context).bottom + 20,
+      ),
       child: Form(
         key: _formKey,
         child: SingleChildScrollView(
@@ -59,24 +65,61 @@ class _TargetSheetState extends ConsumerState<TargetSheet> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text(l10n.targetSheetTitle, style: Theme.of(context).textTheme.titleLarge),
-              const SizedBox(height: 16),
+              Text(l10n.targetSheetTitle, style: Theme.of(context).textTheme.headlineSmall),
+              const SizedBox(height: 6),
+              Text(
+                l10n.targetSheetHint,
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: context.palette.inkMuted),
+              ),
+              const SizedBox(height: 20),
               _field(const Key('target-kcal'), _kcal, l10n.kcalLabel, 100, 2000),
               _field(const Key('target-tolerance'), _tolerance, l10n.toleranceLabel, 10, 500),
-              _field(const Key('target-protein'), _protein, l10n.proteinLabel, 0, 300),
-              _field(const Key('target-fat'), _fat, l10n.fatLabel, 0, 300),
-              _field(const Key('target-carbs'), _carbs, l10n.carbsLabel, 0, 500),
               Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  TextButton(
-                    onPressed: () {
-                      ref.read(mealSelectionProvider.notifier).setCustomTarget(null);
-                      Navigator.of(context).pop();
-                    },
-                    child: Text(l10n.resetTarget),
+                  Expanded(
+                    child: _field(
+                      const Key('target-protein'),
+                      _protein,
+                      l10n.proteinMinLabel,
+                      0,
+                      300,
+                      suffix: l10n.gramsUnit,
+                    ),
                   ),
-                  FilledButton(key: const Key('target-save'), onPressed: _save, child: Text(l10n.save)),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: _field(const Key('target-fat'), _fat, l10n.fatMaxLabel, 0, 300, suffix: l10n.gramsUnit),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: _field(
+                      const Key('target-carbs'),
+                      _carbs,
+                      l10n.carbsMaxLabel,
+                      0,
+                      500,
+                      suffix: l10n.gramsUnit,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8),
+              Row(
+                children: [
+                  Expanded(
+                    child: OutlinedButton(
+                      onPressed: () {
+                        ref.read(mealSelectionProvider.notifier).setCustomTarget(null);
+                        Navigator.of(context).pop();
+                      },
+                      child: Text(l10n.resetTarget),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: FilledButton(key: const Key('target-save'), onPressed: _save, child: Text(l10n.save)),
+                  ),
                 ],
               ),
             ],
@@ -86,12 +129,19 @@ class _TargetSheetState extends ConsumerState<TargetSheet> {
     );
   }
 
-  Widget _field(Key key, TextEditingController controller, String label, int min, int max) => Padding(
+  Widget _field(
+    Key key,
+    TextEditingController controller,
+    String label,
+    int min,
+    int max, {
+    String? suffix,
+  }) => Padding(
     padding: const EdgeInsets.only(bottom: 12),
     child: TextFormField(
       key: key,
       controller: controller,
-      decoration: InputDecoration(labelText: label),
+      decoration: InputDecoration(labelText: label, suffixText: suffix, errorMaxLines: 3),
       keyboardType: TextInputType.number,
       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
       validator: (text) {

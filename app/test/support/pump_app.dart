@@ -7,6 +7,8 @@ import 'package:norma_ryadom/app.dart';
 import 'package:norma_ryadom/config/app_config.dart';
 import 'package:norma_ryadom/data/providers.dart';
 import 'package:norma_ryadom/domain/models/profile.dart';
+import 'package:norma_ryadom/l10n/generated/app_localizations.dart';
+import 'package:norma_ryadom/ui/core/theme.dart';
 
 import 'fakes.dart';
 
@@ -54,6 +56,27 @@ class TestHarness {
     await tester.pumpWidget(ProviderScope(overrides: overrides, child: const NormaRyadomApp()));
     await tester.pumpAndSettle();
   }
+
+  Future<void> pumpComponent(
+    WidgetTester tester,
+    Widget child, {
+    Brightness brightness = Brightness.light,
+    bool settle = true,
+  }) async {
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: overrides,
+        child: MaterialApp(
+          theme: buildTheme(brightness),
+          locale: const Locale('ru'),
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: Scaffold(body: SingleChildScrollView(child: child)),
+        ),
+      ),
+    );
+    if (settle) await tester.pumpAndSettle();
+  }
 }
 
 Future<void> scrollTo(WidgetTester tester, Finder finder) async {
@@ -63,6 +86,12 @@ Future<void> scrollTo(WidgetTester tester, Finder finder) async {
 
 Future<void> tapVisible(WidgetTester tester, Finder finder) async {
   await scrollTo(tester, finder);
-  await tester.tap(finder);
+  final screen = tester.view.physicalSize.height / tester.view.devicePixelRatio;
+  final bottom = tester.getBottomLeft(finder.first).dy;
+  if (bottom > screen - 140) {
+    await tester.drag(find.byType(Scrollable).first, Offset(0, screen - 160 - bottom));
+    await tester.pumpAndSettle();
+  }
+  await tester.tap(finder.first);
   await tester.pumpAndSettle();
 }

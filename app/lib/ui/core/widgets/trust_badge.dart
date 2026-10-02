@@ -14,10 +14,11 @@ class TrustBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
+    final palette = context.palette;
     final (icon, color) = switch (kind) {
-      SourceKind.verified => (Icons.verified, AppColors.good),
-      SourceKind.fromMenu => (Icons.menu_book, AppColors.brand),
-      SourceKind.estimate || SourceKind.unknown => (Icons.help_outline, AppColors.none),
+      SourceKind.verified => (Icons.verified_rounded, palette.good),
+      SourceKind.fromMenu => (Icons.menu_book_rounded, palette.brand),
+      SourceKind.estimate || SourceKind.unknown => (Icons.help_outline_rounded, palette.neutral),
     };
     final details = <String>[
       l10n.trust(kind),
@@ -31,7 +32,7 @@ class TrustBadge extends StatelessWidget {
         Icon(icon, size: 16, color: color),
         const SizedBox(width: 4),
         Flexible(
-          child: Text(details.join(' · '), style: Theme.of(context).textTheme.bodySmall?.copyWith(color: color)),
+          child: Text(details.join(' · '), style: Theme.of(context).textTheme.labelMedium?.copyWith(color: color)),
         ),
       ],
     );

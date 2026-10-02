@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/models/profile.dart';
 import '../core/formatting.dart';
 import '../core/l10n_extensions.dart';
+import '../core/widgets/visuals.dart';
 import 'onboarding_view_model.dart';
 
 class BodyParametersForm extends ConsumerWidget {
@@ -18,17 +19,26 @@ class BodyParametersForm extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(l10n.sexLabel, style: Theme.of(context).textTheme.titleSmall),
-        const SizedBox(height: 8),
-        SegmentedButton<Sex>(
-          segments: [
-            ButtonSegment(value: Sex.female, label: Text(l10n.sexFemale)),
-            ButtonSegment(value: Sex.male, label: Text(l10n.sexMale)),
+        _Label(l10n.sexLabel),
+        Row(
+          children: [
+            for (final (index, (sex, label, icon)) in [
+              (Sex.female, l10n.sexFemale, Icons.female_rounded),
+              (Sex.male, l10n.sexMale, Icons.male_rounded),
+            ].indexed) ...[
+              if (index > 0) const SizedBox(width: 10),
+              Expanded(
+                child: ChoiceCard(
+                  label: label,
+                  icon: icon,
+                  selected: state.sex == sex,
+                  onTap: () => controller.setSex(sex),
+                ),
+              ),
+            ],
           ],
-          selected: {state.sex},
-          onSelectionChanged: (selection) => controller.setSex(selection.first),
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: 20),
         _NumberField(
           fieldKey: const Key('age-field'),
           label: l10n.ageLabel,
@@ -52,38 +62,50 @@ class BodyParametersForm extends ConsumerWidget {
           onChanged: (text) => controller.setBodyField(BodyField.weight, text),
         ),
         const SizedBox(height: 8),
-        Text(l10n.activityLabel, style: Theme.of(context).textTheme.titleSmall),
+        _Label(l10n.activityLabel),
         RadioGroup<ActivityLevel>(
           groupValue: state.activity,
           onChanged: (value) {
             if (value != null) controller.setActivity(value);
           },
-          child: Column(
-            children: [
-              for (final level in ActivityLevel.values)
-                RadioListTile<ActivityLevel>(
-                  key: Key('activity-${level.name}'),
-                  value: level,
-                  title: Text(l10n.activity(level)),
-                  contentPadding: EdgeInsets.zero,
-                ),
-            ],
+          child: Panel(
+            padding: const EdgeInsets.symmetric(vertical: 4),
+            child: Column(
+              children: [
+                for (final (index, level) in ActivityLevel.values.indexed) ...[
+                  if (index > 0) const Divider(indent: 56, endIndent: 16),
+                  RadioListTile<ActivityLevel>(
+                    key: Key('activity-${level.name}'),
+                    value: level,
+                    title: Text(l10n.activity(level)),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 8),
+                  ),
+                ],
+              ],
+            ),
           ),
         ),
-        const SizedBox(height: 8),
-        Text(l10n.goalLabel, style: Theme.of(context).textTheme.titleSmall),
-        const SizedBox(height: 8),
-        SegmentedButton<Goal>(
-          segments: [
-            for (final goal in Goal.values)
-              ButtonSegment(
-                value: goal,
-                label: Text(l10n.goal(goal), textAlign: TextAlign.center),
-              ),
-          ],
-          selected: {state.goal},
-          onSelectionChanged: (selection) => controller.setGoal(selection.first),
-        ),
+        const SizedBox(height: 20),
+        _Label(l10n.goalLabel),
+        for (final (index, goal) in Goal.values.indexed) ...[
+          if (index > 0) const SizedBox(height: 8),
+          ChoiceCard(
+            horizontal: true,
+            label: l10n.goal(goal),
+            subtitle: switch (goal) {
+              Goal.lose => l10n.goalHintLose,
+              Goal.maintain => l10n.goalHintMaintain,
+              Goal.gain => l10n.goalHintGain,
+            },
+            icon: switch (goal) {
+              Goal.lose => Icons.trending_down_rounded,
+              Goal.maintain => Icons.trending_flat_rounded,
+              Goal.gain => Icons.trending_up_rounded,
+            },
+            selected: state.goal == goal,
+            onTap: () => controller.setGoal(goal),
+          ),
+        ],
       ],
     );
   }
@@ -125,5 +147,17 @@ class _NumberField extends StatelessWidget {
       },
       onChanged: onChanged,
     ),
+  );
+}
+
+class _Label extends StatelessWidget {
+  const _Label(this.text);
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) => Padding(
+    padding: const EdgeInsets.only(left: 4, bottom: 10),
+    child: Text(text, style: Theme.of(context).textTheme.titleMedium),
   );
 }

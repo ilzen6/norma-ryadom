@@ -37,7 +37,9 @@ class _NormaRyadomAppState extends ConsumerState<NormaRyadomApp> {
   @override
   Widget build(BuildContext context) => MaterialApp.router(
     onGenerateTitle: (context) => AppLocalizations.of(context).appTitle,
-    theme: buildTheme(),
+    theme: buildTheme(Brightness.light),
+    darkTheme: buildTheme(Brightness.dark),
+    themeMode: ThemeMode.system,
     locale: const Locale('ru'),
     supportedLocales: AppLocalizations.supportedLocales,
     localizationsDelegates: const [

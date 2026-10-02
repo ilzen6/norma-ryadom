@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../utils/result.dart';
 import '../l10n_extensions.dart';
+import '../theme.dart';
 
 class LoadingView extends StatelessWidget {
   const LoadingView({super.key});
@@ -20,13 +21,22 @@ class MessageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsets.all(24),
+    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 28),
     child: Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(icon, size: 40, color: Theme.of(context).colorScheme.outline),
-        const SizedBox(height: 12),
-        Text(message, textAlign: TextAlign.center),
+        Container(
+          width: 64,
+          height: 64,
+          decoration: BoxDecoration(color: context.palette.brandSoft, shape: BoxShape.circle),
+          child: Icon(icon, size: 30, color: context.palette.brand),
+        ),
+        const SizedBox(height: 14),
+        Text(
+          message,
+          textAlign: TextAlign.center,
+          style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: context.palette.inkMuted),
+        ),
       ],
     ),
   );
@@ -44,10 +54,15 @@ class FailureView extends StatelessWidget {
     child: Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(
-          failure == AppFailure.offline ? Icons.cloud_off : Icons.error_outline,
-          size: 40,
-          color: Theme.of(context).colorScheme.error,
+        Container(
+          width: 64,
+          height: 64,
+          decoration: BoxDecoration(color: context.palette.warnSoft, shape: BoxShape.circle),
+          child: Icon(
+            failure == AppFailure.offline ? Icons.cloud_off_rounded : Icons.error_outline_rounded,
+            size: 30,
+            color: context.palette.warn,
+          ),
         ),
         const SizedBox(height: 12),
         Text(context.l10n.failure(failure), textAlign: TextAlign.center),

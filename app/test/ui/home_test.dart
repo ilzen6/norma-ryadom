@@ -33,17 +33,17 @@ void main() {
     );
     await harness.pump(tester);
 
-    expect(find.text('1400 ккал, белок 79 г'), findsOneWidget);
+    expect(find.bySemanticsLabel(RegExp('1400 ккал, белок 79 г')), findsOneWidget);
   });
 
   testWidgets('выбирает приём пищи по времени и пересчитывает цель при переключении', (tester) async {
     final harness = TestHarness(profile: TestData.profile);
     await harness.pump(tester);
 
-    expect(find.textContaining('≈ 630 ккал ± 63'), findsOneWidget);
+    expect(find.bySemanticsLabel(RegExp('≈ 630 ккал ± 63')), findsOneWidget);
     await tester.tap(find.byKey(const Key('meal-breakfast')));
     await tester.pumpAndSettle();
-    expect(find.textContaining('≈ 450 ккал ± 50'), findsOneWidget);
+    expect(find.bySemanticsLabel(RegExp('≈ 450 ккал ± 50')), findsOneWidget);
   });
 
   testWidgets('подбирает варианты рядом и открывает набор', (tester) async {
@@ -57,12 +57,12 @@ void main() {
     await tester.pumpAndSettle();
 
     await scrollTo(tester, find.text('167 м'));
-    expect(find.text('Куриная грудка гриль + Рис с овощами'), findsOneWidget);
+    expect(find.bySemanticsLabel(RegExp('Куриная грудка гриль \\+ Рис с овощами')), findsOneWidget);
     expect(find.text('167 м'), findsOneWidget);
     expect(harness.combos.requestedPrices.single, PricePreference.cheaper);
     expect(harness.combos.requestedTargets.single.excludeTags, isEmpty);
     expect(harness.combos.requestedLocations.single, TestData.deviceLocation);
-    await tapVisible(tester, find.text('Боул с курицей + Морс'));
+    await tapVisible(tester, find.text('Боул с курицей'));
     expect(find.text('Попадание в цель'), findsOneWidget);
   });
 
@@ -106,7 +106,7 @@ void main() {
     await tester.enterText(find.byKey(const Key('target-kcal')), '500');
     await tester.tap(find.byKey(const Key('target-save')));
     await tester.pumpAndSettle();
-    expect(find.textContaining('≈ 500 ккал ± 63'), findsOneWidget);
+    expect(find.bySemanticsLabel(RegExp('≈ 500 ккал ± 63')), findsOneWidget);
 
     await tester.tap(find.byKey(const Key('find-nearby')));
     await tester.pumpAndSettle();

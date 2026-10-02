@@ -9,12 +9,14 @@ import '../../utils/result.dart';
 import '../core/l10n_extensions.dart';
 import '../core/messages.dart';
 import '../core/session.dart';
+import '../core/layout.dart';
 import '../core/theme.dart';
 import '../core/widgets/busy_action.dart';
 import '../core/widgets/combo_card.dart';
 import '../core/widgets/nutrients_text.dart';
 import '../core/widgets/state_views.dart';
 import '../core/widgets/trust_badge.dart';
+import '../core/widgets/visuals.dart';
 import '../home/home_view_model.dart';
 import 'venue_view_model.dart';
 
@@ -28,12 +30,12 @@ class VenueScreen extends ConsumerWidget {
     final l10n = context.l10n;
     final menu = ref.watch(venueMenuProvider(venueId));
     final title = switch (menu.value) {
-      Ok(:final value) => value.venue.name,
+      Ok() => '',
       _ => l10n.venueMenu,
     };
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        title: Text(title, overflow: TextOverflow.ellipsis),
         actions: [
           BusyAction<PhotoSource>(
             prepare: () => _choosePhotoSource(context),
@@ -41,13 +43,15 @@ class VenueScreen extends ConsumerWidget {
             builder: (context, onPressed, busy) => IconButton(
               key: const Key('upload-photo'),
               tooltip: l10n.uploadMenuPhoto,
-              icon: BusyAction.icon(Icons.photo_camera, busy: busy),
+              icon: BusyAction.icon(Icons.add_a_photo_rounded, busy: busy),
               onPressed: onPressed,
             ),
           ),
+          const SizedBox(width: 8),
         ],
       ),
       body: SafeArea(
+        top: false,
         child: switch (menu) {
           AsyncData(value: Ok(:final value)) => _VenueBody(menu: value),
           AsyncData(value: Err(:final failure)) => FailureView(
@@ -111,45 +115,82 @@ class _VenueBody extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
+    final palette = context.palette;
+    final textTheme = Theme.of(context).textTheme;
     final venue = menu.venue;
     final meal = ref.watch(mealSelectionProvider).meal;
     final comboState = ref.watch(venueComboProvider(venue.id));
     final comboController = ref.read(venueComboProvider(venue.id).notifier);
     return ListView(
-      padding: const EdgeInsets.all(16),
+      padding: Layout.page(context, top: 0),
       children: [
-        Text(venue.address),
-        const SizedBox(height: 12),
-        FilledButton.icon(
-          key: const Key('build-here'),
-          onPressed: comboState is SearchRunning ? null : comboController.search,
-          icon: const Icon(Icons.restaurant_menu),
-          label: Text(l10n.venueBuildHere(l10n.meal(meal).toLowerCase())),
+        Panel(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (venue.chainName case final chain?) ...[
+                Eyebrow(l10n.venueChainLabel(chain)),
+                const SizedBox(height: 8),
+              ],
+              Text(venue.name, style: textTheme.headlineSmall),
+              const SizedBox(height: 6),
+              Row(
+                children: [
+                  Icon(Icons.place_rounded, size: 18, color: palette.inkMuted),
+                  const SizedBox(width: 6),
+                  Expanded(
+                    child: Text(venue.address, style: textTheme.bodyMedium?.copyWith(color: palette.inkMuted)),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 18),
+              SizedBox(
+                width: double.infinity,
+                child: FilledButton.icon(
+                  key: const Key('build-here'),
+                  onPressed: comboState is SearchRunning ? null : comboController.search,
+                  icon: const Icon(Icons.auto_awesome_rounded),
+                  label: Text(l10n.venueBuildHere(l10n.meal(meal).toLowerCase())),
+                ),
+              ),
+            ],
+          ),
         ),
         switch (comboState) {
           SearchIdle() => const SizedBox.shrink(),
-          SearchRunning() => const LoadingView(),
+          SearchRunning() => Padding(
+            padding: const EdgeInsets.only(top: Layout.section),
+            child: SkeletonCards(count: 2, label: l10n.searchLoading),
+          ),
           SearchFailed(:final failure) => FailureView(failure: failure, onRetry: comboController.search),
           SearchDone(:final result) when result.options.isEmpty => MessageView(message: l10n.noCombosNearby),
           SearchDone(:final result) => Column(
             key: const Key('venue-combos'),
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              for (final option in result.options)
-                ComboCard(
-                  option: option,
-                  showVenue: false,
-                  onTap: () {
-                    comboController.open(option);
-                    context.push(Routes.combo);
-                  },
+              const SizedBox(height: Layout.section),
+              SectionTitle(title: l10n.venueCombosTitle, trailing: '${result.options.length}'),
+              for (final (index, option) in result.options.indexed) ...[
+                Appear(
+                  index: index,
+                  child: ComboCard(
+                    option: option,
+                    showVenue: false,
+                    onTap: () {
+                      comboController.open(option);
+                      context.push(Routes.combo);
+                    },
+                  ),
                 ),
+                const SizedBox(height: Layout.gap),
+              ],
             ],
           ),
         },
-        const SizedBox(height: 16),
-        Text(l10n.venueMenu, style: Theme.of(context).textTheme.titleLarge),
+        const SizedBox(height: Layout.section),
+        SectionTitle(title: l10n.venueMenu, trailing: menu.items.isEmpty ? null : l10n.menuCount(menu.items.length)),
         if (menu.items.isEmpty) MessageView(message: l10n.venueMenuEmpty),
-        for (final item in menu.items) _MenuItemCard(item: item),
+        for (final item in menu.items) ...[_MenuItemCard(item: item), const SizedBox(height: Layout.gap)],
       ],
     );
   }
@@ -163,51 +204,88 @@ class _MenuItemCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
+    final palette = context.palette;
+    final textTheme = Theme.of(context).textTheme;
     final nutrients = item.nutrients;
     final assessment = item.assessment;
-    return Card(
+    final reasons = assessment?.reasons.map((reason) => _reasonText(context, reason)).where((text) => text.isNotEmpty);
+    return Panel(
       key: Key('menu-item-${item.id}'),
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 12, 8, 4),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Expanded(child: Text(item.name, style: Theme.of(context).textTheme.titleMedium)),
-                if (assessment != null) _VerdictChip(verdict: assessment.verdict),
-              ],
-            ),
-            NutrientsText(
-              kcal: nutrients.kcal,
-              protein: nutrients.protein,
-              fat: nutrients.fat,
-              carbs: nutrients.carbs,
-            ),
-            Text(l10n.priceOf(item.priceMinor)),
-            TrustBadge(kind: item.source.kind, source: item.source),
-            if (assessment != null && assessment.reasons.isNotEmpty)
-              Text(
-                assessment.reasons.map((reason) => _reasonText(context, reason)).join(', '),
-                style: Theme.of(context).textTheme.bodySmall,
+      padding: const EdgeInsets.fromLTRB(16, 16, 8, 6),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              DishAvatar(category: item.category, name: item.name),
+              const SizedBox(width: 14),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(item.name, style: textTheme.titleSmall),
+                    const SizedBox(height: 2),
+                    NutrientsText(
+                      kcal: nutrients.kcal,
+                      protein: nutrients.protein,
+                      fat: nutrients.fat,
+                      carbs: nutrients.carbs,
+                      style: textTheme.bodySmall,
+                    ),
+                  ],
+                ),
               ),
-            Align(
-              alignment: Alignment.centerRight,
-              child: BusyAction<String>(
+              const SizedBox(width: 8),
+              Text(
+                l10n.priceOf(item.priceMinor),
+                style: (item.priceMinor == null ? textTheme.labelMedium : textTheme.titleSmall)?.copyWith(
+                  color: item.priceMinor == null ? palette.inkMuted : palette.ink,
+                  fontFeatures: AppFonts.tabular,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          Padding(
+            padding: const EdgeInsets.only(right: 8),
+            child: MacroSplitBar(protein: nutrients.protein, fat: nutrients.fat, carbs: nutrients.carbs, height: 6),
+          ),
+          if (reasons != null && reasons.isNotEmpty) ...[
+            const SizedBox(height: 10),
+            Text(reasons.join(', '), style: textTheme.bodySmall),
+          ],
+          const SizedBox(height: 4),
+          Row(
+            children: [
+              Expanded(
+                child: Wrap(
+                  spacing: 10,
+                  runSpacing: 6,
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  children: [
+                    if (assessment != null) _VerdictChip(verdict: assessment.verdict),
+                    TrustBadge(kind: item.source.kind, source: item.source),
+                  ],
+                ),
+              ),
+              BusyAction<String>(
                 prepare: () => showDialog<String>(
                   context: context,
                   builder: (_) => _ReportDialog(dishName: item.name),
                 ),
                 run: (reason) => _report(context, ref, reason),
-                builder: (context, onPressed, busy) => TextButton(
+                builder: (context, onPressed, busy) => IconButton(
                   key: Key('report-${item.id}'),
+                  tooltip: l10n.reportNumbers,
                   onPressed: onPressed,
-                  child: Text(l10n.reportNumbers),
+                  icon: BusyAction.icon(Icons.outlined_flag_rounded, busy: busy),
+                  color: palette.inkMuted,
                 ),
               ),
-            ),
-          ],
-        ),
+            ],
+          ),
+        ],
       ),
     );
   }
@@ -247,18 +325,14 @@ class _VerdictChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final (label, color) = switch (verdict) {
-      Verdict.fits => (l10n.verdictFits, AppColors.good),
-      Verdict.partial => (l10n.verdictPartial, AppColors.compromise),
-      Verdict.notFits => (l10n.verdictNotFits, AppColors.none),
-      Verdict.unknown => ('', AppColors.none),
+    final (label, tone, icon) = switch (verdict) {
+      Verdict.fits => (l10n.verdictFits, Tone.good, Icons.check_circle_rounded),
+      Verdict.partial => (l10n.verdictPartial, Tone.warn, Icons.error_outline_rounded),
+      Verdict.notFits => (l10n.verdictNotFits, Tone.neutral, Icons.block_rounded),
+      Verdict.unknown => ('', Tone.neutral, null),
     };
     if (label.isEmpty) return const SizedBox.shrink();
-    return Chip(
-      label: Text(label, style: TextStyle(color: color)),
-      side: BorderSide(color: color),
-      visualDensity: VisualDensity.compact,
-    );
+    return StatusPill(label: label, tone: tone, icon: icon);
   }
 }
 

@@ -189,7 +189,7 @@
       }
     }
   },
-  "comboTotals": "{kcal} ккал · Б {protein} · Ж {fat} · У {carbs}",
+  "comboTotals": "{kcal} ккал · Б {protein} · Ж {fat} · У {carbs}",
   "@comboTotals": {
     "placeholders": {
       "kcal": {
@@ -514,5 +514,126 @@
       }
     }
   },
-  "comboTrustLabel": "Достоверность набора:"
+  "comboTrustLabel": "Достоверность набора:",
+  "kcalUnit": "ккал",
+  "gramsValue": "{grams} г",
+  "@gramsValue": {
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "proteinShort": "Б",
+  "fatShort": "Ж",
+  "carbsShort": "У",
+  "targetFor": "Цель на {meal}",
+  "@targetFor": {
+    "placeholders": {
+      "meal": {
+        "type": "String"
+      }
+    }
+  },
+  "targetTolerance": "± {tolerance} ккал",
+  "@targetTolerance": {
+    "placeholders": {
+      "tolerance": {
+        "type": "int"
+      }
+    }
+  },
+  "targetProteinMin": "белок от {grams} г",
+  "@targetProteinMin": {
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "targetFatMax": "жиры до {grams} г",
+  "@targetFatMax": {
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "targetCarbsMax": "углеводы до {grams} г",
+  "@targetCarbsMax": {
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "resultsTitle": "Варианты рядом",
+  "fitOnTarget": "В цели",
+  "fitCompromise": "Компромисс",
+  "eatenOfNorm": "съедено {eaten} из {norm} ккал",
+  "@eatenOfNorm": {
+    "placeholders": {
+      "eaten": {
+        "type": "int"
+      },
+      "norm": {
+        "type": "int"
+      }
+    }
+  },
+  "remainingLeftShort": "осталось",
+  "comboDishes": "Состав",
+  "comboTotalLabel": "Итого в наборе",
+  "venueChainLabel": "Сеть «{chain}»",
+  "@venueChainLabel": {
+    "placeholders": {
+      "chain": {
+        "type": "String"
+      }
+    }
+  },
+  "menuCount": "{count} позиций",
+  "@menuCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "mapNearbyTitle": "Заведения рядом",
+  "profileSettings": "Настройки",
+  "dishTimes": "×{count}",
+  "@dishTimes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "moreDishes": "{count, plural, one{и ещё {count} блюдо} few{и ещё {count} блюда} other{и ещё {count} блюд}}",
+  "@moreDishes": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "goalHintLose": "Минус 15 % калорий, белка больше",
+  "goalHintMaintain": "Калории по расходу энергии",
+  "goalHintGain": "Плюс 10 % калорий",
+  "preferenceHintNoPork": "Уберём свинину, ветчину, бекон",
+  "preferenceHintVegetarian": "Без мяса, рыбы и морепродуктов",
+  "preferenceHintNoNuts": "Уберём блюда с орехами и ореховыми пастами",
+  "preferenceHintNoMilk": "Без молока, сыра, сливок",
+  "preferenceHintNoGluten": "Без пшеницы, хлеба и выпечки",
+  "searchLoading": "Подбираем наборы рядом…",
+  "venueCombosTitle": "Наборы в этом заведении",
+  "mapOpenVenue": "Открыть меню и наборы",
+  "mapRecenter": "Показать, где я",
+  "targetSheetHint": "Подбор будет искать наборы ровно под эти цифры. «По норме» вернёт расчёт от дневной нормы.",
+  "proteinMinLabel": "Белок от",
+  "fatMaxLabel": "Жиры до",
+  "carbsMaxLabel": "Углеводы до",
+  "gramsUnit": "г",
+  "replacementTotalPrefix": "весь набор"
 }

@@ -39,7 +39,22 @@ flutter:
   generate: true
   assets:
     - assets/demo/catalog.json
+    - assets/map/basemap.json
   fonts:
-    - family: Roboto
+    - family: Onest
       fonts:
-        - asset: assets/fonts/Roboto.ttf
+        - asset: assets/fonts/Onest_400Regular.ttf
+        - asset: assets/fonts/Onest_500Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Onest_600SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Onest_700Bold.ttf
+          weight: 700
+    - family: Unbounded
+      fonts:
+        - asset: assets/fonts/Unbounded_500Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Unbounded_600SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Unbounded_700Bold.ttf
+          weight: 700

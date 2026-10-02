@@ -37,7 +37,7 @@ void main() {
     await tester.tap(find.byKey(const Key('data-reset')));
     await tester.pumpAndSettle();
     expect(harness.profiles.deleted, isTrue);
-    expect(find.text('Шаг 1 из 3'), findsOneWidget);
+    expect(find.text('ШАГ 1 ИЗ 3'), findsOneWidget);
   });
 
   testWidgets('неизвестный адрес заведения ведёт на понятный экран, а не к падению', (tester) async {
@@ -65,14 +65,14 @@ void main() {
     await harness.pump(tester);
     await tester.tap(find.descendant(of: find.byType(NavigationBar), matching: find.text('Дневник')));
     await tester.pumpAndSettle();
-    expect(find.text('Сегодня, 02.10.2026'), findsOneWidget);
+    expect(find.text('ПЯТНИЦА, 2 ОКТЯБРЯ'), findsOneWidget);
     expect(find.text('600 из 1800'), findsOneWidget);
     final locationCalls = harness.location.calls;
 
     harness.now = DateTime(2026, 10, 3, 8, 15);
     await resumeApp(tester);
 
-    expect(find.text('Сегодня, 03.10.2026'), findsOneWidget);
+    expect(find.text('СУББОТА, 3 ОКТЯБРЯ'), findsOneWidget);
     expect(find.text('0 из 1800'), findsOneWidget);
     await tester.tap(find.descendant(of: find.byType(NavigationBar), matching: find.text('Что взять')));
     await tester.pumpAndSettle();

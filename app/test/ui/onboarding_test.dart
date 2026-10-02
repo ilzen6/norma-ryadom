@@ -18,7 +18,7 @@ void main() {
     final harness = TestHarness();
     await harness.pump(tester);
 
-    expect(find.text('Шаг 1 из 3'), findsOneWidget);
+    expect(find.text('ШАГ 1 ИЗ 3'), findsOneWidget);
     expect(tester.widget<FilledButton>(find.byKey(const Key('onboarding-next'))).onPressed, isNull);
     await tester.enterText(find.byKey(const Key('age-field')), '7');
     await tester.pumpAndSettle();
@@ -81,7 +81,7 @@ void main() {
     expect(saved?.goal, Goal.lose);
     expect(saved?.preferences, {DietPreference.noPork, DietPreference.noNuts});
     expect(saved?.locationConsent, isTrue);
-    expect(find.text('Осталось на сегодня'), findsOneWidget);
+    expect(find.text('ОСТАЛОСЬ НА СЕГОДНЯ'), findsOneWidget);
   });
 
   testWidgets('без доступа к геолокации предлагает выбрать район', (tester) async {
@@ -117,6 +117,6 @@ void main() {
     await tester.tap(find.byTooltip('Назад'));
     await tester.pumpAndSettle();
 
-    expect(find.text('Шаг 1 из 3'), findsOneWidget);
+    expect(find.text('ШАГ 1 ИЗ 3'), findsOneWidget);
   });
 }

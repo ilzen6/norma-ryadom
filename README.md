@@ -4,9 +4,10 @@
 
 Курсовой проект. Подробности: [архитектура и решения](docs/decisions.md), [матрица «ТЗ → код → тест»](docs/requirements-matrix.md), [отчёт о проверках](docs/testing.md).
 
-| Онбординг и норма | Подбор рядом | Набор и замена блюда | Дневник |
+| Онбординг и норма | Подбор рядом | Набор и замена блюда | Карта |
 |---|---|---|---|
-| ![](docs/screenshots/app-01-norm.png) | ![](docs/screenshots/app-05-nearby-results.png) | ![](docs/screenshots/app-08-combo-replaced.png) | ![](docs/screenshots/app-09-diary.png) |
+| ![](docs/screenshots/app-01-norm.png) | ![](docs/screenshots/app-05-nearby-results.png) | ![](docs/screenshots/app-07-replacements.png) | ![](docs/screenshots/app-10-map.png) |
+| ![](docs/screenshots/app-dark-04-home.png) | ![](docs/screenshots/app-dark-06-combo.png) | ![](docs/screenshots/app-dark-09-diary.png) | ![](docs/screenshots/app-dark-10-map.png) |
 
 ## Состав
 
@@ -66,7 +67,7 @@ PostgreSQL + PostGIS · SeaweedFS (S3) · Caffeine
 
 Android собирается в двух вариантах: `--flavor demo` (адрес сервера задаётся в профиле, разрешён HTTP к компьютеру в локальной сети) и `--flavor store` (только HTTPS), например `flutter run --flavor demo`. Готовый демо-APK публикуется в Releases (workflow `Release`); как поставить его на телефон и подключить к серверу на своём компьютере — `docs/install-phone.md`. Сценарий защиты — `docs/demo.md`, схемы и график производительности — `docs/architecture.md`.
 
-Переменные клиента (`--dart-define`): `API_BASE_URL`, `TILE_URL_TEMPLATE` (тайлы карты; пустое значение отключает подложку), `SEARCH_RADIUS_METERS`.
+Переменные клиента (`--dart-define`): `API_BASE_URL`, `TILE_URL_TEMPLATE` (тайлы карты; при пустом значении используется встроенная векторная подложка центра Москвы из OpenStreetMap), `SEARCH_RADIUS_METERS`.
 Публичные тайлы OpenStreetMap допустимы только для разработки и демонстрации (правила tile.openstreetmap.org запрещают
 нагрузку от приложений); для выпуска нужен собственный или коммерческий сервер тайлов. Приложение представляется серверу
 тайлов идентификатором `ru.normaryadom.norma_ryadom`.

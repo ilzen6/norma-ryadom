@@ -7,6 +7,7 @@ import '../domain/nutrition/norm_calculator.dart';
 import '../utils/result.dart';
 import 'demo/demo_server.dart';
 import 'local/app_database.dart';
+import 'map/basemap.dart';
 import 'repositories/combo_repository.dart';
 import 'repositories/diary_repository.dart';
 import 'repositories/feedback_repository.dart';
@@ -60,6 +61,19 @@ final demoCatalogLoaderProvider = Provider<Future<String> Function()>(
   (ref) =>
       () => rootBundle.loadString('assets/demo/catalog.json'),
 );
+
+final basemapLoaderProvider = Provider<Future<String> Function()>(
+  (ref) =>
+      () => rootBundle.loadString('assets/map/basemap.json'),
+);
+
+final basemapProvider = FutureProvider<Basemap?>((ref) async {
+  try {
+    return Basemap.fromJson(await ref.watch(basemapLoaderProvider)());
+  } on Object {
+    return null;
+  }
+});
 
 final normaApiProvider = Provider<NormaApi>((ref) {
   final dio = NormaApi.createDio(ref.watch(serverAddressProvider));

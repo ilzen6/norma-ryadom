@@ -38,6 +38,14 @@ extension MealLabels on AppLocalizations {
     DietPreference.noGluten => preferenceNoGluten,
   };
 
+  String preferenceHint(DietPreference preference) => switch (preference) {
+    DietPreference.noPork => preferenceHintNoPork,
+    DietPreference.vegetarian => preferenceHintVegetarian,
+    DietPreference.noNuts => preferenceHintNoNuts,
+    DietPreference.noMilk => preferenceHintNoMilk,
+    DietPreference.noGluten => preferenceHintNoGluten,
+  };
+
   String activity(ActivityLevel level) => switch (level) {
     ActivityLevel.sedentary => activitySedentary,
     ActivityLevel.light => activityLight,

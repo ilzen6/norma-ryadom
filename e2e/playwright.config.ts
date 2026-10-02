@@ -16,6 +16,7 @@ export default defineConfig({
     screenshot: 'only-on-failure',
     locale: 'ru-RU',
     timezoneId: 'Europe/Moscow',
+    colorScheme: process.env.COLOR_SCHEME === 'dark' ? 'dark' : 'light',
   },
   projects: [
     {

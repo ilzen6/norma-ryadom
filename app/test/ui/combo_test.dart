@@ -29,19 +29,20 @@ void main() {
     await harness.pump(tester);
     await tester.tap(find.byKey(const Key('find-nearby')));
     await tester.pumpAndSettle();
-    await tapVisible(tester, find.text('Куриная грудка гриль + Морс'));
+    await tapVisible(tester, find.bySemanticsLabel(RegExp(r'Куриная грудка гриль \+ Морс')));
     return harness;
   }
 
   testWidgets('объясняет попадание в цель по каждому показателю', (tester) async {
     await openCombo(tester);
 
+    expect(find.text('537 ₽'), findsOneWidget);
+    expect(find.text('данные сети'), findsWidgets);
+    await scrollTo(tester, find.text('Калории 470 из 630'));
     expect(find.text('Калории 470 из 630'), findsOneWidget);
     expect(find.text('Белок 40 г, нужно от 28 г'), findsOneWidget);
     expect(find.text('Жиры 26 г, цель до 24 г'), findsOneWidget);
     expect(find.text('больше на 2'), findsOneWidget);
-    expect(find.text('537 ₽'), findsOneWidget);
-    expect(find.text('данные сети'), findsWidgets);
   });
 
   testWidgets('заменяет блюдо, оставляя остальные, по той же цели поиска', (tester) async {
@@ -63,8 +64,7 @@ void main() {
     expect(harness.combos.replaceRequests.single.$2, 1);
     expect(harness.combos.replaceTargets.single, TestData.lunchTarget.copyWith(kcal: 650));
     expect(harness.combos.requestedVenues.single, TestData.venue.id);
-    await tester.tap(find.text('Сок яблочный'));
-    await tester.pumpAndSettle();
+    await tapVisible(tester, find.text('Сок яблочный'));
 
     expect(find.text('Чем заменить'), findsNothing);
     expect(find.text('Сок яблочный'), findsOneWidget);
@@ -96,7 +96,7 @@ void main() {
     expect(entry.meal, MealType.lunch);
     expect(entry.venueName, 'Гриль Хаус, Москва-Сити');
     expect(entry.intake.kcal, 470);
-    expect(find.text('Съедено'), findsOneWidget);
+    expect(find.text('СЪЕДЕНО'), findsOneWidget);
   });
 
   testWidgets('двойное нажатие «Записать в дневник» сохраняет набор один раз', (tester) async {
@@ -123,6 +123,7 @@ void main() {
 
     expect(harness.diary.entries, isEmpty);
     expect(find.text('Что-то пошло не так. Повторите попытку.'), findsOneWidget);
+    await scrollTo(tester, find.text('Попадание в цель'));
     expect(find.text('Попадание в цель'), findsOneWidget);
   });
 }

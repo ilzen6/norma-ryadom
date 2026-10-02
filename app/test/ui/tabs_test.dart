@@ -13,7 +13,7 @@ import '../support/pump_app.dart';
 
 void main() {
   NearbyVenue venue(int id, String name, FitLevel? fit, {bool hasMenu = true}) => NearbyVenue(
-    venue: TestData.venue.copyWith(id: id, name: name),
+    venue: TestData.venue.copyWith(id: id, name: name, chainName: null, lon: TestData.venue.lon + (id - 2) * 0.002),
     distanceMeters: 100 * id,
     hasMenu: hasMenu,
     fit: fit,
@@ -36,22 +36,39 @@ void main() {
 
     await openTab(tester, 'Карта');
 
-    Color colorOf(String name) => tester
-        .widget<Icon>(find.descendant(of: find.widgetWithText(ListTile, name), matching: find.byIcon(Icons.circle)))
-        .color!;
-    expect(colorOf('Зелёный бар'), AppColors.good);
-    expect(colorOf('Блинная'), AppColors.compromise);
-    expect(colorOf('Пицца'), AppColors.none);
-    expect(colorOf('Кафе без меню'), AppColors.noData);
+    Future<Color> colorOf(String name) async {
+      await tester.scrollUntilVisible(
+        find.text(name),
+        120,
+        scrollable: find.descendant(of: find.byKey(const Key('map-venue-list')), matching: find.byType(Scrollable)),
+      );
+      return tester
+          .widget<Text>(find.descendant(of: find.widgetWithText(ListTile, name), matching: find.text(name[0])))
+          .style!
+          .color!;
+    }
+
     expect(find.textContaining(RegExp(r'^\W*есть набор под цель$'), findRichText: true), findsOneWidget);
+    expect(await colorOf('Зелёный бар'), Palette.light.good);
+    expect(await colorOf('Блинная'), Palette.light.warn);
+    expect(await colorOf('Пицца'), Palette.light.neutral);
+    expect(await colorOf('Кафе без меню'), Palette.light.inkSubtle);
 
     await tester.tap(find.byKey(const Key('map-show-all')));
     await tester.pumpAndSettle();
     expect(harness.venues.includeWithoutMenuRequests, [false, true]);
 
+    await tester.scrollUntilVisible(
+      find.text('есть набор под цель · Пресненская наб., 2 · 100 м'),
+      -120,
+      scrollable: find.descendant(of: find.byKey(const Key('map-venue-list')), matching: find.byType(Scrollable)),
+    );
     expect(find.text('есть набор под цель · Пресненская наб., 2 · 100 м'), findsOneWidget);
 
-    await tester.tap(find.text('Зелёный бар'));
+    await tester.tap(find.bySemanticsLabel('Зелёный бар, есть набор под цель'));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('map-selected-venue')), findsOneWidget);
+    await tester.tap(find.byKey(const Key('map-open-venue')));
     await tester.pumpAndSettle();
     expect(find.byType(VenueScreen), findsOneWidget);
     expect(tester.widget<VenueScreen>(find.byType(VenueScreen)).venueId, 1);
@@ -124,7 +141,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(harness.profiles.deleted, isTrue);
-    expect(find.text('Шаг 1 из 3'), findsOneWidget);
+    expect(find.text('ШАГ 1 ИЗ 3'), findsOneWidget);
   });
 
   testWidgets('профиль сохраняет согласие на геолокацию и редактирует параметры', (tester) async {

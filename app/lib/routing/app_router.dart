@@ -7,6 +7,7 @@ import '../ui/combo/combo_screen.dart';
 import '../ui/core/l10n_extensions.dart';
 import '../ui/core/session.dart';
 import '../ui/core/system_screens.dart';
+import '../ui/core/widgets/visuals.dart';
 import '../ui/diary/diary_screen.dart';
 import '../ui/home/home_screen.dart';
 import '../ui/map/map_screen.dart';
@@ -92,16 +93,40 @@ class _MainShell extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     return Scaffold(
+      extendBody: true,
       body: shell,
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: shell.currentIndex,
-        onDestinationSelected: (index) => shell.goBranch(index, initialLocation: index == shell.currentIndex),
-        destinations: [
-          NavigationDestination(icon: const Icon(Icons.restaurant), label: l10n.navHome),
-          NavigationDestination(icon: const Icon(Icons.map_outlined), label: l10n.navMap),
-          NavigationDestination(icon: const Icon(Icons.menu_book_outlined), label: l10n.navDiary),
-          NavigationDestination(icon: const Icon(Icons.person_outline), label: l10n.navProfile),
-        ],
+      bottomNavigationBar: SafeArea(
+        minimum: const EdgeInsets.fromLTRB(16, 0, 16, 12),
+        child: GlassSurface(
+          radius: 36,
+          child: NavigationBar(
+            selectedIndex: shell.currentIndex,
+            labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
+            onDestinationSelected: (index) => shell.goBranch(index, initialLocation: index == shell.currentIndex),
+            destinations: [
+              NavigationDestination(
+                icon: const Icon(Icons.restaurant_outlined),
+                selectedIcon: const Icon(Icons.restaurant_rounded),
+                label: l10n.navHome,
+              ),
+              NavigationDestination(
+                icon: const Icon(Icons.map_outlined),
+                selectedIcon: const Icon(Icons.map_rounded),
+                label: l10n.navMap,
+              ),
+              NavigationDestination(
+                icon: const Icon(Icons.menu_book_outlined),
+                selectedIcon: const Icon(Icons.menu_book_rounded),
+                label: l10n.navDiary,
+              ),
+              NavigationDestination(
+                icon: const Icon(Icons.person_outline_rounded),
+                selectedIcon: const Icon(Icons.person_rounded),
+                label: l10n.navProfile,
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

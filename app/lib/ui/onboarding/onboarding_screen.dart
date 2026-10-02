@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../core/l10n_extensions.dart';
+import '../core/theme.dart';
+import '../core/widgets/visuals.dart';
 import 'body_parameters_form.dart';
 import 'location_picker.dart';
 import 'norm_card.dart';
@@ -29,26 +31,34 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
       _ => l10n.onboardingLocationTitle,
     };
     final canContinue = _step != 0 || state.bodyValid;
+    final textTheme = Theme.of(context).textTheme;
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
         leading: _step == 0
             ? null
             : IconButton(
                 tooltip: l10n.back,
-                icon: const Icon(Icons.arrow_back),
+                icon: const Icon(Icons.arrow_back_rounded),
                 onPressed: () => setState(() => _step--),
               ),
       ),
       body: SafeArea(
         child: ListView(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.fromLTRB(20, 0, 20, 24),
           children: [
-            Text(l10n.onboardingStep(_step + 1, _steps), style: Theme.of(context).textTheme.labelLarge),
-            const SizedBox(height: 16),
+            StepProgress(current: _step, total: _steps),
+            const SizedBox(height: 18),
+            Eyebrow(l10n.onboardingStep(_step + 1, _steps)),
+            const SizedBox(height: 6),
+            Semantics(header: true, child: Text(title, style: textTheme.headlineMedium)),
+            const SizedBox(height: 20),
             ...switch (_step) {
               0 => const [BodyParametersForm(), SizedBox(height: 16), NormCard()],
-              1 => [Text(l10n.preferencesHint), const SizedBox(height: 16), const PreferencesPicker()],
+              1 => [
+                Text(l10n.preferencesHint, style: textTheme.bodyLarge?.copyWith(color: context.palette.inkMuted)),
+                const SizedBox(height: 20),
+                const PreferencesPicker(),
+              ],
               _ => const [LocationPicker()],
             },
           ],
@@ -56,7 +66,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
       ),
       bottomNavigationBar: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.fromLTRB(20, 8, 20, 16),
           child: FilledButton(
             key: const Key('onboarding-next'),
             onPressed: !canContinue || state.saving ? null : _next,

@@ -40,7 +40,8 @@ export async function scrollDown(page: Page, times = 1): Promise<void> {
 
 export async function screenshot(page: Page, name: string): Promise<void> {
   mkdirSync(screenshotDir, { recursive: true });
-  await page.waitForTimeout(400);
+  await page.mouse.move(1, 1);
+  await page.waitForTimeout(600);
   await page.screenshot({ path: join(screenshotDir, `${name}.png`) });
 }
 
@@ -57,4 +58,19 @@ export async function openTab(page: Page, name: string): Promise<void> {
     .or(page.getByRole('button', { name, exact: true }))
     .first()
     .click();
+}
+
+export async function scrollUp(page: Page, times = 1): Promise<void> {
+  for (let i = 0; i < times; i++) {
+    await page.mouse.move(200, 400);
+    await page.mouse.wheel(0, -600);
+    await page.waitForTimeout(200);
+  }
+}
+
+export async function scrollUntilVisible(page: Page, target: Locator, attempts = 10): Promise<void> {
+  for (let i = 0; i < attempts && !(await target.isVisible()); i++) {
+    await scrollDown(page);
+  }
+  await expect(target).toBeVisible();
 }

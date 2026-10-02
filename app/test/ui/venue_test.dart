@@ -92,9 +92,11 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Собрать обед здесь'), findsOneWidget);
-    expect(find.text('Куриная грудка гриль + Рис с овощами'), findsOneWidget);
-    await tester.tap(find.text('Куриная грудка гриль + Рис с овощами'));
+    final combo = find.bySemanticsLabel(RegExp(r'Куриная грудка гриль \+ Рис с овощами'));
+    expect(combo, findsOneWidget);
+    await tester.tap(combo);
     await tester.pumpAndSettle();
+    await scrollTo(tester, find.text('Попадание в цель'));
     expect(find.text('Попадание в цель'), findsOneWidget);
   });
 

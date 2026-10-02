@@ -4,9 +4,11 @@ import {
   button,
   openFlutterApp,
   openTab,
-  semanticTexts,
   screenshot,
   scrollDown,
+  scrollUntilVisible,
+  scrollUp,
+  semanticTexts,
   text,
   typeInto,
 } from './support/flutter';
@@ -55,10 +57,16 @@ test('сценарий защиты: от нормы до записи обед�
     await button(page, 'Подобрать рядом').click();
     const options = page.locator('flt-semantics[role="button"]').filter({ hasText: /килокалорий, белки/ });
     await expect(options.first()).toBeVisible();
-    expect(await options.count()).toBeGreaterThanOrEqual(3);
-    await expect(allText(page, /свин|ветчин|рёбрышки|бужени|пепперони|карбонара/i)).toHaveCount(0);
     await screenshot(page, 'app-05-nearby-results');
-    await options.first().click();
+    const seen = new Set<string>();
+    for (let i = 0; i < 6; i++) {
+      for (const label of await semanticTexts(page, /килокалорий, белки/)) seen.add(label);
+      await scrollDown(page);
+    }
+    expect(seen.size).toBeGreaterThanOrEqual(3);
+    expect([...seen].filter((label) => /свин|ветчин|рёбрышки|бужени|пепперони|карбонара/i.test(label))).toEqual([]);
+    await scrollUp(page, 8);
+    await options.filter({ visible: true }).first().click();
   });
 
   await test.step('результат подбора: отклонения по показателям и замена блюда', async () => {
@@ -124,7 +132,9 @@ test('сценарий защиты: от нормы до записи обед�
   });
 
   await test.step('жалоба «цифры не совпадают»', async () => {
-    await button(page, 'Цифры не совпадают').first().click();
+    const report = button(page, 'Цифры не совпадают').filter({ visible: true }).first();
+    await scrollUntilVisible(page, report);
+    await report.click();
     await typeInto(page, 'Например: на стенде 520 ккал', 'На стенде указано 420 ккал');
     await button(page, 'Отправить').click();
     await expect(text(page, 'Спасибо! Блюдо проверим')).toBeVisible();
@@ -137,5 +147,15 @@ test('сценарий защиты: от нормы до записи обед�
     await (await chooser).setFiles('fixtures/menu-photo.png');
     await expect(text(page, 'Спасибо! Фото отправлено на проверку')).toBeVisible();
     await screenshot(page, 'app-13-photo-sent');
+  });
+
+  await test.step('профиль: параметры, норма и настройки', async () => {
+    await page.goBack();
+    await openTab(page, 'Профиль');
+    await expect(text(page, '25 лет · 165 см · 62 кг')).toBeVisible();
+    await screenshot(page, 'app-14-profile');
+    await scrollDown(page, 3);
+    await expect(text(page, 'Удалить все данные')).toBeVisible();
+    await screenshot(page, 'app-15-profile-settings');
   });
 });
