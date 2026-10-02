@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -216,7 +217,10 @@ class _MealSelector extends ConsumerWidget {
                 button: true,
                 child: GestureDetector(
                   behavior: HitTestBehavior.opaque,
-                  onTap: () => ref.read(mealSelectionProvider.notifier).selectMeal(meal),
+                  onTap: () {
+                    HapticFeedback.selectionClick();
+                    ref.read(mealSelectionProvider.notifier).selectMeal(meal);
+                  },
                   child: AnimatedContainer(
                     duration: const Duration(milliseconds: 220),
                     curve: Curves.easeOutCubic,
@@ -437,7 +441,7 @@ class _SearchResults extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     return switch (ref.watch(nearbySearchProvider)) {
-      SearchIdle() => MessageView(message: l10n.searchPrompt, icon: Icons.ramen_dining_rounded),
+      SearchIdle() => const _HowItWorks(),
       SearchRunning() => SkeletonCards(label: l10n.searchLoading),
       SearchFailed(:final failure) => FailureView(
         failure: failure,
@@ -468,5 +472,64 @@ class _SearchResults extends ConsumerWidget {
         ],
       ),
     };
+  }
+}
+
+class _HowItWorks extends StatelessWidget {
+  const _HowItWorks();
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final palette = context.palette;
+    final textTheme = Theme.of(context).textTheme;
+    final steps = [
+      (Icons.wb_sunny_rounded, l10n.howStepMeal),
+      (Icons.auto_awesome_rounded, l10n.howStepSearch),
+      (Icons.menu_book_rounded, l10n.howStepDiary),
+    ];
+    return Panel(
+      key: const Key('how-it-works'),
+      color: palette.surface.withValues(alpha: 0.72),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Eyebrow(l10n.howTitle),
+          const SizedBox(height: 16),
+          for (final (index, (icon, text)) in steps.indexed) ...[
+            if (index > 0) const SizedBox(height: 14),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(color: palette.brandSoft, borderRadius: BorderRadius.circular(14)),
+                  child: Icon(icon, size: 20, color: palette.brand),
+                ),
+                const SizedBox(width: 14),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 2),
+                    child: Text.rich(
+                      TextSpan(
+                        children: [
+                          TextSpan(
+                            text: '${index + 1}. ',
+                            style: textTheme.titleSmall?.copyWith(color: palette.brand),
+                          ),
+                          TextSpan(text: text),
+                        ],
+                      ),
+                      style: textTheme.bodyMedium,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ],
+      ),
+    );
   }
 }

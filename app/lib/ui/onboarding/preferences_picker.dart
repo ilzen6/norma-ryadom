@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../domain/models/diet_preference.dart';
@@ -32,7 +33,10 @@ class PreferencesPicker extends ConsumerWidget {
             label: l10n.preference(preference),
             hint: l10n.preferenceHint(preference),
             selected: selected.contains(preference),
-            onTap: () => ref.read(onboardingProvider.notifier).togglePreference(preference),
+            onTap: () {
+              HapticFeedback.selectionClick();
+              ref.read(onboardingProvider.notifier).togglePreference(preference);
+            },
           ),
         ],
       ],

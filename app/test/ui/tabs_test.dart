@@ -59,11 +59,11 @@ void main() {
     expect(harness.venues.includeWithoutMenuRequests, [false, true]);
 
     await tester.scrollUntilVisible(
-      find.text('есть набор под цель · Пресненская наб., 2 · 100 м'),
+      find.text('есть набор под цель · Пресненская наб., 2 · 100 м · 2 мин'),
       -120,
       scrollable: find.descendant(of: find.byKey(const Key('map-venue-list')), matching: find.byType(Scrollable)),
     );
-    expect(find.text('есть набор под цель · Пресненская наб., 2 · 100 м'), findsOneWidget);
+    expect(find.text('есть набор под цель · Пресненская наб., 2 · 100 м · 2 мин'), findsOneWidget);
 
     await tester.tap(find.bySemanticsLabel('Зелёный бар, есть набор под цель'));
     await tester.pumpAndSettle();

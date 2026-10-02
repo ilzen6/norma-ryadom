@@ -644,5 +644,38 @@
         "type": "int"
       }
     }
-  }
+  },
+  "distanceKilometers": "{km} км",
+  "@distanceKilometers": {
+    "placeholders": {
+      "km": {
+        "type": "String"
+      }
+    }
+  },
+  "walkMinutes": "{minutes} мин",
+  "@walkMinutes": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "walkSpoken": "{distance}, {minutes, plural, one{{minutes} минута} few{{minutes} минуты} other{{minutes} минут}} пешком",
+  "@walkSpoken": {
+    "placeholders": {
+      "distance": {
+        "type": "String"
+      },
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "venueMapLabel": "Заведение на карте",
+  "howTitle": "Как это работает",
+  "howStepMeal": "Выберите приём пищи — цель по калориям и БЖУ посчитаем из вашей нормы",
+  "howStepSearch": "Нажмите «Подобрать рядом» — найдём наборы в заведениях поблизости",
+  "howStepDiary": "Запишите понравившийся набор в дневник, и остаток на день пересчитается",
+  "appTagline": "Еда вне дома — под вашу норму"
 }

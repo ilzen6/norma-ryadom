@@ -2,6 +2,7 @@ import 'dart:math' as math;
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../../domain/models/catalog.dart';
 import '../formatting.dart';
@@ -489,7 +490,10 @@ class ChoiceCard extends StatelessWidget {
         ),
         clipBehavior: Clip.antiAlias,
         child: InkWell(
-          onTap: onTap,
+          onTap: () {
+            HapticFeedback.selectionClick();
+            onTap();
+          },
           child: horizontal
               ? Padding(
                   padding: const EdgeInsets.fromLTRB(14, 12, 16, 12),
@@ -863,4 +867,43 @@ class _BackdropPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(_BackdropPainter oldDelegate) => oldDelegate.palette != palette;
+}
+
+class BrandMark extends StatelessWidget {
+  const BrandMark({super.key, this.size = 44});
+
+  final double size;
+
+  @override
+  Widget build(BuildContext context) {
+    final palette = context.palette;
+    return ExcludeSemantics(
+      child: Container(
+        width: size,
+        height: size,
+        decoration: BoxDecoration(
+          gradient: heroGradient(palette),
+          borderRadius: BorderRadius.circular(size * 0.32),
+          boxShadow: [
+            BoxShadow(color: palette.brand.withValues(alpha: 0.3), blurRadius: 14, offset: const Offset(0, 6)),
+          ],
+        ),
+        alignment: Alignment.center,
+        child: Container(
+          width: size * 0.52,
+          height: size * 0.52,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            border: Border.all(color: palette.onBrand, width: size * 0.07),
+          ),
+          alignment: Alignment.center,
+          child: Container(
+            width: size * 0.16,
+            height: size * 0.16,
+            decoration: BoxDecoration(color: palette.onBrand, shape: BoxShape.circle),
+          ),
+        ),
+      ),
+    );
+  }
 }

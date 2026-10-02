@@ -110,7 +110,7 @@ test('сценарий защиты: от нормы до записи обед�
   await test.step('карта: цветные точки и список заведений', async () => {
     await openTab(page, 'Карта');
     await expect(text(page, 'есть набор под цель')).toBeVisible();
-    const venues = page.locator('flt-semantics[role="button"]').filter({ hasText: / м$/ });
+    const venues = page.locator('flt-semantics[role="button"]').filter({ hasText: / мин$/ });
     await expect(venues.first()).toBeVisible();
     await screenshot(page, 'app-10-map');
     await venues.filter({ hasText: 'Гриль Хаус, Москва-Сити' }).click();

@@ -51,14 +51,14 @@ void main() {
       ..combos.nearbyResult = Ok(ComboSearchResult(appliedTarget: TestData.lunchTarget, options: options));
     await harness.pump(tester);
 
-    expect(find.text('Выберите приём пищи и нажмите «Подобрать рядом»'), findsOneWidget);
+    expect(find.byKey(const Key('how-it-works')), findsOneWidget);
     await tester.tap(find.byKey(const Key('prefer-cheaper')));
     await tester.tap(find.byKey(const Key('find-nearby')));
     await tester.pumpAndSettle();
 
-    await scrollTo(tester, find.text('167 м'));
+    await scrollTo(tester, find.text('167 м · 3 мин'));
     expect(find.bySemanticsLabel(RegExp('Куриная грудка гриль \\+ Рис с овощами')), findsOneWidget);
-    expect(find.text('167 м'), findsOneWidget);
+    expect(find.text('167 м · 3 мин'), findsOneWidget);
     expect(harness.combos.requestedPrices.single, PricePreference.cheaper);
     expect(harness.combos.requestedTargets.single.excludeTags, isEmpty);
     expect(harness.combos.requestedLocations.single, TestData.deviceLocation);
@@ -143,6 +143,6 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byKey(const Key('search-results')), findsNothing);
-    expect(find.text('Выберите приём пищи и нажмите «Подобрать рядом»'), findsOneWidget);
+    expect(find.byKey(const Key('how-it-works')), findsOneWidget);
   });
 }

@@ -29,24 +29,35 @@ class ComboCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (showVenue) ...[
-            Row(
-              children: [
-                Icon(Icons.storefront_rounded, size: 18, color: palette.inkMuted),
-                const SizedBox(width: 6),
-                Expanded(
-                  child: Text(
-                    option.venue.name,
-                    style: textTheme.labelLarge?.copyWith(color: palette.inkMuted),
-                    overflow: TextOverflow.ellipsis,
+            LayoutBuilder(
+              builder: (context, constraints) => Row(
+                children: [
+                  Icon(Icons.storefront_rounded, size: 18, color: palette.inkMuted),
+                  const SizedBox(width: 6),
+                  Expanded(
+                    child: Text(
+                      option.venue.name,
+                      style: textTheme.labelLarge?.copyWith(color: palette.inkMuted),
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
-                ),
-                if (option.distanceMeters case final meters?)
-                  StatusPill(
-                    label: l10n.distanceMeters(meters),
-                    tone: Tone.neutral,
-                    icon: Icons.directions_walk_rounded,
-                  ),
-              ],
+                  if (option.distanceMeters case final meters?) ...[
+                    const SizedBox(width: 8),
+                    ConstrainedBox(
+                      constraints: BoxConstraints(maxWidth: constraints.maxWidth * 0.48),
+                      child: Semantics(
+                        label: l10n.walkSemantics(meters),
+                        excludeSemantics: true,
+                        child: StatusPill(
+                          label: l10n.walk(meters),
+                          tone: Tone.neutral,
+                          icon: Icons.directions_walk_rounded,
+                        ),
+                      ),
+                    ),
+                  ],
+                ],
+              ),
             ),
             const SizedBox(height: 12),
           ],

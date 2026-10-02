@@ -93,4 +93,15 @@ extension MealLabels on AppLocalizations {
     AppFailure.photoAccessDenied => errorPhotoAccessDenied,
     AppFailure.unexpected => errorUnexpected,
   };
+
+  static const walkingMetersPerMinute = 75;
+
+  String distance(int meters) =>
+      meters < 1000 ? distanceMeters(meters) : distanceKilometers(Formatting.decimal((meters / 100).round() / 10));
+
+  int walkMinutesOf(int meters) => meters <= 0 ? 1 : (meters / walkingMetersPerMinute).ceil();
+
+  String walk(int meters) => '${distance(meters)} · ${walkMinutes(walkMinutesOf(meters))}';
+
+  String walkSemantics(int meters) => walkSpoken(distance(meters), walkMinutesOf(meters));
 }

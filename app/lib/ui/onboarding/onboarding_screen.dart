@@ -46,6 +46,27 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
         child: ListView(
           padding: const EdgeInsets.fromLTRB(20, 0, 20, 24),
           children: [
+            if (_step == 0) ...[
+              Row(
+                children: [
+                  const BrandMark(),
+                  const SizedBox(width: 14),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(l10n.appTitle, style: textTheme.titleMedium),
+                        Text(
+                          l10n.appTagline,
+                          style: textTheme.bodySmall?.copyWith(color: context.palette.inkMuted),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 24),
+            ],
             StepProgress(current: _step, total: _steps),
             const SizedBox(height: 18),
             Eyebrow(l10n.onboardingStep(_step + 1, _steps)),

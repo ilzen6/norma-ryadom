@@ -15,6 +15,7 @@ import '../core/widgets/nutrients_text.dart';
 import '../core/widgets/state_views.dart';
 import '../core/widgets/trust_badge.dart';
 import '../core/widgets/visuals.dart';
+import '../map/venue_mini_map.dart';
 import '../diary/diary_view_model.dart';
 import 'combo_view_model.dart';
 import 'selected_combo.dart';
@@ -124,8 +125,14 @@ class _VenueHeader extends StatelessWidget {
             children: [
               Text(option.venue.address, style: textTheme.bodyMedium?.copyWith(color: palette.inkMuted)),
               if (option.distanceMeters case final meters?)
-                StatusPill(label: l10n.distanceMeters(meters), tone: Tone.neutral, icon: Icons.directions_walk_rounded),
+                StatusPill(label: l10n.walk(meters), tone: Tone.neutral, icon: Icons.directions_walk_rounded),
             ],
+          ),
+          VenueMiniMap(
+            lat: option.venue.lat,
+            lon: option.venue.lon,
+            height: 140,
+            margin: const EdgeInsets.only(top: 14),
           ),
           const SizedBox(height: 4),
           TextButton.icon(

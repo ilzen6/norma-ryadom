@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -15,6 +16,7 @@ import '../core/session.dart';
 import '../core/theme.dart';
 import '../core/widgets/state_views.dart';
 import '../core/widgets/visuals.dart';
+import 'basemap_layers.dart';
 import 'map_view_model.dart';
 
 class MapScreen extends ConsumerWidget {
@@ -148,6 +150,7 @@ class _MapBodyState extends ConsumerState<_MapBody> {
   }
 
   void _select(NearbyVenue venue) {
+    HapticFeedback.selectionClick();
     setState(() => _selectedId = venue.venue.id);
     const motion = (duration: Duration(milliseconds: 280), curve: Curves.easeOutCubic);
     if (_sheetScroll case final scroll? when scroll.hasClients) {
@@ -198,7 +201,7 @@ class _MapBodyState extends ConsumerState<_MapBody> {
                 children: [
                   if (tiles.isNotEmpty)
                     TileLayer(urlTemplate: tiles, userAgentPackageName: 'ru.normaryadom.norma_ryadom'),
-                  if (vector != null) ..._vectorLayers(vector, palette),
+                  if (vector != null) ...BasemapLayers.of(vector, palette),
                   MarkerLayer(
                     markers: [
                       Marker(
@@ -257,89 +260,6 @@ class _MapBodyState extends ConsumerState<_MapBody> {
         ),
       ],
     );
-  }
-
-  List<Widget>? _layers;
-  (Basemap, Palette)? _layersKey;
-
-  List<Widget> _vectorLayers(Basemap basemap, Palette palette) {
-    final key = (basemap, palette);
-    if (_layersKey == key) return _layers ?? const [];
-    _layersKey = key;
-    List<List<LatLng>> roads(String kind) => basemap.roads[kind] ?? const [];
-    Polyline cased(List<LatLng> line, Color color, double width, double casing) => Polyline(
-      points: line,
-      color: color,
-      strokeWidth: width,
-      borderColor: palette.mapRoadCasing,
-      borderStrokeWidth: casing,
-    );
-    return _layers = [
-      PolygonLayer(
-        simplificationTolerance: 0.3,
-        polygons: [
-          for (final ring in basemap.green) Polygon(points: ring, color: palette.mapGreen),
-          for (final ring in basemap.water) Polygon(points: ring, color: palette.mapWater),
-        ],
-      ),
-      _ZoomGate(
-        minZoom: 15,
-        keepAlive: true,
-        child: PolygonLayer(
-          simplificationTolerance: 0.8,
-          polygons: [for (final ring in basemap.buildings) Polygon(points: ring, color: palette.mapBuilding)],
-        ),
-      ),
-      _ZoomGate(
-        minZoom: 15,
-        keepAlive: true,
-        child: PolylineLayer(
-          simplificationTolerance: 0.3,
-          polylines: [
-            for (final line in roads('path')) Polyline(points: line, color: palette.mapRoad, strokeWidth: 1.2),
-          ],
-        ),
-      ),
-      _ZoomGate(
-        minZoom: 14,
-        keepAlive: true,
-        child: PolylineLayer(
-          simplificationTolerance: 0.3,
-          polylines: [
-            for (final line in roads('minor')) Polyline(points: line, color: palette.mapRoad, strokeWidth: 3),
-          ],
-        ),
-      ),
-      PolylineLayer(
-        simplificationTolerance: 0.3,
-        polylines: [
-          for (final line in basemap.rail)
-            Polyline(
-              points: line,
-              color: palette.mapRail,
-              strokeWidth: 2,
-              pattern: StrokePattern.dashed(segments: const [6, 4]),
-            ),
-          for (final line in roads('medium')) cased(line, palette.mapRoad, 5, 1),
-          for (final line in roads('major')) cased(line, palette.mapRoadMajor, 7, 1.2),
-        ],
-      ),
-    ];
-  }
-}
-
-class _ZoomGate extends StatelessWidget {
-  const _ZoomGate({required this.minZoom, required this.child, this.keepAlive = false});
-
-  final double minZoom;
-  final Widget child;
-  final bool keepAlive;
-
-  @override
-  Widget build(BuildContext context) {
-    final visible = MapCamera.of(context).zoom >= minZoom;
-    if (keepAlive) return Offstage(offstage: !visible, child: child);
-    return visible ? child : const SizedBox.shrink();
   }
 }
 
@@ -763,7 +683,7 @@ class _SelectedVenue extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(right: 10),
               child: Text(
-                '${venue.venue.address} · ${l10n.distanceMeters(venue.distanceMeters)}',
+                '${venue.venue.address} · ${l10n.walk(venue.distanceMeters)}',
                 style: textTheme.bodyMedium?.copyWith(color: palette.inkMuted),
               ),
             ),
@@ -890,7 +810,7 @@ class _VenueTile extends StatelessWidget {
         ),
         title: Text(venue.venue.name, style: Theme.of(context).textTheme.titleSmall),
         subtitle: Text(
-          '${_labelOf(l10n, mark)} · ${venue.venue.address} · ${l10n.distanceMeters(venue.distanceMeters)}',
+          '${_labelOf(l10n, mark)} · ${venue.venue.address} · ${l10n.walk(venue.distanceMeters)}',
         ),
         trailing: Icon(Icons.chevron_right_rounded, color: palette.inkSubtle),
       ),

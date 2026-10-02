@@ -17,6 +17,7 @@ import '../core/widgets/nutrients_text.dart';
 import '../core/widgets/state_views.dart';
 import '../core/widgets/trust_badge.dart';
 import '../core/widgets/visuals.dart';
+import '../map/venue_mini_map.dart';
 import '../home/home_view_model.dart';
 import 'venue_view_model.dart';
 
@@ -128,6 +129,7 @@ class _VenueBody extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              VenueMiniMap(lat: venue.lat, lon: venue.lon, height: 140, margin: const EdgeInsets.only(bottom: 18)),
               if (venue.chainName case final chain?) ...[
                 Eyebrow(l10n.venueChainLabel(chain)),
                 const SizedBox(height: 8),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:norma_ryadom/domain/models/catalog.dart';
+import 'package:norma_ryadom/l10n/generated/app_localizations.dart';
+import 'package:norma_ryadom/ui/core/l10n_extensions.dart';
 import 'package:norma_ryadom/ui/core/widgets/combo_card.dart';
 import 'package:norma_ryadom/ui/core/widgets/visuals.dart';
 
@@ -8,6 +10,15 @@ import '../support/fakes.dart';
 import '../support/pump_app.dart';
 
 void main() {
+  test('показывает расстояние в километрах от тысячи метров и время пешком с округлением вверх', () {
+    final l10n = lookupAppLocalizations(const Locale('ru'));
+
+    expect(l10n.walk(144), '144 м · 2 мин');
+    expect(l10n.walk(75), '75 м · 1 мин');
+    expect(l10n.walk(1480), '1,5 км · 20 мин');
+    expect(l10n.walkSemantics(1480), '1,5 км, 20 минут пешком');
+  });
+
   Future<void> pumpPiece(WidgetTester tester, Widget child, {Brightness brightness = Brightness.light}) =>
       TestHarness().pumpComponent(tester, child, brightness: brightness, settle: false).then((_) => tester.pump());
 
