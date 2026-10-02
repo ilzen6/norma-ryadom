@@ -44,6 +44,9 @@ void main() {
     await tester.tap(find.descendant(of: find.byType(NavigationBar), matching: find.text('Профиль')));
     await tester.pumpAndSettle();
     await scrollTo(tester, find.byKey(const Key('server-settings')));
-    expect(find.text('Встроенный демо-каталог: 6 сетей в Москве, вы — в Москва-Сити'), findsOneWidget);
+    expect(
+      find.text('Встроенный демо-каталог: 10 сетей и 349 заведений в центре Москвы, вы — в Москва-Сити'),
+      findsOneWidget,
+    );
   });
 }

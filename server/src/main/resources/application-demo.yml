@@ -24,3 +24,19 @@ demo:
       source-url: https://green-bar.example/nutrition
       menu: classpath:demo/green-bar-menu.csv
       venues: classpath:demo/green-bar-venues.csv
+    - name: Столовая Ложка
+      source-url: https://lozhka.example/nutrition
+      menu: classpath:demo/lozhka-menu.csv
+      venues: classpath:demo/lozhka-venues.csv
+    - name: Суши Нори
+      source-url: https://nori.example/nutrition
+      menu: classpath:demo/nori-menu.csv
+      venues: classpath:demo/nori-venues.csv
+    - name: Поке Волна
+      source-url: https://volna.example/nutrition
+      menu: classpath:demo/volna-menu.csv
+      venues: classpath:demo/volna-venues.csv
+    - name: Пекарня Колос
+      source-url: https://kolos.example/nutrition
+      menu: classpath:demo/kolos-menu.csv
+      venues: classpath:demo/kolos-venues.csv

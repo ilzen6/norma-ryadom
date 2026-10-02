@@ -187,14 +187,17 @@ ThemeData buildTheme(Brightness brightness) {
     useMaterial3: true,
     fontFamily: AppFonts.text,
     textTheme: text,
-    scaffoldBackgroundColor: palette.canvas,
+    scaffoldBackgroundColor: Colors.transparent,
     extensions: [palette],
     visualDensity: VisualDensity.standard,
     materialTapTargetSize: MaterialTapTargetSize.padded,
     splashFactory: InkRipple.splashFactory,
     dividerTheme: DividerThemeData(color: palette.hairline, space: 1, thickness: 1),
     appBarTheme: AppBarTheme(
-      backgroundColor: palette.canvas,
+      backgroundColor: WidgetStateColor.resolveWith(
+        (states) =>
+            states.contains(WidgetState.scrolledUnder) ? palette.canvas.withValues(alpha: 0.94) : Colors.transparent,
+      ),
       foregroundColor: palette.ink,
       surfaceTintColor: Colors.transparent,
       scrolledUnderElevation: 0,

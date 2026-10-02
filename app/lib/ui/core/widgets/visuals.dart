@@ -789,3 +789,78 @@ class Appear extends StatelessWidget {
           child: child,
         );
 }
+
+class Backdrop extends StatelessWidget {
+  const Backdrop({super.key, required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    final palette = context.palette;
+    return ColoredBox(
+      color: palette.canvas,
+      child: Stack(
+        children: [
+          Positioned.fill(
+            child: RepaintBoundary(
+              child: ExcludeSemantics(child: CustomPaint(painter: _BackdropPainter(palette))),
+            ),
+          ),
+          child,
+        ],
+      ),
+    );
+  }
+}
+
+class _BackdropPainter extends CustomPainter {
+  const _BackdropPainter(this.palette);
+
+  final Palette palette;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final width = size.width;
+    void glow(Offset center, double radius, Color color) {
+      canvas.drawCircle(
+        center,
+        radius,
+        Paint()
+          ..shader = RadialGradient(colors: [color, color.withValues(alpha: 0)]).createShader(
+            Rect.fromCircle(center: center, radius: radius),
+          ),
+      );
+    }
+
+    glow(Offset(width * 0.05, -width * 0.1), width * 1.05, palette.brand.withValues(alpha: 0.13));
+    glow(Offset(width * 1.05, width * 0.2), width * 0.75, palette.fat.withValues(alpha: 0.13));
+    glow(Offset(-width * 0.1, size.height * 0.62), width * 0.7, palette.protein.withValues(alpha: 0.06));
+    glow(Offset(width * 0.95, size.height * 0.98), width * 0.85, palette.carbs.withValues(alpha: 0.08));
+
+    final origin = Offset(width * 0.92, -width * 0.18);
+    final reach = math.min(size.height * 0.55, width * 1.25);
+    for (var ring = 1; ring <= 16; ring++) {
+      final base = ring * 26.0;
+      if (base > reach) break;
+      final fade = 1 - base / reach;
+      final path = Path();
+      for (var step = 0; step <= 96; step++) {
+        final angle = step / 96 * math.pi * 2;
+        final wobble = 1 + 0.07 * math.sin(angle * 3 + ring * 0.6) + 0.04 * math.sin(angle * 5 - ring * 0.9);
+        final point = origin + Offset(math.cos(angle), math.sin(angle) * 0.82) * base * wobble;
+        step == 0 ? path.moveTo(point.dx, point.dy) : path.lineTo(point.dx, point.dy);
+      }
+      canvas.drawPath(
+        path..close(),
+        Paint()
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = ring % 4 == 0 ? 1.1 : 0.7
+          ..color = palette.brand.withValues(alpha: 0.16 * fade),
+      );
+    }
+  }
+
+  @override
+  bool shouldRepaint(_BackdropPainter oldDelegate) => oldDelegate.palette != palette;
+}

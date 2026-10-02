@@ -26,6 +26,7 @@ class MapScreen extends ConsumerWidget {
     final venues = ref.watch(mapVenuesProvider);
     void retry() => ref.invalidate(mapVenuesProvider);
     return Scaffold(
+      backgroundColor: context.palette.canvas,
       body: switch (venues.hasError && !venues.isLoading ? null : venues.value) {
         Ok(:final value) => _MapBody(venues: value),
         Err(:final failure) => _MapMessage(
@@ -170,10 +171,6 @@ class _MapBodyState extends ConsumerState<_MapBody> {
     final center = LatLng(location.lat, location.lon);
     final vector = tiles.isEmpty && basemap != null && basemap.covers(center) ? basemap : null;
     final selected = venues.where((venue) => venue.venue.id == _selectedId).firstOrNull;
-    final ordered = [
-      ...venues.where((venue) => venue.venue.id != _selectedId),
-      ?selected,
-    ];
     return Stack(
       children: [
         Positioned.fill(
@@ -210,19 +207,14 @@ class _MapBodyState extends ConsumerState<_MapBody> {
                         height: 44,
                         child: _MyLocationDot(color: palette.brand),
                       ),
-                      for (final venue in ordered)
-                        Marker(
-                          point: LatLng(venue.venue.lat, venue.venue.lon),
-                          width: 56,
-                          height: 64,
-                          alignment: Alignment.topCenter,
-                          child: _VenuePin(
-                            venue: venue,
-                            selected: venue.venue.id == _selectedId,
-                            onTap: () => _select(venue),
-                          ),
-                        ),
                     ],
+                  ),
+                  _VenueMarkers(
+                    stations: vector?.metro ?? const [],
+                    venues: venues,
+                    selectedId: _selectedId,
+                    onSelect: _select,
+                    onCluster: (cluster) => _map.move(cluster, (_map.camera.zoom + 2).clamp(12, 18)),
                   ),
                 ],
               ),
@@ -332,21 +324,6 @@ class _MapBodyState extends ConsumerState<_MapBody> {
           for (final line in roads('major')) cased(line, palette.mapRoadMajor, 7, 1.2),
         ],
       ),
-      _ZoomGate(
-        minZoom: 14.5,
-        child: MarkerLayer(
-          markers: [
-            for (final station in basemap.metro)
-              Marker(
-                point: station.point,
-                width: 160,
-                height: 22,
-                alignment: Alignment.centerRight,
-                child: _MetroLabel(name: station.name, color: palette.metro),
-              ),
-          ],
-        ),
-      ),
     ];
   }
 }
@@ -440,6 +417,192 @@ class _MyLocationDot extends StatelessWidget {
   );
 }
 
+class _Cluster {
+  _Cluster(this.anchor, NearbyVenue first) : members = [first];
+
+  final Offset anchor;
+  final List<NearbyVenue> members;
+
+  LatLng get center => LatLng(
+    members.map((venue) => venue.venue.lat).reduce((a, b) => a + b) / members.length,
+    members.map((venue) => venue.venue.lon).reduce((a, b) => a + b) / members.length,
+  );
+
+  _FitMark get best => members.map(_markOf).reduce((a, b) => a.index <= b.index ? a : b);
+}
+
+class _VenueMarkers extends StatelessWidget {
+  const _VenueMarkers({
+    required this.stations,
+    required this.venues,
+    required this.selectedId,
+    required this.onSelect,
+    required this.onCluster,
+  });
+
+  static const clusterRadius = 60.0;
+  static const clusterUntilZoom = 17.0;
+
+  final List<MetroStation> stations;
+  final List<NearbyVenue> venues;
+  final int? selectedId;
+  final ValueChanged<NearbyVenue> onSelect;
+  final ValueChanged<LatLng> onCluster;
+
+  static List<_Cluster> clusterOf(List<NearbyVenue> venues, Offset Function(LatLng) project) {
+    final clusters = <_Cluster>[];
+    final ordered = [...venues]..sort((a, b) => _markOf(a).index.compareTo(_markOf(b).index));
+    for (final venue in ordered) {
+      final position = project(LatLng(venue.venue.lat, venue.venue.lon));
+      final home = clusters.where((cluster) => (cluster.anchor - position).distance < clusterRadius).firstOrNull;
+      if (home == null) {
+        clusters.add(_Cluster(position, venue));
+      } else {
+        home.members.add(venue);
+      }
+    }
+    return clusters;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final camera = MapCamera.of(context);
+    final zoom = (camera.zoom * 2).roundToDouble() / 2;
+    final selected = venues.where((venue) => venue.venue.id == selectedId).firstOrNull;
+    final rest = venues.where((venue) => venue.venue.id != selectedId).toList();
+    final clusters = zoom >= clusterUntilZoom
+        ? [
+            for (final venue in rest)
+              _Cluster(camera.projectAtZoom(LatLng(venue.venue.lat, venue.venue.lon), zoom), venue),
+          ]
+        : clusterOf(rest, (point) => camera.projectAtZoom(point, zoom));
+    Marker pin(NearbyVenue venue) => Marker(
+      point: LatLng(venue.venue.lat, venue.venue.lon),
+      width: 56,
+      height: 64,
+      alignment: Alignment.topCenter,
+      child: _VenuePin(venue: venue, selected: venue.venue.id == selectedId, onTap: () => onSelect(venue)),
+    );
+    final occupied = <Rect>[
+      for (final cluster in clusters)
+        if (cluster.members.length == 1)
+          Rect.fromCenter(center: cluster.anchor - const Offset(0, 32), width: 56, height: 64)
+        else
+          Rect.fromCircle(center: camera.projectAtZoom(cluster.center, zoom), radius: 28),
+      if (selected != null)
+        Rect.fromCenter(
+          center: camera.projectAtZoom(LatLng(selected.venue.lat, selected.venue.lon), zoom) - const Offset(0, 36),
+          width: 66,
+          height: 76,
+        ),
+    ];
+    final labels = <Rect>[];
+    final metro = <MetroStation>[];
+    if (zoom >= 14.5) {
+      for (final station in stations) {
+        final origin = camera.projectAtZoom(station.point, zoom);
+        final rect = Rect.fromLTWH(origin.dx - 10, origin.dy - 11, 26 + station.name.length * 7.0, 22);
+        if (occupied.any(rect.overlaps) || labels.any(rect.overlaps)) continue;
+        labels.add(rect);
+        metro.add(station);
+      }
+    }
+    return Stack(
+      children: [
+        Positioned.fill(
+          child: MarkerLayer(
+            markers: [
+              for (final station in metro)
+                Marker(
+                  point: station.point,
+                  width: 160,
+                  height: 22,
+                  alignment: Alignment.centerRight,
+                  child: _MetroLabel(name: station.name, color: context.palette.metro),
+                ),
+            ],
+          ),
+        ),
+        Positioned.fill(
+          child: MarkerLayer(
+            markers: [
+              for (final cluster in clusters)
+                if (cluster.members.length == 1)
+                  pin(cluster.members.single)
+                else
+                  Marker(
+                    point: cluster.center,
+                    width: 52,
+                    height: 52,
+                    child: _ClusterBubble(
+                      count: cluster.members.length,
+                      mark: cluster.best,
+                      onTap: () => onCluster(cluster.center),
+                    ),
+                  ),
+              if (selected != null) pin(selected),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _ClusterBubble extends StatelessWidget {
+  const _ClusterBubble({required this.count, required this.mark, required this.onTap});
+
+  final int count;
+  final _FitMark mark;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final palette = context.palette;
+    final color = _colorOf(palette, mark);
+    final size = count >= 10 ? 48.0 : 42.0;
+    return Semantics(
+      container: true,
+      button: true,
+      onTap: onTap,
+      label: context.l10n.mapClusterLabel(count),
+      child: ExcludeSemantics(
+        child: GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: onTap,
+          child: Center(
+            child: Container(
+              width: size,
+              height: size,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: color,
+                border: Border.all(color: palette.surface, width: 3),
+                boxShadow: [
+                  BoxShadow(color: color.withValues(alpha: 0.35), spreadRadius: 4),
+                  BoxShadow(color: palette.ink.withValues(alpha: 0.25), blurRadius: 8, offset: const Offset(0, 3)),
+                ],
+              ),
+              child: Text(
+                '$count',
+                style: TextStyle(
+                  fontFamily: AppFonts.display,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 14,
+                  height: 1,
+                  color: palette.surface,
+                  fontFeatures: AppFonts.tabular,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class _VenuePin extends StatelessWidget {
   const _VenuePin({required this.venue, required this.selected, required this.onTap});
 
@@ -454,8 +617,10 @@ class _VenuePin extends StatelessWidget {
     final color = _colorOf(palette, mark);
     final name = venue.venue.chainName ?? venue.venue.name;
     return Semantics(
+      container: true,
       button: true,
       selected: selected,
+      onTap: onTap,
       label: '${venue.venue.name}, ${_labelOf(context.l10n, mark)}',
       child: ExcludeSemantics(
         child: GestureDetector(

@@ -91,7 +91,7 @@ class DemoCatalog {
 class DemoServerAdapter implements HttpClientAdapter {
   DemoServerAdapter(Future<String> Function() loadCatalog) : _catalog = loadCatalog().then(DemoCatalog.fromJson);
 
-  static const _maxNearby = 50;
+  static const _maxNearby = 100;
   static const _combosPerVenue = 2;
   static const _cachedCombos = 5;
   static const _distanceWeightPerKm = 0.5;

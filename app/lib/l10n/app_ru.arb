@@ -502,7 +502,7 @@
   "serverInvalid": "Введите адрес сервера целиком, например https://norma.example.ru",
   "serverInsecure": "Нужен защищённый адрес, начинающийся с https://",
   "serverSaved": "Сервер подключён",
-  "serverBuiltIn": "Встроенный демо-каталог: 6 сетей в Москве, вы — в Москва-Сити",
+  "serverBuiltIn": "Встроенный демо-каталог: 10 сетей и 349 заведений в центре Москвы, вы — в Москва-Сити",
   "dataErrorText": "Не удалось прочитать данные на устройстве. Попробуйте ещё раз или сбросьте данные и заполните профиль заново.",
   "dataErrorReset": "Сбросить данные",
   "errorUnexpected": "Что-то пошло не так. Повторите попытку.",
@@ -636,5 +636,13 @@
   "carbsMaxLabel": "Углеводы до",
   "gramsUnit": "г",
   "replacementTotalPrefix": "весь набор",
-  "metroBadge": "М"
+  "metroBadge": "М",
+  "mapClusterLabel": "{count, plural, one{{count} заведение рядом, приблизить} few{{count} заведения рядом, приблизить} other{{count} заведений рядом, приблизить}}",
+  "@mapClusterLabel": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

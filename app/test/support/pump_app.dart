@@ -48,10 +48,12 @@ class TestHarness {
     photoPickerProvider.overrideWithValue(picker),
   ];
 
+  Size screen = const Size(1080 / 2.625, 2400 / 2.625);
+
   Future<void> pump(WidgetTester tester) async {
     await initializeDateFormatting('ru');
-    tester.view.physicalSize = const Size(1080, 2400);
     tester.view.devicePixelRatio = 2.625;
+    tester.view.physicalSize = screen * 2.625;
     addTearDown(tester.view.reset);
     await tester.pumpWidget(ProviderScope(overrides: overrides, child: const NormaRyadomApp()));
     await tester.pumpAndSettle();

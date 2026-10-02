@@ -47,6 +47,7 @@ class LocationPicker extends ConsumerWidget {
           ),
         const SizedBox(height: 24),
         DropdownButtonFormField<District>(
+          isExpanded: true,
           key: const Key('district-field'),
           initialValue: state.district,
           decoration: InputDecoration(labelText: l10n.locationDistrictLabel),

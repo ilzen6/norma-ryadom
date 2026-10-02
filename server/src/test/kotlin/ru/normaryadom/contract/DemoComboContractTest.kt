@@ -131,6 +131,10 @@ class DemoComboContractTest {
                 "Кофейня Зерно" to "zerno",
                 "Пицца Квадрат" to "pizza-square",
                 "Зелёный бар" to "green-bar",
+                "Столовая Ложка" to "lozhka",
+                "Суши Нори" to "nori",
+                "Поке Волна" to "volna",
+                "Пекарня Колос" to "kolos",
             )
 
         val CASES =

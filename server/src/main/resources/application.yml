@@ -76,7 +76,7 @@ optimizer:
     limit-factor: 1.2
 
 nearby:
-  max-results: 50
+  max-results: 100
   distance-weight-per-km: 0.5
   combos-per-venue: 2
 

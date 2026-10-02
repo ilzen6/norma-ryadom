@@ -221,6 +221,7 @@ class _MenuItemCard extends ConsumerWidget {
               DishAvatar(category: item.category, name: item.name),
               const SizedBox(width: 14),
               Expanded(
+                flex: 5,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -237,11 +238,15 @@ class _MenuItemCard extends ConsumerWidget {
                 ),
               ),
               const SizedBox(width: 8),
-              Text(
-                l10n.priceOf(item.priceMinor),
-                style: (item.priceMinor == null ? textTheme.labelMedium : textTheme.titleSmall)?.copyWith(
-                  color: item.priceMinor == null ? palette.inkMuted : palette.ink,
-                  fontFeatures: AppFonts.tabular,
+              Flexible(
+                flex: 2,
+                child: Text(
+                  l10n.priceOf(item.priceMinor),
+                  textAlign: TextAlign.end,
+                  style: (item.priceMinor == null ? textTheme.labelMedium : textTheme.titleSmall)?.copyWith(
+                    color: item.priceMinor == null ? palette.inkMuted : palette.ink,
+                    fontFeatures: AppFonts.tabular,
+                  ),
                 ),
               ),
             ],

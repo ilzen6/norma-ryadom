@@ -13,7 +13,7 @@ import '../support/pump_app.dart';
 
 void main() {
   NearbyVenue venue(int id, String name, FitLevel? fit, {bool hasMenu = true}) => NearbyVenue(
-    venue: TestData.venue.copyWith(id: id, name: name, chainName: null, lon: TestData.venue.lon + (id - 2) * 0.002),
+    venue: TestData.venue.copyWith(id: id, name: name, chainName: null, lon: TestData.venue.lon + (id - 2) * 0.004),
     distanceMeters: 100 * id,
     hasMenu: hasMenu,
     fit: fit,
@@ -72,6 +72,29 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byType(VenueScreen), findsOneWidget);
     expect(tester.widget<VenueScreen>(find.byType(VenueScreen)).venueId, 1);
+  });
+
+  testWidgets('карта объединяет соседние заведения в кружок с числом и приближает по нажатию', (tester) async {
+    final harness = TestHarness(profile: TestData.profile)
+      ..venues.nearbyResult = Ok([
+        for (var id = 1; id <= 4; id++)
+          NearbyVenue(
+            venue: TestData.venue.copyWith(id: id, name: 'Точка $id', lon: TestData.venue.lon + id * 0.0002),
+            distanceMeters: 100 * id,
+            hasMenu: true,
+            fit: FitLevel.good,
+          ),
+      ]);
+    await harness.pump(tester);
+    await openTab(tester, 'Карта');
+    expect(find.bySemanticsLabel('4 заведения рядом, приблизить'), findsOneWidget);
+    expect(find.bySemanticsLabel('Точка 1, есть набор под цель'), findsNothing);
+
+    await tester.tap(find.bySemanticsLabel('4 заведения рядом, приблизить'));
+    await tester.pumpAndSettle();
+
+    expect(find.bySemanticsLabel('4 заведения рядом, приблизить'), findsNothing);
+    expect(find.bySemanticsLabel('Точка 1, есть набор под цель'), findsOneWidget);
   });
 
   testWidgets('карта честно показывает пустую выдачу и ошибку', (tester) async {

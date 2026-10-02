@@ -92,7 +92,7 @@ final diaryRepositoryProvider = Provider<DiaryRepository>((ref) => LocalDiaryRep
 
 final venueRepositoryProvider = Provider<VenueRepository>(
   (ref) =>
-      RemoteVenueRepository(ref.watch(normaApiProvider), radiusMeters: ref.watch(appConfigProvider).searchRadiusMeters),
+      RemoteVenueRepository(ref.watch(normaApiProvider), radiusMeters: ref.watch(appConfigProvider).mapRadiusMeters),
 );
 
 final comboRepositoryProvider = Provider<ComboRepository>(

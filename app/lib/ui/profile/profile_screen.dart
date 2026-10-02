@@ -150,6 +150,7 @@ class ProfileScreen extends ConsumerWidget {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
                     child: DropdownButtonFormField<District>(
+                      isExpanded: true,
                       initialValue: profile.district ?? District.moscowCity,
                       decoration: InputDecoration(
                         labelText: l10n.locationDistrictLabel,

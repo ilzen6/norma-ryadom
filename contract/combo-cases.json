@@ -742,6 +742,466 @@
         "verdict" : "PARTIAL",
         "reasons" : [ "LOW_PROTEIN" ]
       } ]
+    }, {
+      "chain" : "Столовая Ложка",
+      "fit" : "GOOD",
+      "nearby" : [ {
+        "dishes" : [ "Треска запечённая", "Гречка с маслом", "Макароны отварные" ],
+        "score" : 0.693521
+      }, {
+        "dishes" : [ "Суп куриный с вермишелью", "Гречка с маслом", "Блин с творогом" ],
+        "score" : 0.814048
+      }, {
+        "dishes" : [ "Треска запечённая", "Рис отварной", "Блин с творогом" ],
+        "score" : 1.005556
+      } ],
+      "atVenue" : [ {
+        "dishes" : [ "Треска запечённая", "Гречка с маслом", "Макароны отварные" ],
+        "score" : 0.639692
+      }, {
+        "dishes" : [ "Овощи тушёные", "Блин с творогом", "Блин с творогом" ],
+        "score" : 0.702678
+      }, {
+        "dishes" : [ "Суп куриный с вермишелью", "Гречка с маслом", "Блин с творогом" ],
+        "score" : 0.748105
+      }, {
+        "dishes" : [ "Треска запечённая", "Пюре картофельное", "Блин с творогом" ],
+        "score" : 0.76343
+      }, {
+        "dishes" : [ "Котлета куриная", "Гречка с маслом", "Гречка с маслом" ],
+        "score" : 0.897867
+      } ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Плов с говядиной",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Сырники со сметаной",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Блин с творогом",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Котлета куриная",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Треска запечённая",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Суп куриный с вермишелью",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Щи из свежей капусты",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Макароны отварные",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Рис отварной",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Гречка с маслом",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Борщ со сметаной",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Пюре картофельное",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Салат свекольный с чесноком",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Винегрет",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Овощи тушёные",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Кисель ягодный",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Салат витаминный",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Компот из сухофруктов",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Морс клюквенный",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Сметана",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Голубцы",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Тефтели в томатном соусе",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      } ]
+    }, {
+      "chain" : "Суши Нори",
+      "fit" : "GOOD",
+      "nearby" : [ {
+        "dishes" : [ "Соус соевый", "Эдамаме", "Рамен с курицей" ],
+        "score" : 0.632778
+      }, {
+        "dishes" : [ "Эдамаме", "Удон с говядиной" ],
+        "score" : 1.096923
+      }, {
+        "dishes" : [ "Салат чука", "Рамен с курицей" ],
+        "score" : 1.308415
+      }, {
+        "dishes" : [ "Эдамаме", "Эдамаме", "Ролл Калифорния, 8 шт." ],
+        "score" : 1.3681
+      } ],
+      "atVenue" : [ {
+        "dishes" : [ "Соус соевый", "Эдамаме", "Рамен с курицей" ],
+        "score" : 0.574125
+      }, {
+        "dishes" : [ "Салат с водорослями и тунцом", "Удон с говядиной" ],
+        "score" : 0.700882
+      }, {
+        "dishes" : [ "Эдамаме", "Салат с водорослями и тунцом", "Ролл Калифорния, 8 шт." ],
+        "score" : 0.732506
+      }, {
+        "dishes" : [ "Салат с водорослями и тунцом", "Рамен с курицей" ],
+        "score" : 0.89888
+      }, {
+        "dishes" : [ "Лимонад юдзу", "Рамен с курицей" ],
+        "score" : 1.011528
+      } ],
+      "replaceFirst" : [ {
+        "dishes" : [ "Чай зелёный", "Эдамаме", "Рамен с курицей" ],
+        "score" : 0.871032
+      } ],
+      "assessment" : [ {
+        "dish" : "Сет «Лёгкий», 16 шт.",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Рамен с курицей",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Удон с говядиной",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Ролл Филадельфия, 8 шт.",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Ролл с угрём, 8 шт.",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Том ям с креветками",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Ролл с лососем, 6 шт.",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Салат с водорослями и тунцом",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Эдамаме",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Нигири с лососем, 2 шт.",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Суп мисо",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Соус соевый",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Чай зелёный",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Ролл Калифорния, 8 шт.",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Ролл с огурцом, 6 шт.",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Моти с манго",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Соус спайси",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Лимонад юдзу",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Салат чука",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      } ]
+    }, {
+      "chain" : "Поке Волна",
+      "fit" : "GOOD",
+      "nearby" : [ {
+        "dishes" : [ "Рис для поке", "Поке на киноа с лососем" ],
+        "score" : 0.698971
+      }, {
+        "dishes" : [ "Киноа", "Поке с лососем" ],
+        "score" : 0.712545
+      }, {
+        "dishes" : [ "Соус унаги", "Киноа", "Поке с тунцом" ],
+        "score" : 0.78199
+      }, {
+        "dishes" : [ "Киноа", "Киноа", "Поке без риса с курицей" ],
+        "score" : 0.795464
+      }, {
+        "dishes" : [ "Комбуча имбирная", "Киноа", "Поке на киноа с лососем" ],
+        "score" : 0.814048
+      } ],
+      "atVenue" : [ {
+        "dishes" : [ "Рис для поке", "Поке на киноа с лососем" ],
+        "score" : 0.641955
+      }, {
+        "dishes" : [ "Киноа", "Поке с лососем" ],
+        "score" : 0.650113
+      }, {
+        "dishes" : [ "Вода газированная", "Чиа-пудинг на кокосовом молоке", "Поке с тунцом" ],
+        "score" : 0.680382
+      }, {
+        "dishes" : [ "Соус унаги", "Киноа", "Поке с тунцом" ],
+        "score" : 0.72753
+      }, {
+        "dishes" : [ "Киноа", "Киноа", "Поке без риса с курицей" ],
+        "score" : 0.730473
+      } ],
+      "replaceFirst" : [ {
+        "dishes" : [ "Киноа", "Поке на киноа с лососем" ],
+        "score" : 1.300714
+      } ],
+      "assessment" : [ {
+        "dish" : "Поке с лососем",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Боул с говядиной и кимчи",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Поке с курицей терияки",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Поке на киноа с лососем",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Поке с тофу",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Поке с тунцом",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Поке с креветками",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Поке без риса с курицей",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Киноа",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Суп мисо",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Вода газированная",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Чиа-пудинг на кокосовом молоке",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Рис для поке",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Смузи манго-маракуйя",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Соус кунжутный",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Авокадо",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Салат из огурцов и вакаме",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Соус унаги",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Комбуча имбирная",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      } ]
+    }, {
+      "chain" : "Пекарня Колос",
+      "fit" : "GOOD",
+      "nearby" : [ {
+        "dishes" : [ "Американо", "Салат с курицей и печёной тыквой", "Каша овсяная с бананом" ],
+        "score" : 1.040323
+      }, {
+        "dishes" : [ "Хлеб цельнозерновой, ломтик", "Хлеб цельнозерновой, ломтик", "Сэндвич с курицей и песто" ],
+        "score" : 1.105878
+      }, {
+        "dishes" : [ "Салат с курицей и печёной тыквой", "Каша рисовая с изюмом" ],
+        "score" : 1.121667
+      } ],
+      "atVenue" : [ {
+        "dishes" : [ "Американо", "Салат с курицей и печёной тыквой", "Каша овсяная с бананом" ],
+        "score" : 0.962283
+      }, {
+        "dishes" : [ "Хлеб цельнозерновой, ломтик", "Морс смородиновый", "Сэндвич с курицей и песто" ],
+        "score" : 0.98541
+      }, {
+        "dishes" : [ "Салат с курицей и печёной тыквой", "Каша рисовая с изюмом" ],
+        "score" : 1.041706
+      }, {
+        "dishes" : [ "Хлеб цельнозерновой, ломтик", "Капучино", "Сэндвич с лососем" ],
+        "score" : 1.327016
+      } ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Сэндвич с курицей и песто",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Сэндвич с лососем",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Тост с авокадо и яйцом",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Скрэмбл с овощами",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Шакшука",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Салат с курицей и печёной тыквой",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Салат зелёный с сыром фета",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Капучино",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Хлеб цельнозерновой, ломтик",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Синнабон",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Каша овсяная с бананом",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Каша рисовая с изюмом",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Раф ванильный",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Круассан классический",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Эклер",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Печенье овсяное",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Морс смородиновый",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Варенье",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Американо",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Круассан с ветчиной и сыром",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Киш лорен",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      } ]
     } ]
   }, {
     "name" : "обед без свинины подешевле",
@@ -1486,6 +1946,466 @@
         "verdict" : "PARTIAL",
         "reasons" : [ "LOW_PROTEIN" ]
       } ]
+    }, {
+      "chain" : "Столовая Ложка",
+      "fit" : "GOOD",
+      "nearby" : [ {
+        "dishes" : [ "Треска запечённая", "Гречка с маслом", "Макароны отварные" ],
+        "score" : 0.902021
+      }, {
+        "dishes" : [ "Суп куриный с вермишелью", "Гречка с маслом", "Блин с творогом" ],
+        "score" : 1.002548
+      }, {
+        "dishes" : [ "Треска запечённая", "Рис отварной", "Блин с творогом" ],
+        "score" : 1.239056
+      } ],
+      "atVenue" : [ {
+        "dishes" : [ "Треска запечённая", "Гречка с маслом", "Макароны отварные" ],
+        "score" : 0.848192
+      }, {
+        "dishes" : [ "Овощи тушёные", "Блин с творогом", "Блин с творогом" ],
+        "score" : 0.881178
+      }, {
+        "dishes" : [ "Суп куриный с вермишелью", "Гречка с маслом", "Блин с творогом" ],
+        "score" : 0.936605
+      }, {
+        "dishes" : [ "Треска запечённая", "Пюре картофельное", "Блин с творогом" ],
+        "score" : 1.00693
+      }, {
+        "dishes" : [ "Котлета куриная", "Гречка с маслом", "Гречка с маслом" ],
+        "score" : 1.066367
+      } ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Плов с говядиной",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Сырники со сметаной",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Блин с творогом",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Котлета куриная",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Треска запечённая",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Суп куриный с вермишелью",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Щи из свежей капусты",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Макароны отварные",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Рис отварной",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Гречка с маслом",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Борщ со сметаной",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Пюре картофельное",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Салат свекольный с чесноком",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Винегрет",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Овощи тушёные",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Кисель ягодный",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Салат витаминный",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Компот из сухофруктов",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Морс клюквенный",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Сметана",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Голубцы",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Тефтели в томатном соусе",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      } ]
+    }, {
+      "chain" : "Суши Нори",
+      "fit" : "GOOD",
+      "nearby" : [ {
+        "dishes" : [ "Соус соевый", "Эдамаме", "Рамен с курицей" ],
+        "score" : 0.966278
+      }, {
+        "dishes" : [ "Эдамаме", "Удон с говядиной" ],
+        "score" : 1.430923
+      }, {
+        "dishes" : [ "Салат чука", "Рамен с курицей" ],
+        "score" : 1.632415
+      }, {
+        "dishes" : [ "Эдамаме", "Эдамаме", "Ролл Калифорния, 8 шт." ],
+        "score" : 1.7866
+      } ],
+      "atVenue" : [ {
+        "dishes" : [ "Соус соевый", "Эдамаме", "Рамен с курицей" ],
+        "score" : 0.907625
+      }, {
+        "dishes" : [ "Салат с водорослями и тунцом", "Удон с говядиной" ],
+        "score" : 1.089882
+      }, {
+        "dishes" : [ "Эдамаме", "Салат с водорослями и тунцом", "Ролл Калифорния, 8 шт." ],
+        "score" : 1.206006
+      }, {
+        "dishes" : [ "Салат с водорослями и тунцом", "Рамен с курицей" ],
+        "score" : 1.27788
+      }, {
+        "dishes" : [ "Лимонад юдзу", "Рамен с курицей" ],
+        "score" : 1.335528
+      } ],
+      "replaceFirst" : [ {
+        "dishes" : [ "Чай зелёный", "Эдамаме", "Рамен с курицей" ],
+        "score" : 1.269532
+      } ],
+      "assessment" : [ {
+        "dish" : "Сет «Лёгкий», 16 шт.",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Рамен с курицей",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Удон с говядиной",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Ролл Филадельфия, 8 шт.",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Ролл с угрём, 8 шт.",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Том ям с креветками",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Ролл с лососем, 6 шт.",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Салат с водорослями и тунцом",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Эдамаме",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Нигири с лососем, 2 шт.",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Суп мисо",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Соус соевый",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Чай зелёный",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Ролл Калифорния, 8 шт.",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Ролл с огурцом, 6 шт.",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Моти с манго",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Соус спайси",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Лимонад юдзу",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Салат чука",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      } ]
+    }, {
+      "chain" : "Поке Волна",
+      "fit" : "GOOD",
+      "nearby" : [ {
+        "dishes" : [ "Рис для поке", "Поке на киноа с лососем" ],
+        "score" : 1.037971
+      }, {
+        "dishes" : [ "Киноа", "Поке с лососем" ],
+        "score" : 1.051545
+      }, {
+        "dishes" : [ "Соус унаги", "Киноа", "Поке с тунцом" ],
+        "score" : 1.14549
+      }, {
+        "dishes" : [ "Киноа", "Киноа", "Поке без риса с курицей" ],
+        "score" : 1.158964
+      }, {
+        "dishes" : [ "Киноа", "Боул с говядиной и кимчи" ],
+        "score" : 1.168028
+      } ],
+      "atVenue" : [ {
+        "dishes" : [ "Рис для поке", "Поке на киноа с лососем" ],
+        "score" : 0.980955
+      }, {
+        "dishes" : [ "Киноа", "Поке с лососем" ],
+        "score" : 0.989113
+      }, {
+        "dishes" : [ "Чиа-пудинг на кокосовом молоке", "Поке с тунцом" ],
+        "score" : 1.069382
+      }, {
+        "dishes" : [ "Соус унаги", "Киноа", "Поке с тунцом" ],
+        "score" : 1.09103
+      }, {
+        "dishes" : [ "Киноа", "Киноа", "Поке без риса с курицей" ],
+        "score" : 1.093973
+      } ],
+      "replaceFirst" : [ {
+        "dishes" : [ "Киноа", "Поке на киноа с лососем" ],
+        "score" : 1.654714
+      } ],
+      "assessment" : [ {
+        "dish" : "Поке с лососем",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Боул с говядиной и кимчи",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Поке с курицей терияки",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Поке на киноа с лососем",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Поке с тофу",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Поке с тунцом",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Поке с креветками",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Поке без риса с курицей",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Киноа",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Суп мисо",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Вода газированная",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Чиа-пудинг на кокосовом молоке",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Рис для поке",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Смузи манго-маракуйя",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Соус кунжутный",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Авокадо",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Салат из огурцов и вакаме",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Соус унаги",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Комбуча имбирная",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      } ]
+    }, {
+      "chain" : "Пекарня Колос",
+      "fit" : "GOOD",
+      "nearby" : [ {
+        "dishes" : [ "Хлеб цельнозерновой, ломтик", "Хлеб цельнозерновой, ломтик", "Сэндвич с курицей и песто" ],
+        "score" : 1.309378
+      }, {
+        "dishes" : [ "Салат с курицей и печёной тыквой", "Каша овсяная с бананом" ],
+        "score" : 1.409878
+      }, {
+        "dishes" : [ "Салат с курицей и печёной тыквой", "Каша рисовая с изюмом" ],
+        "score" : 1.415667
+      } ],
+      "atVenue" : [ {
+        "dishes" : [ "Хлеб цельнозерновой, ломтик", "Хлеб цельнозерновой, ломтик", "Сэндвич с курицей и песто" ],
+        "score" : 1.228216
+      }, {
+        "dishes" : [ "Салат с курицей и печёной тыквой", "Каша овсяная с бананом" ],
+        "score" : 1.328716
+      }, {
+        "dishes" : [ "Салат с курицей и печёной тыквой", "Каша рисовая с изюмом" ],
+        "score" : 1.335706
+      }, {
+        "dishes" : [ "Хлеб цельнозерновой, ломтик", "Капучино", "Сэндвич с лососем" ],
+        "score" : 1.665516
+      } ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Сэндвич с курицей и песто",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Сэндвич с лососем",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Тост с авокадо и яйцом",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Скрэмбл с овощами",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Шакшука",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Салат с курицей и печёной тыквой",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Салат зелёный с сыром фета",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Капучино",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Хлеб цельнозерновой, ломтик",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Синнабон",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Каша овсяная с бананом",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Каша рисовая с изюмом",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Раф ванильный",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Круассан классический",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Эклер",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Печенье овсяное",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Морс смородиновый",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Варенье",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Американо",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Круассан с ветчиной и сыром",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Киш лорен",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      } ]
     } ]
   }, {
     "name" : "завтрак",
@@ -2224,6 +3144,481 @@
         "verdict" : "NOT_FITS",
         "reasons" : [ "FAT_ABOVE" ]
       } ]
+    }, {
+      "chain" : "Столовая Ложка",
+      "fit" : "GOOD",
+      "nearby" : [ {
+        "dishes" : [ "Компот из сухофруктов", "Треска запечённая", "Пюре картофельное" ],
+        "score" : 0.643499
+      }, {
+        "dishes" : [ "Сметана", "Треска запечённая", "Рис отварной" ],
+        "score" : 0.818291
+      }, {
+        "dishes" : [ "Котлета куриная", "Макароны отварные" ],
+        "score" : 0.852821
+      }, {
+        "dishes" : [ "Морс клюквенный", "Треска запечённая", "Гречка с маслом" ],
+        "score" : 0.909231
+      }, {
+        "dishes" : [ "Котлета куриная", "Рис отварной" ],
+        "score" : 0.923834
+      } ],
+      "atVenue" : [ {
+        "dishes" : [ "Компот из сухофруктов", "Треска запечённая", "Пюре картофельное" ],
+        "score" : 0.611186
+      }, {
+        "dishes" : [ "Сметана", "Треска запечённая", "Рис отварной" ],
+        "score" : 0.785931
+      }, {
+        "dishes" : [ "Кисель ягодный", "Сырники со сметаной" ],
+        "score" : 0.799022
+      }, {
+        "dishes" : [ "Сметана", "Суп куриный с вермишелью", "Гречка с маслом" ],
+        "score" : 0.799022
+      }, {
+        "dishes" : [ "Котлета куриная", "Макароны отварные" ],
+        "score" : 0.815999
+      } ],
+      "replaceFirst" : [ {
+        "dishes" : [ "Морс клюквенный", "Треска запечённая", "Пюре картофельное" ],
+        "score" : 0.859568
+      }, {
+        "dishes" : [ "Кисель ягодный", "Треска запечённая", "Пюре картофельное" ],
+        "score" : 1.005209
+      } ],
+      "assessment" : [ {
+        "dish" : "Плов с говядиной",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Сырники со сметаной",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Голубцы",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Блин с творогом",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Тефтели в томатном соусе",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Котлета куриная",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Треска запечённая",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Суп куриный с вермишелью",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Щи из свежей капусты",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Макароны отварные",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Рис отварной",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Гречка с маслом",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Борщ со сметаной",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Пюре картофельное",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Салат свекольный с чесноком",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Винегрет",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Овощи тушёные",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Кисель ягодный",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Салат витаминный",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Компот из сухофруктов",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Морс клюквенный",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Сметана",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      } ]
+    }, {
+      "chain" : "Суши Нори",
+      "fit" : "GOOD",
+      "nearby" : [ {
+        "dishes" : [ "Нигири с лососем, 2 шт.", "Салат с водорослями и тунцом", "Моти с манго" ],
+        "score" : 0.632821
+      }, {
+        "dishes" : [ "Эдамаме", "Эдамаме", "Ролл с лососем, 6 шт." ],
+        "score" : 0.733927
+      }, {
+        "dishes" : [ "Эдамаме", "Салат с водорослями и тунцом", "Ролл с огурцом, 6 шт." ],
+        "score" : 0.779316
+      }, {
+        "dishes" : [ "Эдамаме", "Ролл Калифорния, 8 шт." ],
+        "score" : 0.975418
+      }, {
+        "dishes" : [ "Рамен с курицей" ],
+        "score" : 1.509171
+      } ],
+      "atVenue" : [ {
+        "dishes" : [ "Нигири с лососем, 2 шт.", "Салат с водорослями и тунцом", "Моти с манго" ],
+        "score" : 0.598142
+      }, {
+        "dishes" : [ "Эдамаме", "Эдамаме", "Ролл с лососем, 6 шт." ],
+        "score" : 0.701557
+      }, {
+        "dishes" : [ "Эдамаме", "Салат с водорослями и тунцом", "Ролл с огурцом, 6 шт." ],
+        "score" : 0.744851
+      }, {
+        "dishes" : [ "Эдамаме", "Ролл Калифорния, 8 шт." ],
+        "score" : 0.938293
+      }, {
+        "dishes" : [ "Лимонад юдзу", "Салат с водорослями и тунцом", "Салат с водорослями и тунцом" ],
+        "score" : 0.974317
+      } ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Удон с говядиной",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Ролл Филадельфия, 8 шт.",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Рамен с курицей",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Ролл с угрём, 8 шт.",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Том ям с креветками",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Ролл с лососем, 6 шт.",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Салат с водорослями и тунцом",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Эдамаме",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Нигири с лососем, 2 шт.",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Суп мисо",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Соус соевый",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Чай зелёный",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Ролл Калифорния, 8 шт.",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Ролл с огурцом, 6 шт.",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Моти с манго",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Соус спайси",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Лимонад юдзу",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Салат чука",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Сет «Лёгкий», 16 шт.",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "CARBS_ABOVE" ]
+      } ]
+    }, {
+      "chain" : "Поке Волна",
+      "fit" : "GOOD",
+      "nearby" : [ {
+        "dishes" : [ "Комбуча имбирная", "Поке с тунцом" ],
+        "score" : 0.537607
+      }, {
+        "dishes" : [ "Вода газированная", "Соус унаги", "Поке с тунцом" ],
+        "score" : 0.577345
+      }, {
+        "dishes" : [ "Соус унаги", "Поке с креветками" ],
+        "score" : 0.605812
+      }, {
+        "dishes" : [ "Поке с курицей терияки" ],
+        "score" : 0.613414
+      }, {
+        "dishes" : [ "Вода газированная", "Поке с курицей терияки" ],
+        "score" : 0.613414
+      } ],
+      "atVenue" : [ {
+        "dishes" : [ "Комбуча имбирная", "Поке с тунцом" ],
+        "score" : 0.513343
+      }, {
+        "dishes" : [ "Вода газированная", "Соус унаги", "Поке с тунцом" ],
+        "score" : 0.553091
+      }, {
+        "dishes" : [ "Соус унаги", "Поке с креветками" ],
+        "score" : 0.577163
+      }, {
+        "dishes" : [ "Поке с курицей терияки" ],
+        "score" : 0.587245
+      }, {
+        "dishes" : [ "Вода газированная", "Поке с курицей терияки" ],
+        "score" : 0.587245
+      } ],
+      "replaceFirst" : [ {
+        "dishes" : [ "Соус унаги", "Поке с тунцом" ],
+        "score" : 0.577345
+      }, {
+        "dishes" : [ "Салат из огурцов и вакаме", "Поке с тунцом" ],
+        "score" : 1.4
+      } ],
+      "assessment" : [ {
+        "dish" : "Поке с курицей терияки",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Боул с говядиной и кимчи",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Поке на киноа с лососем",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Поке с тофу",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Поке с тунцом",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Поке с креветками",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Поке без риса с курицей",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Киноа",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Суп мисо",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Вода газированная",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Чиа-пудинг на кокосовом молоке",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Рис для поке",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Смузи манго-маракуйя",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Соус кунжутный",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Авокадо",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Салат из огурцов и вакаме",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Соус унаги",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Комбуча имбирная",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Поке с лососем",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      } ]
+    }, {
+      "chain" : "Пекарня Колос",
+      "fit" : "GOOD",
+      "nearby" : [ {
+        "dishes" : [ "Американо", "Варенье", "Сэндвич с лососем" ],
+        "score" : 0.704136
+      }, {
+        "dishes" : [ "Хлеб цельнозерновой, ломтик", "Морс смородиновый", "Салат с курицей и печёной тыквой" ],
+        "score" : 0.812821
+      }, {
+        "dishes" : [ "Морс смородиновый", "Сэндвич с лососем" ],
+        "score" : 0.884991
+      } ],
+      "atVenue" : [ {
+        "dishes" : [ "Американо", "Варенье", "Сэндвич с лососем" ],
+        "score" : 0.667182
+      }, {
+        "dishes" : [ "Хлеб цельнозерновой, ломтик", "Сэндвич с лососем" ],
+        "score" : 0.77028
+      }, {
+        "dishes" : [ "Хлеб цельнозерновой, ломтик", "Морс смородиновый", "Салат с курицей и печёной тыквой" ],
+        "score" : 0.780284
+      }, {
+        "dishes" : [ "Морс смородиновый", "Сэндвич с лососем" ],
+        "score" : 0.847923
+      } ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Сэндвич с лососем",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Салат с курицей и печёной тыквой",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Салат зелёный с сыром фета",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Капучино",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Хлеб цельнозерновой, ломтик",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Каша овсяная с бананом",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Каша рисовая с изюмом",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Раф ванильный",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Круассан классический",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Эклер",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Печенье овсяное",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Морс смородиновый",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Варенье",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Американо",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Сэндвич с курицей и песто",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Круассан с ветчиной и сыром",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Киш лорен",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Синнабон",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Тост с авокадо и яйцом",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Скрэмбл с овощами",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Шакшука",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      } ]
     } ]
   }, {
     "name" : "вегетарианский ужин",
@@ -2926,6 +4321,376 @@
         "verdict" : "NOT_FITS",
         "reasons" : [ "EXCLUDED_TAG" ]
       } ]
+    }, {
+      "chain" : "Столовая Ложка",
+      "fit" : "GOOD",
+      "nearby" : [ {
+        "dishes" : [ "Блин с творогом", "Блин с творогом" ],
+        "score" : 1.148019
+      }, {
+        "dishes" : [ "Макароны отварные", "Сырники со сметаной" ],
+        "score" : 1.528462
+      } ],
+      "atVenue" : [ {
+        "dishes" : [ "Рис отварной", "Сырники со сметаной" ],
+        "score" : 1.036405
+      }, {
+        "dishes" : [ "Блин с творогом", "Блин с творогом" ],
+        "score" : 1.098558
+      }, {
+        "dishes" : [ "Макароны отварные", "Сырники со сметаной" ],
+        "score" : 1.453404
+      }, {
+        "dishes" : [ "Овощи тушёные", "Гречка с маслом", "Блин с творогом" ],
+        "score" : 1.550059
+      } ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Сырники со сметаной",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Блин с творогом",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Макароны отварные",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Рис отварной",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Гречка с маслом",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Пюре картофельное",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Салат свекольный с чесноком",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Винегрет",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Овощи тушёные",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Кисель ягодный",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Салат витаминный",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Компот из сухофруктов",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Морс клюквенный",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Сметана",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Плов с говядиной",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Голубцы",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Тефтели в томатном соусе",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Котлета куриная",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Борщ со сметаной",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Треска запечённая",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Суп куриный с вермишелью",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Щи из свежей капусты",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      } ]
+    }, {
+      "chain" : "Суши Нори",
+      "fit" : "NONE",
+      "nearby" : [ ],
+      "atVenue" : [ ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Эдамаме",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Соус соевый",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Чай зелёный",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Ролл с огурцом, 6 шт.",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Моти с манго",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Соус спайси",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Лимонад юдзу",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Салат чука",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Сет «Лёгкий», 16 шт.",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Рамен с курицей",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Удон с говядиной",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Ролл Филадельфия, 8 шт.",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Ролл с угрём, 8 шт.",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Ролл Калифорния, 8 шт.",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Том ям с креветками",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Ролл с лососем, 6 шт.",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Салат с водорослями и тунцом",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Нигири с лососем, 2 шт.",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Суп мисо",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      } ]
+    }, {
+      "chain" : "Поке Волна",
+      "fit" : "COMPROMISE",
+      "nearby" : [ ],
+      "atVenue" : [ ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Поке с тофу",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Киноа",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Вода газированная",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Чиа-пудинг на кокосовом молоке",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Рис для поке",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Смузи манго-маракуйя",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Соус кунжутный",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Авокадо",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Салат из огурцов и вакаме",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Соус унаги",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Комбуча имбирная",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Поке с лососем",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Боул с говядиной и кимчи",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Поке с курицей терияки",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Поке на киноа с лососем",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Поке с тунцом",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Поке с креветками",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Поке без риса с курицей",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Суп мисо",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      } ]
+    }, {
+      "chain" : "Пекарня Колос",
+      "fit" : "COMPROMISE",
+      "nearby" : [ ],
+      "atVenue" : [ ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Тост с авокадо и яйцом",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Скрэмбл с овощами",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Шакшука",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Салат зелёный с сыром фета",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Капучино",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Хлеб цельнозерновой, ломтик",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Синнабон",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Каша овсяная с бананом",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Каша рисовая с изюмом",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Раф ванильный",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Круассан классический",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Эклер",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Печенье овсяное",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Морс смородиновый",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Варенье",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Американо",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Сэндвич с курицей и песто",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Круассан с ветчиной и сыром",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Киш лорен",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Сэндвич с лососем",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Салат с курицей и печёной тыквой",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      } ]
     } ]
   }, {
     "name" : "перекус",
@@ -3592,6 +5357,427 @@
         "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
       }, {
         "dish" : "Фалафель с хумусом",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      } ]
+    }, {
+      "chain" : "Столовая Ложка",
+      "fit" : "GOOD",
+      "nearby" : [ {
+        "dishes" : [ "Треска запечённая" ],
+        "score" : 0.48375
+      }, {
+        "dishes" : [ "Суп куриный с вермишелью" ],
+        "score" : 0.886471
+      }, {
+        "dishes" : [ "Борщ со сметаной" ],
+        "score" : 1.106061
+      } ],
+      "atVenue" : [ {
+        "dishes" : [ "Треска запечённая" ],
+        "score" : 0.48375
+      }, {
+        "dishes" : [ "Суп куриный с вермишелью" ],
+        "score" : 0.886471
+      }, {
+        "dishes" : [ "Борщ со сметаной" ],
+        "score" : 1.106061
+      } ],
+      "replaceFirst" : [ {
+        "dishes" : [ "Суп куриный с вермишелью" ],
+        "score" : 0.886471
+      }, {
+        "dishes" : [ "Борщ со сметаной" ],
+        "score" : 1.106061
+      } ],
+      "assessment" : [ {
+        "dish" : "Треска запечённая",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Пюре картофельное",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Суп куриный с вермишелью",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Борщ со сметаной",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Щи из свежей капусты",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Овощи тушёные",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Салат свекольный с чесноком",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Винегрет",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Кисель ягодный",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Салат витаминный",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Компот из сухофруктов",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Морс клюквенный",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Сметана",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Котлета куриная",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Гречка с маслом",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Рис отварной",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Макароны отварные",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Блин с творогом",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE" ]
+      }, {
+        "dish" : "Тефтели в томатном соусе",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Голубцы",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Сырники со сметаной",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Плов с говядиной",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      } ]
+    }, {
+      "chain" : "Суши Нори",
+      "fit" : "GOOD",
+      "nearby" : [ {
+        "dishes" : [ "Соус соевый", "Суп мисо", "Салат чука" ],
+        "score" : 0.514286
+      }, {
+        "dishes" : [ "Чай зелёный", "Соус соевый", "Салат с водорослями и тунцом" ],
+        "score" : 0.530435
+      }, {
+        "dishes" : [ "Суп мисо", "Эдамаме" ],
+        "score" : 0.63619
+      }, {
+        "dishes" : [ "Салат с водорослями и тунцом" ],
+        "score" : 1.069524
+      } ],
+      "atVenue" : [ {
+        "dishes" : [ "Соус соевый", "Суп мисо", "Салат чука" ],
+        "score" : 0.514286
+      }, {
+        "dishes" : [ "Чай зелёный", "Соус соевый", "Салат с водорослями и тунцом" ],
+        "score" : 0.530435
+      }, {
+        "dishes" : [ "Суп мисо", "Эдамаме" ],
+        "score" : 0.63619
+      }, {
+        "dishes" : [ "Салат с водорослями и тунцом" ],
+        "score" : 1.069524
+      } ],
+      "replaceFirst" : [ {
+        "dishes" : [ "Чай зелёный", "Суп мисо", "Салат чука" ],
+        "score" : 1.076667
+      } ],
+      "assessment" : [ {
+        "dish" : "Салат с водорослями и тунцом",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Эдамаме",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Нигири с лососем, 2 шт.",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Суп мисо",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Соус соевый",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Чай зелёный",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Лимонад юдзу",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Салат чука",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Ролл с огурцом, 6 шт.",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Моти с манго",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Ролл с лососем, 6 шт.",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Соус спайси",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Том ям с креветками",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Ролл Калифорния, 8 шт.",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Ролл с угрём, 8 шт.",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Ролл Филадельфия, 8 шт.",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Удон с говядиной",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Рамен с курицей",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Сет «Лёгкий», 16 шт.",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "CARBS_ABOVE" ]
+      } ]
+    }, {
+      "chain" : "Поке Волна",
+      "fit" : "GOOD",
+      "nearby" : [ {
+        "dishes" : [ "Киноа" ],
+        "score" : 1.022727
+      }, {
+        "dishes" : [ "Вода газированная", "Киноа" ],
+        "score" : 1.022727
+      }, {
+        "dishes" : [ "Комбуча имбирная", "Соус унаги", "Суп мисо" ],
+        "score" : 1.032727
+      } ],
+      "atVenue" : [ {
+        "dishes" : [ "Киноа" ],
+        "score" : 1.022727
+      }, {
+        "dishes" : [ "Вода газированная", "Киноа" ],
+        "score" : 1.022727
+      }, {
+        "dishes" : [ "Комбуча имбирная", "Соус унаги", "Суп мисо" ],
+        "score" : 1.032727
+      } ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Киноа",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Салат из огурцов и вакаме",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Суп мисо",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Вода газированная",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Авокадо",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Соус унаги",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Комбуча имбирная",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Смузи манго-маракуйя",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Рис для поке",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Чиа-пудинг на кокосовом молоке",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Соус кунжутный",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Поке без риса с курицей",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Поке с тунцом",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Поке с креветками",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Поке с тофу",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Поке на киноа с лососем",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Поке с курицей терияки",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Боул с говядиной и кимчи",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Поке с лососем",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      } ]
+    }, {
+      "chain" : "Пекарня Колос",
+      "fit" : "COMPROMISE",
+      "nearby" : [ ],
+      "atVenue" : [ ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Капучино",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Хлеб цельнозерновой, ломтик",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Морс смородиновый",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Варенье",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Американо",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Печенье овсяное",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Салат зелёный с сыром фета",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Эклер",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Круассан классический",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Салат с курицей и печёной тыквой",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Раф ванильный",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Шакшука",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Скрэмбл с овощами",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Каша рисовая с изюмом",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Каша овсяная с бананом",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Тост с авокадо и яйцом",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Сэндвич с лососем",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Синнабон",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Круассан с ветчиной и сыром",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Киш лорен",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Сэндвич с курицей и песто",
         "verdict" : "NOT_FITS",
         "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
       } ]

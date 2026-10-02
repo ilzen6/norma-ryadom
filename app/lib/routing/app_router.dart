@@ -43,28 +43,49 @@ final routerProvider = Provider<GoRouter>((ref) {
         ProfileGate.present => onboarding || dataError ? Routes.home : null,
       };
     },
-    errorBuilder: (_, _) => const NotFoundScreen(),
+    errorBuilder: (_, _) => const Backdrop(child: NotFoundScreen()),
     routes: [
-      GoRoute(path: Routes.onboarding, builder: (_, _) => const OnboardingScreen()),
-      GoRoute(path: Routes.dataError, builder: (_, _) => const DataErrorScreen()),
+      GoRoute(
+        path: Routes.onboarding,
+        builder: (_, _) => const Backdrop(child: OnboardingScreen()),
+      ),
+      GoRoute(
+        path: Routes.dataError,
+        builder: (_, _) => const Backdrop(child: DataErrorScreen()),
+      ),
       StatefulShellRoute.indexedStack(
         builder: (_, _, shell) => _MainShell(shell: shell),
         branches: [
           StatefulShellBranch(
-            routes: [GoRoute(path: Routes.home, builder: (_, _) => const HomeScreen())],
+            routes: [
+              GoRoute(
+                path: Routes.home,
+                builder: (_, _) => const Backdrop(child: HomeScreen()),
+              ),
+            ],
           ),
           StatefulShellBranch(
             routes: [GoRoute(path: Routes.map, builder: (_, _) => const MapScreen())],
           ),
           StatefulShellBranch(
-            routes: [GoRoute(path: Routes.diary, builder: (_, _) => const DiaryScreen())],
+            routes: [
+              GoRoute(
+                path: Routes.diary,
+                builder: (_, _) => const Backdrop(child: DiaryScreen()),
+              ),
+            ],
           ),
           StatefulShellBranch(
             routes: [
               GoRoute(
                 path: Routes.profile,
-                builder: (_, _) => const ProfileScreen(),
-                routes: [GoRoute(path: 'edit', builder: (_, _) => const ProfileEditScreen())],
+                builder: (_, _) => const Backdrop(child: ProfileScreen()),
+                routes: [
+                  GoRoute(
+                    path: 'edit',
+                    builder: (_, _) => const Backdrop(child: ProfileEditScreen()),
+                  ),
+                ],
               ),
             ],
           ),
@@ -73,11 +94,14 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/venue/:id',
         builder: (_, state) => switch (int.tryParse(state.pathParameters['id'] ?? '')) {
-          final venueId? when venueId > 0 => VenueScreen(venueId: venueId),
-          _ => const NotFoundScreen(),
+          final venueId? when venueId > 0 => Backdrop(child: VenueScreen(venueId: venueId)),
+          _ => const Backdrop(child: NotFoundScreen()),
         },
       ),
-      GoRoute(path: Routes.combo, builder: (_, _) => const ComboScreen()),
+      GoRoute(
+        path: Routes.combo,
+        builder: (_, _) => const Backdrop(child: ComboScreen()),
+      ),
     ],
   );
   ref.onDispose(router.dispose);

@@ -30,9 +30,9 @@ class DemoCatalogIT : IntegrationTest() {
         loader.run(args)
         loader.run(args)
 
-        assertThat(jdbc.sql("SELECT count(*) FROM chain").query(Int::class.java).single()).isEqualTo(6)
-        assertThat(jdbc.sql("SELECT count(*) FROM venue").query(Int::class.java).single()).isEqualTo(25)
-        assertThat(jdbc.sql("SELECT count(*) FROM menu_item WHERE is_available").query(Int::class.java).single()).isEqualTo(136)
+        assertThat(jdbc.sql("SELECT count(*) FROM chain").query(Int::class.java).single()).isEqualTo(10)
+        assertThat(jdbc.sql("SELECT count(*) FROM venue").query(Int::class.java).single()).isEqualTo(349)
+        assertThat(jdbc.sql("SELECT count(*) FROM menu_item WHERE is_available").query(Int::class.java).single()).isEqualTo(217)
     }
 
     private fun demoProperties(): DemoCatalogProperties {
