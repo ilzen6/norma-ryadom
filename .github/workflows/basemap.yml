@@ -28,7 +28,7 @@ jobs:
           curl -fL --retry 5 -o "$RUNNER_TEMP/region.osm.pbf" https://download.geofabrik.de/russia/central-fed-district-latest.osm.pbf
           osmium extract -b 37.495,55.722,37.690,55.798 --strategy smart "$RUNNER_TEMP/region.osm.pbf" -o "$RUNNER_TEMP/area.osm.pbf"
           osmium export "$RUNNER_TEMP/area.osm.pbf" -f geojsonseq --format-option print_record_separator=false -o "$RUNNER_TEMP/area.geojsonseq"
-          python tool/basemap/build_basemap.py "$RUNNER_TEMP/area.geojsonseq" "$RUNNER_TEMP/basemap.json"
+          python tool/basemap/build_basemap.py "$RUNNER_TEMP/area.geojsonseq" "$RUNNER_TEMP/basemap.json" "$RUNNER_TEMP/places.json"
           ls -la "$RUNNER_TEMP/basemap.json"
       - name: Публикация в ветку basemap-data
         run: |
@@ -37,6 +37,7 @@ jobs:
           git checkout --orphan basemap-data
           git rm -rf --quiet .
           cp "$RUNNER_TEMP/basemap.json" basemap.json
-          git add basemap.json
+          cp "$RUNNER_TEMP/places.json" places.json
+          git add basemap.json places.json
           git commit -m "chore: basemap from OpenStreetMap"
           git push -f origin basemap-data

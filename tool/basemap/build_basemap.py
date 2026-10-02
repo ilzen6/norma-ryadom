@@ -18,6 +18,7 @@ ROAD_CLASSES = {
 GREEN_LEISURE = {"park", "garden", "pitch", "playground"}
 GREEN_LANDUSE = {"grass", "forest", "recreation_ground", "meadow", "village_green", "cemetery"}
 GREEN_NATURAL = {"wood", "scrub", "grassland"}
+FOOD_AMENITIES = {"restaurant", "cafe", "fast_food", "food_court", "bar", "pub"}
 
 
 def encode(points):
@@ -98,14 +99,37 @@ def classify(properties, kind):
     return None
 
 
+def food_place(properties, geometry, frame):
+    if properties.get("amenity") not in FOOD_AMENITIES:
+        return None
+    street = properties.get("addr:street")
+    number = properties.get("addr:housenumber")
+    if not street or not number:
+        return None
+    point = geometry.centroid if geometry.geom_type != "Point" else geometry
+    if not frame.contains(point):
+        return None
+    return {
+        "lat": round(point.y, 6),
+        "lon": round(point.x, 6),
+        "street": street,
+        "housenumber": number,
+        "amenity": properties["amenity"],
+    }
+
+
 def main():
     frame = make_box(WEST, SOUTH, EAST, NORTH)
     water, green, buildings, rail = [], [], [], []
     roads = {name: [] for name in ("major", "medium", "minor", "path")}
     metro = {}
+    places = []
     for feature in features(sys.argv[1]):
         geometry = shape(feature["geometry"])
         properties = feature.get("properties") or {}
+        place = food_place(properties, geometry, frame)
+        if place is not None:
+            places.append(place)
         kind = {"Polygon": "polygon", "MultiPolygon": "polygon", "LineString": "line", "MultiLineString": "line"}.get(
             geometry.geom_type, "point"
         )
@@ -147,7 +171,12 @@ def main():
     }
     with open(sys.argv[2], "w", encoding="utf-8") as output:
         json.dump(basemap, output, ensure_ascii=False, separators=(",", ":"))
+    if len(sys.argv) > 3:
+        unique = {(place["street"], place["housenumber"]): place for place in places}
+        with open(sys.argv[3], "w", encoding="utf-8") as output:
+            json.dump(sorted(unique.values(), key=lambda place: (place["lat"], place["lon"])), output, ensure_ascii=False)
     summary = {key: len(basemap[key]) for key in ("water", "green", "buildings", "rail", "metro")}
+    summary["places"] = len(places)
     summary.update({f"roads.{name}": len(lines) for name, lines in roads.items()})
     print(summary)
 
