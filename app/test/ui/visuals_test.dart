@@ -21,6 +21,27 @@ void main() {
     expect(DishAvatar.iconOf(DishCategory.main, 'Неизвестное блюдо'), Icons.restaurant_rounded);
   });
 
+  test('ищет слово блюда только с начала слова, а не внутри другого', () {
+    expect(DishAvatar.iconOf(DishCategory.dessert, 'Брауни шоколадный'), Icons.cake_rounded);
+    expect(DishAvatar.iconOf(DishCategory.drink, 'Морс барбарисовый'), Icons.local_drink_rounded);
+    expect(DishAvatar.iconOf(DishCategory.main, 'Крем-суп тыквенный'), Icons.soup_kitchen_rounded);
+  });
+
+  testWidgets('при отключённых анимациях кольца сразу показывают итог', (tester) async {
+    await tester.pumpWidget(
+      const MediaQuery(
+        data: MediaQueryData(disableAnimations: true),
+        child: Directionality(
+          textDirection: TextDirection.ltr,
+          child: ProgressRings(rings: [RingSpec(value: 0.6, color: Colors.green)]),
+        ),
+      ),
+    );
+    await tester.pump();
+
+    expect(tester.hasRunningAnimations, isFalse);
+  });
+
   testWidgets('сводит одинаковые блюда набора в одну строку с множителем', (tester) async {
     final rice = TestData.dish(2, 'Рис с овощами', 207, category: DishCategory.side);
     await pumpPiece(tester, DishLines(dishes: [TestData.dish(1, 'Куриная грудка гриль', 214), rice, rice]));

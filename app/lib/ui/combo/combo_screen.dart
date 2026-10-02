@@ -263,6 +263,12 @@ class _DishTile extends ConsumerWidget {
     final l10n = context.l10n;
     final textTheme = Theme.of(context).textTheme;
     final nutrients = dish.nutrients;
+    final stacked = MediaQuery.textScalerOf(context).scale(1) > 1.3;
+    final replace = TextButton(
+      key: Key('replace-$index'),
+      onPressed: () => ref.read(replacementProvider.notifier).load(index),
+      child: Text(l10n.replaceDish, semanticsLabel: l10n.replaceDishTooltip(dish.name)),
+    );
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 12, 8, 12),
       child: Row(
@@ -285,25 +291,43 @@ class _DishTile extends ConsumerWidget {
                 ),
                 const SizedBox(height: 6),
                 TrustBadge(kind: dish.sourceKind),
+                if (stacked) replace,
               ],
             ),
           ),
-          TextButton(
-            key: Key('replace-$index'),
-            onPressed: () => ref.read(replacementProvider.notifier).load(index),
-            child: Text(l10n.replaceDish, semanticsLabel: l10n.replaceDishTooltip(dish.name)),
-          ),
+          if (!stacked) replace,
         ],
       ),
     );
   }
 }
 
-class _Replacements extends ConsumerWidget {
+class _Replacements extends ConsumerStatefulWidget {
   const _Replacements();
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<_Replacements> createState() => _ReplacementsState();
+}
+
+class _ReplacementsState extends ConsumerState<_Replacements> {
+  final _anchor = GlobalKey();
+
+  void _reveal() => WidgetsBinding.instance.addPostFrameCallback((_) {
+    final target = _anchor.currentContext;
+    if (target == null || !target.mounted) return;
+    Scrollable.ensureVisible(
+      target,
+      alignment: 0.15,
+      duration: MediaQuery.disableAnimationsOf(target) ? Duration.zero : const Duration(milliseconds: 320),
+      curve: Curves.easeOutCubic,
+    );
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    ref.listen(replacementProvider, (previous, next) {
+      if (next is ReplacementOptions && previous is! ReplacementOptions) _reveal();
+    });
     final l10n = context.l10n;
     final palette = context.palette;
     final textTheme = Theme.of(context).textTheme;
@@ -316,7 +340,8 @@ class _Replacements extends ConsumerWidget {
         onRetry: () => controller.load(index),
       ),
       ReplacementOptions(:final options) when options.isEmpty => MessageView(message: l10n.noReplacements),
-      ReplacementOptions(:final options) => RevealOnAppear(
+      ReplacementOptions(:final options) => KeyedSubtree(
+        key: _anchor,
         child: Panel(
           key: const Key('replacements'),
           color: palette.brandSoft,

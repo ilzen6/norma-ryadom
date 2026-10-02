@@ -2,7 +2,7 @@
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{admin/fragments :: head('Не найдено')}"></head>
 <body>
-<header th:replace="~{admin/fragments :: nav}"></header>
+<header th:replace="~{admin/fragments :: nav('none')}"></header>
 <main>
     <h1>Не найдено</h1>
     <p><a th:href="@{/admin}">Вернуться к обзору</a></p>

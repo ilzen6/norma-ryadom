@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -69,7 +70,7 @@ final basemapLoaderProvider = Provider<Future<String> Function()>(
 
 final basemapProvider = FutureProvider<Basemap?>((ref) async {
   try {
-    return Basemap.fromJson(await ref.watch(basemapLoaderProvider)());
+    return await compute(Basemap.fromJson, await ref.watch(basemapLoaderProvider)());
   } on Object {
     return null;
   }

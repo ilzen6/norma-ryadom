@@ -88,10 +88,14 @@ class _RemainingHero extends ConsumerWidget {
                         Eyebrow(l10n.remainingTitle, color: onHero.withValues(alpha: 0.8)),
                         const SizedBox(height: 10),
                         if (remaining.kcal > 0) ...[
-                          AnimatedNumber(
-                            value: remaining.kcal.toDouble(),
-                            key: const Key('remaining-summary'),
-                            style: textTheme.displayMedium?.copyWith(color: onHero, fontFeatures: AppFonts.tabular),
+                          FittedBox(
+                            fit: BoxFit.scaleDown,
+                            alignment: Alignment.centerLeft,
+                            child: AnimatedNumber(
+                              value: remaining.kcal.toDouble(),
+                              key: const Key('remaining-summary'),
+                              style: textTheme.displayMedium?.copyWith(color: onHero, fontFeatures: AppFonts.tabular),
+                            ),
                           ),
                           Text(
                             l10n.kcalUnit,

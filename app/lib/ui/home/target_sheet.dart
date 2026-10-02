@@ -74,35 +74,25 @@ class _TargetSheetState extends ConsumerState<TargetSheet> {
               const SizedBox(height: 20),
               _field(const Key('target-kcal'), _kcal, l10n.kcalLabel, 100, 2000),
               _field(const Key('target-tolerance'), _tolerance, l10n.toleranceLabel, 10, 500),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: _field(
-                      const Key('target-protein'),
-                      _protein,
-                      l10n.proteinMinLabel,
-                      0,
-                      300,
-                      suffix: l10n.gramsUnit,
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: _field(const Key('target-fat'), _fat, l10n.fatMaxLabel, 0, 300, suffix: l10n.gramsUnit),
-                  ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: _field(
-                      const Key('target-carbs'),
-                      _carbs,
-                      l10n.carbsMaxLabel,
-                      0,
-                      500,
-                      suffix: l10n.gramsUnit,
-                    ),
-                  ),
-                ],
+              LayoutBuilder(
+                builder: (context, constraints) {
+                  final fields = [
+                    _field(const Key('target-protein'), _protein, l10n.proteinMinLabel, 0, 300, suffix: l10n.gramsUnit),
+                    _field(const Key('target-fat'), _fat, l10n.fatMaxLabel, 0, 300, suffix: l10n.gramsUnit),
+                    _field(const Key('target-carbs'), _carbs, l10n.carbsMaxLabel, 0, 500, suffix: l10n.gramsUnit),
+                  ];
+                  final narrow = constraints.maxWidth < 360 || MediaQuery.textScalerOf(context).scale(1) > 1.3;
+                  if (narrow) return Column(children: fields);
+                  return Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      for (final (index, field) in fields.indexed) ...[
+                        if (index > 0) const SizedBox(width: 10),
+                        Expanded(child: field),
+                      ],
+                    ],
+                  );
+                },
               ),
               const SizedBox(height: 8),
               Row(

@@ -2,7 +2,7 @@
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{admin/fragments :: head('Жалобы')}"></head>
 <body>
-<header th:replace="~{admin/fragments :: nav}"></header>
+<header th:replace="~{admin/fragments :: nav('reviews')}"></header>
 <main>
     <h1>Жалобы «цифры не совпадают»</h1>
     <p th:if="${resolved != null}" class="alert ok" role="status" data-testid="resolved">Жалобы по блюду закрыты</p>

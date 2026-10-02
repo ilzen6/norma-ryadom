@@ -2,7 +2,7 @@
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{admin/fragments :: head(${chain.name})}"></head>
 <body>
-<header th:replace="~{admin/fragments :: nav}"></header>
+<header th:replace="~{admin/fragments :: nav('chains')}"></header>
 <main>
     <h1 th:text="${chain.name}">Сеть</h1>
     <p class="muted">Версия меню: <span th:text="${chain.menuVersion}">0</span></p>

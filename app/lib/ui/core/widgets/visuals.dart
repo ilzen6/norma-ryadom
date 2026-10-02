@@ -153,13 +153,17 @@ class DishAvatar extends StatelessWidget {
     (['салат', 'брокколи', 'овощ', 'кукуруз'], Icons.eco_rounded),
   ];
 
+  static final _patterns = [
+    for (final (words, icon) in _keywords) (RegExp('(^|[^а-яё])(${words.join('|')})'), icon),
+  ];
+
   static IconData iconOf(DishCategory category, [String name = '']) {
     if (category == DishCategory.salad || category == DishCategory.sauce) {
       return category == DishCategory.salad ? Icons.eco_rounded : Icons.water_drop_rounded;
     }
     final lower = name.toLowerCase();
-    for (final (words, icon) in _keywords) {
-      if (words.any(lower.contains)) {
+    for (final (pattern, icon) in _patterns) {
+      if (pattern.hasMatch(lower)) {
         return icon;
       }
     }
@@ -300,7 +304,6 @@ class _ProgressRingsState extends State<ProgressRings> with SingleTickerProvider
   void initState() {
     super.initState();
     _from = [for (final _ in widget.rings) 0];
-    _controller.forward();
   }
 
   @override
@@ -327,25 +330,34 @@ class _ProgressRingsState extends State<ProgressRings> with SingleTickerProvider
   }
 
   @override
-  Widget build(BuildContext context) => SizedBox.square(
-    dimension: widget.size,
-    child: AnimatedBuilder(
-      animation: _curve,
-      builder: (context, child) {
-        final values = _current(widget.rings);
-        return CustomPaint(
-          painter: _RingsPainter(
-            [for (final (index, ring) in widget.rings.indexed) RingSpec(value: values[index], color: ring.color)],
-            widget.stroke,
-            widget.gap,
-            context.palette.surfaceMuted,
-          ),
-          child: child,
-        );
-      },
-      child: widget.center == null ? null : Center(child: widget.center),
-    ),
-  );
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _controller.duration = MediaQuery.disableAnimationsOf(context) ? Duration.zero : const Duration(milliseconds: 900);
+    if (_controller.isDismissed) _controller.forward();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox.square(
+      dimension: widget.size,
+      child: AnimatedBuilder(
+        animation: _curve,
+        builder: (context, child) {
+          final values = _current(widget.rings);
+          return CustomPaint(
+            painter: _RingsPainter(
+              [for (final (index, ring) in widget.rings.indexed) RingSpec(value: values[index], color: ring.color)],
+              widget.stroke,
+              widget.gap,
+              context.palette.surfaceMuted,
+            ),
+            child: child,
+          );
+        },
+        child: widget.center == null ? null : Center(child: widget.center),
+      ),
+    );
+  }
 }
 
 class _RingsPainter extends CustomPainter {
@@ -681,7 +693,17 @@ class _SkeletonCardsState extends State<SkeletonCards> with SingleTickerProvider
   late final AnimationController _controller = AnimationController(
     vsync: this,
     duration: const Duration(milliseconds: 1200),
-  )..repeat(reverse: true);
+  );
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (MediaQuery.disableAnimationsOf(context)) {
+      _controller.value = 1;
+    } else if (!_controller.isAnimating) {
+      _controller.repeat(reverse: true);
+    }
+  }
 
   @override
   void dispose() {
@@ -712,7 +734,7 @@ class _SkeletonCardsState extends State<SkeletonCards> with SingleTickerProvider
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      bar(140, 12),
+                      FractionallySizedBox(widthFactor: 0.5, child: bar(140, 12)),
                       const SizedBox(height: 16),
                       for (final width in [210.0, 170.0]) ...[
                         Row(
@@ -726,7 +748,7 @@ class _SkeletonCardsState extends State<SkeletonCards> with SingleTickerProvider
                               ),
                             ),
                             const SizedBox(width: 12),
-                            bar(width, 12),
+                            Flexible(child: bar(width, 12)),
                           ],
                         ),
                         const SizedBox(height: 10),
@@ -754,42 +776,16 @@ class Appear extends StatelessWidget {
   final int index;
 
   @override
-  Widget build(BuildContext context) => TweenAnimationBuilder<double>(
-    tween: Tween(begin: 0, end: 1),
-    duration: Duration(milliseconds: 380 + 70 * index.clamp(0, 6)),
-    curve: Curves.easeOutCubic,
-    builder: (context, progress, child) => Opacity(
-      opacity: progress,
-      child: Transform.translate(offset: Offset(0, 18 * (1 - progress)), child: child),
-    ),
-    child: child,
-  );
-}
-
-class RevealOnAppear extends StatefulWidget {
-  const RevealOnAppear({super.key, required this.child});
-
-  final Widget child;
-
-  @override
-  State<RevealOnAppear> createState() => _RevealOnAppearState();
-}
-
-class _RevealOnAppearState extends State<RevealOnAppear> {
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (!mounted) return;
-      Scrollable.ensureVisible(
-        context,
-        alignment: 0.15,
-        duration: const Duration(milliseconds: 320),
-        curve: Curves.easeOutCubic,
-      );
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) => widget.child;
+  Widget build(BuildContext context) => MediaQuery.disableAnimationsOf(context)
+      ? child
+      : TweenAnimationBuilder<double>(
+          tween: Tween(begin: 0, end: 1),
+          duration: Duration(milliseconds: 380 + 70 * index.clamp(0, 6)),
+          curve: Curves.easeOutCubic,
+          builder: (context, progress, child) => Opacity(
+            opacity: progress,
+            child: Transform.translate(offset: Offset(0, 18 * (1 - progress)), child: child),
+          ),
+          child: child,
+        );
 }

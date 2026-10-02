@@ -2,15 +2,15 @@
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{admin/fragments :: head('Обзор')}"></head>
 <body>
-<header th:replace="~{admin/fragments :: nav}"></header>
+<header th:replace="~{admin/fragments :: nav('dashboard')}"></header>
 <main>
     <h1>Обзор</h1>
     <div class="tiles">
         <a class="tile" th:href="@{/admin/chains}"><span class="value" th:text="${chainCount}" data-testid="chain-count">0</span><span>сетей</span></a>
         <a class="tile" th:href="@{/admin/chains}"><span class="value" th:text="${venueCount}">0</span><span>точек</span></a>
         <a class="tile" th:href="@{/admin/chains}"><span class="value" th:text="${itemCount}">0</span><span>блюд в продаже</span></a>
-        <a class="tile" th:href="@{/admin/moderation}"><span class="value" th:text="${openSubmissions}" data-testid="open-submissions">0</span><span>фото ждут модерации</span></a>
-        <a class="tile" th:href="@{/admin/reviews}"><span class="value" th:text="${reviewCases}" data-testid="review-cases">0</span><span>блюд на перепроверке</span></a>
+        <a class="tile" th:classappend="${openSubmissions > 0} ? 'attention'" th:href="@{/admin/moderation}"><span class="value" th:text="${openSubmissions}" data-testid="open-submissions">0</span><span>фото ждут модерации</span></a>
+        <a class="tile" th:classappend="${reviewCases > 0} ? 'attention'" th:href="@{/admin/reviews}"><span class="value" th:text="${reviewCases}" data-testid="review-cases">0</span><span>блюд на перепроверке</span></a>
     </div>
 </main>
 </body>

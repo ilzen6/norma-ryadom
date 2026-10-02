@@ -2,7 +2,7 @@
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{admin/fragments :: head('Фото меню')}"></head>
 <body>
-<header th:replace="~{admin/fragments :: nav}"></header>
+<header th:replace="~{admin/fragments :: nav('moderation')}"></header>
 <main>
     <h1>Фото меню № <span th:text="${submission.id}">1</span></h1>
     <p class="muted"><span th:text="${submission.venueName}">Заведение</span>, <span th:text="${submission.venueAddress}">адрес</span> · <span th:text="#{'status.' + ${submission.status}}">статус</span></p>

@@ -24,16 +24,17 @@ class MapScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final venues = ref.watch(mapVenuesProvider);
+    void retry() => ref.invalidate(mapVenuesProvider);
     return Scaffold(
-      body: switch (venues) {
-        AsyncData(value: Ok(:final value)) => _MapBody(venues: value),
-        AsyncData(value: Err(:final failure)) => _MapMessage(
-          child: FailureView(failure: failure, onRetry: () => ref.invalidate(mapVenuesProvider)),
+      body: switch (venues.hasError && !venues.isLoading ? null : venues.value) {
+        Ok(:final value) => _MapBody(venues: value),
+        Err(:final failure) => _MapMessage(
+          child: FailureView(failure: failure, onRetry: retry),
         ),
-        AsyncError() => _MapMessage(
-          child: FailureView(failure: AppFailure.unexpected, onRetry: () => ref.invalidate(mapVenuesProvider)),
+        null when venues.hasError => _MapMessage(
+          child: FailureView(failure: AppFailure.unexpected, onRetry: retry),
         ),
-        _ => _MapMessage(
+        null => _MapMessage(
           child: Semantics(label: l10n.navMap, child: const LoadingView()),
         ),
       },
@@ -237,7 +238,7 @@ class _MapBodyState extends ConsumerState<_MapBody> {
           builder: (context, controller) => _VenueSheet(
             controller: _sheetScroll = controller,
             venues: venues,
-            attribution: tiles.isNotEmpty ? l10n.mapAttribution : vector?.attribution,
+            attribution: tiles.isNotEmpty || vector != null ? l10n.mapAttribution : null,
             header: Row(
               children: [
                 Expanded(
@@ -266,93 +267,103 @@ class _MapBodyState extends ConsumerState<_MapBody> {
     );
   }
 
-  List<Widget> _vectorLayers(Basemap basemap, Palette palette) => [
-    PolygonLayer(
-      simplificationTolerance: 0.3,
-      polygons: [
-        for (final ring in basemap.green) Polygon(points: ring, color: palette.mapGreen),
-        for (final ring in basemap.water) Polygon(points: ring, color: palette.mapWater),
-      ],
-    ),
-    _ZoomGate(
-      minZoom: 15,
-      child: PolygonLayer(
-        simplificationTolerance: 0.4,
+  List<Widget>? _layers;
+  (Basemap, Palette)? _layersKey;
+
+  List<Widget> _vectorLayers(Basemap basemap, Palette palette) {
+    final key = (basemap, palette);
+    if (_layersKey == key) return _layers ?? const [];
+    _layersKey = key;
+    List<List<LatLng>> roads(String kind) => basemap.roads[kind] ?? const [];
+    Polyline cased(List<LatLng> line, Color color, double width, double casing) => Polyline(
+      points: line,
+      color: color,
+      strokeWidth: width,
+      borderColor: palette.mapRoadCasing,
+      borderStrokeWidth: casing,
+    );
+    return _layers = [
+      PolygonLayer(
+        simplificationTolerance: 0.3,
         polygons: [
-          for (final ring in basemap.buildings)
-            Polygon(
-              points: ring,
-              color: palette.mapBuilding,
-              borderColor: palette.mapBuildingEdge,
-              borderStrokeWidth: 0.6,
-            ),
+          for (final ring in basemap.green) Polygon(points: ring, color: palette.mapGreen),
+          for (final ring in basemap.water) Polygon(points: ring, color: palette.mapWater),
         ],
       ),
-    ),
-    PolylineLayer(
-      simplificationTolerance: 0.3,
-      polylines: [
-        for (final line in basemap.roads['path'] ?? const <List<LatLng>>[])
-          Polyline(points: line, color: palette.mapRoad, strokeWidth: 1.2),
-        for (final line in basemap.rail)
-          Polyline(
-            points: line,
-            color: palette.mapRail,
-            strokeWidth: 2,
-            pattern: StrokePattern.dashed(segments: const [6, 4]),
-          ),
-        for (final line in basemap.roads['minor'] ?? const <List<LatLng>>[])
-          Polyline(
-            points: line,
-            color: palette.mapRoad,
-            strokeWidth: 3,
-            borderColor: palette.mapRoadCasing,
-            borderStrokeWidth: 0.8,
-          ),
-        for (final line in basemap.roads['medium'] ?? const <List<LatLng>>[])
-          Polyline(
-            points: line,
-            color: palette.mapRoad,
-            strokeWidth: 5,
-            borderColor: palette.mapRoadCasing,
-            borderStrokeWidth: 1,
-          ),
-        for (final line in basemap.roads['major'] ?? const <List<LatLng>>[])
-          Polyline(
-            points: line,
-            color: palette.mapRoadMajor,
-            strokeWidth: 7,
-            borderColor: palette.mapRoadCasing,
-            borderStrokeWidth: 1.2,
-          ),
-      ],
-    ),
-    _ZoomGate(
-      minZoom: 14.5,
-      child: MarkerLayer(
-        markers: [
-          for (final station in basemap.metro)
-            Marker(
-              point: station.point,
-              width: 160,
-              height: 22,
-              alignment: Alignment.centerRight,
-              child: _MetroLabel(name: station.name, color: palette.metro),
+      _ZoomGate(
+        minZoom: 15,
+        keepAlive: true,
+        child: PolygonLayer(
+          simplificationTolerance: 0.8,
+          polygons: [for (final ring in basemap.buildings) Polygon(points: ring, color: palette.mapBuilding)],
+        ),
+      ),
+      _ZoomGate(
+        minZoom: 15,
+        keepAlive: true,
+        child: PolylineLayer(
+          simplificationTolerance: 0.3,
+          polylines: [
+            for (final line in roads('path')) Polyline(points: line, color: palette.mapRoad, strokeWidth: 1.2),
+          ],
+        ),
+      ),
+      _ZoomGate(
+        minZoom: 14,
+        keepAlive: true,
+        child: PolylineLayer(
+          simplificationTolerance: 0.3,
+          polylines: [
+            for (final line in roads('minor')) Polyline(points: line, color: palette.mapRoad, strokeWidth: 3),
+          ],
+        ),
+      ),
+      PolylineLayer(
+        simplificationTolerance: 0.3,
+        polylines: [
+          for (final line in basemap.rail)
+            Polyline(
+              points: line,
+              color: palette.mapRail,
+              strokeWidth: 2,
+              pattern: StrokePattern.dashed(segments: const [6, 4]),
             ),
+          for (final line in roads('medium')) cased(line, palette.mapRoad, 5, 1),
+          for (final line in roads('major')) cased(line, palette.mapRoadMajor, 7, 1.2),
         ],
       ),
-    ),
-  ];
+      _ZoomGate(
+        minZoom: 14.5,
+        child: MarkerLayer(
+          markers: [
+            for (final station in basemap.metro)
+              Marker(
+                point: station.point,
+                width: 160,
+                height: 22,
+                alignment: Alignment.centerRight,
+                child: _MetroLabel(name: station.name, color: palette.metro),
+              ),
+          ],
+        ),
+      ),
+    ];
+  }
 }
 
 class _ZoomGate extends StatelessWidget {
-  const _ZoomGate({required this.minZoom, required this.child});
+  const _ZoomGate({required this.minZoom, required this.child, this.keepAlive = false});
 
   final double minZoom;
   final Widget child;
+  final bool keepAlive;
 
   @override
-  Widget build(BuildContext context) => MapCamera.of(context).zoom >= minZoom ? child : const SizedBox.shrink();
+  Widget build(BuildContext context) {
+    final visible = MapCamera.of(context).zoom >= minZoom;
+    if (keepAlive) return Offstage(offstage: !visible, child: child);
+    return visible ? child : const SizedBox.shrink();
+  }
 }
 
 class _MetroLabel extends StatelessWidget {
@@ -377,7 +388,7 @@ class _MetroLabel extends StatelessWidget {
               border: Border.all(color: palette.surface, width: 2),
             ),
             child: Text(
-              'М',
+              context.l10n.metroBadge,
               style: TextStyle(color: palette.surface, fontSize: 9, fontWeight: FontWeight.w800, height: 1),
             ),
           ),

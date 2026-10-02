@@ -2,7 +2,7 @@
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{admin/fragments :: head('Модерация')}"></head>
 <body>
-<header th:replace="~{admin/fragments :: nav}"></header>
+<header th:replace="~{admin/fragments :: nav('moderation')}"></header>
 <main>
     <h1>Модерация фото меню</h1>
     <p th:if="${approvedItems != null}" class="alert ok" role="status">Принято блюд: <span th:text="${approvedItems}" data-testid="approved-items">0</span></p>

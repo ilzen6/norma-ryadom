@@ -7,12 +7,12 @@
     <link rel="stylesheet" th:href="@{/admin/assets/admin.css}">
 </head>
 <body>
-<header th:fragment="nav" class="topbar">
+<header th:fragment="nav(section)" class="topbar">
     <a class="brand" th:href="@{/admin}">Норма рядом · админка</a>
     <nav aria-label="Разделы">
-        <a th:href="@{/admin/chains}">Сети и меню</a>
-        <a th:href="@{/admin/moderation}">Модерация фото</a>
-        <a th:href="@{/admin/reviews}">Жалобы</a>
+        <a th:href="@{/admin/chains}" th:attr="aria-current=${section == 'chains'} ? 'page'">Сети и меню</a>
+        <a th:href="@{/admin/moderation}" th:attr="aria-current=${section == 'moderation'} ? 'page'">Модерация фото</a>
+        <a th:href="@{/admin/reviews}" th:attr="aria-current=${section == 'reviews'} ? 'page'">Жалобы</a>
     </nav>
     <form th:action="@{/admin/logout}" method="post" class="logout">
         <button type="submit" class="link">Выйти</button>
