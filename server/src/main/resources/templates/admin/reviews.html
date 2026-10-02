@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{admin/fragments :: head('Жалобы')}"></head>
+<body>
+<header th:replace="~{admin/fragments :: nav}"></header>
+<main>
+    <h1>Жалобы «цифры не совпадают»</h1>
+    <p th:if="${resolved != null}" class="alert ok" role="status" data-testid="resolved">Жалобы по блюду закрыты</p>
+    <p th:if="${correctionError != null}" class="alert error" role="alert">Заполните все четыре значения КБЖУ</p>
+    <p th:if="${#lists.isEmpty(cases)}">Блюд на перепроверке нет</p>
+    <article class="card" th:each="c : ${cases}" th:attr="data-item-id=${c.record.item.id}">
+        <h2 th:text="${c.record.item.name}">Блюдо</h2>
+        <p class="muted">
+            Сейчас: <span th:text="${c.record.item.nutrients.kcal}">0</span> ккал,
+            Б <span th:text="${c.record.item.nutrients.protein}">0</span>,
+            Ж <span th:text="${c.record.item.nutrients.fat}">0</span>,
+            У <span th:text="${c.record.item.nutrients.carbs}">0</span>
+        </p>
+        <ul><li th:each="reason : ${c.reasons}" th:text="${reason}">причина</li></ul>
+        <div class="actions">
+            <form th:action="@{/admin/reviews/{id}/confirm(id=${c.record.item.id})}" method="post">
+                <button type="submit">Данные верны</button>
+            </form>
+            <form th:action="@{/admin/reviews/{id}/withdraw(id=${c.record.item.id})}" method="post">
+                <button type="submit" class="secondary">Снять с продажи</button>
+            </form>
+        </div>
+        <form class="inline" th:action="@{/admin/reviews/{id}/correct(id=${c.record.item.id})}" method="post">
+            <label>Ккал <input name="kcal" type="number" step="0.1" min="0" required></label>
+            <label>Белки <input name="protein" type="number" step="0.1" min="0" required></label>
+            <label>Жиры <input name="fat" type="number" step="0.1" min="0" required></label>
+            <label>Углеводы <input name="carbs" type="number" step="0.1" min="0" required></label>
+            <button type="submit">Исправить цифры</button>
+        </form>
+    </article>
+</main>
+</body>
+</html>

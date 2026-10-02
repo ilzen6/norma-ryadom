@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{admin/fragments :: head('Модерация')}"></head>
+<body>
+<header th:replace="~{admin/fragments :: nav}"></header>
+<main>
+    <h1>Модерация фото меню</h1>
+    <p th:if="${approvedItems != null}" class="alert ok" role="status">Принято блюд: <span th:text="${approvedItems}" data-testid="approved-items">0</span></p>
+    <p th:if="${rejected != null}" class="alert ok" role="status">Фото отклонено</p>
+    <p th:if="${alreadyModerated != null}" class="alert error" role="alert">Это фото уже обработано</p>
+    <table data-testid="submission-table">
+        <thead><tr><th scope="col">№</th><th scope="col">Заведение</th><th scope="col">Статус</th><th scope="col">Загружено</th></tr></thead>
+        <tbody>
+        <tr th:each="s : ${submissions}">
+            <td><a th:href="@{/admin/moderation/{id}(id=${s.id})}" th:text="${s.id}">1</a></td>
+            <td th:text="${s.venueName} + ', ' + ${s.venueAddress}">Заведение</td>
+            <td th:text="#{'status.' + ${s.status}}">Статус</td>
+            <td th:text="${#temporals.format(s.createdAt.atZone(T(java.time.ZoneId).of('Europe/Moscow')), 'dd.MM.yyyy HH:mm')}">01.01.2026</td>
+        </tr>
+        <tr th:if="${#lists.isEmpty(submissions)}"><td colspan="4">Очередь пуста</td></tr>
+        </tbody>
+    </table>
+</main>
+</body>
+</html>

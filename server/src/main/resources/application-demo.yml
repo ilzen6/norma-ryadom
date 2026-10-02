@@ -1,0 +1,26 @@
+demo:
+  chains:
+    - name: Гриль Хаус
+      source-url: https://grill-house.example/nutrition
+      menu: classpath:demo/grill-house-menu.csv
+      venues: classpath:demo/grill-house-venues.csv
+    - name: Тёплая плошка
+      source-url: https://warm-bowl.example/nutrition
+      menu: classpath:demo/warm-bowl-menu.csv
+      venues: classpath:demo/warm-bowl-venues.csv
+    - name: Блинная Масленица
+      source-url: https://blinnaya.example/nutrition
+      menu: classpath:demo/blinnaya-menu.csv
+      venues: classpath:demo/blinnaya-venues.csv
+    - name: Кофейня Зерно
+      source-url: https://zerno.example/nutrition
+      menu: classpath:demo/zerno-menu.csv
+      venues: classpath:demo/zerno-venues.csv
+    - name: Пицца Квадрат
+      source-url: https://pizza-square.example/nutrition
+      menu: classpath:demo/pizza-square-menu.csv
+      venues: classpath:demo/pizza-square-venues.csv
+    - name: Зелёный бар
+      source-url: https://green-bar.example/nutrition
+      menu: classpath:demo/green-bar-menu.csv
+      venues: classpath:demo/green-bar-venues.csv

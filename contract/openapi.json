@@ -1,0 +1,894 @@
+{
+  "components" : {
+    "schemas" : {
+      "AppliedTargetResponse" : {
+        "properties" : {
+          "excludeTags" : {
+            "items" : {
+              "enum" : [ "meat", "pork", "beef", "chicken", "fish", "seafood", "nuts", "milk", "gluten", "egg", "soy" ],
+              "type" : "string"
+            },
+            "type" : "array"
+          },
+          "kcal" : {
+            "format" : "double",
+            "type" : "number"
+          },
+          "kcalTolerance" : {
+            "format" : "double",
+            "type" : "number"
+          },
+          "maxCarbs" : {
+            "format" : "double",
+            "type" : "number"
+          },
+          "maxFat" : {
+            "format" : "double",
+            "type" : "number"
+          },
+          "minProtein" : {
+            "format" : "double",
+            "type" : "number"
+          }
+        },
+        "required" : [ "excludeTags", "kcal", "kcalTolerance", "maxCarbs", "maxFat", "minProtein" ],
+        "type" : "object"
+      },
+      "AssessmentResponse" : {
+        "properties" : {
+          "reasons" : {
+            "items" : {
+              "$ref" : "#/components/schemas/ReasonResponse"
+            },
+            "type" : "array"
+          },
+          "verdict" : {
+            "enum" : [ "FITS", "PARTIAL", "NOT_FITS" ],
+            "type" : "string"
+          }
+        },
+        "required" : [ "reasons", "verdict" ],
+        "type" : "object"
+      },
+      "ComboOptionResponse" : {
+        "properties" : {
+          "combo" : {
+            "$ref" : "#/components/schemas/ComboResponse"
+          },
+          "distanceMeters" : {
+            "format" : "int32",
+            "type" : [ "integer", "null" ]
+          },
+          "venue" : {
+            "$ref" : "#/components/schemas/VenueSummaryResponse"
+          }
+        },
+        "required" : [ "combo", "venue" ],
+        "type" : "object"
+      },
+      "ComboReplaceRequest" : {
+        "properties" : {
+          "dishIds" : {
+            "items" : {
+              "format" : "int64",
+              "type" : "integer"
+            },
+            "maxItems" : 3,
+            "minItems" : 1,
+            "type" : "array"
+          },
+          "limit" : {
+            "format" : "int32",
+            "maximum" : 5,
+            "minimum" : 1,
+            "type" : "integer"
+          },
+          "preferCheaper" : {
+            "type" : "boolean"
+          },
+          "replaceIndex" : {
+            "format" : "int32",
+            "minimum" : 0,
+            "type" : "integer"
+          },
+          "target" : {
+            "$ref" : "#/components/schemas/MealTargetRequest"
+          },
+          "venueId" : {
+            "exclusiveMinimum" : 0,
+            "format" : "int64",
+            "type" : "integer"
+          }
+        },
+        "required" : [ "dishIds", "replaceIndex", "target", "venueId" ],
+        "type" : "object"
+      },
+      "ComboResponse" : {
+        "properties" : {
+          "checks" : {
+            "items" : {
+              "$ref" : "#/components/schemas/MetricCheckResponse"
+            },
+            "type" : "array"
+          },
+          "dishes" : {
+            "items" : {
+              "$ref" : "#/components/schemas/DishResponse"
+            },
+            "type" : "array"
+          },
+          "priceMinor" : {
+            "format" : "int32",
+            "type" : [ "integer", "null" ]
+          },
+          "score" : {
+            "format" : "double",
+            "type" : "number"
+          },
+          "sourceKind" : {
+            "enum" : [ "A", "B", "C" ],
+            "type" : "string"
+          },
+          "totals" : {
+            "$ref" : "#/components/schemas/NutrientsResponse"
+          }
+        },
+        "required" : [ "checks", "dishes", "score", "sourceKind", "totals" ],
+        "type" : "object"
+      },
+      "ComboSearchRequest" : {
+        "properties" : {
+          "limit" : {
+            "format" : "int32",
+            "maximum" : 5,
+            "minimum" : 1,
+            "type" : "integer"
+          },
+          "location" : {
+            "oneOf" : [ {
+              "$ref" : "#/components/schemas/LocationRequest"
+            }, {
+              "type" : "null"
+            } ]
+          },
+          "preferCheaper" : {
+            "type" : "boolean"
+          },
+          "target" : {
+            "$ref" : "#/components/schemas/MealTargetRequest"
+          },
+          "venueId" : {
+            "exclusiveMinimum" : 0,
+            "format" : "int64",
+            "type" : [ "integer", "null" ]
+          }
+        },
+        "required" : [ "target" ],
+        "type" : "object"
+      },
+      "ComboSearchResponse" : {
+        "properties" : {
+          "appliedTarget" : {
+            "$ref" : "#/components/schemas/AppliedTargetResponse"
+          },
+          "options" : {
+            "items" : {
+              "$ref" : "#/components/schemas/ComboOptionResponse"
+            },
+            "type" : "array"
+          }
+        },
+        "required" : [ "appliedTarget", "options" ],
+        "type" : "object"
+      },
+      "DishResponse" : {
+        "properties" : {
+          "category" : {
+            "enum" : [ "main", "side", "salad", "drink", "dessert", "sauce" ],
+            "type" : "string"
+          },
+          "id" : {
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "nutrients" : {
+            "$ref" : "#/components/schemas/NutrientsResponse"
+          },
+          "portionGrams" : {
+            "format" : "double",
+            "type" : [ "number", "null" ]
+          },
+          "priceMinor" : {
+            "format" : "int32",
+            "type" : [ "integer", "null" ]
+          },
+          "sourceKind" : {
+            "enum" : [ "A", "B", "C" ],
+            "type" : "string"
+          },
+          "tags" : {
+            "items" : {
+              "enum" : [ "meat", "pork", "beef", "chicken", "fish", "seafood", "nuts", "milk", "gluten", "egg", "soy" ],
+              "type" : "string"
+            },
+            "type" : "array"
+          }
+        },
+        "required" : [ "category", "id", "name", "nutrients", "sourceKind", "tags" ],
+        "type" : "object"
+      },
+      "ItemReportRequest" : {
+        "properties" : {
+          "reason" : {
+            "maxLength" : 500,
+            "minLength" : 0,
+            "type" : "string"
+          }
+        },
+        "required" : [ "reason" ],
+        "type" : "object"
+      },
+      "LocationRequest" : {
+        "properties" : {
+          "lat" : {
+            "format" : "double",
+            "maximum" : 90,
+            "minimum" : -90,
+            "type" : "number"
+          },
+          "lon" : {
+            "format" : "double",
+            "maximum" : 180,
+            "minimum" : -180,
+            "type" : "number"
+          },
+          "radiusMeters" : {
+            "format" : "int32",
+            "maximum" : 5000,
+            "minimum" : 100,
+            "type" : "integer"
+          }
+        },
+        "required" : [ "lat", "lon", "radiusMeters" ],
+        "type" : "object"
+      },
+      "MealTargetRequest" : {
+        "properties" : {
+          "excludeTags" : {
+            "items" : {
+              "enum" : [ "meat", "pork", "beef", "chicken", "fish", "seafood", "nuts", "milk", "gluten", "egg", "soy" ],
+              "type" : "string"
+            },
+            "maxItems" : 20,
+            "minItems" : 0,
+            "type" : "array",
+            "uniqueItems" : true
+          },
+          "kcal" : {
+            "format" : "double",
+            "maximum" : 2000,
+            "minimum" : 100,
+            "type" : "number"
+          },
+          "kcalTolerance" : {
+            "format" : "double",
+            "maximum" : 500,
+            "minimum" : 10,
+            "type" : "number"
+          },
+          "maxCarbs" : {
+            "format" : "double",
+            "maximum" : 500,
+            "minimum" : 0,
+            "type" : "number"
+          },
+          "maxFat" : {
+            "format" : "double",
+            "maximum" : 300,
+            "minimum" : 0,
+            "type" : "number"
+          },
+          "minProtein" : {
+            "format" : "double",
+            "maximum" : 300,
+            "minimum" : 0,
+            "type" : "number"
+          }
+        },
+        "required" : [ "kcal", "kcalTolerance", "maxCarbs", "maxFat", "minProtein" ],
+        "type" : "object"
+      },
+      "MenuItemResponse" : {
+        "properties" : {
+          "assessment" : {
+            "oneOf" : [ {
+              "$ref" : "#/components/schemas/AssessmentResponse"
+            }, {
+              "type" : "null"
+            } ]
+          },
+          "category" : {
+            "enum" : [ "main", "side", "salad", "drink", "dessert", "sauce" ],
+            "type" : "string"
+          },
+          "id" : {
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "nutrients" : {
+            "$ref" : "#/components/schemas/NutrientsResponse"
+          },
+          "portionGrams" : {
+            "format" : "double",
+            "type" : [ "number", "null" ]
+          },
+          "priceMinor" : {
+            "format" : "int32",
+            "type" : [ "integer", "null" ]
+          },
+          "source" : {
+            "$ref" : "#/components/schemas/SourceResponse"
+          },
+          "tags" : {
+            "items" : {
+              "enum" : [ "meat", "pork", "beef", "chicken", "fish", "seafood", "nuts", "milk", "gluten", "egg", "soy" ],
+              "type" : "string"
+            },
+            "type" : "array"
+          }
+        },
+        "required" : [ "category", "id", "name", "nutrients", "source", "tags" ],
+        "type" : "object"
+      },
+      "MenuPhotoResponse" : {
+        "properties" : {
+          "status" : {
+            "enum" : [ "NEW", "OCR_DONE", "OCR_FAILED", "APPROVED", "REJECTED" ],
+            "type" : "string"
+          },
+          "submissionId" : {
+            "format" : "int64",
+            "type" : "integer"
+          }
+        },
+        "required" : [ "status", "submissionId" ],
+        "type" : "object"
+      },
+      "MetricCheckResponse" : {
+        "properties" : {
+          "delta" : {
+            "format" : "double",
+            "type" : "number"
+          },
+          "goal" : {
+            "format" : "double",
+            "type" : "number"
+          },
+          "metric" : {
+            "enum" : [ "KCAL", "PROTEIN", "FAT", "CARBS" ],
+            "type" : "string"
+          },
+          "status" : {
+            "enum" : [ "OK", "ABOVE", "BELOW" ],
+            "type" : "string"
+          },
+          "value" : {
+            "format" : "double",
+            "type" : "number"
+          }
+        },
+        "required" : [ "delta", "goal", "metric", "status", "value" ],
+        "type" : "object"
+      },
+      "NearbyVenueResponse" : {
+        "properties" : {
+          "distanceMeters" : {
+            "format" : "int32",
+            "type" : "integer"
+          },
+          "fit" : {
+            "enum" : [ "GOOD", "COMPROMISE", "NONE" ],
+            "type" : [ "string", "null" ]
+          },
+          "hasMenu" : {
+            "type" : "boolean"
+          },
+          "venue" : {
+            "$ref" : "#/components/schemas/VenueSummaryResponse"
+          }
+        },
+        "required" : [ "distanceMeters", "hasMenu", "venue" ],
+        "type" : "object"
+      },
+      "NearbyVenuesResponse" : {
+        "properties" : {
+          "venues" : {
+            "items" : {
+              "$ref" : "#/components/schemas/NearbyVenueResponse"
+            },
+            "type" : "array"
+          }
+        },
+        "required" : [ "venues" ],
+        "type" : "object"
+      },
+      "NutrientsResponse" : {
+        "properties" : {
+          "carbs" : {
+            "format" : "double",
+            "type" : "number"
+          },
+          "fat" : {
+            "format" : "double",
+            "type" : "number"
+          },
+          "kcal" : {
+            "format" : "double",
+            "type" : "number"
+          },
+          "protein" : {
+            "format" : "double",
+            "type" : "number"
+          }
+        },
+        "required" : [ "carbs", "fat", "kcal", "protein" ],
+        "type" : "object"
+      },
+      "ReasonResponse" : {
+        "properties" : {
+          "amount" : {
+            "format" : "double",
+            "type" : [ "number", "null" ]
+          },
+          "code" : {
+            "enum" : [ "EXCLUDED_TAG", "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE", "LOW_PROTEIN", "ESTIMATED_DATA" ],
+            "type" : "string"
+          },
+          "tag" : {
+            "enum" : [ "meat", "pork", "beef", "chicken", "fish", "seafood", "nuts", "milk", "gluten", "egg", "soy" ],
+            "type" : [ "string", "null" ]
+          }
+        },
+        "required" : [ "code" ],
+        "type" : "object"
+      },
+      "SourceResponse" : {
+        "properties" : {
+          "kcalHigh" : {
+            "format" : "double",
+            "type" : [ "number", "null" ]
+          },
+          "kcalLow" : {
+            "format" : "double",
+            "type" : [ "number", "null" ]
+          },
+          "kind" : {
+            "enum" : [ "A", "B", "C" ],
+            "type" : "string"
+          },
+          "url" : {
+            "type" : [ "string", "null" ]
+          },
+          "verifiedAt" : {
+            "format" : "date-time",
+            "type" : [ "string", "null" ]
+          }
+        },
+        "required" : [ "kind" ],
+        "type" : "object"
+      },
+      "VenueMenuResponse" : {
+        "properties" : {
+          "items" : {
+            "items" : {
+              "$ref" : "#/components/schemas/MenuItemResponse"
+            },
+            "type" : "array"
+          },
+          "venue" : {
+            "$ref" : "#/components/schemas/VenueSummaryResponse"
+          }
+        },
+        "required" : [ "items", "venue" ],
+        "type" : "object"
+      },
+      "VenueSummaryResponse" : {
+        "properties" : {
+          "address" : {
+            "type" : "string"
+          },
+          "chainName" : {
+            "type" : [ "string", "null" ]
+          },
+          "currency" : {
+            "type" : "string"
+          },
+          "id" : {
+            "format" : "int64",
+            "type" : "integer"
+          },
+          "lat" : {
+            "format" : "double",
+            "type" : "number"
+          },
+          "lon" : {
+            "format" : "double",
+            "type" : "number"
+          },
+          "name" : {
+            "type" : "string"
+          }
+        },
+        "required" : [ "address", "currency", "id", "lat", "lon", "name" ],
+        "type" : "object"
+      }
+    }
+  },
+  "info" : {
+    "title" : "OpenAPI definition",
+    "version" : "v0"
+  },
+  "openapi" : "3.1.0",
+  "paths" : {
+    "/api/v1/combos/replace" : {
+      "post" : {
+        "operationId" : "replace",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ComboReplaceRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ComboSearchResponse"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "summary" : "Замена одного блюда в наборе, остальные блюда зафиксированы",
+        "tags" : [ "combos" ]
+      }
+    },
+    "/api/v1/combos/search" : {
+      "post" : {
+        "operationId" : "search",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ComboSearchRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ComboSearchResponse"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "summary" : "Подбор наборов блюд под цель в заведении или рядом с точкой",
+        "tags" : [ "combos" ]
+      }
+    },
+    "/api/v1/items/{itemId}/reports" : {
+      "post" : {
+        "operationId" : "report",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "itemId",
+          "required" : true,
+          "schema" : {
+            "format" : "int64",
+            "minimum" : 1,
+            "type" : "integer"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ItemReportRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "204" : {
+            "description" : "No Content"
+          }
+        },
+        "summary" : "Жалоба «цифры не совпадают» на блюдо",
+        "tags" : [ "intake" ]
+      }
+    },
+    "/api/v1/venues" : {
+      "get" : {
+        "operationId" : "nearby",
+        "parameters" : [ {
+          "in" : "query",
+          "name" : "lat",
+          "required" : true,
+          "schema" : {
+            "format" : "double",
+            "maximum" : 90.0,
+            "minimum" : -90.0,
+            "type" : "number"
+          }
+        }, {
+          "in" : "query",
+          "name" : "lon",
+          "required" : true,
+          "schema" : {
+            "format" : "double",
+            "maximum" : 180.0,
+            "minimum" : -180.0,
+            "type" : "number"
+          }
+        }, {
+          "in" : "query",
+          "name" : "radius",
+          "required" : true,
+          "schema" : {
+            "format" : "int32",
+            "maximum" : 5000,
+            "minimum" : 100,
+            "type" : "integer"
+          }
+        }, {
+          "in" : "query",
+          "name" : "includeWithoutMenu",
+          "required" : false,
+          "schema" : {
+            "default" : false,
+            "type" : "boolean"
+          }
+        }, {
+          "in" : "query",
+          "name" : "kcal",
+          "required" : false,
+          "schema" : {
+            "format" : "double",
+            "maximum" : 2000.0,
+            "minimum" : 100.0,
+            "type" : "number"
+          }
+        }, {
+          "in" : "query",
+          "name" : "kcalTolerance",
+          "required" : false,
+          "schema" : {
+            "format" : "double",
+            "maximum" : 500.0,
+            "minimum" : 10.0,
+            "type" : "number"
+          }
+        }, {
+          "in" : "query",
+          "name" : "minProtein",
+          "required" : false,
+          "schema" : {
+            "format" : "double",
+            "maximum" : 300.0,
+            "minimum" : 0.0,
+            "type" : "number"
+          }
+        }, {
+          "in" : "query",
+          "name" : "maxFat",
+          "required" : false,
+          "schema" : {
+            "format" : "double",
+            "maximum" : 300.0,
+            "minimum" : 0.0,
+            "type" : "number"
+          }
+        }, {
+          "in" : "query",
+          "name" : "maxCarbs",
+          "required" : false,
+          "schema" : {
+            "format" : "double",
+            "maximum" : 500.0,
+            "minimum" : 0.0,
+            "type" : "number"
+          }
+        }, {
+          "in" : "query",
+          "name" : "excludeTags",
+          "required" : false,
+          "schema" : {
+            "items" : {
+              "enum" : [ "meat", "pork", "beef", "chicken", "fish", "seafood", "nuts", "milk", "gluten", "egg", "soy" ],
+              "type" : "string"
+            },
+            "maxItems" : 20,
+            "minItems" : 0,
+            "type" : "array",
+            "uniqueItems" : true
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/NearbyVenuesResponse"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "summary" : "Заведения рядом с точкой; при переданной цели - цвет соответствия",
+        "tags" : [ "venues" ]
+      }
+    },
+    "/api/v1/venues/{venueId}/menu" : {
+      "get" : {
+        "operationId" : "menu",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "venueId",
+          "required" : true,
+          "schema" : {
+            "format" : "int64",
+            "minimum" : 1,
+            "type" : "integer"
+          }
+        }, {
+          "in" : "query",
+          "name" : "kcal",
+          "required" : false,
+          "schema" : {
+            "format" : "double",
+            "maximum" : 2000.0,
+            "minimum" : 100.0,
+            "type" : "number"
+          }
+        }, {
+          "in" : "query",
+          "name" : "kcalTolerance",
+          "required" : false,
+          "schema" : {
+            "format" : "double",
+            "maximum" : 500.0,
+            "minimum" : 10.0,
+            "type" : "number"
+          }
+        }, {
+          "in" : "query",
+          "name" : "minProtein",
+          "required" : false,
+          "schema" : {
+            "format" : "double",
+            "maximum" : 300.0,
+            "minimum" : 0.0,
+            "type" : "number"
+          }
+        }, {
+          "in" : "query",
+          "name" : "maxFat",
+          "required" : false,
+          "schema" : {
+            "format" : "double",
+            "maximum" : 300.0,
+            "minimum" : 0.0,
+            "type" : "number"
+          }
+        }, {
+          "in" : "query",
+          "name" : "maxCarbs",
+          "required" : false,
+          "schema" : {
+            "format" : "double",
+            "maximum" : 500.0,
+            "minimum" : 0.0,
+            "type" : "number"
+          }
+        }, {
+          "in" : "query",
+          "name" : "excludeTags",
+          "required" : false,
+          "schema" : {
+            "items" : {
+              "enum" : [ "meat", "pork", "beef", "chicken", "fish", "seafood", "nuts", "milk", "gluten", "egg", "soy" ],
+              "type" : "string"
+            },
+            "maxItems" : 20,
+            "minItems" : 0,
+            "type" : "array",
+            "uniqueItems" : true
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/VenueMenuResponse"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "summary" : "Меню заведения; при переданной цели - отсортировано по близости к цели с пометками",
+        "tags" : [ "venues" ]
+      }
+    },
+    "/api/v1/venues/{venueId}/menu-photos" : {
+      "post" : {
+        "operationId" : "upload",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "venueId",
+          "required" : true,
+          "schema" : {
+            "format" : "int64",
+            "minimum" : 1,
+            "type" : "integer"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "multipart/form-data" : {
+              "schema" : {
+                "properties" : {
+                  "photo" : {
+                    "format" : "binary",
+                    "type" : "string"
+                  }
+                },
+                "required" : [ "photo" ],
+                "type" : "object"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "202" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MenuPhotoResponse"
+                }
+              }
+            },
+            "description" : "Accepted"
+          }
+        },
+        "summary" : "Загрузка фото меню или стенда заведения в очередь распознавания и модерации",
+        "tags" : [ "intake" ]
+      }
+    }
+  },
+  "servers" : [ {
+    "description" : "Generated server url",
+    "url" : "http://localhost"
+  } ]
+}

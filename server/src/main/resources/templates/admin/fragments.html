@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(title)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="${title} + ' · Норма рядом'">Норма рядом</title>
+    <link rel="stylesheet" th:href="@{/admin/assets/admin.css}">
+</head>
+<body>
+<header th:fragment="nav" class="topbar">
+    <a class="brand" th:href="@{/admin}">Норма рядом · админка</a>
+    <nav aria-label="Разделы">
+        <a th:href="@{/admin/chains}">Сети и меню</a>
+        <a th:href="@{/admin/moderation}">Модерация фото</a>
+        <a th:href="@{/admin/reviews}">Жалобы</a>
+    </nav>
+    <form th:action="@{/admin/logout}" method="post" class="logout">
+        <button type="submit" class="link">Выйти</button>
+    </form>
+</header>
+<section th:fragment="csvErrors(errors)" th:if="${errors != null}" class="alert error" role="alert">
+    <h2>Файл не принят, данные не изменены</h2>
+    <table>
+        <thead><tr><th scope="col">Строка</th><th scope="col">Колонка</th><th scope="col">Ошибка</th></tr></thead>
+        <tbody>
+        <tr th:each="e : ${errors}">
+            <td th:text="${e.line}">1</td>
+            <td th:text="${e.column} ?: '—'">name</td>
+            <td th:text="#{'csv.error.' + ${e.code}}">Ошибка</td>
+        </tr>
+        </tbody>
+    </table>
+</section>
+</body>
+</html>

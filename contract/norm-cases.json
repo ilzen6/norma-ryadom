@@ -1,0 +1,148 @@
+{
+  "cases": [
+    {
+      "input": {
+        "sex": "female",
+        "age": 25,
+        "heightCm": 165,
+        "weightKg": 62,
+        "activity": "moderate",
+        "goal": "lose"
+      },
+      "expected": {
+        "bmr": 1365.25,
+        "tdee": 2116.14,
+        "kcal": 1800,
+        "protein": 99,
+        "fat": 56,
+        "carbs": 225
+      }
+    },
+    {
+      "input": {
+        "sex": "male",
+        "age": 30,
+        "heightCm": 180,
+        "weightKg": 80,
+        "activity": "sedentary",
+        "goal": "maintain"
+      },
+      "expected": {
+        "bmr": 1780.0,
+        "tdee": 2136.0,
+        "kcal": 2140,
+        "protein": 96,
+        "fat": 72,
+        "carbs": 277
+      }
+    },
+    {
+      "input": {
+        "sex": "female",
+        "age": 50,
+        "heightCm": 155,
+        "weightKg": 48,
+        "activity": "sedentary",
+        "goal": "lose"
+      },
+      "expected": {
+        "bmr": 1037.75,
+        "tdee": 1245.3,
+        "kcal": 1200,
+        "protein": 77,
+        "fat": 43,
+        "carbs": 126
+      }
+    },
+    {
+      "input": {
+        "sex": "male",
+        "age": 22,
+        "heightCm": 175,
+        "weightKg": 70,
+        "activity": "very_high",
+        "goal": "gain"
+      },
+      "expected": {
+        "bmr": 1688.75,
+        "tdee": 3208.62,
+        "kcal": 3530,
+        "protein": 112,
+        "fat": 78,
+        "carbs": 595
+      }
+    },
+    {
+      "input": {
+        "sex": "female",
+        "age": 35,
+        "heightCm": 170,
+        "weightKg": 70,
+        "activity": "light",
+        "goal": "maintain"
+      },
+      "expected": {
+        "bmr": 1426.5,
+        "tdee": 1961.44,
+        "kcal": 1960,
+        "protein": 84,
+        "fat": 63,
+        "carbs": 264
+      }
+    },
+    {
+      "input": {
+        "sex": "male",
+        "age": 60,
+        "heightCm": 170,
+        "weightKg": 94,
+        "activity": "high",
+        "goal": "lose"
+      },
+      "expected": {
+        "bmr": 1707.5,
+        "tdee": 2945.44,
+        "kcal": 2500,
+        "protein": 150,
+        "fat": 85,
+        "carbs": 284
+      }
+    },
+    {
+      "input": {
+        "sex": "male",
+        "age": 70,
+        "heightCm": 160,
+        "weightKg": 50,
+        "activity": "sedentary",
+        "goal": "lose"
+      },
+      "expected": {
+        "bmr": 1155.0,
+        "tdee": 1386.0,
+        "kcal": 1500,
+        "protein": 80,
+        "fat": 45,
+        "carbs": 194
+      }
+    },
+    {
+      "input": {
+        "sex": "female",
+        "age": 19,
+        "heightCm": 172,
+        "weightKg": 58,
+        "activity": "high",
+        "goal": "gain"
+      },
+      "expected": {
+        "bmr": 1399.0,
+        "tdee": 2413.28,
+        "kcal": 2650,
+        "protein": 93,
+        "fat": 59,
+        "carbs": 437
+      }
+    }
+  ]
+}

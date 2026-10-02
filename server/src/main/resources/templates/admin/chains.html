@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{admin/fragments :: head('Сети')}"></head>
+<body>
+<header th:replace="~{admin/fragments :: nav}"></header>
+<main>
+    <h1>Сети и меню</h1>
+    <table>
+        <thead>
+        <tr><th scope="col">Сеть</th><th scope="col">Блюд</th><th scope="col">Точек</th><th scope="col">Версия меню</th><th scope="col">Источник</th></tr>
+        </thead>
+        <tbody>
+        <tr th:each="s : ${chains}">
+            <td><a th:href="@{/admin/chains/{id}(id=${s.chain.id})}" th:text="${s.chain.name}">Сеть</a></td>
+            <td th:text="${s.itemCount}">0</td>
+            <td th:text="${s.venueCount}">0</td>
+            <td th:text="${s.chain.menuVersion}">0</td>
+            <td><a th:if="${s.chain.sourceUrl}" th:href="${s.chain.sourceUrl}" rel="noopener noreferrer" target="_blank">страница КБЖУ</a></td>
+        </tr>
+        <tr th:if="${#lists.isEmpty(chains)}"><td colspan="5">Сетей пока нет</td></tr>
+        </tbody>
+    </table>
+    <section class="card">
+        <h2>Новая сеть</h2>
+        <form th:action="@{/admin/chains}" th:object="${chainForm}" method="post">
+            <label for="name">Название</label>
+            <input id="name" th:field="*{name}" required>
+            <p class="field-error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+            <label for="sourceUrl">Страница с КБЖУ сети</label>
+            <input id="sourceUrl" th:field="*{sourceUrl}" type="url" placeholder="https://">
+            <p class="field-error" th:if="${#fields.hasErrors('sourceUrl')}" th:errors="*{sourceUrl}"></p>
+            <button type="submit">Создать</button>
+        </form>
+    </section>
+</main>
+</body>
+</html>

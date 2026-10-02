@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{admin/fragments :: head(${chain.name})}"></head>
+<body>
+<header th:replace="~{admin/fragments :: nav}"></header>
+<main>
+    <h1 th:text="${chain.name}">Сеть</h1>
+    <p class="muted">Версия меню: <span th:text="${chain.menuVersion}">0</span></p>
+    <p th:if="${imported != null}" class="alert ok" role="status">
+        Импорт выполнен: обновлено <span th:text="${imported.upserted}" data-testid="upserted">0</span>,
+        снято с продажи <span th:text="${imported.withdrawn}" data-testid="withdrawn">0</span>
+    </p>
+    <p th:if="${importError != null}" class="alert error" role="alert" th:text="#{${importError}}">Ошибка</p>
+    <section th:replace="~{admin/fragments :: csvErrors(${csvErrors})}"></section>
+    <div class="columns">
+        <section class="card">
+            <h2>Импорт меню (уровень A)</h2>
+            <p class="muted">CSV в UTF-8 с разделителем «;»: <code>name;category;portion_g;kcal;protein_g;fat_g;carbs_g;price_rub;tags</code></p>
+            <form th:action="@{/admin/chains/{id}/menu(id=${chain.id})}" method="post" enctype="multipart/form-data">
+                <label for="menuFile">Файл меню</label>
+                <input id="menuFile" name="file" type="file" accept=".csv,text/csv" required>
+                <label for="menuSource">Страница с КБЖУ сети</label>
+                <input id="menuSource" name="sourceUrl" type="url" th:value="${chain.sourceUrl}" required>
+                <button type="submit">Загрузить меню</button>
+            </form>
+        </section>
+        <section class="card">
+            <h2>Импорт точек</h2>
+            <p class="muted">CSV: <code>name;address;lat;lon;external_id</code></p>
+            <form th:action="@{/admin/chains/{id}/venues(id=${chain.id})}" method="post" enctype="multipart/form-data">
+                <label for="venueFile">Файл точек</label>
+                <input id="venueFile" name="file" type="file" accept=".csv,text/csv" required>
+                <button type="submit">Загрузить точки</button>
+            </form>
+        </section>
+    </div>
+    <h2>Меню</h2>
+    <table data-testid="menu-table">
+        <thead>
+        <tr><th scope="col">Блюдо</th><th scope="col">Категория</th><th scope="col">Ккал</th><th scope="col">Б</th><th scope="col">Ж</th><th scope="col">У</th><th scope="col">Цена</th><th scope="col">Состояние</th></tr>
+        </thead>
+        <tbody>
+        <tr th:each="r : ${items}" th:classappend="${!r.isAvailable} ? 'withdrawn'">
+            <td th:text="${r.item.name}">Блюдо</td>
+            <td th:text="#{'category.' + ${r.item.category.code}}">Основное</td>
+            <td th:text="${r.item.nutrients.kcal}">0</td>
+            <td th:text="${r.item.nutrients.protein}">0</td>
+            <td th:text="${r.item.nutrients.fat}">0</td>
+            <td th:text="${r.item.nutrients.carbs}">0</td>
+            <td th:text="${r.item.priceMinor != null} ? ${#numbers.formatDecimal(r.item.priceMinor / 100.0, 1, 2, 'POINT')} + ' ₽' : '—'">0</td>
+            <td th:text="${!r.isAvailable} ? 'снято' : (${r.underReview} ? 'на перепроверке' : 'в продаже')">в продаже</td>
+        </tr>
+        <tr th:if="${#lists.isEmpty(items)}"><td colspan="8">Меню ещё не загружено</td></tr>
+        </tbody>
+    </table>
+    <h2>Точки</h2>
+    <table data-testid="venue-table">
+        <thead><tr><th scope="col">Название</th><th scope="col">Адрес</th><th scope="col">Координаты</th></tr></thead>
+        <tbody>
+        <tr th:each="v : ${venues}">
+            <td th:text="${v.name}">Точка</td>
+            <td th:text="${v.address}">Адрес</td>
+            <td th:text="${v.location.lat} + ', ' + ${v.location.lon}">0, 0</td>
+        </tr>
+        <tr th:if="${#lists.isEmpty(venues)}"><td colspan="3">Точек ещё нет</td></tr>
+        </tbody>
+    </table>
+</main>
+</body>
+</html>

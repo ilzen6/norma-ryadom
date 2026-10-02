@@ -1,0 +1,24 @@
+admin:
+  username: test-admin
+  password-hash: "$2a$10$ceaRfGnVAAigyn5nns6LVOLZOtNzDooisRCeW7qSzaZuVIFjdos0m"
+
+intake:
+  ocr:
+    worker-enabled: false
+
+rate-limit:
+  buckets:
+    menu-photo:
+      capacity: 3
+      refill-period: 10m
+    item-report:
+      capacity: 50
+      refill-period: 1h
+
+storage:
+  bucket: test-menu-photos
+  access-key: test-access-key
+  secret-key: test-secret-key
+
+cors:
+  allowed-origins: http://localhost:8090

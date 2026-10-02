@@ -1,0 +1,29 @@
+style:
+  MaxLineLength:
+    maxLineLength: 140
+  MagicNumber:
+    ignoreAnnotation: true
+    ignoreEnums: true
+    ignorePropertyDeclaration: true
+    ignoreCompanionObjectPropertyDeclaration: true
+  FunctionOnlyReturningConstant:
+    ignoreAnnotated:
+      - GetMapping
+      - ExceptionHandler
+
+complexity:
+  TooManyFunctions:
+    allowedFunctionsPerClass: 15
+    allowedFunctionsPerObject: 15
+    ignorePrivate: true
+
+exceptions:
+  SwallowedException:
+    ignoredExceptionTypes:
+      - ChainNameTakenException
+      - SubmissionAlreadyModeratedException
+      - DuplicateKeyException
+      - InterruptedException
+      - MalformedURLException
+      - NumberFormatException
+      - ParseException

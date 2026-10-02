@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{admin/fragments :: head('Фото меню')}"></head>
+<body>
+<header th:replace="~{admin/fragments :: nav}"></header>
+<main>
+    <h1>Фото меню № <span th:text="${submission.id}">1</span></h1>
+    <p class="muted"><span th:text="${submission.venueName}">Заведение</span>, <span th:text="${submission.venueAddress}">адрес</span> · <span th:text="#{'status.' + ${submission.status}}">статус</span></p>
+    <section th:replace="~{admin/fragments :: csvErrors(${csvErrors})}"></section>
+    <div class="columns">
+        <figure class="card">
+            <img th:src="@{/admin/moderation/{id}/photo(id=${submission.id})}" alt="Фото меню от пользователя" class="photo">
+        </figure>
+        <section class="card">
+            <h2>Распознанный текст</h2>
+            <pre data-testid="ocr-text" th:text="${submission.ocrText} ?: 'Текст ещё не распознан'">текст</pre>
+        </section>
+    </div>
+    <section class="card">
+        <h2>Блюда для заведения (уровень B)</h2>
+        <p class="muted">Перенесите строки меню в формат CSV. Цифры сверяйте с фото.</p>
+        <form th:action="@{/admin/moderation/{id}/approve(id=${submission.id})}" method="post">
+            <label for="menuCsv">Строки меню</label>
+            <textarea id="menuCsv" name="menuCsv" rows="10" th:text="${menuCsv}"></textarea>
+            <button type="submit">Подтвердить и добавить в меню</button>
+        </form>
+        <form th:action="@{/admin/moderation/{id}/reject(id=${submission.id})}" method="post">
+            <button type="submit" class="secondary">Отклонить фото</button>
+        </form>
+    </section>
+</main>
+</body>
+</html>
