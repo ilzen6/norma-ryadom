@@ -22,8 +22,13 @@ jobs:
           python-version: "3.12"
       - name: Сборка подложки
         run: |
+          sudo apt-get update -q
+          sudo apt-get install -y -q osmium-tool
           pip install shapely==2.1.2
-          python tool/basemap/build_basemap.py "$RUNNER_TEMP/basemap.json"
+          curl -fL --retry 5 -o "$RUNNER_TEMP/region.osm.pbf" https://download.geofabrik.de/russia/central-fed-district-latest.osm.pbf
+          osmium extract -b 37.495,55.722,37.690,55.798 --strategy smart "$RUNNER_TEMP/region.osm.pbf" -o "$RUNNER_TEMP/area.osm.pbf"
+          osmium export "$RUNNER_TEMP/area.osm.pbf" -f geojsonseq --format-option print_record_separator=false -o "$RUNNER_TEMP/area.geojsonseq"
+          python tool/basemap/build_basemap.py "$RUNNER_TEMP/area.geojsonseq" "$RUNNER_TEMP/basemap.json"
           ls -la "$RUNNER_TEMP/basemap.json"
       - name: Публикация в ветку basemap-data
         run: |
