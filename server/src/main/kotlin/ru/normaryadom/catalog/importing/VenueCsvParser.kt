@@ -11,6 +11,8 @@ class VenueCsvParser {
 
     fun parse(text: String): CsvParseResult<VenueDraft> = document.parse(text)
 
+    fun parse(content: ByteArray): CsvParseResult<VenueDraft> = document.parse(content)
+
     private fun parseRow(row: CsvRowReader): VenueDraft? {
         val name = row.requiredText(NAME, MAX_TEXT_LENGTH)
         val address = row.requiredText(ADDRESS, MAX_TEXT_LENGTH)

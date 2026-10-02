@@ -6,6 +6,10 @@ class CsvDocument<T : Any>(
     private val uniqueKey: (T) -> String,
     private val parseRow: (CsvRowReader) -> T?,
 ) {
+    fun parse(content: ByteArray): CsvParseResult<T> =
+        CsvEncoding.decode(content)?.let(::parse)
+            ?: CsvParseResult.Invalid(listOf(CsvError(FIRST_LINE, CsvErrorCode.MALFORMED, ENCODING)))
+
     fun parse(text: String): CsvParseResult<T> =
         when (val read = CsvTable.read(text, header)) {
             is CsvTableResult.Rejected -> CsvParseResult.Invalid(listOf(read.error))
@@ -29,4 +33,9 @@ class CsvDocument<T : Any>(
             .groupBy({ (_, key) -> key }, { (line, _) -> line })
             .values
             .flatMap { lines -> lines.drop(1).map { line -> CsvError(line, CsvErrorCode.DUPLICATE, uniqueColumn) } }
+
+    private companion object {
+        const val FIRST_LINE = 1L
+        const val ENCODING = "encoding"
+    }
 }

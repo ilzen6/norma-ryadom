@@ -66,7 +66,7 @@ class AdminChainController(
         if (!sourceUrl.matches(HTTP_URL)) {
             redirect.addFlashAttribute("importError", "import.sourceUrl.invalid")
         } else {
-            report(imports.importChainMenu(chainId, file.bytes.decodeToString(), sourceUrl.trim()), redirect)
+            report(imports.importChainMenu(chainId, file.bytes, sourceUrl.trim()), ImportKind.MENU, redirect)
         }
         return "redirect:/admin/chains/$chainId"
     }
@@ -77,16 +77,17 @@ class AdminChainController(
         @RequestParam("file") file: MultipartFile,
         redirect: RedirectAttributes,
     ): String {
-        report(imports.importChainVenues(chainId, file.bytes.decodeToString()), redirect)
+        report(imports.importChainVenues(chainId, file.bytes), ImportKind.VENUES, redirect)
         return "redirect:/admin/chains/$chainId"
     }
 
     private fun report(
         outcome: ImportOutcome,
+        kind: ImportKind,
         redirect: RedirectAttributes,
     ) {
         when (outcome) {
-            is ImportOutcome.Imported -> redirect.addFlashAttribute("imported", outcome)
+            is ImportOutcome.Imported -> redirect.addFlashAttribute("imported", outcome).addFlashAttribute("importKind", kind)
             is ImportOutcome.Rejected -> redirect.addFlashAttribute("csvErrors", outcome.errors)
         }
     }
@@ -94,4 +95,9 @@ class AdminChainController(
     private companion object {
         val HTTP_URL = Regex("^\\s*https?://\\S+\\s*$")
     }
+}
+
+enum class ImportKind {
+    MENU,
+    VENUES,
 }

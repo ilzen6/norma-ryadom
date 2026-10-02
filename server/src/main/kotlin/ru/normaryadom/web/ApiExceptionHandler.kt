@@ -22,9 +22,11 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import ru.normaryadom.common.error.NotFoundException
 import ru.normaryadom.common.ratelimit.RateLimitExceededException
 import ru.normaryadom.intake.photo.PhotoTooLargeException
-import ru.normaryadom.intake.photo.StorageUnavailableException
 import ru.normaryadom.intake.photo.UnsupportedPhotoException
+import ru.normaryadom.intake.storage.StorageUnavailableException
+import ru.normaryadom.recommendation.DishExcludedException
 import ru.normaryadom.recommendation.DishNotInMenuException
+import ru.normaryadom.recommendation.RejectedDishesException
 import ru.normaryadom.recommendation.ReplaceIndexOutOfRangeException
 import ru.normaryadom.recommendation.api.IncompleteTargetException
 import tools.jackson.core.JacksonException
@@ -47,11 +49,15 @@ class ApiExceptionHandler : ResponseEntityExceptionHandler() {
     fun replaceIndex(ex: ReplaceIndexOutOfRangeException): ProblemDetail =
         validationProblem(listOf(FieldError("replaceIndex", "должно быть меньше ${ex.size}")))
 
-    @ExceptionHandler(DishNotInMenuException::class)
-    fun dishNotInMenu(ex: DishNotInMenuException): ProblemDetail =
-        problem(HttpStatus.UNPROCESSABLE_CONTENT, ProblemTypes.DISH_NOT_IN_MENU, "Блюда недоступны в этом заведении").apply {
-            setProperty("dishIds", ex.dishIds)
-        }
+    @ExceptionHandler(RejectedDishesException::class)
+    fun rejectedDishes(ex: RejectedDishesException): ProblemDetail {
+        val (type, detail) =
+            when (ex) {
+                is DishNotInMenuException -> ProblemTypes.DISH_NOT_IN_MENU to "Блюда недоступны в этом заведении"
+                is DishExcludedException -> ProblemTypes.DISH_EXCLUDED to "В наборе есть блюда с исключёнными продуктами"
+            }
+        return problem(HttpStatus.UNPROCESSABLE_CONTENT, type, detail).apply { setProperty("dishIds", ex.dishIds) }
+    }
 
     @ExceptionHandler(RateLimitExceededException::class)
     fun rateLimited(ex: RateLimitExceededException): ResponseEntity<ProblemDetail> =

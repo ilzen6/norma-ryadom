@@ -25,6 +25,24 @@ object MenuPhotos {
         return ByteArrayOutputStream().also { ImageIO.write(image, format, it) }.toByteArray()
     }
 
+    fun withExif(
+        jpeg: ByteArray,
+        marker: String,
+    ): ByteArray {
+        val payload = "Exif\u0000\u0000$marker".toByteArray()
+        val length = payload.size + 2
+        val segment = byteArrayOf(0xFF.toByte(), 0xE1.toByte(), (length shr 8).toByte(), length.toByte()) + payload
+        return jpeg.copyOfRange(0, 2) + segment + jpeg.copyOfRange(2, jpeg.size)
+    }
+
+    fun blank(
+        width: Int,
+        height: Int,
+    ): ByteArray {
+        val image = BufferedImage(width, height, BufferedImage.TYPE_BYTE_BINARY)
+        return ByteArrayOutputStream().also { ImageIO.write(image, "png", it) }.toByteArray()
+    }
+
     private const val WIDTH = 900
     private const val LINE_HEIGHT = 70
     private const val FONT_SIZE = 44

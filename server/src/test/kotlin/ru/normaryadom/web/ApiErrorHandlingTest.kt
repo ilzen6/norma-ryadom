@@ -14,8 +14,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import ru.normaryadom.intake.api.ItemReportController
 import ru.normaryadom.intake.api.MenuPhotoController
 import ru.normaryadom.intake.photo.MenuPhotoService
-import ru.normaryadom.intake.photo.StorageUnavailableException
 import ru.normaryadom.intake.report.ItemReportService
+import ru.normaryadom.intake.storage.StorageUnavailableException
 import java.io.IOException
 
 class ApiErrorHandlingTest {

@@ -139,6 +139,31 @@ class ComboApiIT : IntegrationTest() {
     }
 
     @Test
+    fun `не оставляет в наборе при замене блюдо с исключённым продуктом`() {
+        catalog.chain("Гриль", GRILL_MENU, GRILL_VENUES)
+        val ribs = itemId("Свиные рёбрышки")
+        val rice = itemId("Рис с овощами")
+
+        mockMvc
+            .post("/api/v1/combos/replace") {
+                contentType = MediaType.APPLICATION_JSON
+                content = """{"venueId": ${venueId("grill-01")}, "target": $TARGET, "dishIds": [$ribs, $rice], "replaceIndex": 1}"""
+            }.andExpect {
+                status { isUnprocessableContent() }
+                jsonPath("$.type") { value("urn:norma-ryadom:problem:dish-excluded") }
+                jsonPath("$.dishIds[0]") { value(ribs) }
+            }
+        mockMvc
+            .post("/api/v1/combos/replace") {
+                contentType = MediaType.APPLICATION_JSON
+                content = """{"venueId": ${venueId("grill-01")}, "target": $TARGET, "dishIds": [$ribs, $rice], "replaceIndex": 0}"""
+            }.andExpect {
+                status { isOk() }
+                jsonPath("$.options[*].combo.dishes[*].id") { value(not(hasItem(ribs.toInt()))) }
+            }
+    }
+
+    @Test
     fun `требует ровно одну область поиска и проверяет границы цели`() {
         mockMvc
             .post("/api/v1/combos/search") {

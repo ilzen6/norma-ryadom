@@ -15,8 +15,9 @@ spring:
     locations: classpath:db/migration
   servlet:
     multipart:
-      max-file-size: 8MB
-      max-request-size: 9MB
+      max-file-size: 9MB
+      max-request-size: 10MB
+      resolve-lazily: true
   mvc:
     problemdetails:
       enabled: true
@@ -32,6 +33,9 @@ spring:
 
 server:
   forward-headers-strategy: native
+  tomcat:
+    remoteip:
+      internal-proxies: ${TRUSTED_PROXIES_REGEX:}
   shutdown: graceful
   error:
     include-stacktrace: never
@@ -79,6 +83,7 @@ nearby:
 intake:
   photo:
     max-size: 8MB
+    max-pixels: 24000000
   ocr:
     worker-enabled: true
     poll-interval: 10s
@@ -87,6 +92,7 @@ intake:
     language: rus+eng
   reports:
     review-threshold: 3
+    reporter-key: ${REPORTER_KEY:}
 
 storage:
   endpoint: ${S3_ENDPOINT:http://localhost:8333}
@@ -105,6 +111,9 @@ rate-limit:
     item-report:
       capacity: 20
       refill-period: 1h
+    admin-login:
+      capacity: 10
+      refill-period: 15m
 
 admin:
   username: ${ADMIN_USERNAME:admin}

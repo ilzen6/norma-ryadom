@@ -8,7 +8,8 @@
     <p class="muted">Версия меню: <span th:text="${chain.menuVersion}">0</span></p>
     <p th:if="${imported != null}" class="alert ok" role="status">
         Импорт выполнен: обновлено <span th:text="${imported.upserted}" data-testid="upserted">0</span>,
-        снято с продажи <span th:text="${imported.withdrawn}" data-testid="withdrawn">0</span>
+        <span th:text="${importKind.name() == 'MENU'} ? 'снято с продажи' : 'закрыто точек'">снято с продажи</span>
+        <span th:text="${imported.withdrawn}" data-testid="withdrawn">0</span>
     </p>
     <p th:if="${importError != null}" class="alert error" role="alert" th:text="#{${importError}}">Ошибка</p>
     <section th:replace="~{admin/fragments :: csvErrors(${csvErrors})}"></section>
@@ -55,14 +56,15 @@
     </table>
     <h2>Точки</h2>
     <table data-testid="venue-table">
-        <thead><tr><th scope="col">Название</th><th scope="col">Адрес</th><th scope="col">Координаты</th></tr></thead>
+        <thead><tr><th scope="col">Название</th><th scope="col">Адрес</th><th scope="col">Координаты</th><th scope="col">Состояние</th></tr></thead>
         <tbody>
-        <tr th:each="v : ${venues}">
+        <tr th:each="v : ${venues}" th:classappend="${!v.isActive} ? 'withdrawn'">
             <td th:text="${v.name}">Точка</td>
             <td th:text="${v.address}">Адрес</td>
             <td th:text="${v.location.lat} + ', ' + ${v.location.lon}">0, 0</td>
+            <td th:text="${v.isActive} ? 'работает' : 'закрыта'">работает</td>
         </tr>
-        <tr th:if="${#lists.isEmpty(venues)}"><td colspan="3">Точек ещё нет</td></tr>
+        <tr th:if="${#lists.isEmpty(venues)}"><td colspan="4">Точек ещё нет</td></tr>
         </tbody>
     </table>
 </main>

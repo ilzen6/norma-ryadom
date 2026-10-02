@@ -42,6 +42,20 @@ class AdminWebIT : IntegrationTest() {
     }
 
     @Test
+    fun `блокирует вход после серии попыток с одного адреса`() {
+        val client = uniqueClient()
+        repeat(LOGIN_ATTEMPTS) {
+            login(client, "wrong-$it").andExpect { redirectedUrl("/admin/login?error") }
+        }
+
+        login(client, "test-password").andExpect { redirectedUrl("/admin/login?locked") }
+        mockMvc.get("/admin/login") { param("locked", "") }.andExpect {
+            content { string(containsString("Слишком много попыток")) }
+        }
+        login(uniqueClient(), "test-password").andExpect { redirectedUrl("/admin") }
+    }
+
+    @Test
     fun `не принимает изменения без CSRF-токена и от пользователя без роли`() {
         mockMvc
             .post("/admin/chains") {
@@ -78,7 +92,7 @@ class AdminWebIT : IntegrationTest() {
 
         mockMvc
             .multipart("/admin/chains/$chainId/menu") {
-                file(MockMultipartFile("file", "menu.csv", "text/csv", catalog.menuCsv(GRILL_MENU).toByteArray()))
+                file(MockMultipartFile("file", "menu.csv", "text/csv", catalog.menuCsv(GRILL_MENU)))
                 param("sourceUrl", "https://new.example/kbju")
                 with(admin)
                 with(csrf())
@@ -88,7 +102,7 @@ class AdminWebIT : IntegrationTest() {
             }
         mockMvc
             .multipart("/admin/chains/$chainId/venues") {
-                file(MockMultipartFile("file", "venues.csv", "text/csv", catalog.venueCsv(GRILL_VENUES).toByteArray()))
+                file(MockMultipartFile("file", "venues.csv", "text/csv", catalog.venueCsv(GRILL_VENUES)))
                 with(admin)
                 with(csrf())
             }.andExpect { flash { attributeExists("imported") } }
@@ -110,14 +124,14 @@ class AdminWebIT : IntegrationTest() {
         mockMvc
             .multipart("/admin/chains/$chainId/menu") {
                 val invalid = catalog.menuCsv(listOf("Суп;soup;300;200;5;5;20;150;"))
-                file(MockMultipartFile("file", "menu.csv", "text/csv", invalid.toByteArray()))
+                file(MockMultipartFile("file", "menu.csv", "text/csv", invalid))
                 param("sourceUrl", "https://chain.example/nutrition")
                 with(admin)
                 with(csrf())
             }.andExpect { flash { attributeExists("csvErrors") } }
         mockMvc
             .multipart("/admin/chains/$chainId/menu") {
-                file(MockMultipartFile("file", "menu.csv", "text/csv", catalog.menuCsv(GRILL_MENU).toByteArray()))
+                file(MockMultipartFile("file", "menu.csv", "text/csv", catalog.menuCsv(GRILL_MENU)))
                 param("sourceUrl", "javascript:alert(1)")
                 with(admin)
                 with(csrf())
@@ -174,7 +188,7 @@ class AdminWebIT : IntegrationTest() {
             .post("/admin/moderation/$submissionId/approve") {
                 with(admin)
                 with(csrf())
-                param("menuCsv", catalog.menuCsv(listOf("Шаурма куриная;main;300;520;32;22;48;320;chicken,gluten")))
+                param("menuCsv", String(catalog.menuCsv(listOf("Шаурма куриная;main;300;520;32;22;48;320;chicken,gluten"))))
             }.andExpect { flash { attribute("approvedItems", 1) } }
 
         mockMvc.get("/api/v1/venues/$venueId/menu").andExpect {
@@ -199,7 +213,7 @@ class AdminWebIT : IntegrationTest() {
             .post("/admin/moderation/$submissionId/approve") {
                 with(admin)
                 with(csrf())
-                param("menuCsv", catalog.menuCsv(listOf("Блюдо;main;;много;1;1;1;;")))
+                param("menuCsv", String(catalog.menuCsv(listOf("Блюдо;main;;много;1;1;1;;"))))
             }.andExpect {
                 flash { attributeExists("csvErrors") }
                 redirectedUrl("/admin/moderation/$submissionId")
@@ -275,5 +289,19 @@ class AdminWebIT : IntegrationTest() {
         jdbc.sql("UPDATE menu_item SET under_review = TRUE WHERE id = :id").param("id", id).update()
         jdbc.sql("INSERT INTO item_report (item_id, reason) VALUES (:id, 'Слишком много калорий')").param("id", id).update()
         return id
+    }
+
+    private fun login(
+        client: RequestPostProcessor,
+        password: String,
+    ) = mockMvc.post("/admin/login") {
+        param("username", "test-admin")
+        param("password", password)
+        with(csrf())
+        with(client)
+    }
+
+    private companion object {
+        const val LOGIN_ATTEMPTS = 10
     }
 }

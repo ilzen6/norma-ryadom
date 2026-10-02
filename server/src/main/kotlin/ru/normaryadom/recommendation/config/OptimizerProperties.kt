@@ -1,7 +1,9 @@
 package ru.normaryadom.recommendation.config
 
 import jakarta.validation.Valid
+import jakarta.validation.constraints.DecimalMax
 import jakarta.validation.constraints.DecimalMin
+import jakarta.validation.constraints.Max
 import jakarta.validation.constraints.Min
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.validation.annotation.Validated
@@ -10,6 +12,7 @@ import org.springframework.validation.annotation.Validated
 @ConfigurationProperties("optimizer")
 data class OptimizerProperties(
     @field:Min(1)
+    @field:Max(3)
     val maxItems: Int,
     @field:Min(1)
     val heapFactor: Int,
@@ -41,6 +44,7 @@ data class OptimizerProperties(
         @field:DecimalMin("1.0")
         val kcalToleranceFactor: Double,
         @field:DecimalMin("0.0")
+        @field:DecimalMax("1.0")
         val proteinFactor: Double,
         @field:DecimalMin("1.0")
         val limitFactor: Double,

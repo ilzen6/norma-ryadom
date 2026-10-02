@@ -5,8 +5,6 @@ import net.sourceforge.tess4j.TesseractException
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import ru.normaryadom.intake.config.IntakeProperties
-import ru.normaryadom.intake.photo.MenuTextRecognizer
-import ru.normaryadom.intake.photo.RecognitionResult
 import java.awt.image.BufferedImage
 import java.io.ByteArrayInputStream
 import java.io.IOException

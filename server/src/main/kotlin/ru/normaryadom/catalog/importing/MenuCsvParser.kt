@@ -14,6 +14,8 @@ class MenuCsvParser {
 
     fun parse(text: String): CsvParseResult<MenuItemDraft> = document.parse(text)
 
+    fun parse(content: ByteArray): CsvParseResult<MenuItemDraft> = document.parse(content)
+
     private fun parseRow(row: CsvRowReader): MenuItemDraft? {
         val draft =
             MenuItemDraft(

@@ -44,6 +44,20 @@ class MenuItemRepository(
             .optional()
             .orElse(null)
 
+    fun lockAvailable(id: Long): MenuItemRecord? =
+        jdbc
+            .sql(
+                """
+                SELECT ${MenuItemRows.SELECT_COLUMNS}, m.chain_id, m.venue_id, m.is_available, m.under_review
+                FROM menu_item m
+                WHERE m.id = :id AND m.is_available
+                FOR UPDATE
+                """,
+            ).param("id", id)
+            .query { rs, _ -> MenuItemRecord.map(rs) }
+            .optional()
+            .orElse(null)
+
     fun findByChain(chainId: Long): List<MenuItemRecord> =
         jdbc
             .sql(
@@ -85,7 +99,7 @@ class MenuItemRepository(
                 protein_g = EXCLUDED.protein_g, fat_g = EXCLUDED.fat_g, carbs_g = EXCLUDED.carbs_g,
                 price_minor = EXCLUDED.price_minor, tags = EXCLUDED.tags, source_kind = EXCLUDED.source_kind,
                 source_url = EXCLUDED.source_url, verified_at = EXCLUDED.verified_at,
-                kcal_low = NULL, kcal_high = NULL, is_available = TRUE, under_review = FALSE
+                kcal_low = NULL, kcal_high = NULL, is_available = TRUE
             """,
             drafts.map { draftParams(chainId, it, provenance) }.toTypedArray(),
         )
@@ -107,7 +121,7 @@ class MenuItemRepository(
                 protein_g = EXCLUDED.protein_g, fat_g = EXCLUDED.fat_g, carbs_g = EXCLUDED.carbs_g,
                 price_minor = EXCLUDED.price_minor, tags = EXCLUDED.tags, source_kind = EXCLUDED.source_kind,
                 source_url = EXCLUDED.source_url, verified_at = EXCLUDED.verified_at,
-                kcal_low = NULL, kcal_high = NULL, is_available = TRUE, under_review = FALSE
+                kcal_low = NULL, kcal_high = NULL, is_available = TRUE
             """,
             drafts.map { draftParams(venueId, it, provenance) }.toTypedArray(),
         )
@@ -120,7 +134,7 @@ class MenuItemRepository(
         jdbc
             .sql(
                 """
-                UPDATE menu_item SET is_available = FALSE
+                UPDATE menu_item SET is_available = FALSE, under_review = FALSE
                 WHERE chain_id = :chainId AND is_available AND NOT (name = ANY (:names))
                 """,
             ).param("chainId", chainId)
@@ -150,6 +164,7 @@ class MenuItemRepository(
                 """
                 UPDATE menu_item
                 SET kcal = :kcal, protein_g = :protein, fat_g = :fat, carbs_g = :carbs,
+                    source_kind = 'B', source_url = NULL, kcal_low = NULL, kcal_high = NULL,
                     verified_at = :verifiedAt, under_review = FALSE
                 WHERE id = :id
                 """,

@@ -5,6 +5,8 @@ admin:
 intake:
   ocr:
     worker-enabled: false
+  reports:
+    reporter-key: test-reporter-key
 
 rate-limit:
   buckets:

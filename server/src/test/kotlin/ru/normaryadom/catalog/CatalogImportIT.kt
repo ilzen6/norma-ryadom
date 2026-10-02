@@ -73,16 +73,37 @@ class CatalogImportIT : IntegrationTest() {
     }
 
     @Test
-    fun `повторный импорт точек обновляет их по внешнему идентификатору без дублей`() {
+    fun `повторный импорт точек обновляет их по внешнему идентификатору и закрывает пропавшие`() {
         val chainId = catalog.chain("Гриль", GRILL_MENU, GRILL_VENUES)
 
         val moved = "Гриль, Сити (новый адрес);Пресненская наб., 4;55.7497;37.5398;grill-01"
 
-        imports.importChainVenues(chainId, catalog.venueCsv(listOf(moved)))
+        val outcome = imports.importChainVenues(chainId, catalog.venueCsv(listOf(moved)))
 
-        val venues = chains.venues(chainId)
+        assertThat(outcome).isEqualTo(ImportOutcome.Imported(upserted = 1, withdrawn = 1))
+        val venues = chains.venues(chainId).associateBy { it.address }
         assertThat(venues).hasSize(2)
-        assertThat(venues.first { it.address == "Пресненская наб., 4" }.name).isEqualTo("Гриль, Сити (новый адрес)")
+        assertThat(venues.getValue("Пресненская наб., 4").name).isEqualTo("Гриль, Сити (новый адрес)")
+        assertThat(venues.getValue("Пресненская наб., 4").isActive).isTrue()
+        assertThat(venues.getValue("Тверская, 18").isActive).isFalse()
+        assertThat(chains.list().single { it.chain.id == chainId }.venueCount).isEqualTo(1)
+    }
+
+    @Test
+    fun `отклоняет файл не в UTF-8 и принимает файл с BOM`() {
+        val chainId = catalog.chain("Гриль", GRILL_MENU, GRILL_VENUES)
+        val text = String(catalog.menuCsv(GRILL_MENU), Charsets.UTF_8)
+
+        val cp1251 = imports.importChainMenu(chainId, text.toByteArray(charset("windows-1251")), "https://x.example")
+        val withBom =
+            imports.importChainMenu(
+                chainId,
+                byteArrayOf(0xEF.toByte(), 0xBB.toByte(), 0xBF.toByte()) + text.toByteArray(),
+                "https://x.example",
+            )
+
+        assertThat((cp1251 as ImportOutcome.Rejected).errors.single().code).isEqualTo(CsvErrorCode.MALFORMED)
+        assertThat(withBom).isEqualTo(ImportOutcome.Imported(upserted = GRILL_MENU.size, withdrawn = 0))
     }
 
     @Test

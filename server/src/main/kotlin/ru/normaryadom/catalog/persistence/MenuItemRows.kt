@@ -42,7 +42,7 @@ object MenuItemRows {
 
     private fun tags(rs: ResultSet): Set<DietTag> {
         val codes = rs.getArray("tags").array as Array<*>
-        return codes.mapNotNull { code -> DietTag.fromCode(code.toString()) }.toSet()
+        return codes.map { code -> requireNotNull(DietTag.fromCode(code.toString())) { "Unknown diet tag" } }.toSet()
     }
 
     private fun kcalRange(rs: ResultSet): KcalRange? {

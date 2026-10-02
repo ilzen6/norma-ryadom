@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
+import ru.normaryadom.common.ratelimit.ClientKey
 import ru.normaryadom.intake.report.ItemReportService
 
 @Tag(name = "intake")
@@ -28,6 +29,6 @@ class ItemReportController(
         @Valid @RequestBody body: ItemReportRequest,
         request: HttpServletRequest,
     ) {
-        reports.report(itemId, body.reason, request.remoteAddr)
+        reports.report(itemId, body.reason, ClientKey.of(request.remoteAddr))
     }
 }

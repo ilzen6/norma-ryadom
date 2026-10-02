@@ -15,5 +15,6 @@ data class NearbyProperties(
     @field:DecimalMin("0.0")
     val distanceWeightPerKm: Double,
     @field:Min(1)
+    @field:Max(5)
     val combosPerVenue: Int,
 )

@@ -1,8 +1,17 @@
 package ru.normaryadom.recommendation
 
-class DishNotInMenuException(
+sealed class RejectedDishesException(
     val dishIds: List<Long>,
-) : RuntimeException("Dishes are not available in the venue menu")
+    message: String,
+) : RuntimeException(message)
+
+class DishNotInMenuException(
+    dishIds: List<Long>,
+) : RejectedDishesException(dishIds, "Dishes are not available in the venue menu")
+
+class DishExcludedException(
+    dishIds: List<Long>,
+) : RejectedDishesException(dishIds, "Dishes contain excluded diet tags")
 
 class ReplaceIndexOutOfRangeException(
     val index: Int,

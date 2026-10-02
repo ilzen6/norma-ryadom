@@ -12,9 +12,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.provisioning.InMemoryUserDetailsManager
 import org.springframework.security.web.SecurityFilterChain
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import org.springframework.web.cors.CorsConfiguration
 import org.springframework.web.cors.CorsConfigurationSource
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource
+import ru.normaryadom.common.ratelimit.RateLimiter
 
 @Configuration(proxyBeanMethods = false)
 class SecurityConfiguration {
@@ -31,8 +33,12 @@ class SecurityConfiguration {
 
     @Bean
     @Order(2)
-    fun webSecurity(http: HttpSecurity): SecurityFilterChain =
+    fun webSecurity(
+        http: HttpSecurity,
+        rateLimiter: RateLimiter,
+    ): SecurityFilterChain =
         http
+            .addFilterBefore(AdminLoginRateLimitFilter(rateLimiter), UsernamePasswordAuthenticationFilter::class.java)
             .authorizeHttpRequests {
                 it
                     .requestMatchers("/admin/login", "/admin/assets/**", "/error")

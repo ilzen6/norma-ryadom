@@ -24,9 +24,9 @@ class CatalogFixtures(
         return chainId
     }
 
-    fun menuCsv(rows: List<String>): String = (listOf(MenuCsvParser.HEADER.joinToString(";")) + rows).joinToString("\n")
+    fun menuCsv(rows: List<String>): ByteArray = (listOf(MenuCsvParser.HEADER.joinToString(";")) + rows).joinToString("\n").toByteArray()
 
-    fun venueCsv(rows: List<String>): String = (listOf(VenueCsvParser.HEADER.joinToString(";")) + rows).joinToString("\n")
+    fun venueCsv(rows: List<String>): ByteArray = (listOf(VenueCsvParser.HEADER.joinToString(";")) + rows).joinToString("\n").toByteArray()
 
     companion object {
         const val SOURCE_URL = "https://chain.example/nutrition"

@@ -39,14 +39,18 @@ PostgreSQL + PostGIS · SeaweedFS (S3) · Caffeine
 
 1. Создайте `.env` по образцу `.env.example`. Хеш пароля администратора — bcrypt, например:
    ```bash
-   htpasswd -nbBC 10 "" 'ваш-пароль' | tr -d ':\n'
+   htpasswd -niBC 10 "" | tr -d ':\n'
    ```
+   Команда читает пароль со стандартного ввода, поэтому он не попадает в историю оболочки.
    В `.env` значение хеша берите в одинарные кавычки: `ADMIN_PASSWORD_HASH='$2y$10$...'`.
+   `REPORTER_KEY` — случайная строка (например, `openssl rand -hex 32`): ключ HMAC, которым обезличивается
+   адрес автора жалобы, чтобы один человек не мог отправить несколько жалоб на одно блюдо.
 2. Соберите и поднимите сервер с базой и хранилищем (профиль `demo` загружает демо-каталог):
    ```bash
    (cd server && ./gradlew bootJar)
    docker compose up -d --build --wait
    ```
+   Порты базы, хранилища и сервера открыты только на `127.0.0.1`.
    - API: http://localhost:8080/api/v1, Swagger: http://localhost:8080/swagger-ui.html
    - Админка: http://localhost:8080/admin
 3. Запустите приложение:

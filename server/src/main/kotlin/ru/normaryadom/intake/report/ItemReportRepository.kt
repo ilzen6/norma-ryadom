@@ -9,16 +9,21 @@ import java.time.Instant
 class ItemReportRepository(
     private val jdbc: JdbcClient,
 ) {
-    fun insert(
+    fun insertIfAbsent(
         itemId: Long,
         reason: String,
-    ) {
+        reporterHash: String,
+    ): Boolean =
         jdbc
-            .sql("INSERT INTO item_report (item_id, reason) VALUES (:itemId, :reason)")
-            .param("itemId", itemId)
+            .sql(
+                """
+                INSERT INTO item_report (item_id, reason, reporter_hash) VALUES (:itemId, :reason, :reporterHash)
+                ON CONFLICT (item_id, reporter_hash) WHERE resolved_at IS NULL AND reporter_hash IS NOT NULL DO NOTHING
+                """,
+            ).param("itemId", itemId)
             .param("reason", reason)
-            .update()
-    }
+            .param("reporterHash", reporterHash)
+            .update() > 0
 
     fun countOpen(itemId: Long): Int =
         jdbc

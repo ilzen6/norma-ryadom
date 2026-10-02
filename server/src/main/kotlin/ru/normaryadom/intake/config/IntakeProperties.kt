@@ -20,10 +20,11 @@ data class IntakeProperties(
 ) {
     data class Photo(
         val maxSize: DataSize,
+        @field:Min(1)
+        val maxPixels: Long,
     )
 
     data class Ocr(
-        val workerEnabled: Boolean,
         val pollInterval: Duration,
         @field:Min(1)
         val batchSize: Int,
@@ -36,5 +37,7 @@ data class IntakeProperties(
     data class Reports(
         @field:Min(1)
         val reviewThreshold: Int,
+        @field:NotBlank
+        val reporterKey: String,
     )
 }

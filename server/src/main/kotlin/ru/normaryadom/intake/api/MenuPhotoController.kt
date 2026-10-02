@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestPart
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.multipart.MultipartFile
+import ru.normaryadom.common.ratelimit.ClientKey
 import ru.normaryadom.intake.photo.MenuPhotoService
 
 @Tag(name = "intake")
@@ -29,7 +30,7 @@ class MenuPhotoController(
         @RequestPart("photo") photo: MultipartFile,
         request: HttpServletRequest,
     ): MenuPhotoResponse {
-        val receipt = photos.submit(venueId, photo.bytes, request.remoteAddr)
+        val receipt = photos.submit(venueId, photo.bytes, ClientKey.of(request.remoteAddr))
         return MenuPhotoResponse(submissionId = receipt.submissionId, status = receipt.status)
     }
 }

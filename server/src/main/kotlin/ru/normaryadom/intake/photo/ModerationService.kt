@@ -3,21 +3,18 @@ package ru.normaryadom.intake.photo
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import org.springframework.transaction.support.TransactionOperations
-import ru.normaryadom.catalog.domain.SourceKind
 import ru.normaryadom.catalog.importing.CsvError
 import ru.normaryadom.catalog.importing.CsvParseResult
 import ru.normaryadom.catalog.importing.MenuCsvParser
-import ru.normaryadom.catalog.persistence.MenuItemRepository
-import ru.normaryadom.catalog.persistence.Provenance
-import ru.normaryadom.catalog.service.MenuVersions
+import ru.normaryadom.catalog.service.MenuItemService
+import ru.normaryadom.intake.storage.PhotoStorage
 import java.time.Clock
 
 @Service
 class ModerationService(
     private val submissions: MenuSubmissionRepository,
     private val storage: PhotoStorage,
-    private val items: MenuItemRepository,
-    private val menuVersions: MenuVersions,
+    private val menuItems: MenuItemService,
     private val parser: MenuCsvParser,
     private val transactions: TransactionOperations,
     private val clock: Clock,
@@ -42,13 +39,11 @@ class ModerationService(
         return when (val parsed = parser.parse(menuCsv)) {
             is CsvParseResult.Invalid -> ModerationOutcome.Rejected(parsed.errors)
             is CsvParseResult.Parsed -> {
-                val now = clock.instant()
                 transactions.executeWithoutResult {
-                    if (!submissions.moderate(submissionId, SubmissionStatus.APPROVED, now)) {
+                    if (!submissions.moderate(submissionId, SubmissionStatus.APPROVED, clock.instant())) {
                         throw SubmissionAlreadyModeratedException(submissionId)
                     }
-                    items.upsertForVenue(submission.venueId, parsed.rows, Provenance(SourceKind.B, null, now))
-                    menuVersions.bumpVenue(submission.venueId)
+                    menuItems.addVenueItems(submission.venueId, parsed.rows)
                 }
                 log.info("Menu submission approved: submissionId={}, items={}", submissionId, parsed.rows.size)
                 ModerationOutcome.Approved(parsed.rows.size)

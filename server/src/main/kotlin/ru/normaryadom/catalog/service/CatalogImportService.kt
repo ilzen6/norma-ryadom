@@ -25,7 +25,7 @@ class CatalogImportService(
 ) {
     fun importChainMenu(
         chainId: Long,
-        csv: String,
+        csv: ByteArray,
         sourceUrl: String,
     ): ImportOutcome {
         chains.findById(chainId) ?: throw ChainNotFoundException(chainId)
@@ -49,15 +49,19 @@ class CatalogImportService(
 
     fun importChainVenues(
         chainId: Long,
-        csv: String,
+        csv: ByteArray,
     ): ImportOutcome {
         chains.findById(chainId) ?: throw ChainNotFoundException(chainId)
         return when (val parsed = venueParser.parse(csv)) {
             is CsvParseResult.Invalid -> ImportOutcome.Rejected(parsed.errors)
             is CsvParseResult.Parsed -> {
-                transactions.executeWithoutResult { venues.upsertForChain(chainId, parsed.rows) }
-                log.info("Chain venues imported: chainId={}, upserted={}", chainId, parsed.rows.size)
-                ImportOutcome.Imported(upserted = parsed.rows.size, withdrawn = 0)
+                val closed =
+                    transactions.execute {
+                        venues.upsertForChain(chainId, parsed.rows)
+                        venues.deactivateChainVenuesExcept(chainId, parsed.rows.map { it.externalId })
+                    }
+                log.info("Chain venues imported: chainId={}, upserted={}, closed={}", chainId, parsed.rows.size, closed)
+                ImportOutcome.Imported(upserted = parsed.rows.size, withdrawn = closed)
             }
         }
     }

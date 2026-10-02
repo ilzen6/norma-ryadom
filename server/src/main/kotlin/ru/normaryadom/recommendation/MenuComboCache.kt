@@ -13,7 +13,7 @@ class MenuComboCache(
     private val menus: VenueMenuService,
     private val optimizer: ComboOptimizer,
 ) {
-    @Cacheable(cacheNames = [CACHE_NAME], sync = true)
+    @Cacheable(cacheNames = [CACHE_NAME])
     fun bestCombos(
         scope: MenuScope,
         criteria: SearchCriteria,

@@ -7,11 +7,13 @@ import org.springframework.http.HttpHeaders
 import org.springframework.mock.web.MockMultipartFile
 import org.springframework.test.web.servlet.multipart
 import ru.normaryadom.intake.ocr.MenuOcrProcessor
-import ru.normaryadom.intake.photo.PhotoStorage
+import ru.normaryadom.intake.storage.PhotoStorage
 import ru.normaryadom.support.CatalogFixtures.Companion.GRILL_MENU
 import ru.normaryadom.support.CatalogFixtures.Companion.GRILL_VENUES
 import ru.normaryadom.support.IntegrationTest
 import ru.normaryadom.support.MenuPhotos
+import java.io.ByteArrayInputStream
+import javax.imageio.ImageIO
 
 class MenuPhotoApiIT : IntegrationTest() {
     @Autowired
@@ -38,7 +40,8 @@ class MenuPhotoApiIT : IntegrationTest() {
         val stored = jdbc.sql("SELECT photo_key, content_type, status FROM menu_submission").query().singleRow()
         assertThat(stored["status"]).isEqualTo("NEW")
         assertThat(stored["content_type"]).isEqualTo("image/png")
-        assertThat(storage.get(stored["photo_key"] as String)).isEqualTo(photo)
+        val content = storage.get(stored["photo_key"] as String)
+        assertThat(ImageIO.read(ByteArrayInputStream(content)).height).isEqualTo(ImageIO.read(ByteArrayInputStream(photo)).height)
     }
 
     @Test
@@ -55,13 +58,67 @@ class MenuPhotoApiIT : IntegrationTest() {
     }
 
     @Test
-    fun `помечает нераспознаваемое изображение, не теряя заявку`() {
+    fun `удаляет из фото метаданные EXIF, в том числе геометку`() {
         val venueId = grillVenue()
-        upload(venueId, byteArrayOf(0x89.toByte(), 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A, 1, 2, 3), "broken.png")
+        val photo = MenuPhotos.withExif(MenuPhotos.withText(listOf("Борщ 250"), "jpg"), "GPS 55.7558 37.6173")
 
-        ocr.processPending()
+        upload(venueId, photo, "menu.jpg")
 
-        assertThat(jdbc.sql("SELECT status FROM menu_submission").query(String::class.java).single()).isEqualTo("OCR_FAILED")
+        val key = jdbc.sql("SELECT photo_key FROM menu_submission").query(String::class.java).single()
+        val stored = storage.get(key)
+        assertThat(String(photo, Charsets.ISO_8859_1)).contains("GPS 55.7558")
+        assertThat(String(stored, Charsets.ISO_8859_1)).doesNotContain("GPS 55.7558").doesNotContain("Exif")
+        assertThat(ImageIO.read(ByteArrayInputStream(stored)).width).isEqualTo(ImageIO.read(ByteArrayInputStream(photo)).width)
+    }
+
+    @Test
+    fun `отклоняет повреждённое изображение с верной сигнатурой`() {
+        val venueId = grillVenue()
+        val broken = byteArrayOf(0x89.toByte(), 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A, 1, 2, 3)
+
+        mockMvc
+            .multipart("/api/v1/venues/$venueId/menu-photos") {
+                file(MockMultipartFile("photo", "broken.png", "image/png", broken))
+                with(uniqueClient())
+            }.andExpect {
+                status { isUnsupportedMediaType() }
+                jsonPath("$.type") { value("urn:norma-ryadom:problem:unsupported-photo") }
+            }
+        assertThat(jdbc.sql("SELECT count(*) FROM menu_submission").query(Int::class.java).single()).isZero()
+    }
+
+    @Test
+    fun `отклоняет маленький файл с огромным числом пикселей, не распаковывая его`() {
+        val venueId = grillVenue()
+        val bomb = MenuPhotos.blank(width = 6000, height = 5000)
+        assertThat(bomb.size).isLessThan(1024 * 1024)
+
+        mockMvc
+            .multipart("/api/v1/venues/$venueId/menu-photos") {
+                file(MockMultipartFile("photo", "bomb.png", "image/png", bomb))
+                with(uniqueClient())
+            }.andExpect {
+                status { isContentTooLarge() }
+                jsonPath("$.type") { value("urn:norma-ryadom:problem:photo-too-large") }
+            }
+    }
+
+    @Test
+    fun `помечает заявку без фото в хранилище и продолжает распознавать остальные`() {
+        val venueId = grillVenue()
+        upload(venueId, MenuPhotos.withText(listOf("Солянка")), "lost.png")
+        upload(venueId, MenuPhotos.withText(listOf("Борщ")), "menu.png")
+        val lostId = jdbc.sql("SELECT min(id) FROM menu_submission").query(Long::class.java).single()
+        jdbc
+            .sql("UPDATE menu_submission SET photo_key = 'menu-photos/missing.png' WHERE id = :id")
+            .param("id", lostId)
+            .update()
+
+        val processed = ocr.processPending()
+
+        assertThat(processed).isEqualTo(2)
+        val statuses = jdbc.sql("SELECT status FROM menu_submission ORDER BY id").query(String::class.java).list()
+        assertThat(statuses).containsExactly("OCR_FAILED", "OCR_DONE")
     }
 
     @Test

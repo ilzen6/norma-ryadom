@@ -50,6 +50,21 @@ class VenueRepository(
         )
     }
 
+    fun deactivateChainVenuesExcept(
+        chainId: Long,
+        keptExternalIds: Collection<String>,
+    ): Int =
+        jdbc
+            .sql(
+                """
+                UPDATE venue SET is_active = FALSE
+                WHERE chain_id = :chainId AND is_active
+                  AND (external_id IS NULL OR NOT (external_id = ANY (:externalIds)))
+                """,
+            ).param("chainId", chainId)
+            .param("externalIds", keptExternalIds.toTypedArray())
+            .update()
+
     fun bumpMenuVersion(id: Long) {
         jdbc
             .sql("UPDATE venue SET menu_version = menu_version + 1 WHERE id = :id")

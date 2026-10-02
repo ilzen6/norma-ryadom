@@ -1,4 +1,4 @@
-package ru.normaryadom.intake.photo
+package ru.normaryadom.intake.ocr
 
 interface MenuTextRecognizer {
     fun recognize(image: ByteArray): RecognitionResult

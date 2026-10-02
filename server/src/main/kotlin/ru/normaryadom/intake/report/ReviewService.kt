@@ -5,15 +5,14 @@ import org.springframework.transaction.support.TransactionOperations
 import ru.normaryadom.catalog.domain.Nutrients
 import ru.normaryadom.catalog.persistence.MenuItemRecord
 import ru.normaryadom.catalog.persistence.MenuItemRepository
-import ru.normaryadom.catalog.service.MenuItemNotFoundException
-import ru.normaryadom.catalog.service.MenuVersions
+import ru.normaryadom.catalog.service.MenuItemService
 import java.time.Clock
 
 @Service
 class ReviewService(
     private val items: MenuItemRepository,
+    private val menuItems: MenuItemService,
     private val reports: ItemReportRepository,
-    private val menuVersions: MenuVersions,
     private val transactions: TransactionOperations,
     private val clock: Clock,
 ) {
@@ -23,32 +22,22 @@ class ReviewService(
         return underReview.map { ReviewCase(it, reasons[it.item.id].orEmpty()) }
     }
 
-    fun confirm(itemId: Long) =
-        resolve(itemId) { record ->
-            items.confirm(record.item.id)
-        }
+    fun confirm(itemId: Long) = resolve(itemId) { menuItems.confirm(itemId) }
 
     fun correct(
         itemId: Long,
         nutrients: Nutrients,
-    ) = resolve(itemId) { record ->
-        items.correctNutrients(record.item.id, nutrients, clock.instant())
-    }
+    ) = resolve(itemId) { menuItems.correct(itemId, nutrients) }
 
-    fun withdraw(itemId: Long) =
-        resolve(itemId) { record ->
-            items.withdraw(record.item.id)
-        }
+    fun withdraw(itemId: Long) = resolve(itemId) { menuItems.withdraw(itemId) }
 
     private fun resolve(
         itemId: Long,
-        change: (MenuItemRecord) -> Unit,
+        change: () -> Unit,
     ) {
-        val record = items.findById(itemId) ?: throw MenuItemNotFoundException(itemId)
         transactions.executeWithoutResult {
-            change(record)
+            change()
             reports.resolveOpen(itemId, clock.instant())
-            menuVersions.bumpOwnerOf(record)
         }
     }
 }

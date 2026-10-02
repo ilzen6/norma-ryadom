@@ -2,6 +2,7 @@ package ru.normaryadom.recommendation
 
 import org.springframework.stereotype.Service
 import ru.normaryadom.catalog.domain.GeoPoint
+import ru.normaryadom.catalog.domain.MenuItem
 import ru.normaryadom.catalog.domain.Venue
 import ru.normaryadom.catalog.service.VenueMenuService
 import ru.normaryadom.geo.MenuCoverage
@@ -65,15 +66,24 @@ class ComboSearchService(
         if (replaceIndex !in dishIds.indices) throw ReplaceIndexOutOfRangeException(replaceIndex, dishIds.size)
         val venue = menus.venue(venueId)
         val menu = menus.menu(venue.menuScope)
-        val byId = menu.associateBy { it.id }
-        val missing = dishIds.filterNot(byId::containsKey)
-        if (missing.isNotEmpty()) throw DishNotInMenuException(missing.distinct())
-        val dishes = dishIds.map(byId::getValue)
+        val dishes = dishesFrom(menu, dishIds)
+        val excluded = dishes.filterIndexed { index, dish -> index != replaceIndex && !criteria.target.allows(dish) }
+        if (excluded.isNotEmpty()) throw DishExcludedException(excluded.map { it.id }.distinct())
         val combos = optimizer.replacements(menu, criteria, dishes, replaceIndex, limit)
         return ComboSearchResult(
             appliedCriteria = criteria,
             options = combos.map { ComboOption(venue = venue, distanceMeters = null, combo = it) },
         )
+    }
+
+    private fun dishesFrom(
+        menu: List<MenuItem>,
+        dishIds: List<Long>,
+    ): List<MenuItem> {
+        val byId = menu.associateBy { it.id }
+        val missing = dishIds.filterNot(byId::containsKey)
+        if (missing.isNotEmpty()) throw DishNotInMenuException(missing.distinct())
+        return dishIds.map(byId::getValue)
     }
 
     private fun optionsFor(

@@ -18,9 +18,13 @@ class DemoCatalogLoader(
 ) : ApplicationRunner {
     override fun run(args: ApplicationArguments) {
         properties.chains.forEach { demo ->
-            val chainId = chains.findByName(demo.name)?.id ?: chains.create(demo.name, demo.sourceUrl)
-            val menu = imports.importChainMenu(chainId, demo.menu.getContentAsString(Charsets.UTF_8), demo.sourceUrl)
-            val venues = imports.importChainVenues(chainId, demo.venues.getContentAsString(Charsets.UTF_8))
+            if (chains.findByName(demo.name) != null) {
+                log.info("Demo chain already present, skipped: name={}", demo.name)
+                return@forEach
+            }
+            val chainId = chains.create(demo.name, demo.sourceUrl)
+            val menu = imports.importChainMenu(chainId, demo.menu.contentAsByteArray, demo.sourceUrl)
+            val venues = imports.importChainVenues(chainId, demo.venues.contentAsByteArray)
             check(menu is ImportOutcome.Imported && venues is ImportOutcome.Imported) { "Demo catalog for ${demo.name} is invalid" }
             log.info("Demo chain loaded: chainId={}, items={}, venues={}", chainId, menu.upserted, venues.upserted)
         }
