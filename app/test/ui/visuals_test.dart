@@ -10,13 +10,15 @@ import '../support/fakes.dart';
 import '../support/pump_app.dart';
 
 void main() {
-  test('показывает расстояние в километрах от тысячи метров и время пешком с округлением вверх', () {
+  test('показывает километры от тысячи метров, время пешком только до пяти километров', () {
     final l10n = lookupAppLocalizations(const Locale('ru'));
 
     expect(l10n.walk(144), '144 м · 2 мин');
     expect(l10n.walk(75), '75 м · 1 мин');
     expect(l10n.walk(1480), '1,5 км · 20 мин');
     expect(l10n.walkSemantics(1480), '1,5 км, 20 минут пешком');
+    expect(l10n.walk(12340), '12,3 км');
+    expect(l10n.walk(630800), '631 км');
   });
 
   Future<void> pumpPiece(WidgetTester tester, Widget child, {Brightness brightness = Brightness.light}) =>

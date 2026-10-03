@@ -7,7 +7,7 @@ import '../../data/providers.dart';
 import '../core/l10n_extensions.dart';
 import '../core/session.dart';
 import '../core/theme.dart';
-import 'basemap_layers.dart';
+import 'vector_basemap.dart';
 
 class VenueMiniMap extends ConsumerWidget {
   const VenueMiniMap({
@@ -28,15 +28,14 @@ class VenueMiniMap extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final palette = context.palette;
-    final basemap = ref.watch(basemapProvider).value;
+    final atlas = ref.watch(mapAtlasProvider).value;
     final venue = LatLng(lat, lon);
-    if (ref.watch(appConfigProvider).tileUrlTemplate.isNotEmpty || basemap == null || !basemap.covers(venue)) {
+    if (ref.watch(appConfigProvider).tileUrlTemplate.isNotEmpty || atlas == null || atlas.regionOf(venue) == null) {
       return const SizedBox.shrink();
     }
     final location = ref.watch(locationProvider).value?.location;
     final user = location == null ? null : LatLng(location.lat, location.lon);
-    final showUser =
-        user != null && const Distance().as(LengthUnit.Meter, user, venue) <= nearbyMeters && basemap.covers(user);
+    final showUser = user != null && const Distance().as(LengthUnit.Meter, user, venue) <= nearbyMeters;
     return Padding(
       padding: margin,
       child: Semantics(
@@ -63,7 +62,7 @@ class VenueMiniMap extends ConsumerWidget {
                     interactionOptions: const InteractionOptions(flags: InteractiveFlag.none),
                   ),
                   children: [
-                    ...BasemapLayers.of(basemap, palette),
+                    const VectorBasemap(),
                     if (showUser)
                       PolylineLayer(
                         polylines: [

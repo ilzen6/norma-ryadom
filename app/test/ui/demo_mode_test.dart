@@ -45,7 +45,9 @@ void main() {
     await tester.pumpAndSettle();
     await scrollTo(tester, find.byKey(const Key('server-settings')));
     expect(
-      find.text('Встроенный демо-каталог: 10 сетей и 349 заведений в центре Москвы, вы — в Москва-Сити'),
+      find.text(
+        'Встроенный демо-каталог: 10 сетей и 17 374 заведения в Москве, области и Петербурге; где вы — задаёт район выше',
+      ),
       findsOneWidget,
     );
   });

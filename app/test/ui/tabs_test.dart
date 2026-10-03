@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:norma_ryadom/domain/models/catalog.dart';
 import 'package:norma_ryadom/domain/models/diary.dart';
 import 'package:norma_ryadom/domain/models/meal.dart';
 import 'package:norma_ryadom/domain/models/nutrition_norm.dart';
 import 'package:norma_ryadom/ui/core/theme.dart';
+import 'package:norma_ryadom/ui/map/map_view_model.dart';
 import 'package:norma_ryadom/ui/venue/venue_screen.dart';
 import 'package:norma_ryadom/utils/result.dart';
 
@@ -54,16 +56,27 @@ void main() {
     expect(await colorOf('Пицца'), Palette.light.neutral);
     expect(await colorOf('Кафе без меню'), Palette.light.inkSubtle);
 
-    await tester.tap(find.byKey(const Key('map-show-all')));
-    await tester.pumpAndSettle();
-    expect(harness.venues.includeWithoutMenuRequests, [false, true]);
-
     await tester.scrollUntilVisible(
-      find.text('есть набор под цель · Пресненская наб., 2 · 100 м · 2 мин'),
+      find.byKey(const Key('map-show-all')),
       -120,
       scrollable: find.descendant(of: find.byKey(const Key('map-venue-list')), matching: find.byType(Scrollable)),
     );
-    expect(find.text('есть набор под цель · Пресненская наб., 2 · 100 м · 2 мин'), findsOneWidget);
+    await Scrollable.ensureVisible(tester.element(find.byKey(const Key('map-show-all'))), alignment: 0.5);
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('map-show-all')));
+    await tester.pumpAndSettle();
+    expect(harness.venues.includeWithoutMenuRequests.first, isFalse);
+    expect(harness.venues.includeWithoutMenuRequests.last, isTrue);
+
+    await tester.scrollUntilVisible(
+      find.textContaining('есть набор под цель · Пресненская наб., 2 · '),
+      -120,
+      scrollable: find.descendant(of: find.byKey(const Key('map-venue-list')), matching: find.byType(Scrollable)),
+    );
+    expect(
+      find.textContaining(RegExp(r'^есть набор под цель · Пресненская наб\., 2 · \d+ м · \d+ мин$')),
+      findsOneWidget,
+    );
 
     await tester.tap(find.bySemanticsLabel('Зелёный бар, есть набор под цель'));
     await tester.pumpAndSettle();
@@ -95,6 +108,62 @@ void main() {
 
     expect(find.bySemanticsLabel('4 заведения рядом, приблизить'), findsNothing);
     expect(find.bySemanticsLabel('Точка 1, есть набор под цель'), findsOneWidget);
+  });
+
+  testWidgets('карта подгружает заведения вокруг видимой области после перемещения', (tester) async {
+    final harness = TestHarness(profile: TestData.profile)
+      ..venues.nearbyResult = Ok([venue(1, 'Зелёный бар', FitLevel.good)]);
+    await harness.pump(tester);
+    await openTab(tester, 'Карта');
+    expect(harness.venues.requestedRadii.last, inInclusiveRange(500, 30000));
+    final before = harness.venues.requestedCenters.last;
+
+    await tester.drag(find.byType(FlutterMap), const Offset(-200, 150));
+    await tester.pump(const Duration(milliseconds: 600));
+    await tester.pumpAndSettle();
+
+    expect(harness.venues.requestedCenters.last, isNot(before));
+  });
+
+  testWidgets('карта переносит в выбранный город и ищет заведения уже там', (tester) async {
+    final harness = TestHarness(profile: TestData.profile)
+      ..venues.nearbyResult = Ok([venue(1, 'Зелёный бар', FitLevel.good)]);
+    await harness.pump(tester);
+    await openTab(tester, 'Карта');
+    await tester.tap(find.byKey(const Key('map-cities')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('city-spb')));
+    await tester.pump(const Duration(milliseconds: 600));
+    await tester.pumpAndSettle();
+
+    final center = harness.venues.requestedCenters.last;
+    expect(center.lat, closeTo(59.93, 0.05));
+    expect(center.lon, closeTo(30.34, 0.05));
+    expect(find.text('Санкт-Петербург'), findsOneWidget);
+  });
+
+  testWidgets('карта показывает всю Россию с подписями крупных городов', (tester) async {
+    final harness = TestHarness(profile: TestData.profile);
+    await harness.pump(tester);
+    await openTab(tester, 'Карта');
+    await tester.tap(find.byKey(const Key('map-cities')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('city-russia')));
+    await tester.pump(const Duration(milliseconds: 600));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Вся Россия'), findsOneWidget);
+    expect(find.text('Москва'), findsOneWidget);
+    expect(find.text('Невский проспект'), findsNothing);
+  });
+
+  testWidgets('карта просит приблизиться, когда в области больше заведений, чем показано', (tester) async {
+    final harness = TestHarness(profile: TestData.profile)
+      ..venues.nearbyResult = Ok([for (var id = 1; id <= mapVenueLimit; id++) venue(id, 'Точка $id', FitLevel.good)]);
+    await harness.pump(tester);
+    await openTab(tester, 'Карта');
+
+    expect(find.byKey(const Key('map-truncated')), findsOneWidget);
   });
 
   testWidgets('карта честно показывает пустую выдачу и ошибку', (tester) async {

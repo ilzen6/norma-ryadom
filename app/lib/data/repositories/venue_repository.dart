@@ -9,6 +9,8 @@ abstract interface class VenueRepository {
     required GeoLocation location,
     required MealTarget target,
     required bool includeWithoutMenu,
+    int? radiusMeters,
+    int? limit,
   });
 
   Future<Result<VenueMenu>> menu(int venueId, MealTarget target);
@@ -25,11 +27,14 @@ class RemoteVenueRepository implements VenueRepository {
     required GeoLocation location,
     required MealTarget target,
     required bool includeWithoutMenu,
+    int? radiusMeters,
+    int? limit,
   }) => _api.nearbyVenues(
     location: location,
-    radiusMeters: radiusMeters,
+    radiusMeters: radiusMeters ?? this.radiusMeters,
     includeWithoutMenu: includeWithoutMenu,
     target: target,
+    limit: limit,
   );
 
   @override

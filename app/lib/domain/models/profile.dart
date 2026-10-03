@@ -43,7 +43,7 @@ abstract class UserProfile with _$UserProfile {
     @Default(<DietPreference>{}) Set<DietPreference> preferences,
     NutritionNorm? manualNorm,
     @Default(false) bool locationConsent,
-    District? district,
+    @JsonKey(unknownEnumValue: JsonKey.nullForUndefinedEnumValue) District? district,
   }) = _UserProfile;
 
   factory UserProfile.fromJson(Map<String, dynamic> json) => _$UserProfileFromJson(json);

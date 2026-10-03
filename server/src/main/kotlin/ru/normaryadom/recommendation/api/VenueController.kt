@@ -36,12 +36,13 @@ class VenueController(
     fun nearby(
         @RequestParam @DecimalMin("-90") @DecimalMax("90") lat: Double,
         @RequestParam @DecimalMin("-180") @DecimalMax("180") lon: Double,
-        @RequestParam @Min(100) @Max(5000) radius: Int,
+        @RequestParam @Min(100) @Max(MAX_RADIUS_METERS) radius: Int,
         @RequestParam(defaultValue = "false") includeWithoutMenu: Boolean,
+        @RequestParam(required = false) @Min(1) @Max(MAX_LIMIT) limit: Int?,
         @Valid @ParameterObject target: MealTargetQuery,
     ): NearbyVenuesResponse {
         val coverage = if (includeWithoutMenu) MenuCoverage.ALL else MenuCoverage.WITH_MENU_ONLY
-        val query = NearbyQuery(GeoPoint(lat, lon), radius, coverage, nearby.maxResults)
+        val query = NearbyQuery(GeoPoint(lat, lon), radius, coverage, limit ?: nearby.maxResults)
         val fits =
             target.toCriteriaOrNull()?.let { directory.nearbyWithFit(query, it) }
                 ?: directory.nearby(query).map { VenueFit(it, null) }
@@ -58,5 +59,10 @@ class VenueController(
         val items = menus.menu(venue.menuScope)
         return target.toCriteriaOrNull()?.let { RecommendationMapper.assessedMenuResponse(venue, assessor.assessMenu(items, it)) }
             ?: RecommendationMapper.menuResponse(venue, items)
+    }
+
+    private companion object {
+        const val MAX_RADIUS_METERS = 30_000L
+        const val MAX_LIMIT = 500L
     }
 }

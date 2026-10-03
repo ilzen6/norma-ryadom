@@ -655,7 +655,7 @@
           "required" : true,
           "schema" : {
             "format" : "int32",
-            "maximum" : 5000,
+            "maximum" : 30000,
             "minimum" : 100,
             "type" : "integer"
           }
@@ -666,6 +666,16 @@
           "schema" : {
             "default" : false,
             "type" : "boolean"
+          }
+        }, {
+          "in" : "query",
+          "name" : "limit",
+          "required" : false,
+          "schema" : {
+            "format" : "int32",
+            "maximum" : 500,
+            "minimum" : 1,
+            "type" : "integer"
           }
         }, {
           "in" : "query",

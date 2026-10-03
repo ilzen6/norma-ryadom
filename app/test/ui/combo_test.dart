@@ -57,8 +57,7 @@ void main() {
       ),
     );
 
-    await tester.tap(find.byKey(const Key('replace-1')));
-    await tester.pumpAndSettle();
+    await tapVisible(tester, find.byKey(const Key('replace-1')));
     expect(find.text('Чем заменить'), findsOneWidget);
     expect(harness.combos.replaceRequests.single.$1, [1, 2]);
     expect(harness.combos.replaceRequests.single.$2, 1);
@@ -75,13 +74,11 @@ void main() {
   testWidgets('сообщает, если замены нет, и показывает ошибку замены', (tester) async {
     final harness = await openCombo(tester);
 
-    await tester.tap(find.byKey(const Key('replace-0')));
-    await tester.pumpAndSettle();
+    await tapVisible(tester, find.byKey(const Key('replace-0')));
     expect(find.textContaining('Подходящей замены нет'), findsOneWidget);
 
     harness.combos.replaceResult = const Err(AppFailure.rateLimited);
-    await tester.tap(find.byKey(const Key('replace-0')));
-    await tester.pumpAndSettle();
+    await tapVisible(tester, find.byKey(const Key('replace-0')));
     expect(find.text('Слишком много запросов. Попробуйте чуть позже.'), findsOneWidget);
   });
 

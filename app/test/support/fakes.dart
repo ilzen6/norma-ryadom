@@ -180,6 +180,8 @@ class FakeComboRepository implements ComboRepository {
 
 class FakeVenueRepository implements VenueRepository {
   Result<List<NearbyVenue>> nearbyResult = const Ok([]);
+  final requestedRadii = <int?>[];
+  final requestedCenters = <GeoLocation>[];
   Result<VenueMenu> menuResult = const Err(AppFailure.notFound);
   final List<bool> includeWithoutMenuRequests = [];
 
@@ -188,8 +190,12 @@ class FakeVenueRepository implements VenueRepository {
     required GeoLocation location,
     required MealTarget target,
     required bool includeWithoutMenu,
+    int? radiusMeters,
+    int? limit,
   }) async {
     includeWithoutMenuRequests.add(includeWithoutMenu);
+    requestedRadii.add(radiusMeters);
+    requestedCenters.add(location);
     return nearbyResult;
   }
 

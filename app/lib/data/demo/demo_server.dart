@@ -92,6 +92,7 @@ class DemoServerAdapter implements HttpClientAdapter {
   DemoServerAdapter(Future<String> Function() loadCatalog) : _catalog = loadCatalog().then(DemoCatalog.fromJson);
 
   static const _maxNearby = 100;
+  static const _maxLimit = 500;
   static const _combosPerVenue = 2;
   static const _cachedCombos = 5;
   static const _distanceWeightPerKm = 0.5;
@@ -150,25 +151,26 @@ class DemoServerAdapter implements HttpClientAdapter {
   ResponseBody _nearbyVenues(DemoCatalog catalog, Map<String, String> query) {
     final center = (double.parse(query['lat']!), double.parse(query['lon']!));
     final radius = double.parse(query['radius']!);
+    final limit = (int.tryParse(query['limit'] ?? '') ?? _maxNearby).clamp(1, _maxLimit);
     final target = _queryTarget(query);
     final strict = target?.rounded();
     const optimizer = DemoOptimizer(DemoScorer());
-    final venues = _within(catalog, center, radius);
+    final venues = _within(catalog, center, radius, limit: limit);
+    final fits = <DemoChain, String?>{};
+    String? fitOf(DemoChain chain) => fits.putIfAbsent(
+      chain,
+      () => strict == null
+          ? null
+          : optimizer.bestCombos(chain.menu, strict, _cachedCombos).isNotEmpty
+          ? 'GOOD'
+          : optimizer.bestCombos(chain.menu, strict.relaxed(), _cachedCombos).isNotEmpty
+          ? 'COMPROMISE'
+          : 'NONE',
+    );
     return _json({
       'venues': [
         for (final (chain, venue, distance) in venues)
-          {
-            'venue': _venueJson(venue),
-            'distanceMeters': distance.round(),
-            'hasMenu': true,
-            'fit': strict == null
-                ? null
-                : optimizer.bestCombos(chain.menu, strict, _cachedCombos).isNotEmpty
-                ? 'GOOD'
-                : optimizer.bestCombos(chain.menu, strict.relaxed(), _cachedCombos).isNotEmpty
-                ? 'COMPROMISE'
-                : 'NONE',
-          },
+          {'venue': _venueJson(venue), 'distanceMeters': distance.round(), 'hasMenu': true, 'fit': fitOf(chain)},
       ],
     });
   }
@@ -241,7 +243,12 @@ class DemoServerAdapter implements HttpClientAdapter {
     return _searchResponse(target, [for (final combo in combos) (venue, null, combo)]);
   }
 
-  List<(DemoChain, DemoVenue, double)> _within(DemoCatalog catalog, (double, double) center, double radius) {
+  List<(DemoChain, DemoVenue, double)> _within(
+    DemoCatalog catalog,
+    (double, double) center,
+    double radius, {
+    int limit = _maxNearby,
+  }) {
     final found =
         [
           for (final chain in catalog.chains)
@@ -252,7 +259,7 @@ class DemoServerAdapter implements HttpClientAdapter {
           final byDistance = left.$3.compareTo(right.$3);
           return byDistance != 0 ? byDistance : left.$2.id.compareTo(right.$2.id);
         });
-    return found.take(_maxNearby).toList();
+    return found.take(limit).toList();
   }
 
   static double _distanceMeters((double, double) from, (double, double) to) {

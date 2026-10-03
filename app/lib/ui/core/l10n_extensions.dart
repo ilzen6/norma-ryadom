@@ -28,6 +28,12 @@ extension MealLabels on AppLocalizations {
     District.chistyePrudy => districtChistyePrudy,
     District.kurskaya => districtKurskaya,
     District.belorusskaya => districtBelorusskaya,
+    District.khimki => districtKhimki,
+    District.mytishchi => districtMytishchi,
+    District.podolsk => districtPodolsk,
+    District.spbNevsky => districtSpbNevsky,
+    District.spbPetrogradka => districtSpbPetrogradka,
+    District.spbVasileostrovsky => districtSpbVasileostrovsky,
   };
 
   String preference(DietPreference preference) => switch (preference) {
@@ -96,12 +102,19 @@ extension MealLabels on AppLocalizations {
 
   static const walkingMetersPerMinute = 75;
 
-  String distance(int meters) =>
-      meters < 1000 ? distanceMeters(meters) : distanceKilometers(Formatting.decimal((meters / 100).round() / 10));
+  static const walkingLimitMeters = 5000;
+
+  String distance(int meters) => switch (meters) {
+    < 1000 => distanceMeters(meters),
+    < 100000 => distanceKilometers(Formatting.decimal((meters / 100).round() / 10)),
+    _ => distanceKilometers(Formatting.integer(meters / 1000)),
+  };
 
   int walkMinutesOf(int meters) => meters <= 0 ? 1 : (meters / walkingMetersPerMinute).ceil();
 
-  String walk(int meters) => '${distance(meters)} · ${walkMinutes(walkMinutesOf(meters))}';
+  String walk(int meters) =>
+      meters > walkingLimitMeters ? distance(meters) : '${distance(meters)} · ${walkMinutes(walkMinutesOf(meters))}';
 
-  String walkSemantics(int meters) => walkSpoken(distance(meters), walkMinutesOf(meters));
+  String walkSemantics(int meters) =>
+      meters > walkingLimitMeters ? distance(meters) : walkSpoken(distance(meters), walkMinutesOf(meters));
 }

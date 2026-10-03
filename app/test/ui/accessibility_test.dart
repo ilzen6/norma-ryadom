@@ -79,7 +79,7 @@ void main() {
     expect(
       tester.getSemantics(find.byKey(const Key('map-show-all'))),
       matchesSemantics(
-        label: 'Показать все',
+        label: 'Показать все\nВключая заведения, у которых пока нет данных о меню',
         hasToggledState: true,
         hasEnabledState: true,
         isEnabled: true,

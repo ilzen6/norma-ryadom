@@ -129,6 +129,9 @@ class LocationController extends AsyncNotifier<ResolvedLocation> {
     final profile = await ref.watch(profileProvider.future);
     final district = profile?.district ?? District.moscowCity;
     final fallback = GeoLocation(lat: district.lat, lon: district.lon, source: LocationSource.district);
+    if (ref.watch(appConfigProvider).demoServer) {
+      return ResolvedLocation(GeoLocation(lat: district.lat, lon: district.lon, source: LocationSource.device));
+    }
     if (profile == null || !profile.locationConsent) {
       return ResolvedLocation(fallback);
     }

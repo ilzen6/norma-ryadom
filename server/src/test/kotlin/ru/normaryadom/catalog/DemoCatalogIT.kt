@@ -31,7 +31,7 @@ class DemoCatalogIT : IntegrationTest() {
         loader.run(args)
 
         assertThat(jdbc.sql("SELECT count(*) FROM chain").query(Int::class.java).single()).isEqualTo(10)
-        assertThat(jdbc.sql("SELECT count(*) FROM venue").query(Int::class.java).single()).isEqualTo(349)
+        assertThat(jdbc.sql("SELECT count(*) FROM venue").query(Int::class.java).single()).isEqualTo(17374)
         assertThat(jdbc.sql("SELECT count(*) FROM menu_item WHERE is_available").query(Int::class.java).single()).isEqualTo(217)
     }
 

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart';
@@ -5,6 +7,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:norma_ryadom/app.dart';
 import 'package:norma_ryadom/config/app_config.dart';
+import 'package:norma_ryadom/data/map/basemap.dart';
 import 'package:norma_ryadom/data/providers.dart';
 import 'package:norma_ryadom/domain/models/profile.dart';
 import 'package:norma_ryadom/l10n/generated/app_localizations.dart';
@@ -46,6 +49,11 @@ class TestHarness {
     feedbackRepositoryProvider.overrideWithValue(feedback),
     locationServiceProvider.overrideWithValue(location),
     photoPickerProvider.overrideWithValue(picker),
+    mapAssetLoaderProvider.overrideWithValue((path) async => File('assets/map/$path').readAsStringSync()),
+    mapParsersProvider.overrideWithValue((
+      (source) async => Basemap.packFromJson(source),
+      (source) async => Basemap.fromJson(source),
+    )),
   ];
 
   Size screen = const Size(1080 / 2.625, 2400 / 2.625);

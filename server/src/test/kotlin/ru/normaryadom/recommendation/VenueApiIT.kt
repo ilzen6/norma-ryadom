@@ -35,6 +35,23 @@ class VenueApiIT : IntegrationTest() {
     }
 
     @Test
+    fun `отдаёт не больше заведений, чем просит параметр limit, начиная с ближайших`() {
+        catalog.chain("Гриль", GRILL_MENU, GRILL_VENUES)
+        catalog.chain("Боулы", BOWL_MENU, BOWL_VENUES)
+
+        mockMvc
+            .get("/api/v1/venues") {
+                param("lat", "$CITY_LAT")
+                param("lon", "$CITY_LON")
+                param("radius", "30000")
+                param("limit", "1")
+            }.andExpect {
+                status { isOk() }
+                jsonPath("$.venues.length()") { value(1) }
+            }
+    }
+
+    @Test
     fun `красит точки по лучшему набору под цель`() {
         catalog.chain("Гриль", GRILL_MENU, GRILL_VENUES)
         catalog.chain("Боулы", BOWL_MENU, BOWL_VENUES)
@@ -144,12 +161,14 @@ class VenueApiIT : IntegrationTest() {
             .get("/api/v1/venues") {
                 param("lat", "91")
                 param("lon", "37")
-                param("radius", "5001")
+                param("radius", "30001")
+                param("limit", "501")
             }.andExpect {
                 status { isBadRequest() }
                 jsonPath("$.type") { value("urn:norma-ryadom:problem:validation") }
                 jsonPath("$.errors[*].field") { value(hasItem("lat")) }
                 jsonPath("$.errors[*].field") { value(hasItem("radius")) }
+                jsonPath("$.errors[*].field") { value(hasItem("limit")) }
             }
         mockMvc.get("/api/v1/venues") { param("lat", "55") }.andExpect {
             status { isBadRequest() }

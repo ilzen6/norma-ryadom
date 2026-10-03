@@ -24,6 +24,7 @@ class NormaApi {
     required int radiusMeters,
     required bool includeWithoutMenu,
     MealTarget? target,
+    int? limit,
   }) => _call(
     () => _dio.get<Map<String, dynamic>>(
       '/api/v1/venues',
@@ -32,6 +33,7 @@ class NormaApi {
         'lon': location.lon,
         'radius': radiusMeters,
         'includeWithoutMenu': includeWithoutMenu,
+        'limit': ?limit,
         if (target != null) ..._targetQuery(target),
       },
     ),

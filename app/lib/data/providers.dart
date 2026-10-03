@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -9,6 +8,7 @@ import '../utils/result.dart';
 import 'demo/demo_server.dart';
 import 'local/app_database.dart';
 import 'map/basemap.dart';
+import 'map/map_atlas.dart';
 import 'repositories/combo_repository.dart';
 import 'repositories/diary_repository.dart';
 import 'repositories/feedback_repository.dart';
@@ -63,14 +63,32 @@ final demoCatalogLoaderProvider = Provider<Future<String> Function()>(
       () => rootBundle.loadString('assets/demo/catalog.json'),
 );
 
-final basemapLoaderProvider = Provider<Future<String> Function()>(
+final mapAssetLoaderProvider = Provider<Future<String> Function(String path)>(
   (ref) =>
-      () => rootBundle.loadString('assets/map/basemap.json'),
+      (path) => rootBundle.loadString('assets/map/$path'),
 );
 
-final basemapProvider = FutureProvider<Basemap?>((ref) async {
+final mapAtlasProvider = FutureProvider<MapAtlas?>((ref) async {
   try {
-    return await compute(Basemap.fromJson, await ref.watch(basemapLoaderProvider)());
+    return MapAtlas.fromJson(await ref.watch(mapAssetLoaderProvider)('index.json'));
+  } on Object {
+    return null;
+  }
+});
+
+final mapParsersProvider = Provider<(Future<BasemapPack> Function(String), Future<Basemap> Function(String))>(
+  (ref) => (parsePackInBackground, parseBasemapInBackground),
+);
+
+final packStoreProvider = Provider<AssetStore<BasemapPack>>(
+  (ref) => AssetStore(ref.watch(mapAssetLoaderProvider), ref.watch(mapParsersProvider).$1),
+);
+
+final mapCountryProvider = FutureProvider<Basemap?>((ref) async {
+  final atlas = await ref.watch(mapAtlasProvider.future);
+  if (atlas == null) return null;
+  try {
+    return await ref.watch(mapParsersProvider).$2(await ref.watch(mapAssetLoaderProvider)(atlas.country));
   } on Object {
     return null;
   }

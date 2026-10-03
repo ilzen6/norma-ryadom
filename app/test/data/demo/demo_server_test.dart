@@ -41,6 +41,15 @@ void main() {
     expect(venues.first.distanceMeters, lessThan(300));
   });
 
+  test('отдаёт для карты не больше запрошенного числа ближайших заведений', () async {
+    final venues = valueOf(
+      await api.nearbyVenues(location: center, radiusMeters: 30000, includeWithoutMenu: false, limit: 7),
+    );
+
+    expect(venues, hasLength(7));
+    expect(venues.first.distanceMeters, lessThanOrEqualTo(venues.last.distanceMeters));
+  });
+
   test('подбирает рядом без исключённых продуктов и возвращает округлённую цель', () async {
     final result = valueOf(
       await api.searchNearby(
@@ -100,7 +109,7 @@ void main() {
     expect(valueOf(photo).submissionId, 1);
     expect(await api.reportItem(3, 'Другие цифры'), isA<Ok<void>>());
     expect(await api.health(), isA<Ok<void>>());
-    expect((await api.venueMenu(999, null) as Err<VenueMenu>).failure, AppFailure.notFound);
+    expect((await api.venueMenu(999999, null) as Err<VenueMenu>).failure, AppFailure.notFound);
     expect(
       (await api.replaceDish(
         venueId: 1,

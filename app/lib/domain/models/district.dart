@@ -4,7 +4,13 @@ enum District {
   arbat(55.7516, 37.5930),
   chistyePrudy(55.7616, 37.6420),
   kurskaya(55.7585, 37.6590),
-  belorusskaya(55.7766, 37.5840);
+  belorusskaya(55.7766, 37.5840),
+  khimki(55.8889, 37.4450),
+  mytishchi(55.9105, 37.7320),
+  podolsk(55.4312, 37.5455),
+  spbNevsky(59.9343, 30.3351),
+  spbPetrogradka(59.9663, 30.3115),
+  spbVasileostrovsky(59.9426, 30.2785);
 
   const District(this.lat, this.lon);
 

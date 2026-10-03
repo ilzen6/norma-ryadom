@@ -32,6 +32,9 @@ class Palette extends ThemeExtension<Palette> {
     required this.mapRoadMajor,
     required this.mapRoadCasing,
     required this.mapRail,
+    required this.mapUrban,
+    required this.mapBorder,
+    required this.mapAdmin,
     required this.metro,
   });
 
@@ -65,6 +68,9 @@ class Palette extends ThemeExtension<Palette> {
     mapRoadMajor: Color(0xFFFFF4DA),
     mapRoadCasing: Color(0xFFD5DCD2),
     mapRail: Color(0xFFBEC6BC),
+    mapUrban: Color(0xFFE6EAE2),
+    mapBorder: Color(0xFFA48BB5),
+    mapAdmin: Color(0xFFC3B6CC),
     metro: Color(0xFFD6312B),
   );
 
@@ -98,6 +104,9 @@ class Palette extends ThemeExtension<Palette> {
     mapRoadMajor: Color(0xFF3B4636),
     mapRoadCasing: Color(0xFF111814),
     mapRail: Color(0xFF39443E),
+    mapUrban: Color(0xFF1C2620),
+    mapBorder: Color(0xFF7E6A8D),
+    mapAdmin: Color(0xFF4D4357),
     metro: Color(0xFFFF6B63),
   );
 
@@ -130,6 +139,9 @@ class Palette extends ThemeExtension<Palette> {
   final Color mapRoadMajor;
   final Color mapRoadCasing;
   final Color mapRail;
+  final Color mapUrban;
+  final Color mapBorder;
+  final Color mapAdmin;
   final Color metro;
 
   @override

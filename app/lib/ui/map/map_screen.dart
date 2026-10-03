@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -6,6 +8,7 @@ import 'package:go_router/go_router.dart';
 import 'package:latlong2/latlong.dart' hide Path;
 
 import '../../data/map/basemap.dart';
+import '../../data/map/map_atlas.dart';
 import '../../data/providers.dart';
 import '../../domain/models/catalog.dart';
 import '../../l10n/generated/app_localizations.dart';
@@ -16,7 +19,7 @@ import '../core/session.dart';
 import '../core/theme.dart';
 import '../core/widgets/state_views.dart';
 import '../core/widgets/visuals.dart';
-import 'basemap_layers.dart';
+import 'vector_basemap.dart';
 import 'map_view_model.dart';
 
 class MapScreen extends ConsumerWidget {
@@ -30,7 +33,7 @@ class MapScreen extends ConsumerWidget {
     return Scaffold(
       backgroundColor: context.palette.canvas,
       body: switch (venues.hasError && !venues.isLoading ? null : venues.value) {
-        Ok(:final value) => _MapBody(venues: value),
+        Ok(:final value) => _MapBody(venues: value.venues, truncated: value.truncated),
         Err(:final failure) => _MapMessage(
           child: FailureView(failure: failure, onRetry: retry),
         ),
@@ -85,7 +88,10 @@ String _labelOf(AppLocalizations l10n, _FitMark mark) => switch (mark) {
 };
 
 class _MapToolbar extends ConsumerWidget {
-  const _MapToolbar();
+  const _MapToolbar({this.onCities, this.city});
+
+  final VoidCallback? onCities;
+  final String? city;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -99,26 +105,42 @@ class _MapToolbar extends ConsumerWidget {
         child: Row(
           children: [
             Expanded(
-              child: Semantics(header: true, child: Text(l10n.navMap, style: textTheme.titleLarge)),
-            ),
-            Flexible(
-              child: MergeSemantics(
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Flexible(
-                      child: Text(l10n.mapShowAll, style: textTheme.labelLarge, textAlign: TextAlign.end),
+              child: switch (onCities) {
+                final onCities? => Align(
+                  alignment: Alignment.centerLeft,
+                  heightFactor: 1,
+                  child: Semantics(
+                    button: true,
+                    label: l10n.mapCityButton(city ?? l10n.navMap),
+                    excludeSemantics: true,
+                    child: InkWell(
+                      key: const Key('map-cities'),
+                      borderRadius: BorderRadius.circular(20),
+                      onTap: onCities,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(Icons.location_city_rounded, size: 20, color: context.palette.brand),
+                            const SizedBox(width: 8),
+                            Flexible(
+                              child: Text(
+                                city ?? l10n.navMap,
+                                style: textTheme.titleMedium,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                            const SizedBox(width: 4),
+                            Icon(Icons.expand_more_rounded, color: context.palette.inkMuted),
+                          ],
+                        ),
+                      ),
                     ),
-                    const SizedBox(width: 4),
-                    Switch(
-                      key: const Key('map-show-all'),
-                      value: ref.watch(mapCoverageProvider) == MapCoverage.all,
-                      onChanged: (all) =>
-                          ref.read(mapCoverageProvider.notifier).set(all ? MapCoverage.all : MapCoverage.withMenu),
-                    ),
-                  ],
+                  ),
                 ),
-              ),
+                null => Semantics(header: true, child: Text(l10n.navMap, style: textTheme.titleLarge)),
+              },
             ),
           ],
         ),
@@ -128,9 +150,10 @@ class _MapToolbar extends ConsumerWidget {
 }
 
 class _MapBody extends ConsumerStatefulWidget {
-  const _MapBody({required this.venues});
+  const _MapBody({required this.venues, required this.truncated});
 
   final List<NearbyVenue> venues;
+  final bool truncated;
 
   @override
   ConsumerState<_MapBody> createState() => _MapBodyState();
@@ -140,13 +163,91 @@ class _MapBodyState extends ConsumerState<_MapBody> {
   final _map = MapController();
   final _sheet = DraggableScrollableController();
   ScrollController? _sheetScroll;
+  Timer? _settle;
   int? _selectedId;
+  String? _city;
+  MapAtlas? _placesAtlas;
+  Basemap? _placesCountry;
+  List<MapLabel> _places = const [];
 
   @override
   void dispose() {
+    _settle?.cancel();
     _map.dispose();
     _sheet.dispose();
     super.dispose();
+  }
+
+  void _cameraMoved(MapCamera camera, {Duration delay = const Duration(milliseconds: 450)}) {
+    _settle?.cancel();
+    _settle = Timer(delay, () {
+      if (!mounted) return;
+      final bounds = camera.visibleBounds;
+      final radius = const Distance().as(LengthUnit.Meter, camera.center, bounds.northEast);
+      ref.read(mapViewportProvider.notifier).show(camera.center.latitude, camera.center.longitude, radius);
+      final atlas = ref.read(mapAtlasProvider).value;
+      if (atlas == null) return;
+      final city = atlas.regionOf(camera.center)?.name ?? context.l10n.mapWholeCountry;
+      if (city != _city) setState(() => _city = city);
+    });
+  }
+
+  Future<void> _chooseCity(MapAtlas atlas) async {
+    final target = await showModalBottomSheet<(LatLng, double)>(
+      context: context,
+      useRootNavigator: true,
+      builder: (sheetContext) => SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(24, 0, 24, 8),
+              child: Text(context.l10n.mapCitiesTitle, style: Theme.of(sheetContext).textTheme.titleLarge),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(24, 0, 24, 8),
+              child: Text(
+                context.l10n.mapServiceArea,
+                style: Theme.of(sheetContext).textTheme.bodyMedium?.copyWith(color: sheetContext.palette.inkMuted),
+              ),
+            ),
+            for (final region in atlas.regions)
+              ListTile(
+                key: Key('city-${region.id}'),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 24),
+                leading: Icon(Icons.location_city_rounded, color: sheetContext.palette.brand),
+                title: Text(region.name),
+                onTap: () => Navigator.of(sheetContext).pop((region.center, 13.0)),
+              ),
+            ListTile(
+              key: const Key('city-russia'),
+              contentPadding: const EdgeInsets.symmetric(horizontal: 24),
+              leading: Icon(Icons.public_rounded, color: sheetContext.palette.inkMuted),
+              title: Text(context.l10n.mapWholeCountry),
+              onTap: () => Navigator.of(sheetContext).pop((MapAtlas.russiaCenter, MapAtlas.russiaZoom)),
+            ),
+            const SizedBox(height: 8),
+          ],
+        ),
+      ),
+    );
+    if (target == null || !mounted) return;
+    setState(() => _selectedId = null);
+    _map.move(target.$1, target.$2);
+  }
+
+  List<MapLabel> _placesOf(MapAtlas atlas, Basemap? country) {
+    if (identical(atlas, _placesAtlas) && identical(country, _placesCountry)) return _places;
+    final regional = [for (final region in atlas.regions) ...region.labels];
+    final local = {for (final label in regional) label.name};
+    final major = {...?country?.labels.where((label) => label.rank <= 3).map((label) => label.name)};
+    _placesAtlas = atlas;
+    _placesCountry = country;
+    return _places = [
+      ...?country?.labels.where((label) => label.rank <= 3 || !local.contains(label.name)),
+      ...regional.where((label) => !major.contains(label.name)),
+    ]..sort((a, b) => a.rank.compareTo(b.rank));
   }
 
   void _select(NearbyVenue venue) {
@@ -169,10 +270,11 @@ class _MapBodyState extends ConsumerState<_MapBody> {
     final venues = widget.venues;
     final location = ref.watch(locationProvider).value?.location;
     final tiles = ref.watch(appConfigProvider).tileUrlTemplate;
-    final basemap = ref.watch(basemapProvider).value;
+    final atlas = tiles.isEmpty ? ref.watch(mapAtlasProvider).value : null;
+    final country = atlas == null ? null : ref.watch(mapCountryProvider).value;
+    final places = atlas == null ? const <MapLabel>[] : _placesOf(atlas, country);
     if (location == null) return const _MapMessage(child: LoadingView());
     final center = LatLng(location.lat, location.lon);
-    final vector = tiles.isEmpty && basemap != null && basemap.covers(center) ? basemap : null;
     final selected = venues.where((venue) => venue.venue.id == _selectedId).firstOrNull;
     return Stack(
       children: [
@@ -187,21 +289,21 @@ class _MapBodyState extends ConsumerState<_MapBody> {
                 options: MapOptions(
                   initialCenter: LatLng(center.latitude - 0.004, center.longitude),
                   initialZoom: 15,
-                  minZoom: 12,
+                  minZoom: 3,
+                  cameraConstraint: CameraConstraint.containCenter(
+                    bounds: LatLngBounds(const LatLng(38, 15), const LatLng(80, 180)),
+                  ),
                   maxZoom: 18,
                   backgroundColor: palette.mapLand,
                   onTap: (_, _) => setState(() => _selectedId = null),
-                  cameraConstraint: vector == null
-                      ? const CameraConstraint.unconstrained()
-                      : CameraConstraint.containCenter(
-                          bounds: LatLngBounds(LatLng(vector.south, vector.west), LatLng(vector.north, vector.east)),
-                        ),
+                  onPositionChanged: (camera, _) => _cameraMoved(camera),
+                  onMapReady: () => _cameraMoved(_map.camera, delay: Duration.zero),
                   interactionOptions: const InteractionOptions(flags: InteractiveFlag.all & ~InteractiveFlag.rotate),
                 ),
                 children: [
                   if (tiles.isNotEmpty)
                     TileLayer(urlTemplate: tiles, userAgentPackageName: 'ru.normaryadom.norma_ryadom'),
-                  if (vector != null) ...BasemapLayers.of(vector, palette),
+                  if (atlas != null) const VectorBasemap(),
                   MarkerLayer(
                     markers: [
                       Marker(
@@ -213,7 +315,8 @@ class _MapBodyState extends ConsumerState<_MapBody> {
                     ],
                   ),
                   _VenueMarkers(
-                    stations: vector?.metro ?? const [],
+                    stations: atlas?.stations ?? const [],
+                    places: places,
                     venues: venues,
                     selectedId: _selectedId,
                     onSelect: _select,
@@ -224,7 +327,13 @@ class _MapBodyState extends ConsumerState<_MapBody> {
             ),
           ),
         ),
-        const SafeArea(bottom: false, child: _MapToolbar()),
+        SafeArea(
+          bottom: false,
+          child: _MapToolbar(
+            onCities: atlas == null ? null : () => _chooseCity(atlas),
+            city: _city ?? atlas?.regionOf(center)?.name,
+          ),
+        ),
         DraggableScrollableSheet(
           controller: _sheet,
           initialChildSize: 0.42,
@@ -233,7 +342,8 @@ class _MapBodyState extends ConsumerState<_MapBody> {
           builder: (context, controller) => _VenueSheet(
             controller: _sheetScroll = controller,
             venues: venues,
-            attribution: tiles.isNotEmpty || vector != null ? l10n.mapAttribution : null,
+            attribution: tiles.isNotEmpty || atlas != null ? l10n.mapAttribution : null,
+            truncated: widget.truncated,
             header: Row(
               children: [
                 Expanded(
@@ -259,6 +369,41 @@ class _MapBodyState extends ConsumerState<_MapBody> {
           ),
         ),
       ],
+    );
+  }
+}
+
+class _PlaceLabel extends StatelessWidget {
+  const _PlaceLabel({required this.name, required this.size, required this.major});
+
+  final String name;
+  final double size;
+  final bool major;
+
+  @override
+  Widget build(BuildContext context) {
+    final palette = context.palette;
+    return ExcludeSemantics(
+      child: Center(
+        child: Text(
+          name,
+          maxLines: 1,
+          softWrap: false,
+          overflow: TextOverflow.visible,
+          style: TextStyle(
+            fontFamily: AppFonts.display,
+            fontSize: size,
+            height: 1,
+            fontWeight: major ? FontWeight.w700 : FontWeight.w600,
+            letterSpacing: major ? 0.2 : 0,
+            color: major ? palette.ink : palette.inkMuted,
+            shadows: [
+              Shadow(color: palette.mapLand, blurRadius: 2),
+              Shadow(color: palette.mapLand, blurRadius: 5),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
@@ -338,9 +483,10 @@ class _MyLocationDot extends StatelessWidget {
 }
 
 class _Cluster {
-  _Cluster(this.anchor, NearbyVenue first) : members = [first];
+  _Cluster(this.anchor, NearbyVenue first) : members = [first], seed = LatLng(first.venue.lat, first.venue.lon);
 
   final Offset anchor;
+  final LatLng seed;
   final List<NearbyVenue> members;
 
   LatLng get center => LatLng(
@@ -354,6 +500,7 @@ class _Cluster {
 class _VenueMarkers extends StatelessWidget {
   const _VenueMarkers({
     required this.stations,
+    required this.places,
     required this.venues,
     required this.selectedId,
     required this.onSelect,
@@ -362,8 +509,19 @@ class _VenueMarkers extends StatelessWidget {
 
   static const clusterRadius = 60.0;
   static const clusterUntilZoom = 17.0;
+  static const placeZoom = <double>[2.5, 3, 4.5, 6, 7.5];
+  static const placeUntilZoom = 13.0;
+
+  static double placeSize(int rank) => switch (rank) {
+    0 => 17,
+    1 => 15,
+    2 => 14,
+    3 => 13,
+    _ => 12,
+  };
 
   final List<MetroStation> stations;
+  final List<MapLabel> places;
   final List<NearbyVenue> venues;
   final int? selectedId;
   final ValueChanged<NearbyVenue> onSelect;
@@ -408,7 +566,7 @@ class _VenueMarkers extends StatelessWidget {
         if (cluster.members.length == 1)
           Rect.fromCenter(center: cluster.anchor - const Offset(0, 32), width: 56, height: 64)
         else
-          Rect.fromCircle(center: camera.projectAtZoom(cluster.center, zoom), radius: 28),
+          Rect.fromCircle(center: cluster.anchor, radius: 28),
       if (selected != null)
         Rect.fromCenter(
           center: camera.projectAtZoom(LatLng(selected.venue.lat, selected.venue.lon), zoom) - const Offset(0, 36),
@@ -417,6 +575,22 @@ class _VenueMarkers extends StatelessWidget {
         ),
     ];
     final labels = <Rect>[];
+    final towns = <(MapLabel, Size)>[];
+    if (zoom < placeUntilZoom) {
+      final visible = camera.visibleBounds;
+      for (final place in places) {
+        if (zoom < placeZoom[place.rank.clamp(0, placeZoom.length - 1)] || !visible.contains(place.point)) continue;
+        final size = Size(place.name.length * placeSize(place.rank) * 0.62 + 16, placeSize(place.rank) + 10);
+        final rect = Rect.fromCenter(
+          center: camera.projectAtZoom(place.point, zoom),
+          width: size.width,
+          height: size.height,
+        );
+        if (occupied.any(rect.overlaps) || labels.any(rect.overlaps)) continue;
+        labels.add(rect);
+        towns.add((place, size));
+      }
+    }
     final metro = <MetroStation>[];
     if (zoom >= 14.5) {
       for (final station in stations) {
@@ -429,6 +603,19 @@ class _VenueMarkers extends StatelessWidget {
     }
     return Stack(
       children: [
+        Positioned.fill(
+          child: MarkerLayer(
+            markers: [
+              for (final (place, size) in towns)
+                Marker(
+                  point: place.point,
+                  width: size.width,
+                  height: size.height,
+                  child: _PlaceLabel(name: place.name, size: placeSize(place.rank), major: place.rank <= 1),
+                ),
+            ],
+          ),
+        ),
         Positioned.fill(
           child: MarkerLayer(
             markers: [
@@ -451,7 +638,7 @@ class _VenueMarkers extends StatelessWidget {
                   pin(cluster.members.single)
                 else
                   Marker(
-                    point: cluster.center,
+                    point: cluster.seed,
                     width: 52,
                     height: 52,
                     child: _ClusterBubble(
@@ -714,6 +901,7 @@ class _VenueSheet extends StatelessWidget {
     required this.attribution,
     required this.header,
     required this.onRecenter,
+    this.truncated = false,
   });
 
   final ScrollController controller;
@@ -721,6 +909,7 @@ class _VenueSheet extends StatelessWidget {
   final String? attribution;
   final Widget header;
   final VoidCallback onRecenter;
+  final bool truncated;
 
   @override
   Widget build(BuildContext context) {
@@ -763,7 +952,19 @@ class _VenueSheet extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: 12),
+          if (truncated)
+            Padding(
+              padding: const EdgeInsets.fromLTRB(4, 4, 4, 0),
+              child: StatusPill(
+                key: const Key('map-truncated'),
+                label: l10n.mapTruncated(venues.length),
+                tone: Tone.brand,
+                icon: Icons.zoom_in_rounded,
+              ),
+            ),
+          const SizedBox(height: 4),
+          const _ShowAllSwitch(),
+          const SizedBox(height: 8),
           const _Legend(),
           const SizedBox(height: 12),
           if (venues.isEmpty) MessageView(message: l10n.mapEmpty, icon: Icons.location_off_rounded),
@@ -816,6 +1017,40 @@ class _VenueTile extends StatelessWidget {
       ),
     );
   }
+}
+
+class _ShowAllSwitch extends ConsumerWidget {
+  const _ShowAllSwitch();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) => MergeSemantics(
+    child: Padding(
+      padding: const EdgeInsets.only(left: 4),
+      child: Row(
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(context.l10n.mapShowAll, style: Theme.of(context).textTheme.titleSmall),
+                Text(
+                  context.l10n.mapShowAllHint,
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(color: context.palette.inkMuted),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(width: 12),
+          Switch(
+            key: const Key('map-show-all'),
+            value: ref.watch(mapCoverageProvider) == MapCoverage.all,
+            onChanged: (all) =>
+                ref.read(mapCoverageProvider.notifier).set(all ? MapCoverage.all : MapCoverage.withMenu),
+          ),
+        ],
+      ),
+    ),
+  );
 }
 
 class _Legend extends StatelessWidget {

@@ -39,7 +39,10 @@ flutter:
   generate: true
   assets:
     - assets/demo/catalog.json
-    - assets/map/basemap.json
+    - assets/map/
+    - assets/map/packs/overview/
+    - assets/map/packs/suburb/
+    - assets/map/packs/city/
   fonts:
     - family: Onest
       fonts:

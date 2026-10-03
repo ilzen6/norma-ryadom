@@ -63,6 +63,7 @@ void main() {
     expect(harness.combos.requestedTargets.single.excludeTags, isEmpty);
     expect(harness.combos.requestedLocations.single, TestData.deviceLocation);
     await tapVisible(tester, find.text('Боул с курицей'));
+    await scrollTo(tester, find.text('Попадание в цель'));
     expect(find.text('Попадание в цель'), findsOneWidget);
   });
 
