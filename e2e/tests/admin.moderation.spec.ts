@@ -19,16 +19,18 @@ async function expectAccessible(page: Page): Promise<void> {
   expect(results.violations.map((violation) => `${violation.id}: ${violation.help}`)).toEqual([]);
 }
 
-const kurskaya = { lat: 55.76, lon: 37.6583 };
-const pizzaKurskaya = 'Пицца Квадрат, Курская';
-const porkPizza = 'Пицца Пепперони, кусок';
+const moscowCity = { lat: 55.7495, lon: 37.5374 };
+const burgerKing = { name: 'Бургер Кинг', address: 'Пресненская наб., 2' };
+const porkDish = 'Ангус шеф';
 
-async function venueId(request: APIRequestContext, name: string): Promise<number> {
-  const response = await request.get(`/api/v1/venues?lat=${kurskaya.lat}&lon=${kurskaya.lon}&radius=500`);
+async function venueId(request: APIRequestContext): Promise<number> {
+  const response = await request.get(`/api/v1/venues?lat=${moscowCity.lat}&lon=${moscowCity.lon}&radius=500`);
   expect(response.ok()).toBeTruthy();
-  const body = (await response.json()) as { venues: { venue: { id: number; name: string } }[] };
-  const venue = body.venues.find((entry) => entry.venue.name === name);
-  if (!venue) throw new Error(`В демо-данных нет заведения «${name}»`);
+  const body = (await response.json()) as { venues: { venue: { id: number; name: string; address: string } }[] };
+  const venue = body.venues.find(
+    (entry) => entry.venue.name === burgerKing.name && entry.venue.address === burgerKing.address,
+  );
+  if (!venue) throw new Error(`В демо-данных нет заведения «${burgerKing.name}, ${burgerKing.address}»`);
   return venue.venue.id;
 }
 
@@ -83,7 +85,7 @@ test('администратор заводит сеть, загружает м�
 });
 
 test('модератор видит фото меню с распознанным текстом и переносит блюда в меню', async ({ page, request }) => {
-  const venue = await venueId(request, pizzaKurskaya);
+  const venue = await venueId(request);
   const upload = await request.post(`/api/v1/venues/${venue}/menu-photos`, {
     multipart: {
       photo: { name: 'menu.png', mimeType: 'image/png', buffer: readFileSync('fixtures/menu-photo.png') },
@@ -119,11 +121,11 @@ test('модератор видит фото меню с распознанны�
 });
 
 test('после трёх жалоб блюдо уходит на перепроверку, модератор исправляет цифры', async ({ page, request }) => {
-  const venue = await venueId(request, pizzaKurskaya);
+  const venue = await venueId(request);
   const menu = await request.get(`/api/v1/venues/${venue}/menu`);
   const items = ((await menu.json()) as { items: { id: number; name: string }[] }).items;
-  const item = items.find((entry) => entry.name === porkPizza);
-  if (!item) throw new Error(`В меню нет блюда «${porkPizza}»`);
+  const item = items.find((entry) => entry.name === porkDish);
+  if (!item) throw new Error(`В меню нет блюда «${porkDish}»`);
   const repeated = await request.post(`/api/v1/items/${item.id}/reports`, {
     data: { reason: 'Повтор от того же человека' },
     headers: { 'X-Forwarded-For': '203.0.113.10' },
