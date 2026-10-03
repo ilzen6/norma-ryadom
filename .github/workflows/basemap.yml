@@ -26,6 +26,7 @@ jobs:
           sudo apt-get install -y -q osmium-tool
           pip install shapely==2.1.2
           curl -fL --retry 5 -o "$RUNNER_TEMP/russia.osm.pbf" https://download.geofabrik.de/russia-latest.osm.pbf
+          mkdir -p "$RUNNER_TEMP/regions"
           python tool/basemap/extracts.py "$RUNNER_TEMP/regions" > "$RUNNER_TEMP/extracts.json"
           osmium extract --config "$RUNNER_TEMP/extracts.json" --strategy smart "$RUNNER_TEMP/russia.osm.pbf"
           rm "$RUNNER_TEMP/russia.osm.pbf"
