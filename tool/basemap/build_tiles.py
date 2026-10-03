@@ -5,12 +5,14 @@ from pathlib import Path
 
 from shapely import box as make_box
 from shapely.geometry import Polygon, shape
+from shapely.ops import unary_union
 
 sys.path.insert(0, str(Path(__file__).parent))
 
 from regions import REGIONS, TILESETS
 
-SCALE = 100000
+SCALES = {"overview": 20000, "suburb": 50000, "city": 100000}
+MERGED = {key: ("water", "green", "urban") for key in ("overview", "suburb", "city")}
 ROAD_CLASSES = {
     "motorway": "major", "trunk": "major", "primary": "major", "motorway_link": "major", "trunk_link": "major",
     "secondary": "medium", "tertiary": "medium", "primary_link": "medium", "secondary_link": "medium",
@@ -30,12 +32,12 @@ ADDRESS_REACH_METERS = 60
 
 LEVELS = {
     "overview": {
-        "polygons": {"water": (0.0003, 1e-6), "green": (0.0003, 4e-6), "urban": (0.0003, 1e-6)},
-        "lines": {"major": (0.0002, 0.002), "medium": (0.0002, 0.003), "rail": (0.0002, 0.002)},
+        "polygons": {"water": (0.0006, 4e-6), "green": (0.0008, 2e-5), "urban": (0.0006, 8e-6)},
+        "lines": {"major": (0.0004, 0.002), "medium": (0.0004, 0.004), "rail": (0.0004, 0.003)},
     },
     "suburb": {
-        "polygons": {"water": (0.00008, 2e-7), "green": (0.00008, 5e-7), "urban": (0.00008, 2e-7)},
-        "lines": {"major": (0.00005, 0), "medium": (0.00005, 0), "minor": (0.00005, 0.0002), "rail": (0.00005, 0)},
+        "polygons": {"water": (0.00015, 5e-7), "green": (0.0002, 2e-6), "urban": (0.00015, 1e-6)},
+        "lines": {"major": (0.0001, 0), "medium": (0.0001, 0), "minor": (0.0001, 0.0004), "rail": (0.0001, 0)},
     },
     "city": {
         "polygons": {"water": (0.00004, 2e-8), "green": (0.00004, 2e-8), "urban": (0.00004, 2e-8),
@@ -64,23 +66,38 @@ def tile_bounds(x, y, zoom):
     return south, west, north, east
 
 
-def encode(points, south, west):
-    flat = []
+def encode(points, south, west, scale):
+    deltas = []
+    previous = None
     for lon, lat in points:
-        flat.extend([round((lon - west) * SCALE), round((lat - south) * SCALE)])
-    deltas = flat[:2]
-    for index in range(2, len(flat)):
-        deltas.append(flat[index] - flat[index - 2])
+        current = (round((lon - west) * scale), round((lat - south) * scale))
+        if previous is None:
+            deltas.extend(current)
+        elif current != previous:
+            deltas.extend([current[0] - previous[0], current[1] - previous[1]])
+        else:
+            continue
+        previous = current
     return deltas
 
 
-def encode_polygon(polygon, south, west, minimum):
-    rings = [encode(list(polygon.exterior.coords), south, west)]
+def decode(deltas, south, west, scale):
+    points = []
+    x = y = 0
+    for index in range(0, len(deltas), 2):
+        x += deltas[index]
+        y += deltas[index + 1]
+        points.append((west + x / scale, south + y / scale))
+    return points
+
+
+def encode_polygon(polygon, south, west, minimum, scale):
+    rings = [encode(list(polygon.exterior.coords), south, west, scale)]
     for interior in polygon.interiors:
         hole = interior.coords
         if len(hole) >= 4 and abs(Polygon(hole).area) > minimum:
-            rings.append(encode(list(hole), south, west))
-    return rings
+            rings.append(encode(list(hole), south, west, scale))
+    return [ring for ring in rings if len(ring) >= 6] if len(rings[0]) >= 6 else []
 
 
 def parts(geometry, kind):
@@ -148,6 +165,7 @@ class Tileset:
         self.key = key
         self.zoom = TILESETS[key]["zoom"]
         self.pack = TILESETS[key]["pack"]
+        self.scale = SCALES[key]
         self.tiles = {}
 
     def add(self, kind, geometry, minimum):
@@ -161,21 +179,44 @@ class Tileset:
                 bucket = self.tiles.setdefault((x, y), {name: [] for name in POLYGON_KINDS + LINE_KINDS})
                 if kind in POLYGON_KINDS:
                     for polygon in parts(clipped, "Polygon"):
-                        if polygon.area > 0:
-                            bucket[kind].append(encode_polygon(polygon, south, west, minimum))
+                        rings = encode_polygon(polygon, south, west, minimum, self.scale) if polygon.area > 0 else []
+                        if rings:
+                            bucket[kind].append(rings)
                 else:
                     for line in parts(clipped, "LineString"):
-                        if line.length > 0:
-                            bucket[kind].append(encode(list(line.coords), south, west))
+                        encoded = encode(list(line.coords), south, west, self.scale) if line.length > 0 else []
+                        if len(encoded) >= 4:
+                            bucket[kind].append(encoded)
+
+    def merged(self, kind, shapes, south, west):
+        tolerance, minimum = LEVELS[self.key]["polygons"][kind]
+        polygons = []
+        for rings in shapes:
+            outer, *holes = [decode(ring, south, west, self.scale) for ring in rings]
+            polygon = Polygon(outer, holes).buffer(0)
+            if not polygon.is_empty:
+                polygons.append(polygon)
+        if not polygons:
+            return []
+        union = unary_union(polygons).simplify(tolerance / 2, preserve_topology=True)
+        result = []
+        for polygon in parts(union, "Polygon"):
+            if polygon.area >= minimum:
+                rings = encode_polygon(polygon, south, west, minimum, self.scale)
+                if rings:
+                    result.append(rings)
+        return result
 
     def write(self, directory):
         packs = {}
         shift = self.zoom - self.pack
         for (x, y), bucket in self.tiles.items():
             south, west, north, east = tile_bounds(x, y, self.zoom)
+            for kind in MERGED.get(self.key, ()):
+                bucket[kind] = self.merged(kind, bucket[kind], south, west)
             packs.setdefault((x >> shift, y >> shift), {})[f"{x}_{y}"] = {
                 "bounds": {"south": south, "west": west, "north": north, "east": east},
-                "scale": SCALE,
+                "scale": self.scale,
                 "water": bucket["water"],
                 "green": bucket["green"],
                 "urban": bucket["urban"],
