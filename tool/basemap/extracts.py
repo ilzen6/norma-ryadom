@@ -9,7 +9,7 @@ from regions import REGIONS
 print(json.dumps({
     "directory": sys.argv[1],
     "extracts": [
-        {"output": f"{key}.osm.pbf", "bbox": [west - 0.01, south - 0.01, east + 0.01, north + 0.01]}
+        {"output": f"{key}.osm.pbf", "bbox": [west - 0.02, south - 0.02, east + 0.02, north + 0.02]}
         for key, (south, west, north, east) in ((key, config["bounds"]) for key, config in REGIONS.items())
     ],
 }))

@@ -40,18 +40,29 @@ jobs:
         run: |
           sudo apt-get update -q
           sudo apt-get install -y -q osmium-tool
-          pip install shapely==2.1.2
+          pip install shapely==2.1.2 pyshp==2.3.1
           curl -fL --retry 5 -o "$WORK/russia.osm.pbf" https://download.geofabrik.de/russia-latest.osm.pbf
           mkdir -p "$WORK/regions"
           python tool/basemap/extracts.py "$WORK/regions" > "$WORK/extracts.json"
           osmium extract --config "$WORK/extracts.json" --strategy smart "$WORK/russia.osm.pbf"
           rm "$WORK/russia.osm.pbf"
-          for region in moscow spb kazan ekb nsk; do
+          for region in $(python -c "import sys; sys.path.insert(0, 'tool/basemap'); from regions import REGIONS; print(' '.join(REGIONS))"); do
             osmium export "$WORK/regions/$region.osm.pbf" -f geojsonseq \
               --format-option print_record_separator=false -o "$WORK/regions/$region.geojsonseq"
           done
           python tool/basemap/build_tiles.py "$WORK/regions" "$RUNNER_TEMP/out"
-          du -sh "$RUNNER_TEMP/out/map" "$RUNNER_TEMP/out/map/tiles" "$RUNNER_TEMP/out/places"
+          mkdir -p "$WORK/ne"
+          for layer in 10m_physical/ne_10m_ocean 10m_physical/ne_10m_lakes 10m_physical/ne_10m_rivers_lake_centerlines \
+            10m_cultural/ne_10m_admin_0_boundary_lines_land 10m_cultural/ne_10m_admin_1_states_provinces_lines \
+            10m_cultural/ne_10m_populated_places 10m_cultural/ne_10m_roads 10m_cultural/ne_10m_railroads \
+            10m_cultural/ne_10m_admin_0_countries; do
+            for ext in shp shx dbf cpg; do
+              curl -fsSL --retry 5 -o "$WORK/ne/$(basename "$layer").$ext" \
+                "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/$layer.$ext"
+            done
+          done
+          python tool/basemap/build_country.py "$WORK/ne" "$RUNNER_TEMP/out/map/country.json"
+          du -sh "$RUNNER_TEMP/out/map" "$RUNNER_TEMP/out/map/packs"/* "$RUNNER_TEMP/out/places"
       - name: Публикация в ветку basemap-data
         run: |
           git config user.name "github-actions[bot]"
