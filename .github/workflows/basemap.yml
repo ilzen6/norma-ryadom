@@ -12,32 +12,36 @@ permissions:
 
 jobs:
   basemap:
-    name: Подложка карты из OpenStreetMap
+    name: Карты городов из OpenStreetMap
     runs-on: ubuntu-24.04
-    timeout-minutes: 40
+    timeout-minutes: 90
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
-      - name: Сборка подложки
+      - name: Выгрузка и нарезка регионов
         run: |
           sudo apt-get update -q
           sudo apt-get install -y -q osmium-tool
           pip install shapely==2.1.2
-          curl -fL --retry 5 -o "$RUNNER_TEMP/region.osm.pbf" https://download.geofabrik.de/russia/central-fed-district-latest.osm.pbf
-          osmium extract -b 37.495,55.722,37.690,55.798 --strategy smart "$RUNNER_TEMP/region.osm.pbf" -o "$RUNNER_TEMP/area.osm.pbf"
-          osmium export "$RUNNER_TEMP/area.osm.pbf" -f geojsonseq --format-option print_record_separator=false -o "$RUNNER_TEMP/area.geojsonseq"
-          python tool/basemap/build_basemap.py "$RUNNER_TEMP/area.geojsonseq" "$RUNNER_TEMP/basemap.json" "$RUNNER_TEMP/places.json"
-          ls -la "$RUNNER_TEMP/basemap.json"
+          curl -fL --retry 5 -o "$RUNNER_TEMP/russia.osm.pbf" https://download.geofabrik.de/russia-latest.osm.pbf
+          python tool/basemap/extracts.py "$RUNNER_TEMP/regions" > "$RUNNER_TEMP/extracts.json"
+          osmium extract --config "$RUNNER_TEMP/extracts.json" --strategy smart "$RUNNER_TEMP/russia.osm.pbf"
+          rm "$RUNNER_TEMP/russia.osm.pbf"
+          for region in moscow spb kazan ekb nsk; do
+            osmium export "$RUNNER_TEMP/regions/$region.osm.pbf" -f geojsonseq \
+              --format-option print_record_separator=false -o "$RUNNER_TEMP/regions/$region.geojsonseq"
+          done
+          python tool/basemap/build_tiles.py "$RUNNER_TEMP/regions" "$RUNNER_TEMP/out"
+          du -sh "$RUNNER_TEMP/out/map" "$RUNNER_TEMP/out/map/tiles" "$RUNNER_TEMP/out/places"
       - name: Публикация в ветку basemap-data
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git checkout --orphan basemap-data
           git rm -rf --quiet .
-          cp "$RUNNER_TEMP/basemap.json" basemap.json
-          cp "$RUNNER_TEMP/places.json" places.json
-          git add basemap.json places.json
-          git commit -m "chore: basemap from OpenStreetMap"
+          cp -r "$RUNNER_TEMP/out/map" "$RUNNER_TEMP/out/places" .
+          git add map places
+          git commit -q -m "chore: city maps and food places from OpenStreetMap"
           git push -f origin basemap-data
