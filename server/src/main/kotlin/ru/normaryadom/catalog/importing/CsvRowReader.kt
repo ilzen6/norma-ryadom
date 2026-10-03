@@ -2,6 +2,7 @@ package ru.normaryadom.catalog.importing
 
 import org.apache.commons.csv.CSVRecord
 import java.math.BigDecimal
+import java.time.LocalDate
 
 class CsvRowReader(
     private val record: CSVRecord,
@@ -60,6 +61,11 @@ class CsvRowReader(
             number !in range -> fail(column, CsvErrorCode.OUT_OF_RANGE)
         }
         return number?.takeIf { it in range }
+    }
+
+    fun optionalDate(column: String): LocalDate? {
+        val value = text(column).takeIf { it.isNotEmpty() } ?: return null
+        return runCatching { LocalDate.parse(value) }.getOrNull().also { if (it == null) fail(column, CsvErrorCode.NOT_A_DATE) }
     }
 
     fun <T : Any> codes(

@@ -59,4 +59,6 @@ class FeedbackActions {
   }
 
   Future<Result<void>> reportItem(int itemId, String reason) => _feedback.reportItem(itemId, reason);
+
+  Future<Result<void>> reportVenue(int venueId, VenueReportReason reason) => _feedback.reportVenue(venueId, reason);
 }

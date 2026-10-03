@@ -16,7 +16,7 @@ class NearbyVenueRepository(
                     SELECT ${VenueRows.SELECT_COLUMNS},
                            ST_Distance(v.location, ST_SetSRID(ST_MakePoint(:lon, :lat), 4326)::geography) AS distance_m
                     ${VenueRows.FROM}
-                    WHERE v.is_active
+                    WHERE v.is_active AND NOT v.under_review
                       AND ST_DWithin(v.location, ST_SetSRID(ST_MakePoint(:lon, :lat), 4326)::geography, :radius)
                 )
                 SELECT * FROM nearby

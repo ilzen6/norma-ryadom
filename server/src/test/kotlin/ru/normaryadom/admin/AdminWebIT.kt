@@ -279,6 +279,57 @@ class AdminWebIT : IntegrationTest() {
         assertThat(jdbc.sql("SELECT count(*) FROM item_report WHERE resolved_at IS NULL").query(Int::class.java).single()).isZero()
     }
 
+    @Test
+    fun `модератор разбирает сообщения о закрытых точках - возвращает работающую и убирает закрытую`() {
+        catalog.chain("Гриль", GRILL_MENU, GRILL_VENUES)
+        val working = suspectedClosed("Гриль, Сити")
+        val closed = suspectedClosed("Гриль, Тверская")
+
+        mockMvc.get("/admin") { with(admin) }.andExpect {
+            content { string(containsString("data-testid=\"venue-cases\">2<")) }
+        }
+        mockMvc.get("/admin/venue-reviews") { with(admin) }.andExpect {
+            content { string(containsString("Гриль, Тверская")) }
+            content { string(containsString("Закрыто: 1")) }
+        }
+        mockMvc
+            .post("/admin/venue-reviews/$working/restore") {
+                with(admin)
+                with(csrf())
+            }.andExpect { flash { attribute("resolved", "restored") } }
+        mockMvc
+            .post("/admin/venue-reviews/$closed/close") {
+                with(admin)
+                with(csrf())
+            }.andExpect { flash { attribute("resolved", "closed") } }
+
+        val rows =
+            jdbc
+                .sql("SELECT name, is_active, under_review, confirmed_on FROM venue")
+                .query()
+                .listOfRows()
+                .associateBy { it["name"] }
+        assertThat(rows.getValue("Гриль, Сити")["is_active"]).isEqualTo(true)
+        assertThat(rows.getValue("Гриль, Сити")["confirmed_on"]).isNotNull()
+        assertThat(rows.getValue("Гриль, Тверская")["is_active"]).isEqualTo(false)
+        assertThat(jdbc.sql("SELECT count(*) FROM venue_report WHERE resolved_at IS NULL").query(Int::class.java).single()).isZero()
+    }
+
+    private fun suspectedClosed(name: String): Long {
+        val id =
+            jdbc
+                .sql("SELECT id FROM venue WHERE name = :name")
+                .param("name", name)
+                .query(Long::class.java)
+                .single()
+        jdbc.sql("UPDATE venue SET under_review = TRUE WHERE id = :id").param("id", id).update()
+        jdbc
+            .sql("INSERT INTO venue_report (venue_id, reason, reporter_hash) VALUES (:id, 'closed', 'test')")
+            .param("id", id)
+            .update()
+        return id
+    }
+
     private fun underReview(name: String): Long {
         val id =
             jdbc

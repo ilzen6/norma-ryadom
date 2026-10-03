@@ -14,7 +14,8 @@ PLACES = Path(__file__).with_name("places")
 AREAS = Path(__file__).with_name("areas.json")
 TOWN_REACH_METERS = 15_000
 MIN_GAP_METERS = 40
-HEADER = ["name", "address", "lat", "lon", "external_id"]
+HEADER = ["name", "address", "lat", "lon", "external_id", "confirmed_on"]
+FRESH_YEARS = 3
 
 CHAINS = {
     "grill-house": ("Гриль Хаус", ["restaurant", "bar", "pub", "fast_food"]),
@@ -115,14 +116,21 @@ def main():
     counters = {key: 0 for key in CHAINS}
     turn = 0
     zones = areas()
+    sources = {region: json.loads((PLACES / f"{region}.json").read_text(encoding="utf-8"))
+               for region, _, _ in regions() if (PLACES / f"{region}.json").exists()}
+    newest = max(place["confirmed"] for places in sources.values() for place in places if place.get("confirmed"))
+    fresh_since = f"{int(newest[:4]) - FRESH_YEARS}{newest[4:]}"
+    stale = 0
     for region, stations, towns in regions():
-        source = PLACES / f"{region}.json"
-        if not source.exists():
+        if region not in sources:
             continue
         cell = {}
         for point in taken:
             cell.setdefault((round(point[0], 3), round(point[1], 3)), []).append(point)
-        for place in json.loads(source.read_text(encoding="utf-8")):
+        for place in sources[region]:
+            if (place.get("confirmed") or "") < fresh_since:
+                stale += 1
+                continue
             point = (place["lat"], place["lon"])
             key_cell = (round(point[0], 3), round(point[1], 3))
             nearby = [
@@ -168,6 +176,7 @@ def main():
                 "lat": f"{place['lat']:.6f}",
                 "lon": f"{place['lon']:.6f}",
                 "external_id": f"{key}-osm-{counters[key]:05d}",
+                "confirmed_on": place["confirmed"],
             })
             taken.append(point)
             cell.setdefault(key_cell, []).append(point)
@@ -176,7 +185,8 @@ def main():
             writer = csv.DictWriter(output, fieldnames=HEADER, delimiter=";", lineterminator="\n")
             writer.writeheader()
             writer.writerows(rows)
-    print({key: len(rows) for key, rows in venues.items()}, sum(len(rows) for rows in venues.values()), file=sys.stderr)
+    print({key: len(rows) for key, rows in venues.items()}, sum(len(rows) for rows in venues.values()),
+          "stale skipped", stale, "fresh since", fresh_since, file=sys.stderr)
 
 
 main()

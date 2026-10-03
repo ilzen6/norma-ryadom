@@ -111,6 +111,9 @@ rate-limit:
     item-report:
       capacity: 20
       refill-period: 1h
+    venue-report:
+      capacity: 10
+      refill-period: 1h
     admin-login:
       capacity: 10
       refill-period: 15m

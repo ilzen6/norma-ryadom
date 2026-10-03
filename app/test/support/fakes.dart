@@ -208,6 +208,7 @@ class FakeFeedbackRepository implements FeedbackRepository {
   Result<void> reportResult = const Ok(null);
   final List<(int, String)> reports = [];
   final List<(int, PickedPhoto)> photos = [];
+  final List<(int, VenueReportReason)> venueReports = [];
   Completer<void>? gate;
 
   @override
@@ -220,6 +221,12 @@ class FakeFeedbackRepository implements FeedbackRepository {
   @override
   Future<Result<void>> reportItem(int itemId, String reason) async {
     reports.add((itemId, reason));
+    return reportResult;
+  }
+
+  @override
+  Future<Result<void>> reportVenue(int venueId, VenueReportReason reason) async {
+    venueReports.add((venueId, reason));
     return reportResult;
   }
 }

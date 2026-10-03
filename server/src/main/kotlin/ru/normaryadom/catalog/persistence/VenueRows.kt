@@ -4,10 +4,12 @@ import ru.normaryadom.catalog.domain.GeoPoint
 import ru.normaryadom.catalog.domain.MenuScope
 import ru.normaryadom.catalog.domain.Venue
 import java.sql.ResultSet
+import java.time.LocalDate
 
 object VenueRows {
     const val SELECT_COLUMNS = """
         v.id, v.chain_id, c.name AS chain_name, v.name, v.address, v.is_active, v.menu_version,
+        v.confirmed_on, v.under_review,
         coalesce(c.currency, 'RUB') AS currency,
         coalesce(c.menu_version, 0) AS chain_menu_version,
         ST_Y(v.location::geometry) AS lat, ST_X(v.location::geometry) AS lon,
@@ -46,6 +48,8 @@ object VenueRows {
             currency = rs.getString("currency"),
             menuScope = scope,
             hasMenu = hasOwnItems || rs.getBoolean("has_chain_items"),
+            confirmedOn = rs.getObject("confirmed_on", LocalDate::class.java),
+            underReview = rs.getBoolean("under_review"),
         )
     }
 }

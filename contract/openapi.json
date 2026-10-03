@@ -498,12 +498,26 @@
         "required" : [ "items", "venue" ],
         "type" : "object"
       },
+      "VenueReportRequest" : {
+        "properties" : {
+          "reason" : {
+            "enum" : [ "closed", "moved", "not_found" ],
+            "type" : "string"
+          }
+        },
+        "required" : [ "reason" ],
+        "type" : "object"
+      },
       "VenueSummaryResponse" : {
         "properties" : {
           "address" : {
             "type" : "string"
           },
           "chainName" : {
+            "type" : [ "string", "null" ]
+          },
+          "confirmedOn" : {
+            "format" : "date",
             "type" : [ "string", "null" ]
           },
           "currency" : {
@@ -596,7 +610,7 @@
     },
     "/api/v1/items/{itemId}/reports" : {
       "post" : {
-        "operationId" : "report",
+        "operationId" : "report_1",
         "parameters" : [ {
           "in" : "path",
           "name" : "itemId",
@@ -893,6 +907,38 @@
           }
         },
         "summary" : "Загрузка фото меню или стенда заведения в очередь распознавания и модерации",
+        "tags" : [ "intake" ]
+      }
+    },
+    "/api/v1/venues/{venueId}/reports" : {
+      "post" : {
+        "operationId" : "report",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "venueId",
+          "required" : true,
+          "schema" : {
+            "format" : "int64",
+            "minimum" : 1,
+            "type" : "integer"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/VenueReportRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "204" : {
+            "description" : "No Content"
+          }
+        },
+        "summary" : "Сообщение «заведение закрыто или переехало»",
         "tags" : [ "intake" ]
       }
     }

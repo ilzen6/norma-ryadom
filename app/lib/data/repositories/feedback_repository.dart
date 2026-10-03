@@ -1,3 +1,4 @@
+import '../../domain/models/catalog.dart';
 import '../../utils/result.dart';
 import '../services/norma_api.dart';
 import '../services/photo_picker_service.dart';
@@ -6,6 +7,8 @@ abstract interface class FeedbackRepository {
   Future<Result<SubmissionReceipt>> sendMenuPhoto(int venueId, PickedPhoto photo);
 
   Future<Result<void>> reportItem(int itemId, String reason);
+
+  Future<Result<void>> reportVenue(int venueId, VenueReportReason reason);
 }
 
 class RemoteFeedbackRepository implements FeedbackRepository {
@@ -19,4 +22,7 @@ class RemoteFeedbackRepository implements FeedbackRepository {
 
   @override
   Future<Result<void>> reportItem(int itemId, String reason) => _api.reportItem(itemId, reason.trim());
+
+  @override
+  Future<Result<void>> reportVenue(int venueId, VenueReportReason reason) => _api.reportVenue(venueId, reason);
 }

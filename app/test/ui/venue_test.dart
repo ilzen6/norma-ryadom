@@ -116,6 +116,58 @@ void main() {
     expect(find.text('Спасибо! Блюдо проверим'), findsOneWidget);
   });
 
+  testWidgets('показывает, когда точку последний раз подтверждали', (tester) async {
+    await openVenue(
+      tester,
+      result: Ok(menu.copyWith(venue: TestData.venue.copyWith(confirmedOn: DateTime(2026, 3, 14)))),
+    );
+
+    expect(find.textContaining(RegExp(r'^Точка подтверждена: март 2026\sг\.$')), findsOneWidget);
+  });
+
+  testWidgets('предупреждает, что точку давно не проверяли или дата неизвестна', (tester) async {
+    await openVenue(
+      tester,
+      result: Ok(menu.copyWith(venue: TestData.venue.copyWith(confirmedOn: DateTime(2024, 11, 2)))),
+    );
+    expect(
+      find.textContaining(
+        RegExp(r'^Точку давно не проверяли \(последний раз: ноябрь 2024\sг\.\) — уточните перед походом$'),
+      ),
+      findsOneWidget,
+    );
+  });
+
+  testWidgets('без даты проверки честно говорит, что она неизвестна', (tester) async {
+    await openVenue(tester);
+
+    expect(find.text('Когда точку проверяли, неизвестно — уточните перед походом'), findsOneWidget);
+  });
+
+  testWidgets('сообщает, что заведение закрылось, с выбранной причиной', (tester) async {
+    final harness = await openVenue(tester);
+
+    await tester.tap(find.byKey(const Key('venue-report')));
+    await tester.pumpAndSettle();
+    expect(find.text('Что не так с заведением?'), findsOneWidget);
+    await tester.tap(find.byKey(const Key('venue-report-moved')));
+    await tester.pumpAndSettle();
+
+    expect(harness.feedback.venueReports.single, (7, VenueReportReason.moved));
+    expect(find.text('Спасибо! Проверим и уберём точку, если она закрыта'), findsOneWidget);
+  });
+
+  testWidgets('ничего не отправляет, если сообщение о закрытии отменили', (tester) async {
+    final harness = await openVenue(tester);
+
+    await tester.tap(find.byKey(const Key('venue-report')));
+    await tester.pumpAndSettle();
+    await tester.tapAt(const Offset(8, 8));
+    await tester.pumpAndSettle();
+
+    expect(harness.feedback.venueReports, isEmpty);
+  });
+
   testWidgets('загружает фото меню из галереи и сообщает об ошибке формата', (tester) async {
     final harness = await openVenue(tester);
 

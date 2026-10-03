@@ -16,6 +16,7 @@ class CsvTable private constructor(
         fun read(
             text: String,
             expectedHeader: List<String>,
+            optionalColumns: List<String> = emptyList(),
         ): CsvTableResult {
             val format =
                 CSVFormat.DEFAULT
@@ -27,10 +28,13 @@ class CsvTable private constructor(
                     .setIgnoreEmptyLines(true)
                     .get()
             return try {
-                format.parse(StringReader(text.removePrefix("﻿"))).use { parser ->
+                format.parse(StringReader(text.removePrefix("\uFEFF"))).use { parser ->
                     val header = parser.headerNames.map { it.trim().lowercase() }
                     when {
-                        header != expectedHeader -> CsvTableResult.Rejected(CsvError(HEADER_LINE, CsvErrorCode.HEADER_MISMATCH, null))
+                        header != expectedHeader && header != expectedHeader + optionalColumns ->
+                            CsvTableResult.Rejected(
+                                CsvError(HEADER_LINE, CsvErrorCode.HEADER_MISMATCH, null),
+                            )
                         else -> tableOrEmpty(parser.records)
                     }
                 }

@@ -88,6 +88,7 @@ abstract class VenueSummary with _$VenueSummary {
     required double lat,
     required double lon,
     @Default('RUB') String currency,
+    DateTime? confirmedOn,
   }) = _VenueSummary;
 
   factory VenueSummary.fromJson(Map<String, dynamic> json) => _$VenueSummaryFromJson(json);
@@ -161,4 +162,19 @@ abstract class VenueMenu with _$VenueMenu {
   const factory VenueMenu({required VenueSummary venue, @Default(<MenuItem>[]) List<MenuItem> items}) = _VenueMenu;
 
   factory VenueMenu.fromJson(Map<String, dynamic> json) => _$VenueMenuFromJson(json);
+}
+
+enum VenueReportReason {
+  @JsonValue('closed')
+  closed,
+  @JsonValue('moved')
+  moved,
+  @JsonValue('not_found')
+  notFound;
+
+  String get code => switch (this) {
+    VenueReportReason.closed => 'closed',
+    VenueReportReason.moved => 'moved',
+    VenueReportReason.notFound => 'not_found',
+  };
 }

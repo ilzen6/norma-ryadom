@@ -27,7 +27,7 @@
         </section>
         <section class="card">
             <h2>Импорт точек</h2>
-            <p class="muted">CSV: <code>name;address;lat;lon;external_id</code></p>
+            <p class="muted">CSV: <code>name;address;lat;lon;external_id</code>, по желанию последней колонкой <code>confirmed_on</code> — дата, когда точку последний раз подтвердили (ГГГГ-ММ-ДД)</p>
             <form th:action="@{/admin/chains/{id}/venues(id=${chain.id})}" method="post" enctype="multipart/form-data">
                 <label for="venueFile">Файл точек</label>
                 <input id="venueFile" name="file" type="file" accept=".csv,text/csv" required>

@@ -11,6 +11,7 @@
         <a class="tile" th:href="@{/admin/chains}"><span class="value" th:text="${itemCount}">0</span><span>блюд в продаже</span></a>
         <a class="tile" th:classappend="${openSubmissions > 0} ? 'attention'" th:href="@{/admin/moderation}"><span class="value" th:text="${openSubmissions}" data-testid="open-submissions">0</span><span>фото ждут модерации</span></a>
         <a class="tile" th:classappend="${reviewCases > 0} ? 'attention'" th:href="@{/admin/reviews}"><span class="value" th:text="${reviewCases}" data-testid="review-cases">0</span><span>блюд на перепроверке</span></a>
+        <a class="tile" th:classappend="${venueCases > 0} ? 'attention'" th:href="@{/admin/venue-reviews}"><span class="value" th:text="${venueCases}" data-testid="venue-cases">0</span><span>точек под подозрением на закрытие</span></a>
     </div>
 </main>
 </body>

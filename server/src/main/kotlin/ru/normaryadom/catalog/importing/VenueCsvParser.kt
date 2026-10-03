@@ -7,7 +7,7 @@ import java.math.BigDecimal
 
 @Component
 class VenueCsvParser {
-    private val document = CsvDocument(HEADER, EXTERNAL_ID, VenueDraft::externalId, ::parseRow)
+    private val document = CsvDocument(HEADER, EXTERNAL_ID, VenueDraft::externalId, ::parseRow, OPTIONAL)
 
     fun parse(text: String): CsvParseResult<VenueDraft> = document.parse(text)
 
@@ -19,8 +19,15 @@ class VenueCsvParser {
         val lat = row.requiredNumber(LAT, LAT_RANGE)
         val lon = row.requiredNumber(LON, LON_RANGE)
         val externalId = row.requiredText(EXTERNAL_ID, MAX_TEXT_LENGTH)
+        val confirmedOn = row.optionalDate(CONFIRMED_ON)
         return if (row.isValid) {
-            VenueDraft(name = name, address = address, location = GeoPoint(lat.toDouble(), lon.toDouble()), externalId = externalId)
+            VenueDraft(
+                name = name,
+                address = address,
+                location = GeoPoint(lat.toDouble(), lon.toDouble()),
+                externalId = externalId,
+                confirmedOn = confirmedOn,
+            )
         } else {
             null
         }
@@ -32,7 +39,9 @@ class VenueCsvParser {
         const val LAT = "lat"
         const val LON = "lon"
         const val EXTERNAL_ID = "external_id"
+        const val CONFIRMED_ON = "confirmed_on"
         val HEADER = listOf(NAME, ADDRESS, LAT, LON, EXTERNAL_ID)
+        val OPTIONAL = listOf(CONFIRMED_ON)
 
         private const val MAX_TEXT_LENGTH = 300
         private val LAT_RANGE = BigDecimal("-90")..BigDecimal("90")

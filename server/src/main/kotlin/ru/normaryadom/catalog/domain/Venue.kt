@@ -1,5 +1,7 @@
 package ru.normaryadom.catalog.domain
 
+import java.time.LocalDate
+
 data class Venue(
     val id: Long,
     val chainId: Long?,
@@ -11,4 +13,6 @@ data class Venue(
     val currency: String,
     val menuScope: MenuScope,
     val hasMenu: Boolean,
+    val confirmedOn: LocalDate? = null,
+    val underReview: Boolean = false,
 )

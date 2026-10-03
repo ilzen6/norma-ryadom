@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../data/providers.dart';
 import '../../data/services/photo_picker_service.dart';
 import '../../domain/models/catalog.dart';
 import '../../routing/routes.dart';
@@ -113,6 +114,61 @@ class _VenueBody extends ConsumerWidget {
 
   final VenueMenu menu;
 
+  Future<VenueReportReason?> _chooseVenueProblem(BuildContext context) {
+    final l10n = context.l10n;
+    return showModalBottomSheet<VenueReportReason>(
+      context: context,
+      useRootNavigator: true,
+      isScrollControlled: true,
+      showDragHandle: true,
+      builder: (sheetContext) => SafeArea(
+        child: ListView(
+          shrinkWrap: true,
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(24, 0, 24, 4),
+              child: Semantics(
+                header: true,
+                child: Text(l10n.venueReportTitle, style: Theme.of(sheetContext).textTheme.titleLarge),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(24, 0, 24, 8),
+              child: Text(
+                l10n.venueReportHint,
+                style: Theme.of(sheetContext).textTheme.bodyMedium?.copyWith(color: sheetContext.palette.inkMuted),
+              ),
+            ),
+            for (final (reason, label, icon) in [
+              (VenueReportReason.closed, l10n.venueReportClosed, Icons.do_not_disturb_on_rounded),
+              (VenueReportReason.moved, l10n.venueReportMoved, Icons.moving_rounded),
+              (VenueReportReason.notFound, l10n.venueReportNotFound, Icons.wrong_location_rounded),
+            ])
+              ListTile(
+                key: Key('venue-report-${reason.code}'),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 24),
+                leading: Icon(icon, color: sheetContext.palette.inkMuted),
+                title: Text(label),
+                onTap: () => Navigator.of(sheetContext).pop(reason),
+              ),
+            const SizedBox(height: 8),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Future<void> _reportVenue(BuildContext context, WidgetRef ref, int venueId, VenueReportReason? reason) async {
+    if (reason == null) return;
+    final l10n = context.l10n;
+    final result = await ref.read(feedbackActionsProvider).reportVenue(venueId, reason);
+    if (!context.mounted) return;
+    showMessage(context, switch (result) {
+      Ok() => l10n.venueReportSent,
+      Err(:final failure) => l10n.failure(failure),
+    });
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
@@ -145,6 +201,8 @@ class _VenueBody extends ConsumerWidget {
                   ),
                 ],
               ),
+              const SizedBox(height: 8),
+              _VenueFreshness(confirmedOn: venue.confirmedOn),
               const SizedBox(height: 18),
               SizedBox(
                 width: double.infinity,
@@ -153,6 +211,19 @@ class _VenueBody extends ConsumerWidget {
                   onPressed: comboState is SearchRunning ? null : comboController.search,
                   icon: const Icon(Icons.auto_awesome_rounded),
                   label: Text(l10n.venueBuildHere(l10n.meal(meal).toLowerCase())),
+                ),
+              ),
+              const SizedBox(height: 4),
+              Center(
+                child: BusyAction<VenueReportReason>(
+                  prepare: () => _chooseVenueProblem(context),
+                  run: (reason) => _reportVenue(context, ref, venue.id, reason),
+                  builder: (context, onPressed, busy) => TextButton.icon(
+                    key: const Key('venue-report'),
+                    onPressed: onPressed,
+                    icon: BusyAction.icon(Icons.storefront_rounded, busy: busy),
+                    label: Text(l10n.venueReportAction),
+                  ),
                 ),
               ),
             ],
@@ -321,6 +392,41 @@ class _MenuItemCard extends ConsumerWidget {
       Err(:final failure) => l10n.failure(failure),
     };
     showMessage(context, message);
+  }
+}
+
+class _VenueFreshness extends ConsumerWidget {
+  const _VenueFreshness({required this.confirmedOn});
+
+  static const staleAfter = Duration(days: 548);
+
+  final DateTime? confirmedOn;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = context.l10n;
+    final palette = context.palette;
+    final now = ref.watch(clockProvider)();
+    final (text, icon, color) = switch (confirmedOn) {
+      null => (l10n.venueConfirmedUnknown, Icons.help_outline_rounded, palette.inkMuted),
+      final date when now.difference(date) > staleAfter => (
+        l10n.venueConfirmedStale(date),
+        Icons.history_rounded,
+        palette.warn,
+      ),
+      final date => (l10n.venueConfirmed(date), Icons.verified_rounded, palette.good),
+    };
+    return Row(
+      key: const Key('venue-freshness'),
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Icon(icon, size: 18, color: color),
+        const SizedBox(width: 6),
+        Expanded(
+          child: Text(text, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: palette.inkMuted)),
+        ),
+      ],
+    );
   }
 }
 

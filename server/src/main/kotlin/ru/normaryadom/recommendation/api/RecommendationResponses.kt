@@ -9,6 +9,7 @@ import ru.normaryadom.recommendation.FitLevel
 import ru.normaryadom.recommendation.ReasonCode
 import ru.normaryadom.recommendation.Verdict
 import java.time.Instant
+import java.time.LocalDate
 
 data class NutrientsResponse(
     val kcal: Double,
@@ -34,6 +35,7 @@ data class VenueSummaryResponse(
     val lat: Double,
     val lon: Double,
     val currency: String,
+    val confirmedOn: LocalDate?,
 )
 
 data class DishResponse(

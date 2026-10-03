@@ -70,6 +70,7 @@ object RecommendationMapper {
             lat = venue.location.lat,
             lon = venue.location.lon,
             currency = venue.currency,
+            confirmedOn = venue.confirmedOn,
         )
 
     private fun option(

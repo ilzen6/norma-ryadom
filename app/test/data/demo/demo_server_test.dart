@@ -121,4 +121,9 @@ void main() {
       AppFailure.invalidRequest,
     );
   });
+
+  test('принимает сообщение о закрытой точке и не находит неизвестную', () async {
+    expect(await api.reportVenue(1, VenueReportReason.closed), isA<Ok<void>>());
+    expect((await api.reportVenue(999999, VenueReportReason.moved) as Err<void>).failure, AppFailure.notFound);
+  });
 }

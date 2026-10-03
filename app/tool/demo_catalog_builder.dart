@@ -65,4 +65,5 @@ Map<String, Object?> _venue(Map<String, String> row) => {
   'address': row['address'],
   'lat': double.parse(row['lat']!),
   'lon': double.parse(row['lon']!),
+  if (row['confirmed_on'] case final confirmed? when confirmed.isNotEmpty) 'confirmedOn': confirmed,
 };

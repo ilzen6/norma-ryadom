@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{admin/fragments :: head('Закрытые точки')}"></head>
+<body>
+<header th:replace="~{admin/fragments :: nav('venue-reviews')}"></header>
+<main>
+    <h1>Сообщения «заведение закрыто или переехало»</h1>
+    <p class="muted">Точка уходит сюда и пропадает из поиска, когда о ней сообщили разные пользователи. Проверьте на сайте сети или на месте.</p>
+    <p th:if="${resolved == 'restored'}" class="alert ok" role="status" data-testid="resolved">Точка снова в поиске, дата подтверждения обновлена</p>
+    <p th:if="${resolved == 'closed'}" class="alert ok" role="status" data-testid="resolved">Точка закрыта и больше не показывается</p>
+    <p th:if="${#lists.isEmpty(cases)}">Точек на проверке нет</p>
+    <article class="card" th:each="c : ${cases}" th:attr="data-venue-id=${c.venue.id}">
+        <h2 th:text="${c.venue.name}">Точка</h2>
+        <p class="muted">
+            <span th:text="${c.venue.address}">Адрес</span>
+            <span th:if="${c.venue.chainName != null}"> · <span th:text="${c.venue.chainName}">Сеть</span></span>
+        </p>
+        <p class="muted" th:if="${c.venue.confirmedOn != null}">Последнее подтверждение: <span th:text="${#temporals.format(c.venue.confirmedOn, 'dd.MM.yyyy')}">01.01.2026</span></p>
+        <p class="muted" th:if="${c.venue.confirmedOn == null}">Дата подтверждения неизвестна</p>
+        <ul>
+            <li th:each="entry : ${c.reasons}" th:text="${#messages.msg('venue.report.' + entry.key.code)} + ': ' + ${entry.value}">причина: 1</li>
+        </ul>
+        <div class="actions">
+            <form th:action="@{/admin/venue-reviews/{id}/restore(id=${c.venue.id})}" method="post">
+                <button type="submit">Заведение работает</button>
+            </form>
+            <form th:action="@{/admin/venue-reviews/{id}/close(id=${c.venue.id})}" method="post">
+                <button type="submit" class="secondary">Закрыто — убрать</button>
+            </form>
+        </div>
+    </article>
+</main>
+</body>
+</html>

@@ -23,6 +23,7 @@ enum class CsvErrorCode {
     REQUIRED,
     TOO_LONG,
     NOT_A_NUMBER,
+    NOT_A_DATE,
     OUT_OF_RANGE,
     UNKNOWN_CATEGORY,
     UNKNOWN_TAG,

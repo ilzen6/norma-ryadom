@@ -13,6 +13,7 @@
         <a th:href="@{/admin/chains}" th:attr="aria-current=${section == 'chains'} ? 'page'">Сети и меню</a>
         <a th:href="@{/admin/moderation}" th:attr="aria-current=${section == 'moderation'} ? 'page'">Модерация фото</a>
         <a th:href="@{/admin/reviews}" th:attr="aria-current=${section == 'reviews'} ? 'page'">Жалобы</a>
+        <a th:href="@{/admin/venue-reviews}" th:attr="aria-current=${section == 'venue-reviews'} ? 'page'">Закрытые точки</a>
     </nav>
     <form th:action="@{/admin/logout}" method="post" class="logout">
         <button type="submit" class="link">Выйти</button>

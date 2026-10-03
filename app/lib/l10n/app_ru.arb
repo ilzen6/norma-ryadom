@@ -762,5 +762,31 @@
         "type": "int"
       }
     }
-  }
+  },
+  "venueConfirmed": "Точка подтверждена: {date}",
+  "@venueConfirmed": {
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMMMM"
+      }
+    }
+  },
+  "venueConfirmedStale": "Точку давно не проверяли (последний раз: {date}) — уточните перед походом",
+  "@venueConfirmedStale": {
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMMMM"
+      }
+    }
+  },
+  "venueConfirmedUnknown": "Когда точку проверяли, неизвестно — уточните перед походом",
+  "venueReportAction": "Заведение закрыто или переехало?",
+  "venueReportTitle": "Что не так с заведением?",
+  "venueReportHint": "Когда об этом сообщат несколько человек, точка пропадёт из поиска до проверки модератором.",
+  "venueReportClosed": "Закрылось",
+  "venueReportMoved": "Переехало",
+  "venueReportNotFound": "Не нашёл на месте",
+  "venueReportSent": "Спасибо! Проверим и уберём точку, если она закрыта"
 }

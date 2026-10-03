@@ -5,13 +5,14 @@ class CsvDocument<T : Any>(
     private val uniqueColumn: String,
     private val uniqueKey: (T) -> String,
     private val parseRow: (CsvRowReader) -> T?,
+    private val optionalColumns: List<String> = emptyList(),
 ) {
     fun parse(content: ByteArray): CsvParseResult<T> =
         CsvEncoding.decode(content)?.let(::parse)
             ?: CsvParseResult.Invalid(listOf(CsvError(FIRST_LINE, CsvErrorCode.MALFORMED, ENCODING)))
 
     fun parse(text: String): CsvParseResult<T> =
-        when (val read = CsvTable.read(text, header)) {
+        when (val read = CsvTable.read(text, header, optionalColumns)) {
             is CsvTableResult.Rejected -> CsvParseResult.Invalid(listOf(read.error))
             is CsvTableResult.Read -> parseRows(read.table)
         }

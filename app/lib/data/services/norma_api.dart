@@ -117,6 +117,9 @@ class NormaApi {
     (json) => SubmissionReceipt(submissionId: json['submissionId'] as int),
   );
 
+  Future<Result<void>> reportVenue(int venueId, VenueReportReason reason) =>
+      _call(() => _dio.post<void>('/api/v1/venues/$venueId/reports', data: {'reason': reason.code}), (_) {});
+
   Future<Result<void>> reportItem(int itemId, String reason) =>
       _call(() => _dio.post<void>('/api/v1/items/$itemId/reports', data: {'reason': reason}), (_) {});
 

@@ -5,6 +5,8 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations
 import org.springframework.jdbc.core.simple.JdbcClient
 import org.springframework.stereotype.Repository
 import ru.normaryadom.catalog.domain.Venue
+import java.sql.Types
+import java.time.LocalDate
 
 @Repository
 class VenueRepository(
@@ -32,10 +34,12 @@ class VenueRepository(
     ) {
         batchJdbc.batchUpdate(
             """
-            INSERT INTO venue (chain_id, name, address, location, external_id)
-            VALUES (:chainId, :name, :address, ST_SetSRID(ST_MakePoint(:lon, :lat), 4326)::geography, :externalId)
+            INSERT INTO venue (chain_id, name, address, location, external_id, confirmed_on)
+            VALUES (:chainId, :name, :address, ST_SetSRID(ST_MakePoint(:lon, :lat), 4326)::geography, :externalId,
+                    :confirmedOn)
             ON CONFLICT (chain_id, external_id) WHERE external_id IS NOT NULL DO UPDATE SET
-                name = EXCLUDED.name, address = EXCLUDED.address, location = EXCLUDED.location, is_active = TRUE
+                name = EXCLUDED.name, address = EXCLUDED.address, location = EXCLUDED.location, is_active = TRUE,
+                confirmed_on = coalesce(EXCLUDED.confirmed_on, venue.confirmed_on)
             """,
             drafts
                 .map { draft ->
@@ -46,6 +50,7 @@ class VenueRepository(
                         .addValue("lat", draft.location.lat)
                         .addValue("lon", draft.location.lon)
                         .addValue("externalId", draft.externalId)
+                        .addValue("confirmedOn", draft.confirmedOn, Types.DATE)
                 }.toTypedArray(),
         )
     }
@@ -64,6 +69,42 @@ class VenueRepository(
             ).param("chainId", chainId)
             .param("externalIds", keptExternalIds.toTypedArray())
             .update()
+
+    fun lockActive(id: Long): Boolean =
+        jdbc
+            .sql("SELECT id FROM venue WHERE id = :id AND is_active FOR UPDATE")
+            .param("id", id)
+            .query(Long::class.java)
+            .optional()
+            .isPresent
+
+    fun sendToReview(id: Long): Boolean =
+        jdbc
+            .sql("UPDATE venue SET under_review = TRUE WHERE id = :id AND is_active AND NOT under_review")
+            .param("id", id)
+            .update() > 0
+
+    fun findUnderReview(): List<Venue> =
+        jdbc
+            .sql("SELECT ${VenueRows.SELECT_COLUMNS} ${VenueRows.FROM} WHERE v.is_active AND v.under_review ORDER BY v.id")
+            .query { rs, _ -> VenueRows.map(rs) }
+            .list()
+
+    fun restore(
+        id: Long,
+        confirmedOn: LocalDate,
+    ): Boolean =
+        jdbc
+            .sql("UPDATE venue SET under_review = FALSE, confirmed_on = :confirmedOn WHERE id = :id AND under_review")
+            .param("id", id)
+            .param("confirmedOn", confirmedOn)
+            .update() > 0
+
+    fun close(id: Long): Boolean =
+        jdbc
+            .sql("UPDATE venue SET under_review = FALSE, is_active = FALSE WHERE id = :id AND under_review")
+            .param("id", id)
+            .update() > 0
 
     fun bumpMenuVersion(id: Long) {
         jdbc

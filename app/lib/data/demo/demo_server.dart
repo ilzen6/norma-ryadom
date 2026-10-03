@@ -5,6 +5,7 @@ import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
 
+import '../../domain/models/catalog.dart' show VenueReportReason;
 import 'demo_engine.dart';
 
 class DemoVenue {
@@ -15,6 +16,7 @@ class DemoVenue {
     required this.address,
     required this.lat,
     required this.lon,
+    this.confirmedOn,
   });
 
   final int id;
@@ -23,6 +25,7 @@ class DemoVenue {
   final String address;
   final double lat;
   final double lon;
+  final String? confirmedOn;
 }
 
 class DemoChain {
@@ -72,6 +75,7 @@ class DemoCatalog {
                 address: venue['address'] as String,
                 lat: (venue['lat'] as num).toDouble(),
                 lon: (venue['lon'] as num).toDouble(),
+                confirmedOn: venue['confirmedOn'] as String?,
               ),
           ],
         ),
@@ -126,6 +130,7 @@ class DemoServerAdapter implements HttpClientAdapter {
     final venueMenu = RegExp(r'^/api/v1/venues/(\d+)/menu$').firstMatch(path);
     final menuPhotos = RegExp(r'^/api/v1/venues/(\d+)/menu-photos$').firstMatch(path);
     final reports = RegExp(r'^/api/v1/items/(\d+)/reports$').firstMatch(path);
+    final venueReports = RegExp(r'^/api/v1/venues/(\d+)/reports$').firstMatch(path);
     return switch ((method, path)) {
       ('GET', '/actuator/health') => _json({'status': 'UP'}),
       ('GET', '/api/v1/venues') => _nearbyVenues(catalog, options.uri.queryParameters),
@@ -141,6 +146,7 @@ class DemoServerAdapter implements HttpClientAdapter {
             ? _problem(404)
             : _json({'submissionId': ++_submissions, 'status': 'NEW'}, status: 202),
       ('POST', _) when reports != null => ResponseBody.fromString('', 204),
+      ('POST', _) when venueReports != null => _venueReport(catalog, int.parse(venueReports.group(1)!), _body(options)),
       _ => _problem(404),
     };
   }
@@ -350,6 +356,13 @@ class DemoServerAdapter implements HttpClientAdapter {
           },
       };
 
+  static ResponseBody _venueReport(DemoCatalog catalog, int venueId, Map<String, dynamic> body) {
+    if (catalog.venue(venueId) == null) return _problem(404);
+    final reason = body['reason'];
+    final known = VenueReportReason.values.any((value) => value.code == reason);
+    return known ? ResponseBody.fromString('', 204) : _problem(400);
+  }
+
   static Map<String, Object> _venueJson(DemoVenue venue) => {
     'id': venue.id,
     'name': venue.name,
@@ -358,6 +371,7 @@ class DemoServerAdapter implements HttpClientAdapter {
     'lat': venue.lat,
     'lon': venue.lon,
     'currency': 'RUB',
+    'confirmedOn': ?venue.confirmedOn,
   };
 
   static Map<String, double> _nutrientsJson(DemoNutrients nutrients) => {
