@@ -36,6 +36,7 @@ cleanup() {
     compose logs --no-color > "$root/e2e/test-results/compose.log" 2>&1 || true
     compose ps -a >&2 || true
     tail -n 80 "$root/e2e/test-results/compose.log" >&2 || true
+    find "$root/e2e/test-results" -name error-context.md -exec cat {} + >&2 2>/dev/null || true
   fi
   if [[ "${KEEP_STACK:-false}" != "true" ]]; then
     compose down -v --remove-orphans >/dev/null 2>&1 || true
