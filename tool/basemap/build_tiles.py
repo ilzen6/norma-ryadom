@@ -370,7 +370,11 @@ def process(region, path, tilesets):
             if region.frame.contains(anchor):
                 place = {"lat": round(anchor.y, 6), "lon": round(anchor.x, 6), "street": street, "housenumber": number,
                          "amenity": properties["amenity"], "confirmed": last_confirmed(properties),
-                         "hours": bool(properties.get("opening_hours"))}
+                         "hours": bool(properties.get("opening_hours")),
+                         "name": (properties.get("name") or "").strip() or None,
+                         "brand": (properties.get("brand") or "").strip() or None,
+                         "brand_wikidata": properties.get("brand:wikidata"),
+                         "cuisine": properties.get("cuisine")}
                 if street and number:
                     region.places.setdefault((street, number, round(anchor.y, 4), round(anchor.x, 4)), place)
                 else:
