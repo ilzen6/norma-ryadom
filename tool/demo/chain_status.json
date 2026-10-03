@@ -1,0 +1,44 @@
+[
+  {
+    "chain": "KFC",
+    "status": "renamed",
+    "now": "Rostic's",
+    "checked": "2026-10-03",
+    "source": "https://www.retail.ru/news/v-rossii-ne-ostalos-zavedeniy-kfc-15-yanvarya-2026-273403/"
+  },
+  {
+    "chain": "Pizza Hut",
+    "status": "renamed",
+    "now": "ПиццаН",
+    "checked": "2026-10-03",
+    "source": "https://www.sostav.ru/publication/byvshie-restorany-pizza-hut-v-rossii-smenili-osnovnogo-vladeltsa-78456.html"
+  },
+  {
+    "chain": "One Price Coffee",
+    "status": "renamed",
+    "now": "One Plus Coffee",
+    "checked": "2026-10-03",
+    "source": "https://moskvichmag.ru/?p=523554"
+  },
+  {
+    "chain": "Subway",
+    "status": "unclear",
+    "now": null,
+    "checked": "2026-10-03",
+    "source": "https://incrussia.ru/news/subway-v-rossii-stanovitsya-subjoy-140-restoranov-smenili-nazvanie/"
+  },
+  {
+    "chain": "Art Lunch",
+    "status": "unclear",
+    "now": null,
+    "checked": "2026-10-03",
+    "source": null
+  },
+  {
+    "chain": "Costa",
+    "status": "unclear",
+    "now": null,
+    "checked": "2026-10-03",
+    "source": null
+  }
+]

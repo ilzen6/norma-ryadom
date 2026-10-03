@@ -21,7 +21,15 @@ from build_demo_venues import (
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "server/src/main/resources/demo/real"
 BRANDS = Path(__file__).with_name("brands.json")
+STATUS = Path(__file__).with_name("chain_status.json")
 MIN_CHAIN_PLACES = 5
+MIN_UNBRANDED_CHAIN_PLACES = 10
+GENERIC_NAMES = {
+    "кафе", "бар", "кофейня", "пекарня", "столовая", "буфет", "кебаб", "шаверма", "шаурма", "шавуха", "донер",
+    "хинкальная", "чайхана", "чайхона", "пиццерия", "суши", "бургерная", "блинная", "пельменная", "чебуречная",
+    "кулинария", "закусочная", "ресторан", "пивной бар", "паб", "кофе", "кафетерий", "пончики", "пышечная",
+    "шашлычная", "бистро", "кофе с собой", "восток", "кофе на вынос", "фастфуд", "гриль", "пироги",
+}
 TRANSLIT = str.maketrans("абвгдеёжзийклмнопрстуфхцчшщъыьэюя", "abvgdeejziiklmnoprstufhccss_y_eua")
 
 
@@ -69,13 +77,36 @@ def fresh_places():
 
 
 def main():
-    kept = list(fresh_places())
+    status = {key_of(entry["chain"]): entry for entry in json.loads(STATUS.read_text(encoding="utf-8"))}
+
+    def current(name):
+        entry = status.get(key_of(name))
+        if entry is None:
+            return name
+        return entry["now"] if entry["status"] == "renamed" else None
+
+    kept = []
+    dropped = Counter()
+    for place, town in fresh_places():
+        brand = current(place["brand"]) if place.get("brand") else None
+        name = current(place["name"])
+        if (place.get("brand") and brand is None) or name is None:
+            dropped[place.get("brand") or place["name"]] += 1
+            continue
+        kept.append(({**place, "brand": brand, "name": name if brand is None else brand}, town))
+    print("dropped by chain status", dict(dropped), file=sys.stderr)
     branded = defaultdict(Counter)
     for place, _ in kept:
         if place.get("brand"):
             branded[key_of(place["brand"])][place["brand"]] += 1
     chains = {key: display_name(spellings)
               for key, spellings in branded.items() if sum(spellings.values()) >= MIN_CHAIN_PLACES}
+    unbranded = defaultdict(Counter)
+    for place, _ in kept:
+        if not place.get("brand") and place["name"].strip().lower() not in GENERIC_NAMES:
+            unbranded[key_of(place["name"])][place["name"]] += 1
+    chains.update({key: display_name(spellings) for key, spellings in unbranded.items()
+                   if key not in chains and sum(spellings.values()) >= MIN_UNBRANDED_CHAIN_PLACES})
     rows = defaultdict(list)
     seen = set()
     for place, town in kept:

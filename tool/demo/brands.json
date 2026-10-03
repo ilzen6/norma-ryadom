@@ -5,8 +5,13 @@
     "count": 345
   },
   {
-    "name": "One Price Coffee",
-    "venues": "demo/real/one-price-coffee-venues.csv",
+    "name": "Rostic's",
+    "venues": "demo/real/rostic-s-venues.csv",
+    "count": 240
+  },
+  {
+    "name": "One Plus Coffee",
+    "venues": "demo/real/one-plus-coffee-venues.csv",
     "count": 213
   },
   {
@@ -18,11 +23,6 @@
     "name": "Додо Пицца",
     "venues": "demo/real/dodo-picca-venues.csv",
     "count": 202
-  },
-  {
-    "name": "Rostic's",
-    "venues": "demo/real/rostic-s-venues.csv",
-    "count": 199
   },
   {
     "name": "Бургер Кинг",
@@ -75,9 +75,19 @@
     "count": 74
   },
   {
+    "name": "Кулинарная лавка братьев Караваевых",
+    "venues": "demo/real/kulinarnaa-lavka-brat-ev-karavaevyh-venues.csv",
+    "count": 69
+  },
+  {
     "name": "Милти",
     "venues": "demo/real/milti-venues.csv",
     "count": 68
+  },
+  {
+    "name": "Просто Вася",
+    "venues": "demo/real/prosto-vasa-venues.csv",
+    "count": 58
   },
   {
     "name": "Люди любят",
@@ -90,9 +100,9 @@
     "count": 54
   },
   {
-    "name": "Subway",
-    "venues": "demo/real/subway-venues.csv",
-    "count": 49
+    "name": "Моккано",
+    "venues": "demo/real/mokkano-venues.csv",
+    "count": 50
   },
   {
     "name": "Domino Pizza",
@@ -120,11 +130,6 @@
     "count": 41
   },
   {
-    "name": "KFC",
-    "venues": "demo/real/kfc-venues.csv",
-    "count": 41
-  },
-  {
     "name": "Шаверлэнд",
     "venues": "demo/real/saverlend-venues.csv",
     "count": 41
@@ -133,6 +138,21 @@
     "name": "Тануки",
     "venues": "demo/real/tanuki-venues.csv",
     "count": 39
+  },
+  {
+    "name": "Max Bakery",
+    "venues": "demo/real/max-bakery-venues.csv",
+    "count": 38
+  },
+  {
+    "name": "ПиццаН",
+    "venues": "demo/real/piccan-venues.csv",
+    "count": 38
+  },
+  {
+    "name": "Влаваше",
+    "venues": "demo/real/vlavase-venues.csv",
+    "count": 38
   },
   {
     "name": "Евразия",
@@ -150,9 +170,19 @@
     "count": 36
   },
   {
+    "name": "Дед Хо",
+    "venues": "demo/real/ded-ho-venues.csv",
+    "count": 33
+  },
+  {
     "name": "Coffee Like",
     "venues": "demo/real/coffee-like-venues.csv",
     "count": 33
+  },
+  {
+    "name": "Coffee Point",
+    "venues": "demo/real/coffee-point-venues.csv",
+    "count": 32
   },
   {
     "name": "Даблби",
@@ -165,13 +195,38 @@
     "count": 32
   },
   {
+    "name": "Etlon Coffee",
+    "venues": "demo/real/etlon-coffee-venues.csv",
+    "count": 32
+  },
+  {
     "name": "ЧебурекМи",
     "venues": "demo/real/ceburekmi-venues.csv",
     "count": 31
   },
   {
+    "name": "Up Sushi",
+    "venues": "demo/real/up-sushi-venues.csv",
+    "count": 30
+  },
+  {
+    "name": "SeDelice",
+    "venues": "demo/real/sedelice-venues.csv",
+    "count": 30
+  },
+  {
+    "name": "Шаверно",
+    "venues": "demo/real/saverno-venues.csv",
+    "count": 30
+  },
+  {
     "name": "Cinnabon",
     "venues": "demo/real/cinnabon-venues.csv",
+    "count": 27
+  },
+  {
+    "name": "Uppetit",
+    "venues": "demo/real/uppetit-venues.csv",
     "count": 27
   },
   {
@@ -180,9 +235,29 @@
     "count": 26
   },
   {
+    "name": "Eazzy Pizza & Gelato",
+    "venues": "demo/real/eazzy-pizza-gelato-venues.csv",
+    "count": 26
+  },
+  {
+    "name": "Франклинс Бургер",
+    "venues": "demo/real/franklins-burger-venues.csv",
+    "count": 25
+  },
+  {
+    "name": "Лепим и варим",
+    "venues": "demo/real/lepim-i-varim-venues.csv",
+    "count": 25
+  },
+  {
     "name": "The Бык",
     "venues": "demo/real/the-byk-venues.csv",
     "count": 25
+  },
+  {
+    "name": "Моремания",
+    "venues": "demo/real/moremania-venues.csv",
+    "count": 24
   },
   {
     "name": "Буше",
@@ -195,8 +270,28 @@
     "count": 24
   },
   {
+    "name": "Hatimaki",
+    "venues": "demo/real/hatimaki-venues.csv",
+    "count": 23
+  },
+  {
+    "name": "Брусника",
+    "venues": "demo/real/brusnika-venues.csv",
+    "count": 23
+  },
+  {
     "name": "Планета Суши",
     "venues": "demo/real/planeta-susi-venues.csv",
+    "count": 22
+  },
+  {
+    "name": "Farsh",
+    "venues": "demo/real/farsh-venues.csv",
+    "count": 22
+  },
+  {
+    "name": "Zotman Pizza",
+    "venues": "demo/real/zotman-pizza-venues.csv",
     "count": 22
   },
   {
@@ -205,14 +300,94 @@
     "count": 22
   },
   {
+    "name": "Этлон кофе",
+    "venues": "demo/real/etlon-kofe-venues.csv",
+    "count": 22
+  },
+  {
+    "name": "КофеБон",
+    "venues": "demo/real/kofebon-venues.csv",
+    "count": 22
+  },
+  {
+    "name": "Gagawa",
+    "venues": "demo/real/gagawa-venues.csv",
+    "count": 21
+  },
+  {
+    "name": "Pims",
+    "venues": "demo/real/pims-venues.csv",
+    "count": 20
+  },
+  {
+    "name": "Кофемания",
+    "venues": "demo/real/kofemania-venues.csv",
+    "count": 20
+  },
+  {
+    "name": "Beer House",
+    "venues": "demo/real/beer-house-venues.csv",
+    "count": 20
+  },
+  {
     "name": "Якитория",
     "venues": "demo/real/akitoria-venues.csv",
     "count": 19
   },
   {
-    "name": "Pizza Hut",
-    "venues": "demo/real/pizza-hut-venues.csv",
+    "name": "Чито Гврито",
+    "venues": "demo/real/cito-gvrito-venues.csv",
     "count": 19
+  },
+  {
+    "name": "Стейк & Бургер",
+    "venues": "demo/real/steik-burger-venues.csv",
+    "count": 18
+  },
+  {
+    "name": "Милана",
+    "venues": "demo/real/milana-venues.csv",
+    "count": 18
+  },
+  {
+    "name": "Здрасте",
+    "venues": "demo/real/zdraste-venues.csv",
+    "count": 18
+  },
+  {
+    "name": "Frank by Баста",
+    "venues": "demo/real/frank-by-basta-venues.csv",
+    "count": 18
+  },
+  {
+    "name": "Зерно",
+    "venues": "demo/real/zerno-venues.csv",
+    "count": 18
+  },
+  {
+    "name": "Vasilchuki Chaihona №1",
+    "venues": "demo/real/vasilchuki-chaihona-1-venues.csv",
+    "count": 17
+  },
+  {
+    "name": "Корчма",
+    "venues": "demo/real/korcma-venues.csv",
+    "count": 17
+  },
+  {
+    "name": "PhoBo",
+    "venues": "demo/real/phobo-venues.csv",
+    "count": 16
+  },
+  {
+    "name": "Вкусная Шаверма",
+    "venues": "demo/real/vkusnaa-saverma-venues.csv",
+    "count": 16
+  },
+  {
+    "name": "Пан Круассан",
+    "venues": "demo/real/pan-kruassan-venues.csv",
+    "count": 16
   },
   {
     "name": "Сушишоп",
@@ -225,9 +400,24 @@
     "count": 16
   },
   {
+    "name": "ПхалиХинкали",
+    "venues": "demo/real/phalihinkali-venues.csv",
+    "count": 16
+  },
+  {
     "name": "Британские пекарни",
     "venues": "demo/real/britanskie-pekarni-venues.csv",
     "count": 16
+  },
+  {
+    "name": "Pizza Express",
+    "venues": "demo/real/pizza-express-venues.csv",
+    "count": 15
+  },
+  {
+    "name": "Столовая №1",
+    "venues": "demo/real/stolovaa-1-venues.csv",
+    "count": 15
   },
   {
     "name": "Mama Roma",
@@ -235,9 +425,39 @@
     "count": 15
   },
   {
+    "name": "Дагестанская лавка",
+    "venues": "demo/real/dagestanskaa-lavka-venues.csv",
+    "count": 14
+  },
+  {
+    "name": "CofeFest",
+    "venues": "demo/real/cofefest-venues.csv",
+    "count": 14
+  },
+  {
+    "name": "Вареничная №1",
+    "venues": "demo/real/varenicnaa-1-venues.csv",
+    "count": 13
+  },
+  {
     "name": "Брынза",
     "venues": "demo/real/brynza-venues.csv",
     "count": 13
+  },
+  {
+    "name": "Кио кухня",
+    "venues": "demo/real/kio-kuhna-venues.csv",
+    "count": 13
+  },
+  {
+    "name": "Нияма",
+    "venues": "demo/real/niama-venues.csv",
+    "count": 12
+  },
+  {
+    "name": "Деликатеска",
+    "venues": "demo/real/delikateska-venues.csv",
+    "count": 12
   },
   {
     "name": "Coffeeshop Company",
@@ -250,8 +470,78 @@
     "count": 12
   },
   {
+    "name": "Harat's",
+    "venues": "demo/real/harat-s-venues.csv",
+    "count": 12
+  },
+  {
+    "name": "Чихо",
+    "venues": "demo/real/ciho-venues.csv",
+    "count": 12
+  },
+  {
+    "name": "Старик Хинкалыч",
+    "venues": "demo/real/starik-hinkalyc-venues.csv",
+    "count": 12
+  },
+  {
+    "name": "BlackWood",
+    "venues": "demo/real/blackwood-venues.csv",
+    "count": 12
+  },
+  {
+    "name": "Плов Центр",
+    "venues": "demo/real/plov-centr-venues.csv",
+    "count": 11
+  },
+  {
+    "name": "Буханка",
+    "venues": "demo/real/buhanka-venues.csv",
+    "count": 11
+  },
+  {
+    "name": "Джонджоли",
+    "venues": "demo/real/djondjoli-venues.csv",
+    "count": 11
+  },
+  {
+    "name": "Марчеллис",
+    "venues": "demo/real/marcellis-venues.csv",
+    "count": 11
+  },
+  {
+    "name": "Изи Паб",
+    "venues": "demo/real/izi-pab-venues.csv",
+    "count": 10
+  },
+  {
+    "name": "Андерсон",
+    "venues": "demo/real/anderson-venues.csv",
+    "count": 10
+  },
+  {
     "name": "TGI Fridays",
     "venues": "demo/real/tgi-fridays-venues.csv",
+    "count": 10
+  },
+  {
+    "name": "Мидийное место",
+    "venues": "demo/real/midiinoe-mesto-venues.csv",
+    "count": 10
+  },
+  {
+    "name": "Бюро",
+    "venues": "demo/real/buro-venues.csv",
+    "count": 10
+  },
+  {
+    "name": "Vaffel",
+    "venues": "demo/real/vaffel-venues.csv",
+    "count": 10
+  },
+  {
+    "name": "Контакт Бар",
+    "venues": "demo/real/kontakt-bar-venues.csv",
     "count": 10
   },
   {
@@ -263,11 +553,6 @@
     "name": "Ginza",
     "venues": "demo/real/ginza-venues.csv",
     "count": 8
-  },
-  {
-    "name": "Art Lunch",
-    "venues": "demo/real/art-lunch-venues.csv",
-    "count": 6
   },
   {
     "name": "Кофе Хауз",
