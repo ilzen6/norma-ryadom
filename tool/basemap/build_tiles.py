@@ -271,6 +271,10 @@ def main():
             "bounds": {"south": south, "west": west, "north": north, "east": east},
             "center": {"lat": config["center"][0], "lon": config["center"][1]},
             "overview": overview,
+            "metro": [
+                {"name": name, "lat": round(lat, 6), "lon": round(lon, 6)}
+                for name, (lon, lat) in sorted(region.metro.items())
+            ],
         })
         print(key, {kind: len(items) for kind, items in region.overview.items()}, "places", len(places), flush=True)
     index["tiles"] = tiles.write(out / "map" / "tiles")
