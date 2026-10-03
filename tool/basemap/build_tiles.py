@@ -4,7 +4,7 @@ import sys
 from pathlib import Path
 
 from shapely import box as make_box
-from shapely.geometry import shape
+from shapely.geometry import Polygon, shape
 from shapely.ops import unary_union
 
 sys.path.insert(0, str(Path(__file__).parent))
@@ -56,6 +56,15 @@ def encode(points, south, west):
     for index in range(2, len(flat)):
         deltas.append(flat[index] - flat[index - 2])
     return deltas
+
+
+def encode_polygon(polygon, south, west, minimum=0.0):
+    rings = [encode(list(polygon.exterior.coords), south, west)]
+    for interior in polygon.interiors:
+        hole = interior.coords
+        if len(hole) >= 4 and abs(Polygon(hole).area) > minimum:
+            rings.append(encode(list(hole), south, west))
+    return rings
 
 
 def parts(geometry, kind):
@@ -192,8 +201,8 @@ class Region:
             "bounds": {"south": south, "west": west, "north": north, "east": east},
             "scale": SCALE,
             "attribution": "© участники OpenStreetMap, ODbL",
-            "water": [encode(list(p.exterior.coords), south, west) for p in water],
-            "green": [encode(list(p.exterior.coords), south, west) for p in self.overview["green"]],
+            "water": [encode_polygon(p, south, west, 3e-7) for p in water],
+            "green": [encode_polygon(p, south, west, 1e-6) for p in self.overview["green"]],
             "buildings": [],
             "roads": {
                 kind: [encode(list(line.coords), south, west) for line in self.overview[kind]]
@@ -220,7 +229,7 @@ class Tiles:
                 if kind in POLYGON_KINDS:
                     for polygon in parts(clipped, "Polygon"):
                         if polygon.area > 0:
-                            bucket[kind].append(encode(list(polygon.exterior.coords), south, west))
+                            bucket[kind].append(encode_polygon(polygon, south, west, 4e-9))
                 else:
                     for line in parts(clipped, "LineString"):
                         if line.length > 0:
