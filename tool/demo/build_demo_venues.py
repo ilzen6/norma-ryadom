@@ -1,4 +1,5 @@
 import csv
+from collections import Counter
 import json
 import math
 import sys
@@ -16,6 +17,7 @@ TOWN_REACH_METERS = 15_000
 MIN_GAP_METERS = 40
 HEADER = ["name", "address", "lat", "lon", "external_id", "confirmed_on"]
 FRESH_YEARS = 3
+MASS_EDIT_PLACES = 100
 
 CHAINS = {
     "grill-house": ("Гриль Хаус", ["restaurant", "bar", "pub", "fast_food"]),
@@ -120,7 +122,13 @@ def main():
                for region, _, _ in regions() if (PLACES / f"{region}.json").exists()}
     newest = max(place["confirmed"] for places in sources.values() for place in places if place.get("confirmed"))
     fresh_since = f"{int(newest[:4]) - FRESH_YEARS}{newest[4:]}"
+    mass_edits = {
+        region: {day for day, count in Counter(place.get("confirmed") for place in places).items()
+                 if day and count > MASS_EDIT_PLACES}
+        for region, places in sources.items()
+    }
     stale = 0
+    bulk = 0
     for region, stations, towns in regions():
         if region not in sources:
             continue
@@ -128,6 +136,9 @@ def main():
         for point in taken:
             cell.setdefault((round(point[0], 3), round(point[1], 3)), []).append(point)
         for place in sources[region]:
+            if place.get("confirmed") in mass_edits[region]:
+                bulk += 1
+                continue
             if (place.get("confirmed") or "") < fresh_since:
                 stale += 1
                 continue
@@ -186,7 +197,8 @@ def main():
             writer.writeheader()
             writer.writerows(rows)
     print({key: len(rows) for key, rows in venues.items()}, sum(len(rows) for rows in venues.values()),
-          "stale skipped", stale, "fresh since", fresh_since, file=sys.stderr)
+          "stale skipped", stale, "bulk edit skipped", bulk, sorted(set().union(*mass_edits.values())),
+          "fresh since", fresh_since, file=sys.stderr)
 
 
 main()

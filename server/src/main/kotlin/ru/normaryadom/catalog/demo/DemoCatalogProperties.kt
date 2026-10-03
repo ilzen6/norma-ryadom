@@ -10,13 +10,14 @@ import org.springframework.validation.annotation.Validated
 @ConfigurationProperties("demo")
 data class DemoCatalogProperties(
     val chains: List<@Valid DemoChain> = emptyList(),
+    val places: Resource? = null,
 ) {
     data class DemoChain(
         @field:NotBlank
         val name: String,
         @field:NotBlank
         val sourceUrl: String,
-        val menu: Resource,
+        val menu: Resource? = null,
         val venues: Resource,
     )
 }

@@ -55,6 +55,46 @@ class VenueRepository(
         )
     }
 
+    fun upsertStandalone(drafts: List<VenueDraft>) {
+        batchJdbc.batchUpdate(
+            """
+            INSERT INTO venue (chain_id, name, address, location, external_id, confirmed_on)
+            VALUES (NULL, :name, :address, ST_SetSRID(ST_MakePoint(:lon, :lat), 4326)::geography, :externalId,
+                    :confirmedOn)
+            ON CONFLICT (external_id) WHERE chain_id IS NULL AND external_id IS NOT NULL DO UPDATE SET
+                name = EXCLUDED.name, address = EXCLUDED.address, location = EXCLUDED.location, is_active = TRUE,
+                confirmed_on = coalesce(EXCLUDED.confirmed_on, venue.confirmed_on)
+            """,
+            drafts
+                .map { draft ->
+                    MapSqlParameterSource()
+                        .addValue("name", draft.name)
+                        .addValue("address", draft.address)
+                        .addValue("lat", draft.location.lat)
+                        .addValue("lon", draft.location.lon)
+                        .addValue("externalId", draft.externalId)
+                        .addValue("confirmedOn", draft.confirmedOn, Types.DATE)
+                }.toTypedArray(),
+        )
+    }
+
+    fun deactivateStandaloneExcept(keptExternalIds: Collection<String>): Int =
+        jdbc
+            .sql(
+                """
+                UPDATE venue SET is_active = FALSE
+                WHERE chain_id IS NULL AND is_active AND external_id IS NOT NULL
+                  AND NOT (external_id = ANY (:externalIds))
+                """,
+            ).param("externalIds", keptExternalIds.toTypedArray())
+            .update()
+
+    fun countStandalone(): Int =
+        jdbc
+            .sql("SELECT count(*) FROM venue WHERE chain_id IS NULL AND is_active")
+            .query(Int::class.java)
+            .single()
+
     fun deactivateChainVenuesExcept(
         chainId: Long,
         keptExternalIds: Collection<String>,

@@ -12,7 +12,7 @@ class DemoVenue {
   const DemoVenue({
     required this.id,
     required this.name,
-    required this.chainName,
+    this.chainName,
     required this.address,
     required this.lat,
     required this.lon,
@@ -21,7 +21,7 @@ class DemoVenue {
 
   final int id;
   final String name;
-  final String chainName;
+  final String? chainName;
   final String address;
   final double lat;
   final double lon;
@@ -50,7 +50,7 @@ class DemoCatalog {
           name: chain['name'] as String,
           sourceUrl: chain['sourceUrl'] as String,
           menu: [
-            for (final item in (chain['items'] as List<dynamic>).cast<Map<String, dynamic>>())
+            for (final item in (chain['items'] as List<dynamic>? ?? const []).cast<Map<String, dynamic>>())
               DemoDish(
                 id: nextDishId++,
                 name: item['name'] as String,
@@ -79,6 +79,22 @@ class DemoCatalog {
               ),
           ],
         ),
+      DemoChain(
+        name: '',
+        sourceUrl: '',
+        menu: const [],
+        venues: [
+          for (final venue in (root['places'] as List<dynamic>? ?? const []).cast<Map<String, dynamic>>())
+            DemoVenue(
+              id: nextVenueId++,
+              name: venue['name'] as String,
+              address: venue['address'] as String,
+              lat: (venue['lat'] as num).toDouble(),
+              lon: (venue['lon'] as num).toDouble(),
+              confirmedOn: venue['confirmedOn'] as String?,
+            ),
+        ],
+      ),
     ];
     return DemoCatalog(verifiedAt: root['verifiedAt'] as String, chains: chains);
   }
@@ -161,7 +177,7 @@ class DemoServerAdapter implements HttpClientAdapter {
     final target = _queryTarget(query);
     final strict = target?.rounded();
     const optimizer = DemoOptimizer(DemoScorer());
-    final venues = _within(catalog, center, radius, limit: limit);
+    final venues = _within(catalog, center, radius, limit: limit, withMenuOnly: query['includeWithoutMenu'] != 'true');
     final fits = <DemoChain, String?>{};
     String? fitOf(DemoChain chain) => fits.putIfAbsent(
       chain,
@@ -176,7 +192,12 @@ class DemoServerAdapter implements HttpClientAdapter {
     return _json({
       'venues': [
         for (final (chain, venue, distance) in venues)
-          {'venue': _venueJson(venue), 'distanceMeters': distance.round(), 'hasMenu': true, 'fit': fitOf(chain)},
+          {
+            'venue': _venueJson(venue),
+            'distanceMeters': distance.round(),
+            'hasMenu': chain.menu.isNotEmpty,
+            'fit': chain.menu.isEmpty ? null : fitOf(chain),
+          },
       ],
     });
   }
@@ -254,13 +275,15 @@ class DemoServerAdapter implements HttpClientAdapter {
     (double, double) center,
     double radius, {
     int limit = _maxNearby,
+    bool withMenuOnly = true,
   }) {
     final found =
         [
           for (final chain in catalog.chains)
-            for (final venue in chain.venues)
-              if (_distanceMeters(center, (venue.lat, venue.lon)) case final distance when distance <= radius)
-                (chain, venue, distance),
+            if (!withMenuOnly || chain.menu.isNotEmpty)
+              for (final venue in chain.venues)
+                if (_distanceMeters(center, (venue.lat, venue.lon)) case final distance when distance <= radius)
+                  (chain, venue, distance),
         ]..sort((left, right) {
           final byDistance = left.$3.compareTo(right.$3);
           return byDistance != 0 ? byDistance : left.$2.id.compareTo(right.$2.id);
@@ -366,7 +389,7 @@ class DemoServerAdapter implements HttpClientAdapter {
   static Map<String, Object> _venueJson(DemoVenue venue) => {
     'id': venue.id,
     'name': venue.name,
-    'chainName': venue.chainName,
+    'chainName': ?venue.chainName,
     'address': venue.address,
     'lat': venue.lat,
     'lon': venue.lon,

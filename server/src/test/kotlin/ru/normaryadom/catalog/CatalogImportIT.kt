@@ -90,6 +90,34 @@ class CatalogImportIT : IntegrationTest() {
     }
 
     @Test
+    fun `импортирует заведения без сети и при повторном импорте закрывает пропавшие`() {
+        val first =
+            imports.importStandaloneVenues(
+                catalog.venueCsv(
+                    listOf(
+                        "Якитория;Пресненская наб., 2;55.7496;37.5397;osm-node-1",
+                        "Кафе Ромашка;Тверская, 18;55.7663;37.6046;osm-node-2",
+                    ),
+                ),
+            )
+        val second =
+            imports.importStandaloneVenues(
+                catalog.venueCsv(listOf("Якитория;Пресненская наб., 2;55.7496;37.5397;osm-node-1")),
+            )
+
+        assertThat(first).isEqualTo(ImportOutcome.Imported(upserted = 2, withdrawn = 0))
+        assertThat(second).isEqualTo(ImportOutcome.Imported(upserted = 1, withdrawn = 1))
+        val rows =
+            jdbc
+                .sql("SELECT name, chain_id, is_active FROM venue ORDER BY name")
+                .query()
+                .listOfRows()
+        assertThat(rows.map { it["name"] }).containsExactly("Кафе Ромашка", "Якитория")
+        assertThat(rows.map { it["chain_id"] }).containsOnlyNulls()
+        assertThat(rows.map { it["is_active"] }).containsExactly(false, true)
+    }
+
+    @Test
     fun `отклоняет файл не в UTF-8 и принимает файл с BOM`() {
         val chainId = catalog.chain("Гриль", GRILL_MENU, GRILL_VENUES)
         val text = String(catalog.menuCsv(GRILL_MENU), Charsets.UTF_8)

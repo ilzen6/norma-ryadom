@@ -8,6 +8,7 @@ const _meatKinds = {'pork', 'beef', 'chicken'};
 String buildDemoCatalog(Directory serverResources) {
   final config = File('${serverResources.path}/application-demo.yml').readAsLinesSync();
   final chains = <Map<String, Object?>>[];
+  var places = <Map<String, Object?>>[];
   String? name;
   String? sourceUrl;
   String? menu;
@@ -15,18 +16,23 @@ String buildDemoCatalog(Directory serverResources) {
     if (line.startsWith('- name:')) name = _value(line);
     if (line.startsWith('source-url:')) sourceUrl = _value(line);
     if (line.startsWith('menu:')) menu = _value(line).replaceFirst('classpath:', '');
-    if (line.startsWith('venues:') && name != null && sourceUrl != null && menu != null) {
+    if (line.startsWith('places:')) {
+      places = _rows(File('${serverResources.path}/${_value(line).replaceFirst('classpath:', '')}'))
+          .map(_venue)
+          .toList();
+    }
+    if (line.startsWith('venues:') && name != null && sourceUrl != null) {
       final venues = _value(line).replaceFirst('classpath:', '');
       chains.add({
         'name': name,
         'sourceUrl': sourceUrl,
-        'items': _rows(File('${serverResources.path}/$menu')).map(_item).toList(),
+        'items': menu == null ? const <Object>[] : _rows(File('${serverResources.path}/$menu')).map(_item).toList(),
         'venues': _rows(File('${serverResources.path}/$venues')).map(_venue).toList(),
       });
       name = sourceUrl = menu = null;
     }
   }
-  return '${const JsonEncoder.withIndent('  ').convert({'verifiedAt': demoVerifiedAt, 'chains': chains})}\n';
+  return '${const JsonEncoder.withIndent('  ').convert({'verifiedAt': demoVerifiedAt, 'chains': chains, 'places': places})}\n';
 }
 
 String _value(String line) => line.substring(line.indexOf(':') + 1).trim();

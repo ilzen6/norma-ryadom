@@ -11,6 +11,7 @@ import org.springframework.core.env.StandardEnvironment
 import org.springframework.core.io.ClassPathResource
 import ru.normaryadom.catalog.demo.DemoCatalogLoader
 import ru.normaryadom.catalog.demo.DemoCatalogProperties
+import ru.normaryadom.catalog.persistence.VenueRepository
 import ru.normaryadom.catalog.service.CatalogImportService
 import ru.normaryadom.catalog.service.ChainService
 import ru.normaryadom.support.IntegrationTest
@@ -22,9 +23,12 @@ class DemoCatalogIT : IntegrationTest() {
     @Autowired
     private lateinit var imports: CatalogImportService
 
+    @Autowired
+    private lateinit var venues: VenueRepository
+
     @Test
     fun `демо-каталог валиден и загружается повторно без дублей`() {
-        val loader = DemoCatalogLoader(demoProperties(), chains, imports)
+        val loader = DemoCatalogLoader(demoProperties(), chains, imports, venues)
         val args: ApplicationArguments = DefaultApplicationArguments()
 
         loader.run(args)

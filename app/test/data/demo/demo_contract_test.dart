@@ -38,7 +38,7 @@ void main() {
 
   test('эталон покрывает все сети и несколько целей', () {
     expect(cases.length, greaterThanOrEqualTo(5));
-    expect(catalog.chains.map((chain) => chain.name), [
+    expect(catalog.chains.where((chain) => chain.menu.isNotEmpty).map((chain) => chain.name), [
       for (final chain in (cases.first['chains'] as List<dynamic>).cast<Map<String, dynamic>>()) chain['chain'],
     ]);
   });

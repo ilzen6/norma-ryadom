@@ -6,6 +6,7 @@ import 'package:norma_ryadom/data/services/location_service.dart';
 import 'package:norma_ryadom/data/services/norma_api.dart';
 import 'package:norma_ryadom/domain/models/catalog.dart';
 import 'package:norma_ryadom/domain/models/combo.dart';
+import 'package:norma_ryadom/domain/models/geo_location.dart';
 import 'package:norma_ryadom/utils/result.dart';
 
 import '../../support/fakes.dart';
@@ -125,5 +126,29 @@ void main() {
   test('принимает сообщение о закрытой точке и не находит неизвестную', () async {
     expect(await api.reportVenue(1, VenueReportReason.closed), isA<Ok<void>>());
     expect((await api.reportVenue(999999, VenueReportReason.moved) as Err<void>).failure, AppFailure.notFound);
+  });
+
+  test('заведения без меню видны только по запросу «показать все» и без цвета соответствия', () async {
+    final places = NormaApi(
+      NormaApi.createDio('http://demo')
+        ..httpClientAdapter = DemoServerAdapter(
+          () async =>
+              '{"verifiedAt": "2026-09-30T00:00:00Z", "chains": [{"name": "Якитория", "sourceUrl": "https://example.org",'
+              ' "venues": [{"name": "Якитория", "address": "ул. Тверская, 1", "lat": 55.7575, "lon": 37.6135}]}],'
+              ' "places": [{"name": "Кафе Ромашка", "address": "ул. Тверская, 3", "lat": 55.7578, "lon": 37.6129,'
+              ' "confirmedOn": "2026-03-14"}]}',
+        ),
+    );
+    const location = GeoLocation(lat: 55.7576, lon: 37.6132, source: LocationSource.device);
+
+    final withMenu = valueOf(
+      await places.nearbyVenues(location: location, radiusMeters: 1000, includeWithoutMenu: false),
+    );
+    final all = valueOf(await places.nearbyVenues(location: location, radiusMeters: 1000, includeWithoutMenu: true));
+
+    expect(withMenu, isEmpty);
+    expect(all.map((venue) => venue.venue.name), containsAll(['Якитория', 'Кафе Ромашка']));
+    expect(all.every((venue) => !venue.hasMenu && venue.fit == null), isTrue);
+    expect(all.firstWhere((venue) => venue.venue.chainName == null).venue.confirmedOn, DateTime(2026, 3, 14));
   });
 }

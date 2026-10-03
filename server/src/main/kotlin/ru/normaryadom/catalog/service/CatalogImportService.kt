@@ -66,6 +66,20 @@ class CatalogImportService(
         }
     }
 
+    fun importStandaloneVenues(csv: ByteArray): ImportOutcome =
+        when (val parsed = venueParser.parse(csv)) {
+            is CsvParseResult.Invalid -> ImportOutcome.Rejected(parsed.errors)
+            is CsvParseResult.Parsed -> {
+                val closed =
+                    transactions.execute {
+                        venues.upsertStandalone(parsed.rows)
+                        venues.deactivateStandaloneExcept(parsed.rows.map { it.externalId })
+                    }
+                log.info("Standalone venues imported: upserted={}, closed={}", parsed.rows.size, closed)
+                ImportOutcome.Imported(upserted = parsed.rows.size, withdrawn = closed)
+            }
+        }
+
     private companion object {
         val log = LoggerFactory.getLogger(CatalogImportService::class.java)
     }
