@@ -24,21 +24,33 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
+      - name: Подкачка и рабочий диск
+        run: |
+          sudo fallocate -l 8G /mnt/swapfile
+          sudo chmod 600 /mnt/swapfile
+          sudo mkswap /mnt/swapfile
+          sudo swapon /mnt/swapfile
+          sudo mkdir -p /mnt/work
+          sudo chown "$USER" /mnt/work
+          free -h
+          df -h /mnt
       - name: Выгрузка и нарезка регионов
+        env:
+          WORK: /mnt/work
         run: |
           sudo apt-get update -q
           sudo apt-get install -y -q osmium-tool
           pip install shapely==2.1.2
-          curl -fL --retry 5 -o "$RUNNER_TEMP/russia.osm.pbf" https://download.geofabrik.de/russia-latest.osm.pbf
-          mkdir -p "$RUNNER_TEMP/regions"
-          python tool/basemap/extracts.py "$RUNNER_TEMP/regions" > "$RUNNER_TEMP/extracts.json"
-          osmium extract --config "$RUNNER_TEMP/extracts.json" --strategy smart "$RUNNER_TEMP/russia.osm.pbf"
-          rm "$RUNNER_TEMP/russia.osm.pbf"
+          curl -fL --retry 5 -o "$WORK/russia.osm.pbf" https://download.geofabrik.de/russia-latest.osm.pbf
+          mkdir -p "$WORK/regions"
+          python tool/basemap/extracts.py "$WORK/regions" > "$WORK/extracts.json"
+          osmium extract --config "$WORK/extracts.json" --strategy smart "$WORK/russia.osm.pbf"
+          rm "$WORK/russia.osm.pbf"
           for region in moscow spb kazan ekb nsk; do
-            osmium export "$RUNNER_TEMP/regions/$region.osm.pbf" -f geojsonseq \
-              --format-option print_record_separator=false -o "$RUNNER_TEMP/regions/$region.geojsonseq"
+            osmium export "$WORK/regions/$region.osm.pbf" -f geojsonseq \
+              --format-option print_record_separator=false -o "$WORK/regions/$region.geojsonseq"
           done
-          python tool/basemap/build_tiles.py "$RUNNER_TEMP/regions" "$RUNNER_TEMP/out"
+          python tool/basemap/build_tiles.py "$WORK/regions" "$RUNNER_TEMP/out"
           du -sh "$RUNNER_TEMP/out/map" "$RUNNER_TEMP/out/map/tiles" "$RUNNER_TEMP/out/places"
       - name: Публикация в ветку basemap-data
         run: |
