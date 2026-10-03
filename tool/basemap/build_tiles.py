@@ -1,5 +1,6 @@
 import json
 import math
+from datetime import datetime, timezone
 import sys
 from pathlib import Path
 
@@ -308,7 +309,9 @@ def is_closed(properties):
 
 
 def calendar_date(value):
-    value = (value or "").strip()[:10]
+    if isinstance(value, (int, float)):
+        return datetime.fromtimestamp(value, tz=timezone.utc).strftime("%Y-%m-%d")
+    value = str(value or "").strip()[:10]
     if len(value) == 10 and value[4] == "-" and value[7] == "-" and value.replace("-", "").isdigit():
         return value
     if len(value) >= 7 and value[4] == "-" and value[:4].isdigit() and value[5:7].isdigit():
