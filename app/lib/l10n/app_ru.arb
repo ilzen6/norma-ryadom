@@ -122,6 +122,61 @@
   "districtChistyePrudy": "Чистые пруды",
   "districtKurskaya": "Курская",
   "districtBelorusskaya": "Белорусская",
+  "districtZelenograd": "Зеленоград",
+  "districtBalashikha": "Балашиха",
+  "districtDmitrov": "Дмитров",
+  "districtDolgoprudny": "Долгопрудный",
+  "districtDomodedovo": "Домодедово",
+  "districtZhukovsky": "Жуковский",
+  "districtIstra": "Истра",
+  "districtKolomna": "Коломна",
+  "districtKorolev": "Королёв",
+  "districtKrasnogorsk": "Красногорск",
+  "districtLyubertsy": "Люберцы",
+  "districtMytishchi": "Мытищи",
+  "districtNoginsk": "Ногинск",
+  "districtOdintsovo": "Одинцово",
+  "districtPodolsk": "Подольск",
+  "districtPushkino": "Пушкино",
+  "districtReutov": "Реутов",
+  "districtSergievPosad": "Сергиев Посад",
+  "districtSerpukhov": "Серпухов",
+  "districtKhimki": "Химки",
+  "districtShchyolkovo": "Щёлково",
+  "districtElektrostal": "Электросталь",
+  "districtSpbNevsky": "Невский проспект",
+  "districtSpbPetrogradka": "Петроградская",
+  "districtSpbVasileostrovsky": "Васильевский остров",
+  "districtSpbMoskovsky": "Московская",
+  "districtSpbPushkin": "Пушкин",
+  "regionMoscow": "Москва",
+  "regionOblast": "Московская область",
+  "regionSpb": "Санкт-Петербург",
+  "districtInRegion": "{region}, {district}",
+  "@districtInRegion": {
+    "placeholders": {
+      "region": {
+        "type": "String"
+      },
+      "district": {
+        "type": "String"
+      }
+    }
+  },
+  "districtSearch": "Найти район или город",
+  "districtSearchEmpty": "Ничего не нашлось — попробуйте другое название",
+  "districtChange": "{label}: {district}. Изменить",
+  "@districtChange": {
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "district": {
+        "type": "String"
+      }
+    }
+  },
+  "districtPickerTitle": "Где вы",
   "start": "Начать",
   "navHome": "Что взять",
   "navMap": "Карта",
@@ -502,7 +557,7 @@
   "serverInvalid": "Введите адрес сервера целиком, например https://norma.example.ru",
   "serverInsecure": "Нужен защищённый адрес, начинающийся с https://",
   "serverSaved": "Сервер подключён",
-  "serverBuiltIn": "Встроенный демо-каталог: 10 сетей и 17 374 заведения в Москве, области и Петербурге; где вы — задаёт район выше",
+  "serverBuiltIn": "Встроенный демо-каталог: 10 сетей и 17 374 заведения в Москве, области и Петербурге; где вы — задаёт район выше",
   "dataErrorText": "Не удалось прочитать данные на устройстве. Попробуйте ещё раз или сбросьте данные и заполните профиль заново.",
   "dataErrorReset": "Сбросить данные",
   "errorUnexpected": "Что-то пошло не так. Повторите попытку.",
@@ -687,12 +742,6 @@
       }
     }
   },
-  "districtKhimki": "Химки, центр",
-  "districtMytishchi": "Мытищи, центр",
-  "districtPodolsk": "Подольск, центр",
-  "districtSpbNevsky": "Санкт-Петербург, Невский проспект",
-  "districtSpbPetrogradka": "Санкт-Петербург, Петроградская",
-  "districtSpbVasileostrovsky": "Санкт-Петербург, Васильевский остров",
   "mapCityButton": "Город на карте: {city}. Выбрать другой",
   "@mapCityButton": {
     "placeholders": {
@@ -703,5 +752,15 @@
   },
   "mapShowAllHint": "Включая заведения, у которых пока нет данных о меню",
   "mapWholeCountry": "Вся Россия",
-  "mapServiceArea": "Заведения пока есть в Москве, области и Петербурге"
+  "mapServiceArea": "Заведения пока есть в Москве, области и Петербурге",
+  "mapSheetExpand": "Развернуть список на весь экран",
+  "mapSheetCollapse": "Свернуть к карте",
+  "mapSheetCount": "{count} на карте",
+  "@mapSheetCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

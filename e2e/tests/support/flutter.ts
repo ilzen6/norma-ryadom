@@ -13,9 +13,16 @@ export async function openFlutterApp(page: Page, path = '/'): Promise<void> {
 }
 
 export async function typeInto(page: Page, label: string, text: string): Promise<void> {
-  await page.getByRole('textbox', { name: label }).click();
-  await page.keyboard.press('ControlOrMeta+A');
-  await page.keyboard.type(text);
+  const field = page.getByRole('textbox', { name: label });
+  await expect(async () => {
+    await field.click();
+    await page.waitForFunction(
+      () => document.activeElement?.tagName === 'INPUT' || document.activeElement?.tagName === 'TEXTAREA',
+    );
+    await page.keyboard.press('ControlOrMeta+A');
+    await page.keyboard.type(text, { delay: 20 });
+    await expect(page.locator(':focus')).toHaveValue(text, { timeout: 1000 });
+  }).toPass({ timeout: 15_000 });
 }
 
 export function button(page: Page, name: string | RegExp): Locator {

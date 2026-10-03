@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -162,6 +163,7 @@ class _MapBody extends ConsumerStatefulWidget {
 class _MapBodyState extends ConsumerState<_MapBody> {
   final _map = MapController();
   final _sheet = DraggableScrollableController();
+  final _sheetExtent = ValueNotifier<double>(_VenueSheet.half);
   ScrollController? _sheetScroll;
   Timer? _settle;
   int? _selectedId;
@@ -175,6 +177,7 @@ class _MapBodyState extends ConsumerState<_MapBody> {
     _settle?.cancel();
     _map.dispose();
     _sheet.dispose();
+    _sheetExtent.dispose();
     super.dispose();
   }
 
@@ -250,6 +253,11 @@ class _MapBodyState extends ConsumerState<_MapBody> {
     ]..sort((a, b) => a.rank.compareTo(b.rank));
   }
 
+  void _resizeSheet(double size) {
+    if (!_sheet.isAttached) return;
+    _sheet.animateTo(size, duration: const Duration(milliseconds: 320), curve: Curves.easeOutCubic);
+  }
+
   void _select(NearbyVenue venue) {
     HapticFeedback.selectionClick();
     setState(() => _selectedId = venue.venue.id);
@@ -257,8 +265,8 @@ class _MapBodyState extends ConsumerState<_MapBody> {
     if (_sheetScroll case final scroll? when scroll.hasClients) {
       scroll.animateTo(0, duration: motion.duration, curve: motion.curve);
     }
-    if (_sheet.isAttached && _sheet.size < 0.42) {
-      _sheet.animateTo(0.42, duration: motion.duration, curve: motion.curve);
+    if (_sheet.isAttached && _sheet.size < _VenueSheet.half) {
+      _sheet.animateTo(_VenueSheet.half, duration: motion.duration, curve: motion.curve);
     }
     _map.move(LatLng(venue.venue.lat - 0.0025, venue.venue.lon), _map.camera.zoom < 15.5 ? 15.5 : _map.camera.zoom);
   }
@@ -279,93 +287,120 @@ class _MapBodyState extends ConsumerState<_MapBody> {
     return Stack(
       children: [
         Positioned.fill(
-          child: Semantics(
-            container: true,
-            label: l10n.mapAreaLabel(venues.length),
-            child: ColoredBox(
-              color: palette.mapLand,
-              child: FlutterMap(
-                mapController: _map,
-                options: MapOptions(
-                  initialCenter: LatLng(center.latitude - 0.004, center.longitude),
-                  initialZoom: 15,
-                  minZoom: 3,
-                  cameraConstraint: CameraConstraint.containCenter(
-                    bounds: LatLngBounds(const LatLng(38, 15), const LatLng(80, 180)),
+          child: ValueListenableBuilder<double>(
+            valueListenable: _sheetExtent,
+            builder: (context, extent, map) => ExcludeSemantics(excluding: extent >= _VenueSheet.covers, child: map),
+            child: Semantics(
+              container: true,
+              label: l10n.mapAreaLabel(venues.length),
+              child: ColoredBox(
+                color: palette.mapLand,
+                child: FlutterMap(
+                  mapController: _map,
+                  options: MapOptions(
+                    initialCenter: LatLng(center.latitude - 0.004, center.longitude),
+                    initialZoom: 15,
+                    minZoom: 3,
+                    cameraConstraint: CameraConstraint.containCenter(
+                      bounds: LatLngBounds(const LatLng(38, 15), const LatLng(80, 180)),
+                    ),
+                    maxZoom: 18,
+                    backgroundColor: palette.mapLand,
+                    onTap: (_, _) => setState(() => _selectedId = null),
+                    onPositionChanged: (camera, _) => _cameraMoved(camera),
+                    onMapReady: () => _cameraMoved(_map.camera, delay: Duration.zero),
+                    interactionOptions: const InteractionOptions(flags: InteractiveFlag.all & ~InteractiveFlag.rotate),
                   ),
-                  maxZoom: 18,
-                  backgroundColor: palette.mapLand,
-                  onTap: (_, _) => setState(() => _selectedId = null),
-                  onPositionChanged: (camera, _) => _cameraMoved(camera),
-                  onMapReady: () => _cameraMoved(_map.camera, delay: Duration.zero),
-                  interactionOptions: const InteractionOptions(flags: InteractiveFlag.all & ~InteractiveFlag.rotate),
+                  children: [
+                    if (tiles.isNotEmpty)
+                      TileLayer(urlTemplate: tiles, userAgentPackageName: 'ru.normaryadom.norma_ryadom'),
+                    if (atlas != null) const VectorBasemap(),
+                    MarkerLayer(
+                      markers: [
+                        Marker(
+                          point: center,
+                          width: 44,
+                          height: 44,
+                          child: _MyLocationDot(color: palette.brand),
+                        ),
+                      ],
+                    ),
+                    _VenueMarkers(
+                      stations: atlas?.stations ?? const [],
+                      places: places,
+                      venues: venues,
+                      selectedId: _selectedId,
+                      onSelect: _select,
+                      onCluster: (cluster) => _map.move(cluster, (_map.camera.zoom + 2).clamp(12, 18)),
+                    ),
+                  ],
                 ),
-                children: [
-                  if (tiles.isNotEmpty)
-                    TileLayer(urlTemplate: tiles, userAgentPackageName: 'ru.normaryadom.norma_ryadom'),
-                  if (atlas != null) const VectorBasemap(),
-                  MarkerLayer(
-                    markers: [
-                      Marker(
-                        point: center,
-                        width: 44,
-                        height: 44,
-                        child: _MyLocationDot(color: palette.brand),
-                      ),
-                    ],
-                  ),
-                  _VenueMarkers(
-                    stations: atlas?.stations ?? const [],
-                    places: places,
-                    venues: venues,
-                    selectedId: _selectedId,
-                    onSelect: _select,
-                    onCluster: (cluster) => _map.move(cluster, (_map.camera.zoom + 2).clamp(12, 18)),
-                  ),
-                ],
               ),
             ),
           ),
         ),
-        SafeArea(
-          bottom: false,
-          child: _MapToolbar(
-            onCities: atlas == null ? null : () => _chooseCity(atlas),
-            city: _city ?? atlas?.regionOf(center)?.name,
+        ValueListenableBuilder<double>(
+          valueListenable: _sheetExtent,
+          builder: (context, extent, toolbar) => Offstage(offstage: extent >= _VenueSheet.covers, child: toolbar),
+          child: SafeArea(
+            bottom: false,
+            child: _MapToolbar(
+              onCities: atlas == null ? null : () => _chooseCity(atlas),
+              city: _city ?? atlas?.regionOf(center)?.name,
+            ),
           ),
         ),
-        DraggableScrollableSheet(
-          controller: _sheet,
-          initialChildSize: 0.42,
-          minChildSize: 0.2,
-          maxChildSize: 0.86,
-          builder: (context, controller) => _VenueSheet(
-            controller: _sheetScroll = controller,
-            venues: venues,
-            attribution: tiles.isNotEmpty || atlas != null ? l10n.mapAttribution : null,
-            truncated: widget.truncated,
-            header: Row(
-              children: [
-                Expanded(
-                  child: AnimatedSize(
-                    duration: const Duration(milliseconds: 220),
-                    curve: Curves.easeOutCubic,
-                    alignment: Alignment.topCenter,
-                    child: AnimatedSwitcher(
+        LayoutBuilder(
+          builder: (context, box) => NotificationListener<DraggableScrollableNotification>(
+            onNotification: (notification) {
+              _sheetExtent.value = notification.extent;
+              return false;
+            },
+            child: DraggableScrollableSheet(
+              controller: _sheet,
+              initialChildSize: _VenueSheet.half,
+              minChildSize: _VenueSheet.peekOf(
+                box.maxHeight,
+                MediaQuery.paddingOf(context).bottom,
+                MediaQuery.textScalerOf(context),
+              ),
+              snap: true,
+              snapSizes: const [_VenueSheet.half],
+              builder: (context, controller) => ValueListenableBuilder<double>(
+                valueListenable: _sheetExtent,
+                builder: (context, extent, _) => PopScope(
+                  canPop: extent < _VenueSheet.fullFrom,
+                  onPopInvokedWithResult: (didPop, _) {
+                    if (!didPop) _resizeSheet(_VenueSheet.half);
+                  },
+                  child: _VenueSheet(
+                    controller: _sheetScroll = controller,
+                    progress: ((extent - _VenueSheet.fullFrom) / (1 - _VenueSheet.fullFrom)).clamp(0.0, 1.0),
+                    venues: venues,
+                    attribution: tiles.isNotEmpty || atlas != null ? l10n.mapAttribution : null,
+                    truncated: widget.truncated,
+                    onExpand: () => _resizeSheet(1),
+                    onCollapse: () => _resizeSheet(_VenueSheet.half),
+                    header: AnimatedSize(
                       duration: const Duration(milliseconds: 220),
-                      child: selected == null
-                          ? const SizedBox(width: double.infinity)
-                          : _SelectedVenue(
-                              key: ValueKey(selected.venue.id),
-                              venue: selected,
-                              onClose: () => setState(() => _selectedId = null),
-                            ),
+                      curve: Curves.easeOutCubic,
+                      alignment: Alignment.topCenter,
+                      child: AnimatedSwitcher(
+                        duration: const Duration(milliseconds: 220),
+                        child: selected == null
+                            ? const SizedBox(width: double.infinity)
+                            : _SelectedVenue(
+                                key: ValueKey(selected.venue.id),
+                                venue: selected,
+                                onClose: () => setState(() => _selectedId = null),
+                              ),
+                      ),
                     ),
+                    onRecenter: () => _map.move(LatLng(center.latitude - 0.004, center.longitude), 15),
                   ),
                 ),
-              ],
+              ),
             ),
-            onRecenter: () => _map.move(LatLng(center.latitude - 0.004, center.longitude), 15),
           ),
         ),
       ],
@@ -904,18 +939,30 @@ class _SelectedVenue extends StatelessWidget {
 class _VenueSheet extends StatelessWidget {
   const _VenueSheet({
     required this.controller,
+    required this.progress,
     required this.venues,
     required this.attribution,
     required this.header,
     required this.onRecenter,
+    required this.onExpand,
+    required this.onCollapse,
     this.truncated = false,
   });
 
+  static double peekOf(double height, double bottomInset, TextScaler scaler) =>
+      ((_SheetHeader.heightOf(scaler) + 8 + bottomInset) / height).clamp(0.12, 0.4);
+  static const half = 0.42;
+  static const fullFrom = 0.9;
+  static const covers = 0.99;
+
   final ScrollController controller;
+  final double progress;
   final List<NearbyVenue> venues;
   final String? attribution;
   final Widget header;
   final VoidCallback onRecenter;
+  final VoidCallback onExpand;
+  final VoidCallback onCollapse;
   final bool truncated;
 
   @override
@@ -923,65 +970,203 @@ class _VenueSheet extends StatelessWidget {
     final l10n = context.l10n;
     final palette = context.palette;
     final textTheme = Theme.of(context).textTheme;
+    final radius = Radius.circular(AppRadii.card * (1 - progress));
     return DecoratedBox(
       decoration: BoxDecoration(
         color: palette.canvas,
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(AppRadii.card)),
-        boxShadow: [BoxShadow(color: palette.ink.withValues(alpha: 0.12), blurRadius: 24, offset: const Offset(0, -4))],
+        borderRadius: BorderRadius.vertical(top: radius),
+        boxShadow: [
+          BoxShadow(
+            color: palette.ink.withValues(alpha: 0.12 * (1 - progress)),
+            blurRadius: 24,
+            offset: const Offset(0, -4),
+          ),
+        ],
       ),
-      child: ListView(
-        key: const Key('map-venue-list'),
-        controller: controller,
-        padding: EdgeInsets.fromLTRB(16, 10, 16, 16 + MediaQuery.paddingOf(context).bottom),
-        children: [
-          Center(
-            child: Container(
-              width: 40,
-              height: 5,
-              decoration: BoxDecoration(color: palette.hairline, borderRadius: BorderRadius.circular(3)),
-            ),
-          ),
-          const SizedBox(height: 14),
-          header,
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 4),
-            child: Row(
-              children: [
-                Expanded(child: Text(l10n.mapNearbyTitle, style: textTheme.titleLarge)),
-                Text('${venues.length}', style: textTheme.labelLarge?.copyWith(color: palette.inkMuted)),
-                const SizedBox(width: 8),
-                IconButton.filledTonal(
-                  key: const Key('map-recenter'),
-                  tooltip: l10n.mapRecenter,
-                  onPressed: onRecenter,
-                  icon: const Icon(Icons.my_location_rounded),
-                ),
-              ],
-            ),
-          ),
-          if (truncated)
-            Padding(
-              padding: const EdgeInsets.fromLTRB(4, 4, 4, 0),
-              child: StatusPill(
-                key: const Key('map-truncated'),
-                label: l10n.mapTruncated(venues.length),
-                tone: Tone.brand,
-                icon: Icons.zoom_in_rounded,
+      child: ClipRRect(
+        borderRadius: BorderRadius.vertical(top: radius),
+        child: CustomScrollView(
+          key: const Key('map-venue-list'),
+          controller: controller,
+          slivers: [
+            SliverPersistentHeader(
+              pinned: true,
+              delegate: _SheetHeader(
+                top: MediaQuery.paddingOf(context).top * progress,
+                row: _SheetHeader.rowOf(MediaQuery.textScalerOf(context)),
+                progress: progress,
+                count: venues.length,
+                onRecenter: onRecenter,
+                onExpand: onExpand,
+                onCollapse: onCollapse,
               ),
             ),
-          const SizedBox(height: 4),
-          const _ShowAllSwitch(),
-          const SizedBox(height: 8),
-          const _Legend(),
-          const SizedBox(height: 12),
-          if (venues.isEmpty) MessageView(message: l10n.mapEmpty, icon: Icons.location_off_rounded),
-          for (final venue in venues) ...[_VenueTile(venue: venue), const SizedBox(height: 8)],
-          if (attribution case final attribution?)
-            Padding(
-              padding: const EdgeInsets.only(top: 8),
-              child: Text(attribution, style: textTheme.bodySmall, textAlign: TextAlign.center),
+            SliverPadding(
+              padding: EdgeInsets.fromLTRB(16, 0, 16, 16 + MediaQuery.paddingOf(context).bottom),
+              sliver: SliverList.list(
+                children: [
+                  header,
+                  if (truncated)
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(4, 4, 4, 0),
+                      child: StatusPill(
+                        key: const Key('map-truncated'),
+                        label: l10n.mapTruncated(venues.length),
+                        tone: Tone.brand,
+                        icon: Icons.zoom_in_rounded,
+                      ),
+                    ),
+                  const SizedBox(height: 8),
+                  const _ShowAllSwitch(),
+                  const SizedBox(height: 12),
+                  const _Legend(),
+                  const SizedBox(height: 16),
+                  if (venues.isEmpty) MessageView(message: l10n.mapEmpty, icon: Icons.location_off_rounded),
+                  for (final venue in venues) ...[_VenueTile(venue: venue), const SizedBox(height: 8)],
+                  if (attribution case final attribution?)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8),
+                      child: Text(attribution, style: textTheme.bodySmall, textAlign: TextAlign.center),
+                    ),
+                ],
+              ),
             ),
-        ],
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _SheetHeader extends SliverPersistentHeaderDelegate {
+  const _SheetHeader({
+    required this.top,
+    required this.row,
+    required this.progress,
+    required this.count,
+    required this.onRecenter,
+    required this.onExpand,
+    required this.onCollapse,
+  });
+
+  static const grip = 22.0;
+
+  static double rowOf(TextScaler scaler) => math.max(64, 16 + scaler.scale(28) + scaler.scale(17));
+
+  static double heightOf(TextScaler scaler) => grip + rowOf(scaler);
+
+  final double top;
+  final double row;
+  final double progress;
+  final int count;
+  final VoidCallback onRecenter;
+  final VoidCallback onExpand;
+  final VoidCallback onCollapse;
+
+  @override
+  double get minExtent => grip + row + top;
+
+  @override
+  double get maxExtent => grip + row + top;
+
+  @override
+  bool shouldRebuild(_SheetHeader oldDelegate) => true;
+
+  @override
+  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
+    final l10n = context.l10n;
+    final palette = context.palette;
+    final textTheme = Theme.of(context).textTheme;
+    final full = progress >= 1;
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: palette.canvas,
+        border: Border(
+          bottom: BorderSide(color: shrinkOffset > 0 || overlapsContent ? palette.hairline : palette.canvas),
+        ),
+      ),
+      child: Padding(
+        padding: EdgeInsets.fromLTRB(12, top, 12, 0),
+        child: Column(
+          children: [
+            SizedBox(
+              height: grip,
+              child: Center(
+                child: Opacity(
+                  opacity: 1 - progress,
+                  child: Container(
+                    width: 40,
+                    height: 5,
+                    decoration: BoxDecoration(color: palette.hairline, borderRadius: BorderRadius.circular(3)),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: row,
+              child: Row(
+                children: [
+                  if (full) ...[
+                    IconButton(
+                      key: const Key('map-sheet-collapse'),
+                      tooltip: l10n.mapSheetCollapse,
+                      onPressed: onCollapse,
+                      icon: const Icon(Icons.keyboard_arrow_down_rounded),
+                    ),
+                    const SizedBox(width: 4),
+                  ] else
+                    const SizedBox(width: 4),
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Semantics(
+                          header: true,
+                          child: Text(
+                            l10n.mapNearbyTitle,
+                            style: textTheme.titleLarge,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        Text(
+                          l10n.mapSheetCount(count),
+                          style: textTheme.labelMedium?.copyWith(color: palette.inkMuted),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  if (full)
+                    FilledButton.tonalIcon(
+                      key: const Key('map-sheet-map'),
+                      onPressed: onCollapse,
+                      icon: const Icon(Icons.map_rounded, size: 18),
+                      label: Text(l10n.navMap),
+                    )
+                  else ...[
+                    IconButton.filledTonal(
+                      key: const Key('map-recenter'),
+                      tooltip: l10n.mapRecenter,
+                      onPressed: onRecenter,
+                      icon: const Icon(Icons.my_location_rounded),
+                    ),
+                    const SizedBox(width: 4),
+                    IconButton(
+                      key: const Key('map-sheet-expand'),
+                      tooltip: l10n.mapSheetExpand,
+                      onPressed: onExpand,
+                      icon: const Icon(Icons.open_in_full_rounded),
+                    ),
+                  ],
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

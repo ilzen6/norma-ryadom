@@ -21,19 +21,51 @@ extension MealLabels on AppLocalizations {
     MealType.snack => mealSnack,
   };
 
-  String district(District district) => switch (district) {
+  String districtName(District district) => switch (district) {
     District.moscowCity => districtMoscowCity,
     District.tverskaya => districtTverskaya,
     District.arbat => districtArbat,
     District.chistyePrudy => districtChistyePrudy,
     District.kurskaya => districtKurskaya,
     District.belorusskaya => districtBelorusskaya,
-    District.khimki => districtKhimki,
+    District.zelenograd => districtZelenograd,
+    District.balashikha => districtBalashikha,
+    District.dmitrov => districtDmitrov,
+    District.dolgoprudny => districtDolgoprudny,
+    District.domodedovo => districtDomodedovo,
+    District.zhukovsky => districtZhukovsky,
+    District.istra => districtIstra,
+    District.kolomna => districtKolomna,
+    District.korolev => districtKorolev,
+    District.krasnogorsk => districtKrasnogorsk,
+    District.lyubertsy => districtLyubertsy,
     District.mytishchi => districtMytishchi,
+    District.noginsk => districtNoginsk,
+    District.odintsovo => districtOdintsovo,
     District.podolsk => districtPodolsk,
+    District.pushkino => districtPushkino,
+    District.reutov => districtReutov,
+    District.sergievPosad => districtSergievPosad,
+    District.serpukhov => districtSerpukhov,
+    District.khimki => districtKhimki,
+    District.shchyolkovo => districtShchyolkovo,
+    District.elektrostal => districtElektrostal,
     District.spbNevsky => districtSpbNevsky,
     District.spbPetrogradka => districtSpbPetrogradka,
     District.spbVasileostrovsky => districtSpbVasileostrovsky,
+    District.spbMoskovsky => districtSpbMoskovsky,
+    District.spbPushkin => districtSpbPushkin,
+  };
+
+  String region(DistrictRegion region) => switch (region) {
+    DistrictRegion.moscow => regionMoscow,
+    DistrictRegion.oblast => regionOblast,
+    DistrictRegion.spb => regionSpb,
+  };
+
+  String district(District district) => switch (district.region) {
+    DistrictRegion.spb => districtInRegion(region(district.region), districtName(district)),
+    _ => districtName(district),
   };
 
   String preference(DietPreference preference) => switch (preference) {

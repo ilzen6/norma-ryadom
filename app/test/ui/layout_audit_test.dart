@@ -123,10 +123,21 @@ void main() {
 
       await openTab(tester, 'Карта');
       issues.addAll(await LayoutAudit.inspectScrolling(tester, 'карта'));
+      await tester.tap(find.byKey(const Key('map-sheet-expand')));
+      await tester.pumpAndSettle();
+      issues.addAll(await LayoutAudit.inspectScrolling(tester, 'список заведений на весь экран'));
+      await tester.tap(find.byKey(const Key('map-sheet-map')));
+      await tester.pumpAndSettle();
       await openTab(tester, 'Дневник');
       issues.addAll(await LayoutAudit.inspectScrolling(tester, 'дневник'));
       await openTab(tester, 'Профиль');
       issues.addAll(await LayoutAudit.inspectScrolling(tester, 'профиль'));
+      await tester.scrollUntilVisible(find.byKey(const Key('district-field')), 120);
+      await tester.tap(find.byKey(const Key('district-field')));
+      await tester.pumpAndSettle();
+      issues.addAll(await LayoutAudit.inspectScrolling(tester, 'выбор района'));
+      await tester.tapAt(const Offset(8, 8));
+      await tester.pumpAndSettle();
 
       unawaited(GoRouter.of(tester.element(find.byType(Scaffold).first)).push('/venue/7'));
       await tester.pumpAndSettle();

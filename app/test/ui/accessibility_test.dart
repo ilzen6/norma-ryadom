@@ -157,4 +157,17 @@ void main() {
     }
     handle.dispose();
   });
+
+  testWidgets('поле района озвучивается как кнопка с текущим районом', (tester) async {
+    final handle = tester.ensureSemantics();
+    await TestHarness(profile: TestData.profile).pump(tester);
+    await tester.tap(find.descendant(of: find.byType(NavigationBar), matching: find.text('Профиль')));
+    await tester.pumpAndSettle();
+
+    expect(
+      tester.getSemantics(find.byKey(const Key('district-field'))),
+      isSemantics(isButton: true, hasTapAction: true, label: 'Или выберите район: Москва-Сити. Изменить'),
+    );
+    handle.dispose();
+  });
 }

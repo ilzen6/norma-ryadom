@@ -11,6 +11,7 @@ import '../core/messages.dart';
 import '../core/layout.dart';
 import '../core/session.dart';
 import '../core/theme.dart';
+import '../core/widgets/district_field.dart';
 import '../core/widgets/visuals.dart';
 import '../core/widgets/state_views.dart';
 import 'server_dialog.dart';
@@ -147,24 +148,11 @@ class ProfileScreen extends ConsumerWidget {
                     },
                   ),
                   const Divider(indent: 72, endIndent: 16),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
-                    child: DropdownButtonFormField<District>(
-                      isExpanded: true,
-                      initialValue: profile.district ?? District.moscowCity,
-                      decoration: InputDecoration(
-                        labelText: l10n.locationDistrictLabel,
-                        prefixIcon: const Icon(Icons.location_city_rounded),
-                      ),
-                      items: [
-                        for (final district in District.values)
-                          DropdownMenuItem(value: district, child: Text(l10n.district(district))),
-                      ],
-                      onChanged: (district) async {
-                        if (district == null) return;
-                        await controller.save(profile.copyWith(district: district));
-                      },
-                    ),
+                  DistrictField(
+                    key: const Key('district-field'),
+                    inset: true,
+                    value: profile.district ?? District.moscowCity,
+                    onChanged: (district) => controller.save(profile.copyWith(district: district)),
                   ),
                   const Divider(indent: 72, endIndent: 16),
                   ListTile(

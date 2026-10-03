@@ -3,6 +3,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:norma_ryadom/domain/models/catalog.dart';
 import 'package:norma_ryadom/domain/models/diary.dart';
+import 'package:norma_ryadom/domain/models/district.dart';
 import 'package:norma_ryadom/domain/models/meal.dart';
 import 'package:norma_ryadom/domain/models/nutrition_norm.dart';
 import 'package:norma_ryadom/ui/core/theme.dart';
@@ -37,6 +38,8 @@ void main() {
     await harness.pump(tester);
 
     await openTab(tester, 'Карта');
+    await tester.tap(find.byKey(const Key('map-sheet-expand')));
+    await tester.pumpAndSettle();
 
     Future<Color> colorOf(String name) async {
       await tester.scrollUntilVisible(
@@ -56,28 +59,26 @@ void main() {
     expect(await colorOf('Пицца'), Palette.light.neutral);
     expect(await colorOf('Кафе без меню'), Palette.light.inkSubtle);
 
-    await tester.scrollUntilVisible(
-      find.byKey(const Key('map-show-all')),
-      -120,
-      scrollable: find.descendant(of: find.byKey(const Key('map-venue-list')), matching: find.byType(Scrollable)),
-    );
-    await Scrollable.ensureVisible(tester.element(find.byKey(const Key('map-show-all'))), alignment: 0.5);
+    await Scrollable.ensureVisible(tester.element(find.byKey(const Key('map-show-all'))), alignment: 0.3);
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const Key('map-show-all')));
     await tester.pumpAndSettle();
     expect(harness.venues.includeWithoutMenuRequests.first, isFalse);
     expect(harness.venues.includeWithoutMenuRequests.last, isTrue);
 
-    await tester.scrollUntilVisible(
-      find.textContaining('есть набор под цель · Пресненская наб., 2 · '),
-      -120,
-      scrollable: find.descendant(of: find.byKey(const Key('map-venue-list')), matching: find.byType(Scrollable)),
+    await Scrollable.ensureVisible(
+      tester.element(find.textContaining('есть набор под цель · Пресненская наб., 2 · ')),
+      alignment: 0.5,
     );
+    await tester.pumpAndSettle();
     expect(
       find.textContaining(RegExp(r'^есть набор под цель · Пресненская наб\., 2 · \d+ м · \d+ мин$')),
       findsOneWidget,
     );
 
+    await tester.tap(find.byKey(const Key('map-sheet-map')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('map-sheet-expand')), findsOneWidget);
     await tester.tap(find.bySemanticsLabel('Зелёный бар, есть набор под цель'));
     await tester.pumpAndSettle();
     expect(find.byKey(const Key('map-selected-venue')), findsOneWidget);
@@ -271,5 +272,57 @@ void main() {
     await tester.tap(find.byKey(const Key('location-consent')));
     await tester.pumpAndSettle();
     expect(harness.profiles.profile?.locationConsent, isTrue);
+  });
+
+  testWidgets('список заведений разворачивается на весь экран, а «Назад» сворачивает его к карте', (tester) async {
+    final harness = TestHarness(profile: TestData.profile)
+      ..venues.nearbyResult = Ok([venue(1, 'Зелёный бар', FitLevel.good)]);
+    await harness.pump(tester);
+    await openTab(tester, 'Карта');
+    expect(find.text('1 на карте'), findsOneWidget);
+
+    await tester.tap(find.byKey(const Key('map-sheet-expand')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('map-sheet-collapse')), findsOneWidget);
+    expect(find.byKey(const Key('map-sheet-expand')), findsNothing);
+
+    await tester.binding.handlePopRoute();
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('map-sheet-expand')), findsOneWidget);
+    expect(find.byType(FlutterMap), findsOneWidget);
+  });
+
+  testWidgets('район выбирается поиском из списка, сгруппированного по Москве, области и Петербургу', (tester) async {
+    final harness = TestHarness(profile: TestData.profile);
+    await harness.pump(tester);
+    await openTab(tester, 'Профиль');
+    await tester.scrollUntilVisible(find.byKey(const Key('district-field')), 120);
+    await tester.tap(find.byKey(const Key('district-field')));
+    await tester.pumpAndSettle();
+
+    expect(find.text('МОСКВА'), findsOneWidget);
+    expect(find.text('МОСКОВСКАЯ ОБЛАСТЬ'), findsOneWidget);
+    await tester.enterText(find.byKey(const Key('district-search')), 'хим');
+    await tester.pumpAndSettle();
+    expect(find.text('МОСКВА'), findsNothing);
+    expect(find.byKey(const Key('district-arbat')), findsNothing);
+
+    await tester.tap(find.byKey(const Key('district-khimki')));
+    await tester.pumpAndSettle();
+    expect(harness.profiles.profile?.district, District.khimki);
+    expect(find.text('Химки'), findsOneWidget);
+  });
+
+  testWidgets('поиск района без совпадений честно сообщает об этом', (tester) async {
+    final harness = TestHarness(profile: TestData.profile);
+    await harness.pump(tester);
+    await openTab(tester, 'Профиль');
+    await tester.scrollUntilVisible(find.byKey(const Key('district-field')), 120);
+    await tester.tap(find.byKey(const Key('district-field')));
+    await tester.pumpAndSettle();
+
+    await tester.enterText(find.byKey(const Key('district-search')), 'Владивосток');
+    await tester.pumpAndSettle();
+    expect(find.text('Ничего не нашлось — попробуйте другое название'), findsOneWidget);
   });
 }

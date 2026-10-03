@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../domain/models/district.dart';
 import '../core/l10n_extensions.dart';
+import '../core/widgets/district_field.dart';
 import '../core/widgets/visuals.dart';
 import 'onboarding_view_model.dart';
 
@@ -46,18 +46,10 @@ class LocationPicker extends ConsumerWidget {
             child: Text(l10n.failure(failure), style: TextStyle(color: Theme.of(context).colorScheme.error)),
           ),
         const SizedBox(height: 24),
-        DropdownButtonFormField<District>(
-          isExpanded: true,
+        DistrictField(
           key: const Key('district-field'),
-          initialValue: state.district,
-          decoration: InputDecoration(labelText: l10n.locationDistrictLabel),
-          items: [
-            for (final district in District.values)
-              DropdownMenuItem(value: district, child: Text(l10n.district(district))),
-          ],
-          onChanged: (district) {
-            if (district != null) controller.setDistrict(district);
-          },
+          value: state.district,
+          onChanged: controller.setDistrict,
         ),
       ],
     );
