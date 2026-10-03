@@ -109,16 +109,30 @@ def classify(properties, kind):
     return None
 
 
+ADDRESS_CELL = 0.001
+ADDRESS_REACH_METERS = 60
+
+
 def food_place(properties, geometry):
     if properties.get("amenity") not in FOOD_AMENITIES:
         return None
+    point = geometry if geometry.geom_type == "Point" else geometry.representative_point()
+    return {"lat": round(point.y, 6), "lon": round(point.x, 6), "street": properties.get("addr:street"),
+            "housenumber": properties.get("addr:housenumber"), "amenity": properties["amenity"]}
+
+
+def address_point(properties, geometry):
     street = properties.get("addr:street")
     number = properties.get("addr:housenumber")
     if not street or not number:
         return None
     point = geometry if geometry.geom_type == "Point" else geometry.representative_point()
-    return {"lat": round(point.y, 6), "lon": round(point.x, 6), "street": street, "housenumber": number,
-            "amenity": properties["amenity"]}
+    return point.y, point.x, street, number
+
+
+def meters(lat1, lon1, lat2, lon2):
+    scale = math.cos(math.radians((lat1 + lat2) / 2))
+    return math.hypot((lat1 - lat2) * 111_320, (lon1 - lon2) * 111_320 * scale)
 
 
 class Region:
@@ -130,6 +144,30 @@ class Region:
         self.overview = {kind: [] for kind in POLYGON_KINDS + LINE_KINDS}
         self.metro = {}
         self.places = {}
+        self.unaddressed = []
+        self.addresses = {}
+
+    def add_address(self, lat, lon, street, number):
+        self.addresses.setdefault((int(lat / ADDRESS_CELL), int(lon / ADDRESS_CELL)), []).append((lat, lon, street, number))
+
+    def nearest_address(self, lat, lon):
+        cell = (int(lat / ADDRESS_CELL), int(lon / ADDRESS_CELL))
+        best = None
+        for dy in (-1, 0, 1):
+            for dx in (-1, 0, 1):
+                for candidate in self.addresses.get((cell[0] + dy, cell[1] + dx), []):
+                    distance = meters(lat, lon, candidate[0], candidate[1])
+                    if distance <= ADDRESS_REACH_METERS and (best is None or distance < best[0]):
+                        best = (distance, candidate)
+        return None if best is None else best[1]
+
+    def resolve_places(self):
+        for place in self.unaddressed:
+            found = self.nearest_address(place["lat"], place["lon"])
+            if found is not None:
+                place["street"], place["housenumber"] = found[2], found[3]
+                key = (place["street"], place["housenumber"], round(place["lat"], 4), round(place["lon"], 4))
+                self.places.setdefault(key, place)
 
     def add_overview(self, kind, geometry):
         if kind == "water":
@@ -213,9 +251,16 @@ def process(region, path, tiles):
     for feature in features(path):
         geometry = shape(feature["geometry"])
         properties = feature.get("properties") or {}
+        address = address_point(properties, geometry)
+        if address is not None:
+            region.add_address(*address)
         place = food_place(properties, geometry)
         if place is not None and region.frame.contains(geometry.representative_point()):
-            region.places[(place["street"], place["housenumber"])] = place
+            if place["street"] and place["housenumber"]:
+                key = (place["street"], place["housenumber"], round(place["lat"], 4), round(place["lon"], 4))
+                region.places.setdefault(key, place)
+            else:
+                region.unaddressed.append(place)
         kind = {"Polygon": "polygon", "MultiPolygon": "polygon", "LineString": "line", "MultiLineString": "line"}.get(
             geometry.geom_type, "point"
         )
@@ -258,6 +303,7 @@ def main():
     for key, config in REGIONS.items():
         region = Region(key, config)
         process(region, source / f"{key}.geojsonseq", tiles)
+        region.resolve_places()
         overview = f"overview_{key}.json"
         (out / "map" / overview).write_text(
             json.dumps(region.overview_json(), ensure_ascii=False, separators=(",", ":")), encoding="utf-8"
