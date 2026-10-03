@@ -4,8 +4,8 @@ import sys
 from pathlib import Path
 
 from shapely import box as make_box
-from shapely.geometry import Polygon, shape
-from shapely.ops import unary_union
+from shapely.geometry import LineString, MultiLineString, Polygon, shape
+from shapely.ops import linemerge, unary_union
 
 sys.path.insert(0, str(Path(__file__).parent))
 
@@ -37,7 +37,7 @@ LEVELS = {
     },
     "suburb": {
         "polygons": {"water": (0.00015, 5e-7), "green": (0.0002, 2e-6), "urban": (0.00015, 1e-6)},
-        "lines": {"major": (0.0001, 0), "medium": (0.0001, 0), "minor": (0.0001, 0.0004), "rail": (0.0001, 0)},
+        "lines": {"major": (0.0001, 0), "medium": (0.0001, 0), "minor": (0.0001, 0), "rail": (0.0001, 0)},
     },
     "city": {
         "polygons": {"water": (0.00004, 2e-8), "green": (0.00004, 2e-8), "urban": (0.00004, 2e-8),
@@ -207,6 +207,22 @@ class Tileset:
                     result.append(rings)
         return result
 
+    def joined(self, kind, lines, south, west):
+        rule = LEVELS[self.key]["lines"].get(kind)
+        if rule is None or not lines:
+            return lines
+        tolerance, minimum = rule
+        pieces = [LineString(decode(line, south, west, self.scale)) for line in lines]
+        merged = linemerge(MultiLineString(pieces))
+        result = []
+        for line in parts(merged, "LineString"):
+            simple = line.simplify(tolerance / 2)
+            if simple.length > minimum:
+                encoded = encode(list(simple.coords), south, west, self.scale)
+                if len(encoded) >= 4:
+                    result.append(encoded)
+        return result
+
     def write(self, directory):
         packs = {}
         shift = self.zoom - self.pack
@@ -214,6 +230,8 @@ class Tileset:
             south, west, north, east = tile_bounds(x, y, self.zoom)
             for kind in MERGED.get(self.key, ()):
                 bucket[kind] = self.merged(kind, bucket[kind], south, west)
+            for kind in LINE_KINDS:
+                bucket[kind] = self.joined(kind, bucket[kind], south, west)
             packs.setdefault((x >> shift, y >> shift), {})[f"{x}_{y}"] = {
                 "bounds": {"south": south, "west": west, "north": north, "east": east},
                 "scale": self.scale,
@@ -292,10 +310,10 @@ def add_to_levels(region, target, clipped, tilesets):
             rule = LEVELS[level]["lines"].get(kind)
             if rule is None:
                 continue
-            tolerance, minimum = rule
+            tolerance, _ = rule
             for line in parts(geometry, "LineString"):
                 simple = line.simplify(tolerance)
-                if simple.length > minimum:
+                if simple.length > 0:
                     tileset.add(kind, simple, 0)
 
 
