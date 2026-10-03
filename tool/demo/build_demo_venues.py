@@ -201,4 +201,5 @@ def main():
           "fresh since", fresh_since, file=sys.stderr)
 
 
-main()
+if __name__ == "__main__":
+    main()
