@@ -27,6 +27,9 @@ URBAN_LANDUSE = {"residential", "commercial", "retail"}
 FOOD_AMENITIES = {"restaurant", "cafe", "fast_food", "food_court", "bar", "pub"}
 POLYGON_KINDS = ("water", "green", "urban", "buildings")
 LINE_KINDS = ("major", "medium", "minor", "path", "rail")
+LIFECYCLE_PREFIXES = ("disused:", "abandoned:", "was:", "demolished:", "removed:", "razed:", "destroyed:")
+CHECK_DATE_TAGS = ("check_date", "survey:date", "check_date:opening_hours", "check_date:amenity", "source:date")
+CLOSED_WORDS = ("закрыт", "closed", "не работает")
 ADDRESS_CELL = 0.001
 ADDRESS_REACH_METERS = 60
 
@@ -262,6 +265,7 @@ class Region:
         self.metro = {}
         self.labels = {}
         self.places = {}
+        self.closed = 0
         self.unaddressed = []
         self.addresses = {}
 
@@ -286,6 +290,36 @@ class Region:
                 place["street"], place["housenumber"] = found[2], found[3]
                 key = (place["street"], place["housenumber"], round(place["lat"], 4), round(place["lon"], 4))
                 self.places.setdefault(key, place)
+
+
+def is_closed(properties):
+    if any(f"{prefix}amenity" in properties for prefix in LIFECYCLE_PREFIXES):
+        return True
+    if properties.get("disused") == "yes" or properties.get("abandoned") == "yes":
+        return True
+    if (properties.get("opening_hours") or "").strip().lower() in ("closed", "off"):
+        return True
+    if properties.get("end_date"):
+        return True
+    if properties.get("access") in ("private", "no", "customers_only"):
+        return True
+    name = (properties.get("name") or "").lower()
+    return any(word in name for word in CLOSED_WORDS)
+
+
+def calendar_date(value):
+    value = (value or "").strip()[:10]
+    if len(value) == 10 and value[4] == "-" and value[7] == "-" and value.replace("-", "").isdigit():
+        return value
+    if len(value) >= 7 and value[4] == "-" and value[:4].isdigit() and value[5:7].isdigit():
+        return value[:7] + "-01"
+    return None
+
+
+def last_confirmed(properties):
+    dates = [calendar_date(properties.get(tag)) for tag in ("@timestamp",) + CHECK_DATE_TAGS]
+    dates = [date for date in dates if date]
+    return max(dates) if dates else None
 
 
 def add_to_levels(region, target, clipped, tilesets):
@@ -326,11 +360,14 @@ def process(region, path, tilesets):
         if street and number:
             anchor = point or geometry.representative_point()
             region.add_address(anchor.y, anchor.x, street, number)
-        if properties.get("amenity") in FOOD_AMENITIES:
+        if properties.get("amenity") in FOOD_AMENITIES and is_closed(properties):
+            region.closed += 1
+        elif properties.get("amenity") in FOOD_AMENITIES:
             anchor = point or geometry.representative_point()
             if region.frame.contains(anchor):
                 place = {"lat": round(anchor.y, 6), "lon": round(anchor.x, 6), "street": street, "housenumber": number,
-                         "amenity": properties["amenity"]}
+                         "amenity": properties["amenity"], "confirmed": last_confirmed(properties),
+                         "hours": bool(properties.get("opening_hours"))}
                 if street and number:
                     region.places.setdefault((street, number, round(anchor.y, 4), round(anchor.x, 4)), place)
                 else:
@@ -387,7 +424,7 @@ def main():
                 for name, (lon, lat, rank) in sorted(region.labels.items(), key=lambda item: item[1][2])
             ],
         })
-        print(key, "places", len(places), "labels", len(region.labels), "metro", len(region.metro), flush=True)
+        print(key, "places", len(places), "closed", region.closed, "labels", len(region.labels), "metro", len(region.metro), flush=True)
     index["tilesets"] = {key: tileset.write(out / "map" / "packs") for key, tileset in tilesets.items()}
     for key, tileset in index["tilesets"].items():
         print(key, "packs", len(tileset["packs"]), "tiles", len(tilesets[key].tiles))

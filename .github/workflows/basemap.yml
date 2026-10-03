@@ -47,7 +47,7 @@ jobs:
           osmium extract --config "$WORK/extracts.json" --strategy smart "$WORK/russia.osm.pbf"
           rm "$WORK/russia.osm.pbf"
           for region in $(python -c "import sys; sys.path.insert(0, 'tool/basemap'); from regions import REGIONS; print(' '.join(REGIONS))"); do
-            osmium export "$WORK/regions/$region.osm.pbf" -f geojsonseq \
+            osmium export "$WORK/regions/$region.osm.pbf" -f geojsonseq -a timestamp \
               --format-option print_record_separator=false -o "$WORK/regions/$region.geojsonseq"
           done
           python tool/basemap/build_tiles.py "$WORK/regions" "$RUNNER_TEMP/out"
