@@ -7,6 +7,7 @@ import '../core/theme.dart';
 
 abstract final class BasemapLayers {
   static const capacity = 96;
+  static const _roadBands = [(0.0, 11.5, 0.4), (11.5, 13.0, 0.55), (13.0, 14.5, 0.8), (14.5, 99.0, 1.0)];
   static final _cache = <(Basemap, Palette), List<Widget>>{};
 
   static List<Widget> of(Basemap basemap, Palette palette) {
@@ -62,30 +63,26 @@ abstract final class BasemapLayers {
           ],
         ),
       ),
-      ZoomGate(
-        minZoom: 13,
-        keepAlive: true,
-        child: PolylineLayer(
-          simplificationTolerance: 0.3,
-          polylines: [
-            for (final line in roads('minor')) Polyline(points: line, color: palette.mapRoad, strokeWidth: 3),
-          ],
+      for (final (from, until, scale) in _roadBands)
+        ZoomGate(
+          minZoom: from,
+          maxZoom: until,
+          child: PolylineLayer(
+            simplificationTolerance: 0.3,
+            polylines: [
+              for (final line in roads('minor')) Polyline(points: line, color: palette.mapRoad, strokeWidth: 3 * scale),
+              for (final line in basemap.rail)
+                Polyline(
+                  points: line,
+                  color: palette.mapRail,
+                  strokeWidth: 2 * scale,
+                  pattern: StrokePattern.dashed(segments: [6 * scale, 4 * scale]),
+                ),
+              for (final line in roads('medium')) cased(line, palette.mapRoad, 5 * scale, scale),
+              for (final line in roads('major')) cased(line, palette.mapRoadMajor, 7 * scale, 1.2 * scale),
+            ],
+          ),
         ),
-      ),
-      PolylineLayer(
-        simplificationTolerance: 0.3,
-        polylines: [
-          for (final line in basemap.rail)
-            Polyline(
-              points: line,
-              color: palette.mapRail,
-              strokeWidth: 2,
-              pattern: StrokePattern.dashed(segments: const [6, 4]),
-            ),
-          for (final line in roads('medium')) cased(line, palette.mapRoad, 5, 1),
-          for (final line in roads('major')) cased(line, palette.mapRoadMajor, 7, 1.2),
-        ],
-      ),
     ];
   }
 }
@@ -173,15 +170,23 @@ List<Widget> _country(Basemap basemap, Palette palette) {
 }
 
 class ZoomGate extends StatelessWidget {
-  const ZoomGate({super.key, required this.minZoom, required this.child, this.keepAlive = false});
+  const ZoomGate({
+    super.key,
+    required this.minZoom,
+    required this.child,
+    this.maxZoom = double.infinity,
+    this.keepAlive = false,
+  });
 
   final double minZoom;
+  final double maxZoom;
   final Widget child;
   final bool keepAlive;
 
   @override
   Widget build(BuildContext context) {
-    final visible = MapCamera.of(context).zoom >= minZoom;
+    final zoom = MapCamera.of(context).zoom;
+    final visible = zoom >= minZoom && zoom < maxZoom;
     if (keepAlive) return Offstage(offstage: !visible, child: child);
     return visible ? child : const SizedBox.shrink();
   }

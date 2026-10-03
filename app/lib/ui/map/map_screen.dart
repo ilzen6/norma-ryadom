@@ -391,11 +391,11 @@ class _PlaceLabel extends StatelessWidget {
           softWrap: false,
           overflow: TextOverflow.visible,
           style: TextStyle(
-            fontFamily: AppFonts.display,
+            fontFamily: AppFonts.text,
             fontSize: size,
             height: 1,
             fontWeight: major ? FontWeight.w700 : FontWeight.w600,
-            letterSpacing: major ? 0.2 : 0,
+            letterSpacing: major ? 0.3 : 0.1,
             color: major ? palette.ink : palette.inkMuted,
             shadows: [
               Shadow(color: palette.mapLand, blurRadius: 2),
@@ -509,14 +509,14 @@ class _VenueMarkers extends StatelessWidget {
 
   static const clusterRadius = 60.0;
   static const clusterUntilZoom = 17.0;
-  static const placeZoom = <double>[2.5, 3, 4.5, 6, 7.5];
+  static const placeZoom = <double>[2.5, 3, 4.5, 5.5, 7];
   static const placeUntilZoom = 13.0;
 
   static double placeSize(int rank) => switch (rank) {
-    0 => 17,
-    1 => 15,
-    2 => 14,
-    3 => 13,
+    0 => 15,
+    1 => 13.5,
+    2 => 13,
+    3 => 12.5,
     _ => 12,
   };
 
@@ -578,15 +578,22 @@ class _VenueMarkers extends StatelessWidget {
     final towns = <(MapLabel, Size)>[];
     if (zoom < placeUntilZoom) {
       final visible = camera.visibleBounds;
+      final screen = (Offset.zero & camera.nonRotatedSize).deflate(8);
       for (final place in places) {
         if (zoom < placeZoom[place.rank.clamp(0, placeZoom.length - 1)] || !visible.contains(place.point)) continue;
-        final size = Size(place.name.length * placeSize(place.rank) * 0.62 + 16, placeSize(place.rank) + 10);
+        final size = Size(place.name.length * placeSize(place.rank) * 0.6 + 12, placeSize(place.rank) + 8);
+        final onScreen = Rect.fromCenter(
+          center: camera.latLngToScreenOffset(place.point),
+          width: size.width,
+          height: size.height,
+        );
+        if (!screen.contains(onScreen.topLeft) || !screen.contains(onScreen.bottomRight)) continue;
         final rect = Rect.fromCenter(
           center: camera.projectAtZoom(place.point, zoom),
           width: size.width,
           height: size.height,
         );
-        if (occupied.any(rect.overlaps) || labels.any(rect.overlaps)) continue;
+        if (occupied.any(rect.inflate(6).overlaps) || labels.any(rect.inflate(6).overlaps)) continue;
         labels.add(rect);
         towns.add((place, size));
       }
