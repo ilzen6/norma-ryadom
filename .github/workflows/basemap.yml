@@ -10,6 +10,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: basemap
+  cancel-in-progress: true
+
 jobs:
   basemap:
     name: Карты городов из OpenStreetMap
