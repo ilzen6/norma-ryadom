@@ -23,25 +23,41 @@ import '../core/widgets/visuals.dart';
 import 'vector_basemap.dart';
 import 'map_view_model.dart';
 
-class MapScreen extends ConsumerWidget {
+class MapScreen extends ConsumerStatefulWidget {
   const MapScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<MapScreen> createState() => _MapScreenState();
+}
+
+class _MapScreenState extends ConsumerState<MapScreen> {
+  MapVenues? _shown;
+
+  @override
+  Widget build(BuildContext context) {
     final l10n = context.l10n;
     final venues = ref.watch(mapVenuesProvider);
     void retry() => ref.invalidate(mapVenuesProvider);
+    final result = venues.hasError && !venues.isLoading ? null : venues.value;
+    if (result case Ok(:final value)) _shown = value;
+    final failure = switch (result) {
+      Err(:final failure) => failure,
+      null when venues.hasError => AppFailure.unexpected,
+      _ => null,
+    };
     return Scaffold(
       backgroundColor: context.palette.canvas,
-      body: switch (venues.hasError && !venues.isLoading ? null : venues.value) {
-        Ok(:final value) => _MapBody(venues: value.venues, truncated: value.truncated),
-        Err(:final failure) => _MapMessage(
+      body: switch ((_shown, failure)) {
+        (final shown?, _) => _MapBody(
+          venues: shown.venues,
+          truncated: shown.truncated,
+          failure: failure,
+          onRetry: retry,
+        ),
+        (null, final failure?) => _MapMessage(
           child: FailureView(failure: failure, onRetry: retry),
         ),
-        null when venues.hasError => _MapMessage(
-          child: FailureView(failure: AppFailure.unexpected, onRetry: retry),
-        ),
-        null => _MapMessage(
+        (null, null) => _MapMessage(
           child: Semantics(label: l10n.navMap, child: const LoadingView()),
         ),
       },
@@ -151,10 +167,12 @@ class _MapToolbar extends ConsumerWidget {
 }
 
 class _MapBody extends ConsumerStatefulWidget {
-  const _MapBody({required this.venues, required this.truncated});
+  const _MapBody({required this.venues, required this.truncated, required this.onRetry, this.failure});
 
   final List<NearbyVenue> venues;
   final bool truncated;
+  final AppFailure? failure;
+  final VoidCallback onRetry;
 
   @override
   ConsumerState<_MapBody> createState() => _MapBodyState();
@@ -199,10 +217,10 @@ class _MapBodyState extends ConsumerState<_MapBody> {
     final target = await showModalBottomSheet<(LatLng, double)>(
       context: context,
       useRootNavigator: true,
+      isScrollControlled: true,
       builder: (sheetContext) => SafeArea(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+        child: ListView(
+          shrinkWrap: true,
           children: [
             Padding(
               padding: const EdgeInsets.fromLTRB(24, 0, 24, 8),
@@ -268,7 +286,11 @@ class _MapBodyState extends ConsumerState<_MapBody> {
     if (_sheet.isAttached && _sheet.size < _VenueSheet.half) {
       _sheet.animateTo(_VenueSheet.half, duration: motion.duration, curve: motion.curve);
     }
-    _map.move(LatLng(venue.venue.lat - 0.0025, venue.venue.lon), _map.camera.zoom < 15.5 ? 15.5 : _map.camera.zoom);
+    final camera = _map.camera;
+    final zoom = math.max(camera.zoom, 15.5);
+    final pin = camera.projectAtZoom(LatLng(venue.venue.lat, venue.venue.lon), zoom);
+    final shift = camera.nonRotatedSize.height * _VenueSheet.half / 2;
+    _map.move(camera.unprojectAtZoom(pin + Offset(0, shift), zoom), zoom);
   }
 
   @override
@@ -379,6 +401,8 @@ class _MapBodyState extends ConsumerState<_MapBody> {
                     venues: venues,
                     attribution: tiles.isNotEmpty || atlas != null ? l10n.mapAttribution : null,
                     truncated: widget.truncated,
+                    failure: widget.failure,
+                    onRetry: widget.onRetry,
                     onExpand: () => _resizeSheet(1),
                     onCollapse: () => _resizeSheet(_VenueSheet.half),
                     header: AnimatedSize(
@@ -609,6 +633,8 @@ class _VenueMarkers extends StatelessWidget {
           height: 76,
         ),
     ];
+    final scaler = MediaQuery.textScalerOf(context);
+    final fit = math.pow(2, zoom - camera.zoom).toDouble();
     final labels = <Rect>[];
     final towns = <(MapLabel, Size)>[];
     if (zoom < placeUntilZoom) {
@@ -616,7 +642,8 @@ class _VenueMarkers extends StatelessWidget {
       final screen = (Offset.zero & camera.nonRotatedSize).deflate(8);
       for (final place in places) {
         if (zoom < placeZoom[place.rank.clamp(0, placeZoom.length - 1)] || !visible.contains(place.point)) continue;
-        final size = Size(place.name.length * placeSize(place.rank) * 0.6 + 12, placeSize(place.rank) + 8);
+        final font = scaler.scale(placeSize(place.rank));
+        final size = Size(place.name.length * font * 0.6 + 12, font + 8);
         final onScreen = Rect.fromCenter(
           center: camera.latLngToScreenOffset(place.point),
           width: size.width,
@@ -625,8 +652,8 @@ class _VenueMarkers extends StatelessWidget {
         if (!screen.contains(onScreen.topLeft) || !screen.contains(onScreen.bottomRight)) continue;
         final rect = Rect.fromCenter(
           center: camera.projectAtZoom(place.point, zoom),
-          width: size.width,
-          height: size.height,
+          width: size.width * fit,
+          height: size.height * fit,
         );
         if (occupied.any(rect.inflate(6).overlaps) || labels.any(rect.inflate(6).overlaps)) continue;
         labels.add(rect);
@@ -634,10 +661,18 @@ class _VenueMarkers extends StatelessWidget {
       }
     }
     final metro = <MetroStation>[];
+    final metroHeight = math.max(22, scaler.scale(12) + 10).toDouble();
+    final metroWidth = math.min(240, 26 + scaler.scale(7) * 30).toDouble();
     if (zoom >= 14.5) {
       for (final station in stations) {
         final origin = camera.projectAtZoom(station.point, zoom);
-        final rect = Rect.fromLTWH(origin.dx - 10, origin.dy - 11, 26 + station.name.length * 7.0, 22);
+        final width = math.min(metroWidth, 26 + scaler.scale(7) * station.name.length);
+        final rect = Rect.fromLTWH(
+          origin.dx - 10 * fit,
+          origin.dy - metroHeight / 2 * fit,
+          width * fit,
+          metroHeight * fit,
+        );
         if (occupied.any(rect.overlaps) || labels.any(rect.overlaps)) continue;
         labels.add(rect);
         metro.add(station);
@@ -664,8 +699,8 @@ class _VenueMarkers extends StatelessWidget {
               for (final station in metro)
                 Marker(
                   point: station.point,
-                  width: 160,
-                  height: 22,
+                  width: metroWidth,
+                  height: metroHeight,
                   alignment: Alignment.centerRight,
                   child: _MetroLabel(name: station.name, color: context.palette.metro),
                 ),
@@ -946,7 +981,9 @@ class _VenueSheet extends StatelessWidget {
     required this.onRecenter,
     required this.onExpand,
     required this.onCollapse,
+    required this.onRetry,
     this.truncated = false,
+    this.failure,
   });
 
   static double peekOf(double height, double bottomInset, TextScaler scaler) =>
@@ -963,7 +1000,9 @@ class _VenueSheet extends StatelessWidget {
   final VoidCallback onRecenter;
   final VoidCallback onExpand;
   final VoidCallback onCollapse;
+  final VoidCallback onRetry;
   final bool truncated;
+  final AppFailure? failure;
 
   @override
   Widget build(BuildContext context) {
@@ -1006,6 +1045,30 @@ class _VenueSheet extends StatelessWidget {
               sliver: SliverList.list(
                 children: [
                   header,
+                  if (failure case final failure?)
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 8),
+                      child: Material(
+                        key: const Key('map-reload-failed'),
+                        color: palette.warnSoft,
+                        borderRadius: BorderRadius.circular(AppRadii.tile),
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(16, 8, 8, 8),
+                          child: Row(
+                            children: [
+                              Icon(
+                                failure == AppFailure.offline ? Icons.cloud_off_rounded : Icons.error_outline_rounded,
+                                color: palette.warn,
+                              ),
+                              const SizedBox(width: 12),
+                              Expanded(child: Text(l10n.failure(failure), style: textTheme.bodyMedium)),
+                              const SizedBox(width: 8),
+                              TextButton(onPressed: onRetry, child: Text(l10n.retry)),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
                   if (truncated)
                     Padding(
                       padding: const EdgeInsets.fromLTRB(4, 4, 4, 0),

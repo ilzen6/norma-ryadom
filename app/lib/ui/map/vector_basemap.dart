@@ -81,7 +81,12 @@ class _VectorBasemapState extends ConsumerState<VectorBasemap> {
     return Stack(
       children: [
         for (final map in maps)
-          for (final layer in BasemapLayers.of(map, palette)) Positioned.fill(child: layer),
+          Positioned.fill(
+            key: ObjectKey(map),
+            child: Stack(
+              children: [for (final layer in BasemapLayers.of(map, palette)) Positioned.fill(child: layer)],
+            ),
+          ),
       ],
     );
   }

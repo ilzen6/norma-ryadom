@@ -167,7 +167,7 @@ void main() {
     expect(find.byKey(const Key('map-truncated')), findsOneWidget);
   });
 
-  testWidgets('карта честно показывает пустую выдачу и ошибку', (tester) async {
+  testWidgets('карта честно показывает пустую выдачу, а ошибку подгрузки — плашкой, не теряя карту', (tester) async {
     final harness = TestHarness(profile: TestData.profile);
     await harness.pump(tester);
 
@@ -178,6 +178,8 @@ void main() {
     await tester.tap(find.byKey(const Key('map-show-all')));
     await tester.pumpAndSettle();
     expect(find.text('Сервис временно недоступен. Попробуйте позже.'), findsOneWidget);
+    expect(find.byType(FlutterMap), findsOneWidget);
+    expect(find.byKey(const Key('map-reload-failed')), findsOneWidget);
   });
 
   testWidgets('дневник показывает прогресс по каждому показателю и даёт управлять записями', (tester) async {
@@ -324,5 +326,35 @@ void main() {
     await tester.enterText(find.byKey(const Key('district-search')), 'Владивосток');
     await tester.pumpAndSettle();
     expect(find.text('Ничего не нашлось — попробуйте другое название'), findsOneWidget);
+  });
+
+  testWidgets('поиск района не различает «е» и «ё»', (tester) async {
+    final harness = TestHarness(profile: TestData.profile);
+    await harness.pump(tester);
+    await openTab(tester, 'Профиль');
+    await tester.scrollUntilVisible(find.byKey(const Key('district-field')), 120);
+    await tester.tap(find.byKey(const Key('district-field')));
+    await tester.pumpAndSettle();
+
+    await tester.enterText(find.byKey(const Key('district-search')), 'королев');
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('district-korolev')), findsOneWidget);
+    await tester.enterText(find.byKey(const Key('district-search')), 'Щелково');
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('district-shchyolkovo')), findsOneWidget);
+  });
+
+  testWidgets('карта без единой удачной загрузки показывает ошибку на весь экран с повтором', (tester) async {
+    final harness = TestHarness(profile: TestData.profile)
+      ..venues.nearbyResult = const Err(AppFailure.serviceUnavailable);
+    await harness.pump(tester);
+    await openTab(tester, 'Карта');
+    expect(find.byType(FlutterMap), findsNothing);
+    expect(find.text('Сервис временно недоступен. Попробуйте позже.'), findsOneWidget);
+
+    harness.venues.nearbyResult = Ok([venue(1, 'Зелёный бар', FitLevel.good)]);
+    await tester.tap(find.text('Повторить'));
+    await tester.pumpAndSettle();
+    expect(find.byType(FlutterMap), findsOneWidget);
   });
 }

@@ -136,6 +136,22 @@ void main() {
     expect(store.isReady('broken'), isTrue);
   });
 
+  test('хранилище не перезагружает сломанный файл после проверки', () async {
+    var loads = 0;
+    final store = AssetStore<Basemap>((path) async {
+      loads++;
+      return '{';
+    }, (source) async => Basemap.fromJson(source));
+
+    await store.get('broken');
+    expect(store.peek('broken'), isNull);
+    expect(store.peek('missing'), isNull);
+    expect(store.isReady('broken'), isTrue);
+    expect(store.isReady('missing'), isFalse);
+    await store.get('broken');
+    expect(loads, 1);
+  });
+
   test('границы региона отличают область целиком внутри от выходящей за край', () {
     const region = GeoBounds(54, 35, 57, 40);
 

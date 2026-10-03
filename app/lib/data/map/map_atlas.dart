@@ -94,7 +94,7 @@ class MapTileset {
     return 'packs/$id/${x >> shift}_${y >> shift}.json';
   }
 
-  List<String> tilesIn(GeoBounds view, {int limit = 48}) {
+  List<String> tilesIn(GeoBounds view, {int limit = 256}) {
     final tiles = <String>[];
     final shift = zoom - packZoom;
     for (var x = tileX(view.west, zoom); x <= tileX(view.east, zoom); x++) {
@@ -157,8 +157,9 @@ class AssetStore<T extends Object> {
   bool isReady(String path) => _ready.containsKey(path);
 
   T? peek(String path) {
+    if (!_ready.containsKey(path)) return null;
     final value = _ready.remove(path);
-    if (value != null) _ready[path] = value;
+    _ready[path] = value;
     return value;
   }
 

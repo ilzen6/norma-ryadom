@@ -85,11 +85,12 @@ class _DistrictSheetState extends State<_DistrictSheet> {
     final l10n = context.l10n;
     final palette = context.palette;
     final textTheme = Theme.of(context).textTheme;
-    final query = _query.trim().toLowerCase();
+    String plain(String text) => text.trim().toLowerCase().replaceAll('ё', 'е');
+    final query = plain(_query);
     bool matches(District district) =>
         query.isEmpty ||
-        l10n.districtName(district).toLowerCase().contains(query) ||
-        l10n.region(district.region).toLowerCase().contains(query);
+        plain(l10n.districtName(district)).contains(query) ||
+        plain(l10n.region(district.region)).contains(query);
     final groups = [
       for (final region in DistrictRegion.values)
         (region, District.values.where((district) => district.region == region && matches(district)).toList()),
@@ -161,7 +162,11 @@ class _DistrictSheetState extends State<_DistrictSheet> {
               ],
             ),
           ],
-          SliverToBoxAdapter(child: SizedBox(height: 16 + MediaQuery.paddingOf(context).bottom)),
+          SliverToBoxAdapter(
+            child: SizedBox(
+              height: 16 + MediaQuery.paddingOf(context).bottom + MediaQuery.viewInsetsOf(context).bottom,
+            ),
+          ),
         ],
       ),
     );
