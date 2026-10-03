@@ -58,6 +58,19 @@ void main() {
     expect(find.text('Норма задана вручную'), findsOneWidget);
   });
 
+  testWidgets('предупреждает, что отметки исключений зависят от состава, опубликованного сетью', (tester) async {
+    await TestHarness().pump(tester);
+    await fillBody(tester);
+
+    await tester.tap(find.byKey(const Key('onboarding-next')));
+    await tester.pumpAndSettle();
+
+    expect(
+      find.text('Отметки берутся из состава, который публикует сеть. При аллергии уточняйте состав у персонала.'),
+      findsOneWidget,
+    );
+  });
+
   testWidgets('проходит три шага и сохраняет профиль на устройстве', (tester) async {
     final harness = TestHarness();
     await harness.pump(tester);

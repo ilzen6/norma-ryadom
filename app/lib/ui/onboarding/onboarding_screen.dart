@@ -79,6 +79,12 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                 Text(l10n.preferencesHint, style: textTheme.bodyLarge?.copyWith(color: context.palette.inkMuted)),
                 const SizedBox(height: 20),
                 const PreferencesPicker(),
+                const SizedBox(height: 16),
+                Text(
+                  l10n.preferencesAllergyNote,
+                  key: const Key('preferences-allergy-note'),
+                  style: textTheme.bodyMedium?.copyWith(color: context.palette.inkMuted),
+                ),
               ],
               _ => const [LocationPicker()],
             },

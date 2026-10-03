@@ -113,13 +113,13 @@ test('сценарий защиты: от нормы до записи обед�
     const venues = page.locator('flt-semantics[role="button"]').filter({ hasText: / мин$/ });
     await expect(venues.first()).toBeVisible();
     await screenshot(page, 'app-10-map');
-    const grill = venues.filter({ hasText: 'Гриль Хаус, Москва-Сити' });
-    for (let i = 0; i < 25 && !(await grill.isVisible()); i++) {
+    const burgerKing = venues.filter({ hasText: 'Бургер Кинг' }).first();
+    for (let i = 0; i < 25 && !(await burgerKing.isVisible()); i++) {
       await page.mouse.move(200, 820);
       await page.mouse.wheel(0, 300);
       await page.waitForTimeout(250);
     }
-    await grill.click();
+    await burgerKing.click();
   });
 
   await test.step('экран заведения: значки достоверности и пометки', async () => {

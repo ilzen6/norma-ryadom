@@ -1,42 +1,348 @@
 demo:
+  places: classpath:demo/real/places-venues.csv
   chains:
-    - name: Гриль Хаус
-      source-url: https://grill-house.example/nutrition
-      menu: classpath:demo/grill-house-menu.csv
-      venues: classpath:demo/grill-house-venues.csv
-    - name: Тёплая плошка
-      source-url: https://warm-bowl.example/nutrition
-      menu: classpath:demo/warm-bowl-menu.csv
-      venues: classpath:demo/warm-bowl-venues.csv
-    - name: Блинная Масленица
-      source-url: https://blinnaya.example/nutrition
-      menu: classpath:demo/blinnaya-menu.csv
-      venues: classpath:demo/blinnaya-venues.csv
-    - name: Кофейня Зерно
-      source-url: https://zerno.example/nutrition
-      menu: classpath:demo/zerno-menu.csv
-      venues: classpath:demo/zerno-venues.csv
-    - name: Пицца Квадрат
-      source-url: https://pizza-square.example/nutrition
-      menu: classpath:demo/pizza-square-menu.csv
-      venues: classpath:demo/pizza-square-venues.csv
-    - name: Зелёный бар
-      source-url: https://green-bar.example/nutrition
-      menu: classpath:demo/green-bar-menu.csv
-      venues: classpath:demo/green-bar-venues.csv
-    - name: Столовая Ложка
-      source-url: https://lozhka.example/nutrition
-      menu: classpath:demo/lozhka-menu.csv
-      venues: classpath:demo/lozhka-venues.csv
-    - name: Суши Нори
-      source-url: https://nori.example/nutrition
-      menu: classpath:demo/nori-menu.csv
-      venues: classpath:demo/nori-venues.csv
-    - name: Поке Волна
-      source-url: https://volna.example/nutrition
-      menu: classpath:demo/volna-menu.csv
-      venues: classpath:demo/volna-venues.csv
-    - name: Пекарня Колос
-      source-url: https://kolos.example/nutrition
-      menu: classpath:demo/kolos-menu.csv
-      venues: classpath:demo/kolos-venues.csv
+    - name: "Cofix"
+      source-url: "https://msk.cofix.global/"
+      source-date: 2026-10-03
+      menu: classpath:demo/real/cofix-menu.csv
+      venues: classpath:demo/real/cofix-venues.csv
+    - name: "Бургер Кинг"
+      source-url: "https://s3.burgerkingrus.ru/default/0001/76/63751da2ff388af43630c54add8491b8f2df7568.pdf"
+      source-date: 2024-08-13
+      menu: classpath:demo/real/burger-king-menu.csv
+      venues: classpath:demo/real/burger-king-venues.csv
+    - name: "Крошка Картошка"
+      source-url: "https://www.kartoshka.com/menu/"
+      source-date: 2026-10-03
+      menu: classpath:demo/real/kroska-kartoska-menu.csv
+      venues: classpath:demo/real/kroska-kartoska-venues.csv
+    - name: "Вкусно — и точка"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/vkusno-i-tocka-venues.csv
+    - name: "Rostic's"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/rostic-s-venues.csv
+    - name: "One Plus Coffee"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/one-plus-coffee-venues.csv
+    - name: "Додо Пицца"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/dodo-picca-venues.csv
+    - name: "Теремок"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/teremok-venues.csv
+    - name: "Surf Coffee"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/surf-coffee-venues.csv
+    - name: "Шоколадница"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/sokoladnica-venues.csv
+    - name: "Baggins Coffee"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/baggins-coffee-venues.csv
+    - name: "Хлебник"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/hlebnik-venues.csv
+    - name: "Стардогs"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/stardogs-venues.csv
+    - name: "Цех85"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/ceh85-venues.csv
+    - name: "Суши Wok"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/susi-wok-venues.csv
+    - name: "Кулинарная лавка братьев Караваевых"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/kulinarnaa-lavka-brat-ev-karavaevyh-venues.csv
+    - name: "Милти"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/milti-venues.csv
+    - name: "Просто Вася"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/prosto-vasa-venues.csv
+    - name: "Люди любят"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/ludi-lubat-venues.csv
+    - name: "Правда Кофе"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/pravda-kofe-venues.csv
+    - name: "Моккано"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/mokkano-venues.csv
+    - name: "Domino Pizza"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/domino-pizza-venues.csv
+    - name: "Дринкит"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/drinkit-venues.csv
+    - name: "Токио-Сити"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/tokio-siti-venues.csv
+    - name: "Папа Джонс"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/papa-djons-venues.csv
+    - name: "Штолле"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/stolle-venues.csv
+    - name: "Шаверлэнд"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/saverlend-venues.csv
+    - name: "Тануки"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/tanuki-venues.csv
+    - name: "Max Bakery"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/max-bakery-venues.csv
+    - name: "ПиццаН"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/piccan-venues.csv
+    - name: "Влаваше"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/vlavase-venues.csv
+    - name: "Евразия"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/evrazia-venues.csv
+    - name: "IL Патио"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/il-patio-venues.csv
+    - name: "Stars Coffee"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/stars-coffee-venues.csv
+    - name: "Дед Хо"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/ded-ho-venues.csv
+    - name: "Coffee Like"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/coffee-like-venues.csv
+    - name: "Coffee Point"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/coffee-point-venues.csv
+    - name: "Даблби"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/dablbi-venues.csv
+    - name: "Prime"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/prime-venues.csv
+    - name: "Etlon Coffee"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/etlon-coffee-venues.csv
+    - name: "ЧебурекМи"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/ceburekmi-venues.csv
+    - name: "Up Sushi"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/up-sushi-venues.csv
+    - name: "SeDelice"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/sedelice-venues.csv
+    - name: "Шаверно"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/saverno-venues.csv
+    - name: "Cinnabon"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/cinnabon-venues.csv
+    - name: "Uppetit"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/uppetit-venues.csv
+    - name: "Суши-Маркет"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/susi-market-venues.csv
+    - name: "Eazzy Pizza & Gelato"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/eazzy-pizza-gelato-venues.csv
+    - name: "Франклинс Бургер"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/franklins-burger-venues.csv
+    - name: "Лепим и варим"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/lepim-i-varim-venues.csv
+    - name: "The Бык"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/the-byk-venues.csv
+    - name: "Моремания"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/moremania-venues.csv
+    - name: "Буше"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/buse-venues.csv
+    - name: "Пироговый дворик"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/pirogovyi-dvorik-venues.csv
+    - name: "Hatimaki"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/hatimaki-venues.csv
+    - name: "Брусника"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/brusnika-venues.csv
+    - name: "Планета Суши"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/planeta-susi-venues.csv
+    - name: "Farsh"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/farsh-venues.csv
+    - name: "Zotman Pizza"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/zotman-pizza-venues.csv
+    - name: "Север-Метрополь"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/sever-metropol-venues.csv
+    - name: "Этлон кофе"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/etlon-kofe-venues.csv
+    - name: "КофеБон"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/kofebon-venues.csv
+    - name: "Gagawa"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/gagawa-venues.csv
+    - name: "Pims"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/pims-venues.csv
+    - name: "Кофемания"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/kofemania-venues.csv
+    - name: "Beer House"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/beer-house-venues.csv
+    - name: "Якитория"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/akitoria-venues.csv
+    - name: "Чито Гврито"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/cito-gvrito-venues.csv
+    - name: "Стейк & Бургер"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/steik-burger-venues.csv
+    - name: "Милана"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/milana-venues.csv
+    - name: "Здрасте"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/zdraste-venues.csv
+    - name: "Frank by Баста"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/frank-by-basta-venues.csv
+    - name: "Зерно"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/zerno-venues.csv
+    - name: "Vasilchuki Chaihona №1"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/vasilchuki-chaihona-1-venues.csv
+    - name: "Корчма"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/korcma-venues.csv
+    - name: "PhoBo"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/phobo-venues.csv
+    - name: "Вкусная Шаверма"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/vkusnaa-saverma-venues.csv
+    - name: "Пан Круассан"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/pan-kruassan-venues.csv
+    - name: "Сушишоп"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/susisop-venues.csv
+    - name: "Skuratov Coffee"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/skuratov-coffee-venues.csv
+    - name: "ПхалиХинкали"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/phalihinkali-venues.csv
+    - name: "Британские пекарни"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/britanskie-pekarni-venues.csv
+    - name: "Pizza Express"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/pizza-express-venues.csv
+    - name: "Столовая №1"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/stolovaa-1-venues.csv
+    - name: "Mama Roma"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/mama-roma-venues.csv
+    - name: "Дагестанская лавка"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/dagestanskaa-lavka-venues.csv
+    - name: "CofeFest"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/cofefest-venues.csv
+    - name: "Вареничная №1"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/varenicnaa-1-venues.csv
+    - name: "Брынза"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/brynza-venues.csv
+    - name: "Кио кухня"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/kio-kuhna-venues.csv
+    - name: "Нияма"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/niama-venues.csv
+    - name: "Деликатеска"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/delikateska-venues.csv
+    - name: "Coffeeshop Company"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/coffeeshop-company-venues.csv
+    - name: "Му-Му"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/mu-mu-venues.csv
+    - name: "Harat's"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/harat-s-venues.csv
+    - name: "Чихо"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/ciho-venues.csv
+    - name: "Старик Хинкалыч"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/starik-hinkalyc-venues.csv
+    - name: "BlackWood"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/blackwood-venues.csv
+    - name: "Плов Центр"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/plov-centr-venues.csv
+    - name: "Буханка"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/buhanka-venues.csv
+    - name: "Джонджоли"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/djondjoli-venues.csv
+    - name: "Марчеллис"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/marcellis-venues.csv
+    - name: "Изи Паб"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/izi-pab-venues.csv
+    - name: "Андерсон"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/anderson-venues.csv
+    - name: "TGI Fridays"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/tgi-fridays-venues.csv
+    - name: "Мидийное место"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/midiinoe-mesto-venues.csv
+    - name: "Бюро"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/buro-venues.csv
+    - name: "Vaffel"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/vaffel-venues.csv
+    - name: "Контакт Бар"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/kontakt-bar-venues.csv
+    - name: "Тан Жен"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/tan-jen-venues.csv
+    - name: "Ginza"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/ginza-venues.csv
+    - name: "Кофе Хауз"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/kofe-hauz-venues.csv
+    - name: "Carl's Jr."
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/carl-s-jr-venues.csv

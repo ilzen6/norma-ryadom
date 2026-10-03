@@ -29,9 +29,16 @@ class DemoVenue {
 }
 
 class DemoChain {
-  const DemoChain({required this.name, required this.sourceUrl, required this.menu, required this.venues});
+  const DemoChain({
+    required this.name,
+    required this.sourceUrl,
+    required this.menu,
+    required this.venues,
+    this.verifiedAt,
+  });
 
   final String name;
+  final String? verifiedAt;
   final String sourceUrl;
   final List<DemoDish> menu;
   final List<DemoVenue> venues;
@@ -49,6 +56,7 @@ class DemoCatalog {
         DemoChain(
           name: chain['name'] as String,
           sourceUrl: chain['sourceUrl'] as String,
+          verifiedAt: chain['verifiedAt'] as String?,
           menu: [
             for (final item in (chain['items'] as List<dynamic>? ?? const []).cast<Map<String, dynamic>>())
               DemoDish(
@@ -235,7 +243,9 @@ class DemoServerAdapter implements HttpClientAdapter {
     final center = ((location['lat'] as num).toDouble(), (location['lon'] as num).toDouble());
     final ranked =
         <(double, DemoVenue, double, DemoCombo)>[
-          for (final (chain, venue, distance) in _within(catalog, center, (location['radiusMeters'] as num).toDouble()))
+          for (final (chain, venue, distance) in _closestPerChain(
+            _within(catalog, center, (location['radiusMeters'] as num).toDouble()),
+          ))
             for (final combo in optimizer.bestCombos(chain.menu, applied, _cachedCombos).take(_combosPerVenue))
               (combo.score + _distanceWeightPerKm * distance / 1000, venue, distance, combo),
         ]..sort((left, right) {
@@ -289,6 +299,14 @@ class DemoServerAdapter implements HttpClientAdapter {
           return byDistance != 0 ? byDistance : left.$2.id.compareTo(right.$2.id);
         });
     return found.take(limit).toList();
+  }
+
+  static List<(DemoChain, DemoVenue, double)> _closestPerChain(List<(DemoChain, DemoVenue, double)> venues) {
+    final seen = <DemoChain>{};
+    return [
+      for (final entry in venues)
+        if (seen.add(entry.$1)) entry,
+    ];
   }
 
   static double _distanceMeters((double, double) from, (double, double) to) {
@@ -360,7 +378,7 @@ class DemoServerAdapter implements HttpClientAdapter {
         'nutrients': _nutrientsJson(dish.nutrients),
         'priceMinor': dish.priceMinor,
         'tags': _sortedTags(dish.tags),
-        'source': {'kind': 'A', 'url': chain.sourceUrl, 'verifiedAt': catalog.verifiedAt},
+        'source': {'kind': 'A', 'url': chain.sourceUrl, 'verifiedAt': chain.verifiedAt ?? catalog.verifiedAt},
         if (assessment != null)
           'assessment': {
             'verdict': switch (assessment.verdict) {

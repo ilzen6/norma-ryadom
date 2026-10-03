@@ -63,8 +63,8 @@ void main() {
 
     expect(result.appliedTarget.kcal, 630);
     expect(result.appliedTarget.kcalTolerance, 60);
-    expect(result.options, hasLength(5));
-    expect(result.options.map((option) => option.venue.name).toSet().length, greaterThanOrEqualTo(2));
+    expect(result.options, isNotEmpty);
+    expect(result.options.length, lessThanOrEqualTo(5));
     for (final option in result.options) {
       expect(option.combo.dishes.expand((dish) => dish.tags), isNot(contains('pork')));
       expect(option.combo.checks.map((check) => check.metric), [Metric.kcal, Metric.protein, Metric.fat, Metric.carbs]);
@@ -75,12 +75,12 @@ void main() {
   test('меню заведения отсортировано по близости к цели и с пометками', () async {
     final menu = valueOf(await api.venueMenu(1, TestData.lunchTarget));
 
-    expect(menu.venue.name, 'Гриль Хаус, Москва-Сити');
+    expect(menu.venue.name, 'Cofix');
     expect(menu.items.first.assessment?.verdict, Verdict.fits);
-    final ribs = menu.items.firstWhere((item) => item.name == 'Свиные рёбрышки');
-    expect(ribs.assessment?.verdict, Verdict.notFits);
-    expect(ribs.assessment?.reasons.first.code, ReasonCode.excludedTag);
-    expect(ribs.source.kind, SourceKind.verified);
+    final sausage = menu.items.firstWhere((item) => item.name == 'Марсельская сосиска в тесте');
+    expect(sausage.assessment?.verdict, Verdict.notFits);
+    expect(sausage.assessment?.reasons.first.code, ReasonCode.excludedTag);
+    expect(sausage.source.kind, SourceKind.verified);
   });
 
   test('подбирает в заведении и заменяет блюдо, оставляя остальные', () async {

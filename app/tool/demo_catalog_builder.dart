@@ -12,10 +12,12 @@ String buildDemoCatalog(Directory serverResources) {
   String? name;
   String? sourceUrl;
   String? menu;
+  String? sourceDate;
   for (final line in config.map((line) => line.trim())) {
     if (line.startsWith('- name:')) name = _value(line);
     if (line.startsWith('source-url:')) sourceUrl = _value(line);
     if (line.startsWith('menu:')) menu = _value(line).replaceFirst('classpath:', '');
+    if (line.startsWith('source-date:')) sourceDate = _value(line);
     if (line.startsWith('places:')) {
       places = _rows(File('${serverResources.path}/${_value(line).replaceFirst('classpath:', '')}'))
           .map(_venue)
@@ -26,16 +28,20 @@ String buildDemoCatalog(Directory serverResources) {
       chains.add({
         'name': name,
         'sourceUrl': sourceUrl,
+        'verifiedAt': ?(sourceDate == null ? null : '${sourceDate}T00:00:00Z'),
         'items': menu == null ? const <Object>[] : _rows(File('${serverResources.path}/$menu')).map(_item).toList(),
         'venues': _rows(File('${serverResources.path}/$venues')).map(_venue).toList(),
       });
-      name = sourceUrl = menu = null;
+      name = sourceUrl = menu = sourceDate = null;
     }
   }
   return '${const JsonEncoder.withIndent('  ').convert({'verifiedAt': demoVerifiedAt, 'chains': chains, 'places': places})}\n';
 }
 
-String _value(String line) => line.substring(line.indexOf(':') + 1).trim();
+String _value(String line) {
+  final value = line.substring(line.indexOf(':') + 1).trim();
+  return value.startsWith('"') ? jsonDecode(value) as String : value;
+}
 
 List<Map<String, String>> _rows(File file) {
   final lines = file.readAsLinesSync().where((line) => line.trim().isNotEmpty).toList();

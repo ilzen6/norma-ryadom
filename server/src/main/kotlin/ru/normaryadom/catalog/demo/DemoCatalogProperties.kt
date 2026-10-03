@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotBlank
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.core.io.Resource
 import org.springframework.validation.annotation.Validated
+import java.time.LocalDate
 
 @Validated
 @ConfigurationProperties("demo")
@@ -18,6 +19,7 @@ data class DemoCatalogProperties(
         @field:NotBlank
         val sourceUrl: String,
         val menu: Resource? = null,
+        val sourceDate: LocalDate? = null,
         val venues: Resource,
     )
 }

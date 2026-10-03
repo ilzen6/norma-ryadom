@@ -125,16 +125,9 @@ class DemoComboContractTest {
 
         val DEMO_CHAINS =
             listOf(
-                "Гриль Хаус" to "grill-house",
-                "Тёплая плошка" to "warm-bowl",
-                "Блинная Масленица" to "blinnaya",
-                "Кофейня Зерно" to "zerno",
-                "Пицца Квадрат" to "pizza-square",
-                "Зелёный бар" to "green-bar",
-                "Столовая Ложка" to "lozhka",
-                "Суши Нори" to "nori",
-                "Поке Волна" to "volna",
-                "Пекарня Колос" to "kolos",
+                "Cofix" to "real/cofix",
+                "Бургер Кинг" to "real/burger-king",
+                "Крошка Картошка" to "real/kroska-kartoska",
             )
 
         val CASES =

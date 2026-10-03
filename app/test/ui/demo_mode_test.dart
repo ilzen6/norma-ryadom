@@ -39,14 +39,16 @@ void main() {
     await tester.tap(find.byKey(const Key('find-nearby')));
     await tester.pumpAndSettle();
     await scrollTo(tester, find.byKey(const Key('search-results')));
-    expect(find.textContaining('Москва-Сити'), findsWidgets);
+    expect(find.text('Бургер Кинг'), findsWidgets);
+    expect(find.text('Cofix'), findsWidgets);
 
     await tester.tap(find.descendant(of: find.byType(NavigationBar), matching: find.text('Профиль')));
     await tester.pumpAndSettle();
     await scrollTo(tester, find.byKey(const Key('server-settings')));
     expect(
       find.text(
-        'Встроенный демо-каталог: 10 сетей и 17\u00a0374 заведения в Москве, области и Петербурге; где вы — задаёт район выше',
+        'Встроенный демо-каталог: 14\u00a0285 реальных заведений из OpenStreetMap в Москве, области и Петербурге; '
+        'КБЖУ — с официальных сайтов Cofix, Бургер Кинга и Крошки Картошки; где вы — задаёт район выше',
       ),
       findsOneWidget,
     );

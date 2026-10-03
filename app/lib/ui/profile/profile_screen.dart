@@ -127,6 +127,11 @@ class ProfileScreen extends ConsumerWidget {
                           StatusPill(label: l10n.preference(preference), tone: Tone.neutral, icon: Icons.block_rounded),
                       ],
                     ),
+                    const SizedBox(height: 8),
+                    Text(
+                      l10n.preferencesAllergyNote,
+                      style: textTheme.bodySmall?.copyWith(color: palette.inkMuted),
+                    ),
                   ],
                 ],
               ),

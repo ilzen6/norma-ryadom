@@ -9,6 +9,7 @@ import ru.normaryadom.catalog.persistence.VenueRepository
 import ru.normaryadom.catalog.service.CatalogImportService
 import ru.normaryadom.catalog.service.ChainService
 import ru.normaryadom.catalog.service.ImportOutcome
+import java.time.ZoneOffset
 
 @Component
 @Profile("demo")
@@ -25,7 +26,8 @@ class DemoCatalogLoader(
                 return@forEach
             }
             val chainId = chains.create(demo.name, demo.sourceUrl)
-            val menu = demo.menu?.let { imports.importChainMenu(chainId, it.contentAsByteArray, demo.sourceUrl) }
+            val verifiedAt = demo.sourceDate?.atStartOfDay(ZoneOffset.UTC)?.toInstant()
+            val menu = demo.menu?.let { imports.importChainMenu(chainId, it.contentAsByteArray, demo.sourceUrl, verifiedAt) }
             val venues = imports.importChainVenues(chainId, demo.venues.contentAsByteArray)
             check((menu == null || menu is ImportOutcome.Imported) && venues is ImportOutcome.Imported) {
                 "Demo catalog for ${demo.name} is invalid"

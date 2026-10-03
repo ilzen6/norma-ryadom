@@ -7,7 +7,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 
-from build_demo_venues import (
+from venue_sources import (
     FRESH_YEARS,
     HEADER,
     MASS_EDIT_PLACES,
@@ -128,7 +128,7 @@ def main():
             "confirmed_on": place["confirmed"],
         })
     OUT.mkdir(parents=True, exist_ok=True)
-    for old in OUT.glob("*.csv"):
+    for old in OUT.glob("*-venues.csv"):
         old.unlink()
     brands = []
     for chain, venues in sorted(rows.items(), key=lambda item: (item[0] is not None, -len(item[1]))):

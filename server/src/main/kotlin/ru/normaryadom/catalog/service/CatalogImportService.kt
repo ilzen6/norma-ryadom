@@ -12,6 +12,7 @@ import ru.normaryadom.catalog.persistence.MenuItemRepository
 import ru.normaryadom.catalog.persistence.Provenance
 import ru.normaryadom.catalog.persistence.VenueRepository
 import java.time.Clock
+import java.time.Instant
 
 @Service
 class CatalogImportService(
@@ -27,12 +28,13 @@ class CatalogImportService(
         chainId: Long,
         csv: ByteArray,
         sourceUrl: String,
+        verifiedAt: Instant? = null,
     ): ImportOutcome {
         chains.findById(chainId) ?: throw ChainNotFoundException(chainId)
         return when (val parsed = menuParser.parse(csv)) {
             is CsvParseResult.Invalid -> ImportOutcome.Rejected(parsed.errors)
             is CsvParseResult.Parsed -> {
-                val provenance = Provenance(kind = SourceKind.A, url = sourceUrl, verifiedAt = clock.instant())
+                val provenance = Provenance(kind = SourceKind.A, url = sourceUrl, verifiedAt = verifiedAt ?: clock.instant())
                 val withdrawn =
                     transactions.execute {
                         items.upsertForChain(chainId, parsed.rows, provenance)
