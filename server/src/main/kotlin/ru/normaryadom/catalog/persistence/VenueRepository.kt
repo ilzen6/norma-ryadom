@@ -38,7 +38,9 @@ class VenueRepository(
             VALUES (:chainId, :name, :address, ST_SetSRID(ST_MakePoint(:lon, :lat), 4326)::geography, :externalId,
                     :confirmedOn)
             ON CONFLICT (chain_id, external_id) WHERE external_id IS NOT NULL DO UPDATE SET
-                name = EXCLUDED.name, address = EXCLUDED.address, location = EXCLUDED.location, is_active = TRUE,
+                name = EXCLUDED.name, address = EXCLUDED.address, location = EXCLUDED.location,
+                is_active = venue.closed_on IS NULL OR coalesce(EXCLUDED.confirmed_on > venue.closed_on, FALSE),
+                closed_on = CASE WHEN EXCLUDED.confirmed_on > venue.closed_on THEN NULL ELSE venue.closed_on END,
                 confirmed_on = coalesce(EXCLUDED.confirmed_on, venue.confirmed_on)
             """,
             drafts
@@ -62,7 +64,9 @@ class VenueRepository(
             VALUES (NULL, :name, :address, ST_SetSRID(ST_MakePoint(:lon, :lat), 4326)::geography, :externalId,
                     :confirmedOn)
             ON CONFLICT (external_id) WHERE chain_id IS NULL AND external_id IS NOT NULL DO UPDATE SET
-                name = EXCLUDED.name, address = EXCLUDED.address, location = EXCLUDED.location, is_active = TRUE,
+                name = EXCLUDED.name, address = EXCLUDED.address, location = EXCLUDED.location,
+                is_active = venue.closed_on IS NULL OR coalesce(EXCLUDED.confirmed_on > venue.closed_on, FALSE),
+                closed_on = CASE WHEN EXCLUDED.confirmed_on > venue.closed_on THEN NULL ELSE venue.closed_on END,
                 confirmed_on = coalesce(EXCLUDED.confirmed_on, venue.confirmed_on)
             """,
             drafts
@@ -140,10 +144,14 @@ class VenueRepository(
             .param("confirmedOn", confirmedOn)
             .update() > 0
 
-    fun close(id: Long): Boolean =
+    fun close(
+        id: Long,
+        closedOn: LocalDate,
+    ): Boolean =
         jdbc
-            .sql("UPDATE venue SET under_review = FALSE, is_active = FALSE WHERE id = :id AND under_review")
+            .sql("UPDATE venue SET under_review = FALSE, is_active = FALSE, closed_on = :closedOn WHERE id = :id AND under_review")
             .param("id", id)
+            .param("closedOn", closedOn)
             .update() > 0
 
     fun bumpMenuVersion(id: Long) {

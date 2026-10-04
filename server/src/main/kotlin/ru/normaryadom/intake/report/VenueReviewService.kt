@@ -22,7 +22,7 @@ class VenueReviewService(
 
     fun restore(venueId: Long) = resolve(venueId) { venues.restore(venueId, LocalDate.now(clock)) }
 
-    fun close(venueId: Long) = resolve(venueId) { venues.close(venueId) }
+    fun close(venueId: Long) = resolve(venueId) { venues.close(venueId, LocalDate.now(clock)) }
 
     private fun resolve(
         venueId: Long,

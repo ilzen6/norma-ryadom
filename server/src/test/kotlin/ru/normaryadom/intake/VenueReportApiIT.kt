@@ -9,6 +9,8 @@ import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.post
 import org.springframework.test.web.servlet.request.RequestPostProcessor
+import ru.normaryadom.catalog.importing.VenueCsvParser
+import ru.normaryadom.catalog.service.CatalogImportService
 import ru.normaryadom.intake.report.VenueReviewService
 import ru.normaryadom.support.CatalogFixtures.Companion.CITY_LAT
 import ru.normaryadom.support.CatalogFixtures.Companion.CITY_LON
@@ -20,6 +22,9 @@ import java.time.LocalDate
 class VenueReportApiIT : IntegrationTest() {
     @Autowired
     private lateinit var reviews: VenueReviewService
+
+    @Autowired
+    private lateinit var imports: CatalogImportService
 
     @Test
     fun `после сообщений от трёх разных людей убирает точку из поиска рядом и ставит в очередь проверки`() {
@@ -85,6 +90,34 @@ class VenueReportApiIT : IntegrationTest() {
                 content = """{"reason": "closed"}"""
                 with(uniqueClient())
             }.andExpect { status { isNotFound() } }
+    }
+
+    @Test
+    fun `не возвращает закрытую модератором точку, когда сеть снова присылает её в списке точек`() {
+        val chainId = catalog.chain("Гриль", GRILL_MENU, GRILL_VENUES)
+        val venueId = venueId("Гриль, Сити")
+        repeat(3) { report(venueId, "closed") }
+        reviews.close(venueId)
+
+        imports.importChainVenues(chainId, catalog.venueCsv(GRILL_VENUES))
+
+        nearby().andExpect { jsonPath("$.venues[*].venue.name") { value(not(hasItem("Гриль, Сити"))) } }
+    }
+
+    @Test
+    fun `возвращает закрытую точку, если источник подтвердил её позже решения модератора`() {
+        val chainId = catalog.chain("Гриль", GRILL_MENU, GRILL_VENUES)
+        val venueId = venueId("Гриль, Сити")
+        repeat(3) { report(venueId, "closed") }
+        reviews.close(venueId)
+        val confirmedLater = LocalDate.now().plusDays(1)
+
+        imports.importChainVenues(
+            chainId,
+            "${VenueCsvParser.HEADER.joinToString(";")};confirmed_on\n${GRILL_VENUES.first()};$confirmedLater".toByteArray(),
+        )
+
+        nearby().andExpect { jsonPath("$.venues[*].venue.name") { value(hasItem("Гриль, Сити")) } }
     }
 
     @Test

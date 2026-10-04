@@ -41,8 +41,8 @@
 | Схема архитектуры, путь запроса «подобрать рядом», жизненный цикл блюда | `architecture.md` |
 | EXPLAIN ANALYZE геозапроса: `Bitmap Index Scan on venue_location_gix`, 0,3 мс на 10 000 точек | `reports/explain-nearby-venues.txt` |
 | График времени подбора от размера меню: 250 позиций — медиана 6 мс при бюджете 100 мс | `architecture.md`, `reports/optimizer-timing.csv` |
-| Покрытие: сервер — строки 98,7%, ветви 85,5%; клиент — 94,0% | `testing.md`, отчёты Kover и lcov в артефактах CI |
-| Как проверялось: 152 теста сервера, 90 клиента, 5 сквозных сценариев, axe по WCAG 2.2 AA, CI на каждый push | `testing.md`, GitHub → Actions |
+| Покрытие: сервер — строки 98,7%, ветви 85,5%; клиент — 96,7% | `testing.md`, отчёты Kover и lcov в артефактах CI |
+| Как проверялось: 167 тестов сервера, 165 клиента, 5 сквозных сценариев, axe по WCAG 2.2 AA, CI на каждый push | `testing.md`, GitHub → Actions |
 | Связь требований с кодом и тестами | `requirements-matrix.md` |
 
 ## Вероятные вопросы

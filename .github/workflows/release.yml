@@ -44,7 +44,7 @@ jobs:
       - name: Сборка APK
         working-directory: app
         run: |
-          flutter build apk --release --flavor demo --dart-define=API_BASE_URL=http://127.0.0.1:8080
+          flutter build apk --release --flavor demo --dart-define=API_BASE_URL=http://127.0.0.1:8080 --dart-define=TILE_URL_TEMPLATE=
           cp build/app/outputs/flutter-apk/app-demo-release.apk "$RUNNER_TEMP/norma-ryadom-demo.apk"
           flutter build apk --release --flavor demo --dart-define=DEMO_SERVER=true --dart-define=TILE_URL_TEMPLATE=
           cp build/app/outputs/flutter-apk/app-demo-release.apk "$RUNNER_TEMP/norma-ryadom-offline.apk"
