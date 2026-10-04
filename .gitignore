@@ -26,3 +26,6 @@ e2e/playwright-report/
 server/.jqwik-database
 e2e/screenshots/
 __pycache__/
+
+menus-inbox/
+*.har
