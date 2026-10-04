@@ -400,6 +400,11 @@
   "mapLegendCompromise": "компромисс",
   "mapLegendNone": "нет подходящего",
   "mapLegendNoData": "нет данных о меню",
+  "mapLegendVerified": "КБЖУ от сети",
+  "mapLegendFromMenu": "КБЖУ из меню заведения",
+  "mapLegendEstimate": "КБЖУ — оценка",
+  "mapColoringFit": "По норме",
+  "mapColoringData": "По данным",
   "mapEmpty": "Рядом нет заведений с меню",
   "mapVenueSemantics": "{name}, {distance}",
   "@mapVenueSemantics": {

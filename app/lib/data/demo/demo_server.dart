@@ -205,6 +205,7 @@ class DemoServerAdapter implements HttpClientAdapter {
             'distanceMeters': distance.round(),
             'hasMenu': chain.menu.isNotEmpty,
             'fit': chain.menu.isEmpty ? null : fitOf(chain),
+            'dataQuality': chain.menu.isEmpty ? null : 'A',
           },
       ],
     });

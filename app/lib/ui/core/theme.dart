@@ -20,6 +20,7 @@ class Palette extends ThemeExtension<Palette> {
     required this.goodSoft,
     required this.warn,
     required this.warnSoft,
+    required this.bad,
     required this.neutral,
     required this.neutralSoft,
     required this.glass,
@@ -56,6 +57,7 @@ class Palette extends ThemeExtension<Palette> {
     goodSoft: Color(0xFFDCF1E3),
     warn: Color(0xFF94570A),
     warnSoft: Color(0xFFFBEBD2),
+    bad: Color(0xFFB3261E),
     neutral: Color(0xFF5E6A63),
     neutralSoft: Color(0xFFE9EDE9),
     glass: Color(0xD9FFFFFF),
@@ -92,6 +94,7 @@ class Palette extends ThemeExtension<Palette> {
     goodSoft: Color(0xFF1B3A2B),
     warn: Color(0xFFF2B05A),
     warnSoft: Color(0xFF3A2D17),
+    bad: Color(0xFFF2938C),
     neutral: Color(0xFFA2AFA7),
     neutralSoft: Color(0xFF232E28),
     glass: Color(0xCC16201B),
@@ -127,6 +130,7 @@ class Palette extends ThemeExtension<Palette> {
   final Color goodSoft;
   final Color warn;
   final Color warnSoft;
+  final Color bad;
   final Color neutral;
   final Color neutralSoft;
   final Color glass;

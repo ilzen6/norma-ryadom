@@ -388,6 +388,10 @@
       },
       "NearbyVenueResponse" : {
         "properties" : {
+          "dataQuality" : {
+            "enum" : [ "A", "B", "C" ],
+            "type" : [ "string", "null" ]
+          },
           "distanceMeters" : {
             "format" : "int32",
             "type" : "integer"

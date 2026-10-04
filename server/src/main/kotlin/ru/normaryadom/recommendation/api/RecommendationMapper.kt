@@ -34,6 +34,7 @@ object RecommendationMapper {
                         distanceMeters = fit.nearbyVenue.distanceMeters.roundToInt(),
                         hasMenu = fit.nearbyVenue.venue.hasMenu,
                         fit = fit.fit,
+                        dataQuality = fit.nearbyVenue.venue.dataQuality,
                     )
                 },
         )

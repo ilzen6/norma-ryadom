@@ -88,6 +88,41 @@ void main() {
     expect(tester.widget<VenueScreen>(find.byType(VenueScreen)).venueId, 1);
   });
 
+  testWidgets('карта в режиме «По данным» красит заведения по достоверности КБЖУ', (tester) async {
+    final harness = TestHarness(profile: TestData.profile)
+      ..venues.nearbyResult = Ok([
+        venue(1, 'Сеть', FitLevel.none).copyWith(dataQuality: SourceKind.verified),
+        venue(2, 'Столовая', FitLevel.good).copyWith(dataQuality: SourceKind.fromMenu),
+        venue(3, 'Шаурма', FitLevel.good).copyWith(dataQuality: SourceKind.estimate),
+        venue(4, 'Кафе без меню', null, hasMenu: false),
+      ]);
+    await harness.pump(tester);
+
+    await openTab(tester, 'Карта');
+    await tester.tap(find.byKey(const Key('map-sheet-expand')));
+    await tester.pumpAndSettle();
+    await Scrollable.ensureVisible(tester.element(find.byKey(const Key('map-coloring'))), alignment: 0.3);
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('По данным'));
+    await tester.pumpAndSettle();
+
+    Color colorOf(String name) => tester
+        .widget<Text>(find.descendant(of: find.widgetWithText(ListTile, name), matching: find.text(name[0])))
+        .style!
+        .color!;
+
+    expect(find.textContaining(RegExp(r'^\W*КБЖУ — оценка$'), findRichText: true), findsOneWidget);
+    expect(find.textContaining(RegExp(r'^\W*есть набор под цель$'), findRichText: true), findsNothing);
+    expect(colorOf('Сеть'), Palette.light.good);
+    expect(colorOf('Столовая'), Palette.light.warn);
+    expect(colorOf('Шаурма'), Palette.light.bad);
+    expect(find.textContaining(RegExp(r'^КБЖУ из меню заведения · ')), findsOneWidget);
+
+    await tester.tap(find.text('По норме'));
+    await tester.pumpAndSettle();
+    expect(colorOf('Сеть'), Palette.light.neutral);
+  });
+
   testWidgets('карта объединяет соседние заведения в кружок с числом и приближает по нажатию', (tester) async {
     final harness = TestHarness(profile: TestData.profile)
       ..venues.nearbyResult = Ok([

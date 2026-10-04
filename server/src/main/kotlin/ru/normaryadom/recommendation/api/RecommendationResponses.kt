@@ -82,6 +82,7 @@ data class NearbyVenueResponse(
     val distanceMeters: Int,
     val hasMenu: Boolean,
     val fit: FitLevel?,
+    val dataQuality: SourceKind?,
 )
 
 data class NearbyVenuesResponse(

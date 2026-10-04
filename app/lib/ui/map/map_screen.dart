@@ -81,27 +81,50 @@ class _MapMessage extends StatelessWidget {
   );
 }
 
-enum _FitMark { good, compromise, none, noData }
+enum _Mark { good, compromise, none, verified, fromMenu, estimate, noData }
 
-_FitMark _markOf(NearbyVenue venue) => switch (venue.fit) {
-  _ when !venue.hasMenu => _FitMark.noData,
-  FitLevel.good => _FitMark.good,
-  FitLevel.compromise => _FitMark.compromise,
-  _ => _FitMark.none,
+_Mark _markOf(NearbyVenue venue, MapColoring coloring) => switch (coloring) {
+  _ when !venue.hasMenu => _Mark.noData,
+  MapColoring.fit => switch (venue.fit) {
+    FitLevel.good => _Mark.good,
+    FitLevel.compromise => _Mark.compromise,
+    _ => _Mark.none,
+  },
+  MapColoring.data => switch (venue.dataQuality) {
+    SourceKind.verified => _Mark.verified,
+    SourceKind.fromMenu => _Mark.fromMenu,
+    SourceKind.estimate => _Mark.estimate,
+    _ => _Mark.noData,
+  },
 };
 
-Color _colorOf(Palette palette, _FitMark mark) => switch (mark) {
-  _FitMark.good => palette.good,
-  _FitMark.compromise => palette.warn,
-  _FitMark.none => palette.neutral,
-  _FitMark.noData => palette.inkSubtle,
+List<_Mark> _legendOf(MapColoring coloring) => switch (coloring) {
+  MapColoring.fit => const [_Mark.good, _Mark.compromise, _Mark.none, _Mark.noData],
+  MapColoring.data => const [_Mark.verified, _Mark.fromMenu, _Mark.estimate, _Mark.noData],
 };
 
-String _labelOf(AppLocalizations l10n, _FitMark mark) => switch (mark) {
-  _FitMark.good => l10n.mapLegendGood,
-  _FitMark.compromise => l10n.mapLegendCompromise,
-  _FitMark.none => l10n.mapLegendNone,
-  _FitMark.noData => l10n.mapLegendNoData,
+Color _colorOf(Palette palette, _Mark mark) => switch (mark) {
+  _Mark.good || _Mark.verified => palette.good,
+  _Mark.compromise || _Mark.fromMenu => palette.warn,
+  _Mark.estimate => palette.bad,
+  _Mark.none => palette.neutral,
+  _Mark.noData => palette.inkSubtle,
+};
+
+Tone _toneOf(_Mark mark) => switch (mark) {
+  _Mark.good || _Mark.verified => Tone.good,
+  _Mark.compromise || _Mark.fromMenu => Tone.warn,
+  _ => Tone.neutral,
+};
+
+String _labelOf(AppLocalizations l10n, _Mark mark) => switch (mark) {
+  _Mark.good => l10n.mapLegendGood,
+  _Mark.compromise => l10n.mapLegendCompromise,
+  _Mark.none => l10n.mapLegendNone,
+  _Mark.verified => l10n.mapLegendVerified,
+  _Mark.fromMenu => l10n.mapLegendFromMenu,
+  _Mark.estimate => l10n.mapLegendEstimate,
+  _Mark.noData => l10n.mapLegendNoData,
 };
 
 class _MapToolbar extends ConsumerWidget {
@@ -553,10 +576,11 @@ class _Cluster {
     members.map((venue) => venue.venue.lon).reduce((a, b) => a + b) / members.length,
   );
 
-  _FitMark get best => members.map(_markOf).reduce((a, b) => a.index <= b.index ? a : b);
+  _Mark best(MapColoring coloring) =>
+      members.map((venue) => _markOf(venue, coloring)).reduce((a, b) => a.index <= b.index ? a : b);
 }
 
-class _VenueMarkers extends StatelessWidget {
+class _VenueMarkers extends ConsumerWidget {
   const _VenueMarkers({
     required this.stations,
     required this.places,
@@ -586,9 +610,9 @@ class _VenueMarkers extends StatelessWidget {
   final ValueChanged<NearbyVenue> onSelect;
   final ValueChanged<LatLng> onCluster;
 
-  static List<_Cluster> clusterOf(List<NearbyVenue> venues, Offset Function(LatLng) project) {
+  static List<_Cluster> clusterOf(List<NearbyVenue> venues, Offset Function(LatLng) project, MapColoring coloring) {
     final clusters = <_Cluster>[];
-    final ordered = [...venues]..sort((a, b) => _markOf(a).index.compareTo(_markOf(b).index));
+    final ordered = [...venues]..sort((a, b) => _markOf(a, coloring).index.compareTo(_markOf(b, coloring).index));
     for (final venue in ordered) {
       final position = project(LatLng(venue.venue.lat, venue.venue.lon));
       final home = clusters.where((cluster) => (cluster.anchor - position).distance < clusterRadius).firstOrNull;
@@ -602,7 +626,8 @@ class _VenueMarkers extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final coloring = ref.watch(mapColoringProvider);
     final camera = MapCamera.of(context);
     final zoom = (camera.zoom * 2).roundToDouble() / 2;
     final selected = venues.where((venue) => venue.venue.id == selectedId).firstOrNull;
@@ -612,13 +637,18 @@ class _VenueMarkers extends StatelessWidget {
             for (final venue in rest)
               _Cluster(camera.projectAtZoom(LatLng(venue.venue.lat, venue.venue.lon), zoom), venue),
           ]
-        : clusterOf(rest, (point) => camera.projectAtZoom(point, zoom));
+        : clusterOf(rest, (point) => camera.projectAtZoom(point, zoom), coloring);
     Marker pin(NearbyVenue venue) => Marker(
       point: LatLng(venue.venue.lat, venue.venue.lon),
       width: 56,
       height: 64,
       alignment: Alignment.topCenter,
-      child: _VenuePin(venue: venue, selected: venue.venue.id == selectedId, onTap: () => onSelect(venue)),
+      child: _VenuePin(
+        venue: venue,
+        mark: _markOf(venue, coloring),
+        selected: venue.venue.id == selectedId,
+        onTap: () => onSelect(venue),
+      ),
     );
     final occupied = <Rect>[
       for (final cluster in clusters)
@@ -720,7 +750,7 @@ class _VenueMarkers extends StatelessWidget {
                     height: 52,
                     child: _ClusterBubble(
                       count: cluster.members.length,
-                      mark: cluster.best,
+                      mark: cluster.best(coloring),
                       onTap: () => onCluster(cluster.center),
                     ),
                   ),
@@ -737,7 +767,7 @@ class _ClusterBubble extends StatelessWidget {
   const _ClusterBubble({required this.count, required this.mark, required this.onTap});
 
   final int count;
-  final _FitMark mark;
+  final _Mark mark;
   final VoidCallback onTap;
 
   @override
@@ -788,16 +818,16 @@ class _ClusterBubble extends StatelessWidget {
 }
 
 class _VenuePin extends StatelessWidget {
-  const _VenuePin({required this.venue, required this.selected, required this.onTap});
+  const _VenuePin({required this.venue, required this.mark, required this.selected, required this.onTap});
 
   final NearbyVenue venue;
+  final _Mark mark;
   final bool selected;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     final palette = context.palette;
-    final mark = _markOf(venue);
     final color = _colorOf(palette, mark);
     final name = venue.venue.chainName ?? venue.venue.name;
     return Semantics(
@@ -903,18 +933,18 @@ class _PinPainter extends CustomPainter {
       old.color != color || old.rim != rim || old.shadow != shadow || old.selected != selected;
 }
 
-class _SelectedVenue extends StatelessWidget {
+class _SelectedVenue extends ConsumerWidget {
   const _SelectedVenue({super.key, required this.venue, required this.onClose});
 
   final NearbyVenue venue;
   final VoidCallback onClose;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final palette = context.palette;
     final textTheme = Theme.of(context).textTheme;
-    final mark = _markOf(venue);
+    final mark = _markOf(venue, ref.watch(mapColoringProvider));
     return Padding(
       padding: const EdgeInsets.only(bottom: 14),
       child: Panel(
@@ -928,11 +958,7 @@ class _SelectedVenue extends StatelessWidget {
                 Expanded(
                   child: StatusPill(
                     label: _labelOf(l10n, mark),
-                    tone: switch (mark) {
-                      _FitMark.good => Tone.good,
-                      _FitMark.compromise => Tone.warn,
-                      _ => Tone.neutral,
-                    },
+                    tone: _toneOf(mark),
                   ),
                 ),
                 IconButton(tooltip: l10n.close, icon: const Icon(Icons.close_rounded), onPressed: onClose),
@@ -1082,9 +1108,14 @@ class _VenueSheet extends StatelessWidget {
                   const SizedBox(height: 8),
                   const _ShowAllSwitch(),
                   const SizedBox(height: 12),
-                  const _Legend(),
-                  const SizedBox(height: 16),
-                  if (venues.isEmpty) MessageView(message: l10n.mapEmpty, icon: Icons.location_off_rounded),
+                  if (venues.isEmpty)
+                    MessageView(message: l10n.mapEmpty, icon: Icons.location_off_rounded)
+                  else ...[
+                    const _ColoringToggle(),
+                    const SizedBox(height: 12),
+                    const _Legend(),
+                    const SizedBox(height: 16),
+                  ],
                   for (final venue in venues) ...[_VenueTile(venue: venue), const SizedBox(height: 8)],
                   if (attribution case final attribution?)
                     Padding(
@@ -1235,16 +1266,16 @@ class _SheetHeader extends SliverPersistentHeaderDelegate {
   }
 }
 
-class _VenueTile extends StatelessWidget {
+class _VenueTile extends ConsumerWidget {
   const _VenueTile({required this.venue});
 
   final NearbyVenue venue;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final palette = context.palette;
-    final mark = _markOf(venue);
+    final mark = _markOf(venue, ref.watch(mapColoringProvider));
     final color = _colorOf(palette, mark);
     return Panel(
       padding: EdgeInsets.zero,
@@ -1308,18 +1339,37 @@ class _ShowAllSwitch extends ConsumerWidget {
   );
 }
 
-class _Legend extends StatelessWidget {
+class _ColoringToggle extends ConsumerWidget {
+  const _ColoringToggle();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = context.l10n;
+    return SegmentedButton<MapColoring>(
+      key: const Key('map-coloring'),
+      showSelectedIcon: false,
+      segments: [
+        ButtonSegment(value: MapColoring.fit, label: Text(l10n.mapColoringFit)),
+        ButtonSegment(value: MapColoring.data, label: Text(l10n.mapColoringData)),
+      ],
+      selected: {ref.watch(mapColoringProvider)},
+      onSelectionChanged: (selection) => ref.read(mapColoringProvider.notifier).set(selection.single),
+    );
+  }
+}
+
+class _Legend extends ConsumerWidget {
   const _Legend();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final palette = context.palette;
     return Wrap(
       spacing: 8,
       runSpacing: 8,
       children: [
-        for (final mark in _FitMark.values)
+        for (final mark in _legendOf(ref.watch(mapColoringProvider)))
           DecoratedBox(
             decoration: ShapeDecoration(color: palette.surface, shape: const StadiumBorder()),
             child: Padding(

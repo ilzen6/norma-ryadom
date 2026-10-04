@@ -18,6 +18,17 @@ class MapCoverageController extends Notifier<MapCoverage> {
   void set(MapCoverage coverage) => state = coverage;
 }
 
+enum MapColoring { fit, data }
+
+final mapColoringProvider = NotifierProvider<MapColoringController, MapColoring>(MapColoringController.new);
+
+class MapColoringController extends Notifier<MapColoring> {
+  @override
+  MapColoring build() => MapColoring.fit;
+
+  void set(MapColoring coloring) => state = coloring;
+}
+
 class MapViewport {
   const MapViewport({required this.center, required this.radiusMeters});
 

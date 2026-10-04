@@ -101,6 +101,7 @@ abstract class NearbyVenue with _$NearbyVenue {
     required int distanceMeters,
     required bool hasMenu,
     @JsonKey(unknownEnumValue: FitLevel.unknown) FitLevel? fit,
+    @JsonKey(unknownEnumValue: SourceKind.unknown) SourceKind? dataQuality,
   }) = _NearbyVenue;
 
   factory NearbyVenue.fromJson(Map<String, dynamic> json) => _$NearbyVenueFromJson(json);

@@ -2,6 +2,7 @@ package ru.normaryadom.catalog.persistence
 
 import ru.normaryadom.catalog.domain.GeoPoint
 import ru.normaryadom.catalog.domain.MenuScope
+import ru.normaryadom.catalog.domain.SourceKind
 import ru.normaryadom.catalog.domain.Venue
 import java.sql.ResultSet
 import java.time.LocalDate
@@ -20,7 +21,12 @@ object VenueRows {
         EXISTS (
             SELECT 1 FROM menu_item shared
             WHERE shared.chain_id = v.chain_id AND shared.is_available AND NOT shared.under_review
-        ) AS has_chain_items
+        ) AS has_chain_items,
+        (
+            SELECT min(item.source_kind)
+            FROM menu_item item
+            WHERE (item.venue_id = v.id OR item.chain_id = v.chain_id) AND item.is_available AND NOT item.under_review
+        ) AS data_quality
     """
 
     const val FROM = "FROM venue v LEFT JOIN chain c ON c.id = v.chain_id"
@@ -50,6 +56,7 @@ object VenueRows {
             hasMenu = hasOwnItems || rs.getBoolean("has_chain_items"),
             confirmedOn = rs.getObject("confirmed_on", LocalDate::class.java),
             underReview = rs.getBoolean("under_review"),
+            dataQuality = rs.getString("data_quality")?.let(SourceKind::fromCode),
         )
     }
 }

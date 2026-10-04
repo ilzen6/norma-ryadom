@@ -91,6 +91,35 @@ class VenueApiIT : IntegrationTest() {
     }
 
     @Test
+    fun `отмечает заведение сети с официальной таблицей КБЖУ уровнем данных A`() {
+        catalog.chain("Гриль", GRILL_MENU, GRILL_VENUES)
+
+        mockMvc
+            .get("/api/v1/venues") {
+                param("lat", "$CITY_LAT")
+                param("lon", "$CITY_LON")
+                param("radius", "1000")
+            }.andExpect { jsonPath("$.venues[0].dataQuality") { value("A") } }
+    }
+
+    @Test
+    fun `не даёт уровень данных заведению без доступных блюд`() {
+        catalog.chain("Гриль", GRILL_MENU, GRILL_VENUES)
+        jdbc.sql("UPDATE menu_item SET is_available = FALSE").update()
+
+        mockMvc
+            .get("/api/v1/venues") {
+                param("lat", "$CITY_LAT")
+                param("lon", "$CITY_LON")
+                param("radius", "1000")
+                param("includeWithoutMenu", "true")
+            }.andExpect {
+                jsonPath("$.venues[0].hasMenu") { value(false) }
+                jsonPath("$.venues[0].dataQuality") { doesNotExist() }
+            }
+    }
+
+    @Test
     fun `отдаёт меню заведения с уровнем доверия, без цели - без пометок`() {
         catalog.chain("Гриль", GRILL_MENU, GRILL_VENUES)
         val venueId = venueId("grill-01")
