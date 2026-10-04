@@ -65,6 +65,8 @@ PostgreSQL + PostGIS · SeaweedFS (S3) · Caffeine
    ```
    Для веба: `flutter run -d chrome --dart-define=API_BASE_URL=http://localhost:8080` и `CORS_ALLOWED_ORIGINS` с адресом страницы.
 
+На iOS-симуляторе (нужны macOS и Xcode) вариантов сборки нет: `open -a Simulator`, затем `flutter run --dart-define=API_BASE_URL=http://localhost:8080` (устройство — из `flutter devices`). Без сервера приложение работает на встроенном демо-каталоге: `flutter run --dart-define=DEMO_SERVER=true --dart-define=TILE_URL_TEMPLATE=` (вы «находитесь» в Москва-Сити). Для HTTP к серверу на своём компьютере в `Info.plist` разрешена только локальная сеть (`NSAllowsLocalNetworking`).
+
 Android собирается в двух вариантах: `--flavor demo` (адрес сервера задаётся в профиле, разрешён HTTP к компьютеру в локальной сети) и `--flavor store` (только HTTPS), например `flutter run --flavor demo`. Готовый демо-APK публикуется в Releases (workflow `Release`); как поставить его на телефон и подключить к серверу на своём компьютере — `docs/install-phone.md`. Сценарий защиты — `docs/demo.md`, схемы и график производительности — `docs/architecture.md`.
 
 Переменные клиента (`--dart-define`): `API_BASE_URL`, `TILE_URL_TEMPLATE` (тайлы карты; при пустом значении используется встроенная векторная карта России с подробными Москвой, областью и Петербургом из OpenStreetMap), `SEARCH_RADIUS_METERS` (радиус подбора, 1500 м), `MAP_RADIUS_METERS` (радиус точек на карте до первого сдвига, 3000 м; дальше карта грузит видимую область).
