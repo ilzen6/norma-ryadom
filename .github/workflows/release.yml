@@ -46,6 +46,8 @@ jobs:
         run: |
           flutter build apk --release --flavor demo --dart-define=API_BASE_URL=http://127.0.0.1:8080
           cp build/app/outputs/flutter-apk/app-demo-release.apk "$RUNNER_TEMP/norma-ryadom-demo.apk"
+          flutter build apk --release --flavor demo --dart-define=DEMO_SERVER=true --dart-define=TILE_URL_TEMPLATE=
+          cp build/app/outputs/flutter-apk/app-demo-release.apk "$RUNNER_TEMP/norma-ryadom-offline.apk"
       - name: Публикация
         uses: softprops/action-gh-release@v2
         with:
@@ -53,7 +55,11 @@ jobs:
           name: ${{ github.ref_type == 'tag' && github.ref_name || format('Демо-сборка {0}', github.run_number) }}
           target_commitish: ${{ github.sha }}
           prerelease: ${{ github.ref_type != 'tag' }}
-          files: ${{ runner.temp }}/norma-ryadom-demo.apk
+          files: |
+            ${{ runner.temp }}/norma-ryadom-demo.apk
+            ${{ runner.temp }}/norma-ryadom-offline.apk
           body: |
             Демо-сборка «Норма рядом» для Android.
+            norma-ryadom-offline.apk работает без сервера на встроенном демо-каталоге (вы «находитесь» в Москва-Сити).
+            norma-ryadom-demo.apk подключается к серверу на компьютере.
             Установка и подключение к серверу — docs/install-phone.md.
