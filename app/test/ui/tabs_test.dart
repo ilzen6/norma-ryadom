@@ -232,7 +232,7 @@ void main() {
 
     await openTab(tester, 'Дневник');
     expect(find.text('530 из 1800'), findsOneWidget);
-    expect(find.text('34 из 99'), findsOneWidget);
+    expect(find.text('34 из 135'), findsOneWidget);
     expect(find.text('Обед'), findsWidgets);
 
     await tester.tap(find.byTooltip('В избранное'));

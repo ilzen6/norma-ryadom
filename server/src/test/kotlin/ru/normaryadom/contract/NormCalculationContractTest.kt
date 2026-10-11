@@ -32,6 +32,9 @@ class NormCalculationContractTest {
     }
 
     private object ReferenceNorm {
+        private const val PROTEIN_SHARE = 0.30
+        private const val FAT_SHARE = 0.30
+        private const val CARBS_SHARE = 0.40
         private val activity = mapOf("sedentary" to 1.2, "light" to 1.375, "moderate" to 1.55, "high" to 1.725, "very_high" to 1.9)
         private val goal = mapOf("lose" to 0.85, "maintain" to 1.0, "gain" to 1.10)
         private val safeMinimum = mapOf("female" to 1200, "male" to 1500)
@@ -43,9 +46,9 @@ class NormCalculationContractTest {
             val tdee = bmr * activity.getValue(input["activity"].asString())
             val goalName = input["goal"].asString()
             val kcal = max(round(tdee * goal.getValue(goalName) / 10) * 10, safeMinimum.getValue(sex))
-            val protein = round((if (goalName == "maintain") 1.2 else 1.6) * weight)
-            val fat = round(max(0.9 * weight, kcal * 0.2 / 9))
-            val carbs = max(0, round((kcal - 4.0 * protein - 9.0 * fat) / 4))
+            val protein = round(kcal * PROTEIN_SHARE / 4)
+            val fat = round(kcal * FAT_SHARE / 9)
+            val carbs = round(kcal * CARBS_SHARE / 4)
             return Norm(bmr, tdee, kcal, protein, fat, carbs)
         }
 

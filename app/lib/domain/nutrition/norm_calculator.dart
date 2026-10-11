@@ -20,13 +20,6 @@ class NormCalculator {
 
   static const _maleOffset = 5;
   static const _femaleOffset = -161;
-  static const _proteinPerKgActive = 1.6;
-  static const _proteinPerKgMaintain = 1.2;
-  static const _fatPerKg = 0.9;
-  static const _minFatShare = 0.2;
-  static const _kcalPerGramProtein = 4;
-  static const _kcalPerGramFat = 9;
-  static const _kcalPerGramCarbs = 4;
   static const _kcalStep = 10;
 
   static int safeMinimumKcal(Sex sex) => switch (sex) {
@@ -41,17 +34,10 @@ class NormCalculator {
     final goalKcal = _roundHalfUp(tdee * profile.goal.factor / _kcalStep) * _kcalStep;
     final safeMinimum = safeMinimumKcal(profile.sex);
     final kcal = goalKcal < safeMinimum ? safeMinimum : goalKcal;
-    final proteinPerKg = profile.goal == Goal.maintain ? _proteinPerKgMaintain : _proteinPerKgActive;
-    final protein = _roundHalfUp(proteinPerKg * profile.weightKg);
-    final fatByWeight = _fatPerKg * profile.weightKg;
-    final fatByShare = kcal * _minFatShare / _kcalPerGramFat;
-    final fat = _roundHalfUp(fatByWeight > fatByShare ? fatByWeight : fatByShare);
-    final carbsKcal = kcal - protein * _kcalPerGramProtein - fat * _kcalPerGramFat;
-    final carbs = carbsKcal <= 0 ? 0 : _roundHalfUp(carbsKcal / _kcalPerGramCarbs);
     return NormCalculation(
       bmr: bmr,
       tdee: tdee,
-      norm: NutritionNorm(kcal: kcal, protein: protein, fat: fat, carbs: carbs),
+      norm: MacroSplit.standard.normFor(kcal),
       limitedBySafeMinimum: goalKcal < safeMinimum,
     );
   }

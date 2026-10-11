@@ -90,6 +90,39 @@
       }
     }
   },
+  "normShares": "Доли калорий: белки {protein}% · жиры {fat}% · углеводы {carbs}%",
+  "@normShares": {
+    "placeholders": {
+      "protein": {
+        "type": "int"
+      },
+      "fat": {
+        "type": "int"
+      },
+      "carbs": {
+        "type": "int"
+      }
+    }
+  },
+  "proteinShareLabel": "Белки, % калорий",
+  "fatShareLabel": "Жиры, % калорий",
+  "carbsShareLabel": "Углеводы, % калорий",
+  "normShareGrams": "≈ {grams} г",
+  "@normShareGrams": {
+    "placeholders": {
+      "grams": {
+        "type": "int"
+      }
+    }
+  },
+  "normSharesTotal": "Сумма долей {total}%, нужно ровно 100%",
+  "@normSharesTotal": {
+    "placeholders": {
+      "total": {
+        "type": "int"
+      }
+    }
+  },
   "normEditManually": "Изменить вручную",
   "normUseCalculated": "Вернуть расчётную",
   "normManualHint": "Норма задана вручную",

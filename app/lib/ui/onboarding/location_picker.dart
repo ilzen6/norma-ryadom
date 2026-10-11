@@ -45,12 +45,14 @@ class LocationPicker extends ConsumerWidget {
             padding: const EdgeInsets.only(top: 8),
             child: Text(l10n.failure(failure), style: TextStyle(color: Theme.of(context).colorScheme.error)),
           ),
-        const SizedBox(height: 24),
-        DistrictField(
-          key: const Key('district-field'),
-          value: state.district,
-          onChanged: controller.setDistrict,
-        ),
+        if (!state.locationConsent) ...[
+          const SizedBox(height: 24),
+          DistrictField(
+            key: const Key('district-field'),
+            value: state.district,
+            onChanged: controller.setDistrict,
+          ),
+        ],
       ],
     );
   }

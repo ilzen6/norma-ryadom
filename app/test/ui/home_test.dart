@@ -33,7 +33,7 @@ void main() {
     );
     await harness.pump(tester);
 
-    expect(find.bySemanticsLabel(RegExp('1400 ккал, белок 79 г')), findsOneWidget);
+    expect(find.bySemanticsLabel(RegExp('1400 ккал, белок 115 г')), findsOneWidget);
   });
 
   testWidgets('выбирает приём пищи по времени и пересчитывает цель при переключении', (tester) async {

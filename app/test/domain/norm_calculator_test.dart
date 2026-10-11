@@ -84,6 +84,15 @@ void main() {
     expect(calculator.isSafeManualNorm(Sex.male, manual.copyWith(protein: -1)), isFalse);
   });
 
+  test('раскладывает калории по долям 30/30/40: белки и углеводы по 4 ккал в грамме, жиры по 9', () {
+    expect(MacroSplit.standard.normFor(2490), const NutritionNorm(kcal: 2490, protein: 187, fat: 83, carbs: 249));
+  });
+
+  test('восстанавливает доли калорий из граммов нормы', () {
+    final split = const NutritionNorm(kcal: 2000, protein: 175, fat: 67, carbs: 175).split;
+    expect((split.protein, split.fat, split.carbs), (35, 30, 35));
+  });
+
   test('остаток нормы считается как норма минус съеденное', () {
     const norm = NutritionNorm(kcal: 1800, protein: 99, fat: 56, carbs: 225);
     const eaten = Intake(kcal: 661, protein: 40.4, fat: 21.2, carbs: 78.6);

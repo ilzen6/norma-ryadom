@@ -34,25 +34,22 @@ class _NormCardState extends ConsumerState<NormCard> {
   }
 
   void _startEditing(NutritionNorm norm) {
+    final split = norm.split;
     _kcal.text = '${norm.kcal}';
-    _protein.text = '${norm.protein}';
-    _fat.text = '${norm.fat}';
-    _carbs.text = '${norm.carbs}';
+    _protein.text = '${split.protein}';
+    _fat.text = '${split.fat}';
+    _carbs.text = '${100 - split.protein - split.fat}';
     setState(() => _editing = true);
   }
 
+  int? _value(TextEditingController controller) => int.tryParse(controller.text);
+
+  MacroSplit get _split =>
+      MacroSplit(protein: _value(_protein) ?? 0, fat: _value(_fat) ?? 0, carbs: _value(_carbs) ?? 0);
+
   void _applyManual() {
     if (!(_formKey.currentState?.validate() ?? false)) return;
-    final applied = ref
-        .read(onboardingProvider.notifier)
-        .setManualNorm(
-          NutritionNorm(
-            kcal: int.parse(_kcal.text),
-            protein: int.parse(_protein.text),
-            fat: int.parse(_fat.text),
-            carbs: int.parse(_carbs.text),
-          ),
-        );
+    final applied = ref.read(onboardingProvider.notifier).setManualNorm(_split.normFor(int.parse(_kcal.text)));
     if (applied) setState(() => _editing = false);
   }
 
@@ -86,6 +83,12 @@ class _NormCardState extends ConsumerState<NormCard> {
           ),
           const SizedBox(height: 10),
           Text(l10n.normMacros(norm.protein, norm.fat, norm.carbs), style: textTheme.titleSmall),
+          const SizedBox(height: 4),
+          Text(
+            l10n.normShares(norm.split.protein, norm.split.fat, norm.split.carbs),
+            key: const Key('norm-shares'),
+            style: textTheme.bodySmall?.copyWith(color: palette.inkMuted),
+          ),
           const SizedBox(height: 14),
           Container(
             width: double.infinity,
@@ -139,30 +142,70 @@ class _NormCardState extends ConsumerState<NormCard> {
     final safeMinimum = NormCalculator.safeMinimumKcal(ref.watch(onboardingProvider).sex);
     return Form(
       key: _formKey,
-      child: Column(
-        children: [
-          const SizedBox(height: 12),
-          _field(_kcal, l10n.kcalLabel, (value) => value < safeMinimum ? l10n.normBelowSafeMinimum(safeMinimum) : null),
-          _field(_protein, l10n.proteinLabel, (_) => null),
-          _field(_fat, l10n.fatLabel, (_) => null),
-          _field(_carbs, l10n.carbsLabel, (_) => null),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              TextButton(onPressed: () => setState(() => _editing = false), child: Text(l10n.cancel)),
-              FilledButton(onPressed: _applyManual, child: Text(l10n.save)),
-            ],
-          ),
-        ],
+      child: ListenableBuilder(
+        listenable: Listenable.merge([_kcal, _protein, _fat, _carbs]),
+        builder: (context, _) => Column(
+          children: [
+            const SizedBox(height: 12),
+            _field(
+              _kcal,
+              l10n.kcalLabel,
+              (value) => value < safeMinimum ? l10n.normBelowSafeMinimum(safeMinimum) : null,
+              key: const Key('norm-manual-kcal'),
+            ),
+            _shareField(_protein, l10n.proteinShareLabel, (norm) => norm.protein, const Key('norm-manual-protein')),
+            _shareField(_fat, l10n.fatShareLabel, (norm) => norm.fat, const Key('norm-manual-fat')),
+            _shareField(
+              _carbs,
+              l10n.carbsShareLabel,
+              (norm) => norm.carbs,
+              const Key('norm-manual-carbs'),
+              check: (_) => _split.total == 100 ? null : l10n.normSharesTotal(_split.total),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                TextButton(onPressed: () => setState(() => _editing = false), child: Text(l10n.cancel)),
+                FilledButton(onPressed: _applyManual, child: Text(l10n.save)),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
 
-  Widget _field(TextEditingController controller, String label, String? Function(int value) check) => Padding(
+  Widget _shareField(
+    TextEditingController controller,
+    String label,
+    int Function(NutritionNorm norm) grams,
+    Key key, {
+    String? Function(int value)? check,
+  }) {
+    final kcal = _value(_kcal);
+    return _field(
+      controller,
+      label,
+      (value) => value > 100 ? context.l10n.fieldOutOfRange(0, 100) : check?.call(value),
+      key: key,
+      helper: kcal == null || _value(controller) == null
+          ? null
+          : context.l10n.normShareGrams(grams(_split.normFor(kcal))),
+    );
+  }
+
+  Widget _field(
+    TextEditingController controller,
+    String label,
+    String? Function(int value) check, {
+    Key? key,
+    String? helper,
+  }) => Padding(
     padding: const EdgeInsets.only(bottom: 8),
     child: TextFormField(
+      key: key,
       controller: controller,
-      decoration: InputDecoration(labelText: label),
+      decoration: InputDecoration(labelText: label, helperText: helper),
       keyboardType: TextInputType.number,
       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
       validator: (text) {

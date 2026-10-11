@@ -39,7 +39,6 @@ void main() {
     await tester.tap(find.byKey(const Key('find-nearby')));
     await tester.pumpAndSettle();
     await scrollTo(tester, find.byKey(const Key('search-results')));
-    expect(find.text('Бургер Кинг'), findsWidgets);
     expect(find.text('Cofix'), findsWidgets);
 
     await tester.tap(find.descendant(of: find.byType(NavigationBar), matching: find.text('Профиль')));

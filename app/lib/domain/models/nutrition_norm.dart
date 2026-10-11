@@ -12,12 +12,51 @@ abstract class NutritionNorm with _$NutritionNorm {
 
   factory NutritionNorm.fromJson(Map<String, dynamic> json) => _$NutritionNormFromJson(json);
 
+  MacroSplit get split => kcal <= 0
+      ? MacroSplit.standard
+      : MacroSplit(
+          protein: (protein * MacroSplit.kcalPerGramProtein * 100 / kcal).round(),
+          fat: (fat * MacroSplit.kcalPerGramFat * 100 / kcal).round(),
+          carbs: (carbs * MacroSplit.kcalPerGramCarbs * 100 / kcal).round(),
+        );
+
   NutritionNorm minus(Intake intake) => NutritionNorm(
     kcal: kcal - intake.kcal.round(),
     protein: protein - intake.protein.round(),
     fat: fat - intake.fat.round(),
     carbs: carbs - intake.carbs.round(),
   );
+}
+
+class MacroSplit {
+  const MacroSplit({required this.protein, required this.fat, required this.carbs});
+
+  static const standard = MacroSplit(protein: 30, fat: 30, carbs: 40);
+  static const kcalPerGramProtein = 4;
+  static const kcalPerGramFat = 9;
+  static const kcalPerGramCarbs = 4;
+
+  final int protein;
+  final int fat;
+  final int carbs;
+
+  int get total => protein + fat + carbs;
+
+  NutritionNorm normFor(int kcal) => NutritionNorm(
+    kcal: kcal,
+    protein: _grams(kcal, protein, kcalPerGramProtein),
+    fat: _grams(kcal, fat, kcalPerGramFat),
+    carbs: _grams(kcal, carbs, kcalPerGramCarbs),
+  );
+
+  static int _grams(int kcal, int percent, int kcalPerGram) => (kcal * percent / 100 / kcalPerGram + 0.5).floor();
+
+  @override
+  bool operator ==(Object other) =>
+      other is MacroSplit && other.protein == protein && other.fat == fat && other.carbs == carbs;
+
+  @override
+  int get hashCode => Object.hash(protein, fat, carbs);
 }
 
 @freezed
