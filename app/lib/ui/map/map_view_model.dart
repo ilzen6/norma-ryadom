@@ -18,6 +18,25 @@ class MapCoverageController extends Notifier<MapCoverage> {
   void set(MapCoverage coverage) => state = coverage;
 }
 
+class MapFocus {
+  const MapFocus({required this.venueId, required this.lat, required this.lon});
+
+  final int venueId;
+  final double lat;
+  final double lon;
+}
+
+final mapFocusProvider = NotifierProvider<MapFocusController, MapFocus?>(MapFocusController.new);
+
+class MapFocusController extends Notifier<MapFocus?> {
+  @override
+  MapFocus? build() => null;
+
+  void focus(MapFocus focus) => state = focus;
+
+  void clear() => state = null;
+}
+
 enum MapColoring { fit, data }
 
 final mapColoringProvider = NotifierProvider<MapColoringController, MapColoring>(MapColoringController.new);

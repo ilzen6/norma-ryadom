@@ -185,7 +185,13 @@ class _VenueBody extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              VenueMiniMap(lat: venue.lat, lon: venue.lon, height: 140, margin: const EdgeInsets.only(bottom: 18)),
+              VenueMiniMap(
+                lat: venue.lat,
+                lon: venue.lon,
+                venueId: venue.id,
+                height: 140,
+                margin: const EdgeInsets.only(bottom: 18),
+              ),
               if (venue.chainName case final chain?) ...[
                 Eyebrow(l10n.venueChainLabel(chain)),
                 const SizedBox(height: 8),

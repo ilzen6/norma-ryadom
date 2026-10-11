@@ -3,10 +3,14 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:latlong2/latlong.dart' hide Path;
 
+import 'package:go_router/go_router.dart';
+
 import '../../data/providers.dart';
+import '../../routing/routes.dart';
 import '../core/l10n_extensions.dart';
 import '../core/session.dart';
 import '../core/theme.dart';
+import 'map_view_model.dart';
 import 'vector_basemap.dart';
 
 class VenueMiniMap extends ConsumerWidget {
@@ -14,6 +18,7 @@ class VenueMiniMap extends ConsumerWidget {
     super.key,
     required this.lat,
     required this.lon,
+    this.venueId,
     this.height = 150,
     this.margin = EdgeInsets.zero,
   });
@@ -22,6 +27,7 @@ class VenueMiniMap extends ConsumerWidget {
 
   final double lat;
   final double lon;
+  final int? venueId;
   final double height;
   final EdgeInsets margin;
 
@@ -36,81 +42,112 @@ class VenueMiniMap extends ConsumerWidget {
     final location = ref.watch(locationProvider).value?.location;
     final user = location == null ? null : LatLng(location.lat, location.lon);
     final showUser = user != null && const Distance().as(LengthUnit.Meter, user, venue) <= nearbyMeters;
+    final venueId = this.venueId;
+    void openMap() {
+      ref.read(mapFocusProvider.notifier).focus(MapFocus(venueId: venueId!, lat: lat, lon: lon));
+      context.go(Routes.map);
+    }
+
     return Padding(
       padding: margin,
       child: Semantics(
-        image: true,
-        label: context.l10n.venueMapLabel,
+        image: venueId == null,
+        button: venueId != null,
+        label: venueId == null ? context.l10n.venueMapLabel : context.l10n.venueOpenOnMap,
+        onTap: venueId == null ? null : openMap,
         child: ExcludeSemantics(
           child: ClipRRect(
             borderRadius: BorderRadius.circular(AppRadii.tile),
             child: SizedBox(
               height: height,
-              child: IgnorePointer(
-                child: FlutterMap(
-                  options: MapOptions(
-                    initialCameraFit: showUser
-                        ? CameraFit.coordinates(
-                            coordinates: [venue, user],
-                            padding: const EdgeInsets.fromLTRB(40, 56, 40, 24),
-                            maxZoom: 17,
-                          )
-                        : null,
-                    initialCenter: venue,
-                    initialZoom: 16,
-                    backgroundColor: palette.mapLand,
-                    interactionOptions: const InteractionOptions(flags: InteractiveFlag.none),
-                  ),
+              child: GestureDetector(
+                key: venueId == null ? null : const Key('venue-mini-map'),
+                behavior: HitTestBehavior.opaque,
+                onTap: venueId == null ? null : openMap,
+                child: Stack(
                   children: [
-                    const VectorBasemap(),
-                    if (showUser)
-                      PolylineLayer(
-                        polylines: [
-                          Polyline(
-                            points: [user, venue],
-                            color: palette.brand.withValues(alpha: 0.7),
-                            strokeWidth: 3,
-                            pattern: const StrokePattern.dotted(spacingFactor: 2),
+                    Positioned.fill(
+                      child: IgnorePointer(
+                        child: FlutterMap(
+                          options: MapOptions(
+                            initialCameraFit: showUser
+                                ? CameraFit.coordinates(
+                                    coordinates: [venue, user],
+                                    padding: const EdgeInsets.fromLTRB(40, 56, 40, 24),
+                                    maxZoom: 17,
+                                  )
+                                : null,
+                            initialCenter: venue,
+                            initialZoom: 16,
+                            backgroundColor: palette.mapLand,
+                            interactionOptions: const InteractionOptions(flags: InteractiveFlag.none),
                           ),
-                        ],
-                      ),
-                    MarkerLayer(
-                      markers: [
-                        if (showUser)
-                          Marker(
-                            point: user,
-                            width: 22,
-                            height: 22,
-                            child: DecoratedBox(
-                              decoration: BoxDecoration(
-                                color: palette.brand,
-                                shape: BoxShape.circle,
-                                border: Border.all(color: palette.surface, width: 3),
+                          children: [
+                            const VectorBasemap(),
+                            if (showUser)
+                              PolylineLayer(
+                                polylines: [
+                                  Polyline(
+                                    points: [user, venue],
+                                    color: palette.brand.withValues(alpha: 0.7),
+                                    strokeWidth: 3,
+                                    pattern: const StrokePattern.dotted(spacingFactor: 2),
+                                  ),
+                                ],
                               ),
-                            ),
-                          ),
-                        Marker(
-                          point: venue,
-                          width: 40,
-                          height: 40,
-                          child: DecoratedBox(
-                            decoration: BoxDecoration(
-                              color: palette.brand,
-                              shape: BoxShape.circle,
-                              border: Border.all(color: palette.surface, width: 3),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: palette.ink.withValues(alpha: 0.25),
-                                  blurRadius: 8,
-                                  offset: const Offset(0, 3),
+                            MarkerLayer(
+                              markers: [
+                                if (showUser)
+                                  Marker(
+                                    point: user,
+                                    width: 22,
+                                    height: 22,
+                                    child: DecoratedBox(
+                                      decoration: BoxDecoration(
+                                        color: palette.brand,
+                                        shape: BoxShape.circle,
+                                        border: Border.all(color: palette.surface, width: 3),
+                                      ),
+                                    ),
+                                  ),
+                                Marker(
+                                  point: venue,
+                                  width: 40,
+                                  height: 40,
+                                  child: DecoratedBox(
+                                    decoration: BoxDecoration(
+                                      color: palette.brand,
+                                      shape: BoxShape.circle,
+                                      border: Border.all(color: palette.surface, width: 3),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: palette.ink.withValues(alpha: 0.25),
+                                          blurRadius: 8,
+                                          offset: const Offset(0, 3),
+                                        ),
+                                      ],
+                                    ),
+                                    child: Icon(Icons.storefront_rounded, size: 18, color: palette.onBrand),
+                                  ),
                                 ),
                               ],
                             ),
-                            child: Icon(Icons.storefront_rounded, size: 18, color: palette.onBrand),
+                          ],
+                        ),
+                      ),
+                    ),
+                    if (venueId != null)
+                      Positioned(
+                        top: 8,
+                        right: 8,
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(color: palette.surface, shape: BoxShape.circle),
+                          child: Padding(
+                            padding: const EdgeInsets.all(6),
+                            child: Icon(Icons.open_in_full_rounded, size: 18, color: palette.ink),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
                   ],
                 ),
               ),

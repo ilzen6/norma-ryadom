@@ -131,6 +131,7 @@ class _VenueHeader extends StatelessWidget {
           VenueMiniMap(
             lat: option.venue.lat,
             lon: option.venue.lon,
+            venueId: option.venue.id,
             height: 140,
             margin: const EdgeInsets.only(top: 14),
           ),

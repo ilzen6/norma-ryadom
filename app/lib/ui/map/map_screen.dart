@@ -208,6 +208,7 @@ class _MapBodyState extends ConsumerState<_MapBody> {
   ScrollController? _sheetScroll;
   Timer? _settle;
   int? _selectedId;
+  bool _mapReady = false;
   String? _city;
   MapAtlas? _placesAtlas;
   Basemap? _placesCountry;
@@ -301,7 +302,17 @@ class _MapBodyState extends ConsumerState<_MapBody> {
 
   void _select(NearbyVenue venue) {
     HapticFeedback.selectionClick();
-    setState(() => _selectedId = venue.venue.id);
+    _reveal(venue.venue.id, LatLng(venue.venue.lat, venue.venue.lon));
+  }
+
+  void _applyFocus(MapFocus? focus) {
+    if (focus == null || !_mapReady) return;
+    ref.read(mapFocusProvider.notifier).clear();
+    _reveal(focus.venueId, LatLng(focus.lat, focus.lon));
+  }
+
+  void _reveal(int venueId, LatLng point) {
+    setState(() => _selectedId = venueId);
     const motion = (duration: Duration(milliseconds: 280), curve: Curves.easeOutCubic);
     if (_sheetScroll case final scroll? when scroll.hasClients) {
       scroll.animateTo(0, duration: motion.duration, curve: motion.curve);
@@ -311,13 +322,14 @@ class _MapBodyState extends ConsumerState<_MapBody> {
     }
     final camera = _map.camera;
     final zoom = math.max(camera.zoom, 15.5);
-    final pin = camera.projectAtZoom(LatLng(venue.venue.lat, venue.venue.lon), zoom);
+    final pin = camera.projectAtZoom(point, zoom);
     final shift = camera.nonRotatedSize.height * _VenueSheet.half / 2;
     _map.move(camera.unprojectAtZoom(pin + Offset(0, shift), zoom), zoom);
   }
 
   @override
   Widget build(BuildContext context) {
+    ref.listen(mapFocusProvider, (_, focus) => _applyFocus(focus));
     final l10n = context.l10n;
     final palette = context.palette;
     final venues = widget.venues;
@@ -353,7 +365,11 @@ class _MapBodyState extends ConsumerState<_MapBody> {
                     backgroundColor: palette.mapLand,
                     onTap: (_, _) => setState(() => _selectedId = null),
                     onPositionChanged: (camera, _) => _cameraMoved(camera),
-                    onMapReady: () => _cameraMoved(_map.camera, delay: Duration.zero),
+                    onMapReady: () {
+                      _mapReady = true;
+                      _applyFocus(ref.read(mapFocusProvider));
+                      _cameraMoved(_map.camera, delay: Duration.zero);
+                    },
                     interactionOptions: const InteractionOptions(flags: InteractiveFlag.all & ~InteractiveFlag.rotate),
                   ),
                   children: [

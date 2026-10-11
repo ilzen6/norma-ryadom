@@ -7,6 +7,7 @@ import 'package:norma_ryadom/data/services/norma_api.dart';
 import 'package:norma_ryadom/data/services/photo_picker_service.dart';
 import 'package:norma_ryadom/domain/models/catalog.dart';
 import 'package:norma_ryadom/domain/models/combo.dart';
+import 'package:norma_ryadom/ui/map/map_screen.dart';
 import 'package:norma_ryadom/utils/result.dart';
 
 import '../support/fakes.dart';
@@ -61,6 +62,23 @@ void main() {
     await tester.pumpAndSettle();
     return harness;
   }
+
+  testWidgets('по нажатию на мини-карту открывает большую карту с выбранным заведением', (tester) async {
+    final harness = await openVenue(tester);
+    harness.venues.nearbyResult = const Ok([
+      NearbyVenue(venue: TestData.venue, distanceMeters: 145, hasMenu: true, fit: FitLevel.good),
+    ]);
+
+    await tester.tap(find.byKey(const Key('venue-mini-map')));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(MapScreen), findsOneWidget);
+    expect(find.byKey(const Key('map-selected-venue')), findsOneWidget);
+    expect(
+      find.descendant(of: find.byKey(const Key('map-selected-venue')), matching: find.text('Гриль Хаус, Москва-Сити')),
+      findsOneWidget,
+    );
+  });
 
   testWidgets('показывает меню с пометками, причинами и уровнем доверия', (tester) async {
     await openVenue(tester);
