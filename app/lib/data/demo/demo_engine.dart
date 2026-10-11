@@ -253,10 +253,11 @@ class DemoOptimizer {
   }
 
   static int sharedDishes(DemoCombo first, DemoCombo second) {
-    Map<int, int> counts(DemoCombo combo) {
-      final counts = <int, int>{};
-      for (final id in combo.dishIds) {
-        counts[id] = (counts[id] ?? 0) + 1;
+    Map<String, int> counts(DemoCombo combo) {
+      final counts = <String, int>{};
+      for (final dish in combo.dishes) {
+        final key = _sameDish(dish);
+        counts[key] = (counts[key] ?? 0) + 1;
       }
       return counts;
     }
@@ -265,6 +266,11 @@ class DemoOptimizer {
     return counts(
       first,
     ).entries.fold(0, (sum, entry) => sum + math.min(entry.value, secondCounts[entry.key] ?? 0));
+  }
+
+  static String _sameDish(DemoDish dish) {
+    final nutrients = dish.nutrients;
+    return '${dish.category}|${nutrients.kcal}|${nutrients.protein}|${nutrients.fat}|${nutrients.carbs}';
   }
 }
 

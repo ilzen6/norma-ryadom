@@ -128,6 +128,18 @@ class ComboOptimizerTest {
     }
 
     @Test
+    fun `не показывает наборы, которые отличаются только вариантом блюда с теми же КБЖУ`() {
+        val shrimps = dish(1, kcal = 330.0, protein = 28.0, fat = 8.0, carbs = 30.0)
+        val shrimpsSeasoned = dish(2, kcal = 330.0, protein = 28.0, fat = 8.0, carbs = 30.0)
+        val rings = dish(3, DishCategory.SIDE, kcal = 240.0, protein = 4.0, fat = 10.0, carbs = 30.0)
+        val ringsSeasoned = dish(4, DishCategory.SIDE, kcal = 240.0, protein = 4.0, fat = 10.0, carbs = 30.0)
+
+        val combos = optimizer.bestCombos(listOf(shrimps, shrimpsSeasoned, rings, ringsSeasoned), criteria(), limit = 5)
+
+        assertThat(combos.filter { it.dishes.size == 2 }).hasSize(1)
+    }
+
+    @Test
     fun `ставит блюдо с проверенными данными выше оценки при равной близости к цели`() {
         val estimated = dish(1, kcal = 600.0, protein = 30.0, source = SourceKind.C)
         val verified = dish(2, kcal = 600.0, protein = 30.0, source = SourceKind.A)

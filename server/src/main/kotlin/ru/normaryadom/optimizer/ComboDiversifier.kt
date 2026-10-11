@@ -1,5 +1,9 @@
 package ru.normaryadom.optimizer
 
+import ru.normaryadom.catalog.domain.DishCategory
+import ru.normaryadom.catalog.domain.MenuItem
+import ru.normaryadom.catalog.domain.Nutrients
+
 object ComboDiversifier {
     const val MAX_SHARED_DISHES = 1
 
@@ -19,8 +23,10 @@ object ComboDiversifier {
         first: Combo,
         second: Combo,
     ): Int {
-        val firstCounts = first.dishIds.groupingBy { it }.eachCount()
-        val secondCounts = second.dishIds.groupingBy { it }.eachCount()
-        return firstCounts.entries.sumOf { (id, count) -> minOf(count, secondCounts[id] ?: 0) }
+        val firstCounts = first.dishes.groupingBy(::sameDish).eachCount()
+        val secondCounts = second.dishes.groupingBy(::sameDish).eachCount()
+        return firstCounts.entries.sumOf { (dish, count) -> minOf(count, secondCounts[dish] ?: 0) }
     }
+
+    private fun sameDish(item: MenuItem): Pair<DishCategory, Nutrients> = item.category to item.nutrients
 }
