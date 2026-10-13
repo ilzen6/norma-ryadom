@@ -123,6 +123,26 @@ void main() {
     expect(colorOf('Сеть'), Palette.light.neutral);
   });
 
+  testWidgets('карта объясняет, что значат цвета уровней данных', (tester) async {
+    final harness = TestHarness(profile: TestData.profile)
+      ..venues.nearbyResult = Ok([venue(1, 'Сеть', FitLevel.good).copyWith(dataQuality: SourceKind.verified)]);
+    await harness.pump(tester);
+
+    await openTab(tester, 'Карта');
+    await tester.tap(find.byKey(const Key('map-sheet-expand')));
+    await tester.pumpAndSettle();
+    await Scrollable.ensureVisible(tester.element(find.byKey(const Key('map-coloring-help'))), alignment: 0.3);
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('map-coloring-help')));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Что значат цвета'), findsOneWidget);
+    expect(find.text('Красный — оценка, цифры приблизительные.'), findsOneWidget);
+    await tester.tap(find.text('Закрыть'));
+    await tester.pumpAndSettle();
+    expect(find.text('Что значат цвета'), findsNothing);
+  });
+
   testWidgets('карта объединяет соседние заведения в кружок с числом и приближает по нажатию', (tester) async {
     final harness = TestHarness(profile: TestData.profile)
       ..venues.nearbyResult = Ok([

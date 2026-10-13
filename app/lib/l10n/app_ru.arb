@@ -438,6 +438,11 @@
   "mapLegendEstimate": "КБЖУ — оценка",
   "mapColoringFit": "По норме",
   "mapColoringData": "По данным",
+  "mapColoringHelp": "Что значат цвета",
+  "mapColoringHelpVerified": "Зелёный — КБЖУ из официальной таблицы сети.",
+  "mapColoringHelpFromMenu": "Жёлтый — КБЖУ из меню заведения: фото проверил модератор.",
+  "mapColoringHelpEstimate": "Красный — оценка, цифры приблизительные.",
+  "mapColoringHelpNoData": "Серый — данных о меню пока нет.",
   "mapEmpty": "Рядом нет заведений с меню",
   "mapVenueSemantics": "{name}, {distance}",
   "@mapVenueSemantics": {

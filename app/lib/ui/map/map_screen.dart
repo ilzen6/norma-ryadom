@@ -1361,15 +1361,67 @@ class _ColoringToggle extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    return SegmentedButton<MapColoring>(
-      key: const Key('map-coloring'),
-      showSelectedIcon: false,
-      segments: [
-        ButtonSegment(value: MapColoring.fit, label: Text(l10n.mapColoringFit)),
-        ButtonSegment(value: MapColoring.data, label: Text(l10n.mapColoringData)),
+    return Row(
+      children: [
+        Expanded(
+          child: SegmentedButton<MapColoring>(
+            key: const Key('map-coloring'),
+            showSelectedIcon: false,
+            segments: [
+              ButtonSegment(value: MapColoring.fit, label: Text(l10n.mapColoringFit)),
+              ButtonSegment(value: MapColoring.data, label: Text(l10n.mapColoringData)),
+            ],
+            selected: {ref.watch(mapColoringProvider)},
+            onSelectionChanged: (selection) => ref.read(mapColoringProvider.notifier).set(selection.single),
+          ),
+        ),
+        IconButton(
+          key: const Key('map-coloring-help'),
+          tooltip: l10n.mapColoringHelp,
+          icon: const Icon(Icons.info_outline_rounded),
+          onPressed: () => showDialog<void>(context: context, builder: (_) => const _ColoringHelp()),
+        ),
       ],
-      selected: {ref.watch(mapColoringProvider)},
-      onSelectionChanged: (selection) => ref.read(mapColoringProvider.notifier).set(selection.single),
+    );
+  }
+}
+
+class _ColoringHelp extends StatelessWidget {
+  const _ColoringHelp();
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final palette = context.palette;
+    final rows = [
+      (palette.good, l10n.mapColoringHelpVerified),
+      (palette.warn, l10n.mapColoringHelpFromMenu),
+      (palette.bad, l10n.mapColoringHelpEstimate),
+      (palette.inkSubtle, l10n.mapColoringHelpNoData),
+    ];
+    return AlertDialog(
+      title: Text(l10n.mapColoringHelp),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          for (final (color, text) in rows)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 10),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 4, right: 10),
+                    child: Icon(Icons.circle, size: 12, color: color),
+                  ),
+                  Expanded(child: Text(text)),
+                ],
+              ),
+            ),
+        ],
+      ),
+      actions: [TextButton(onPressed: () => Navigator.of(context).pop(), child: Text(l10n.close))],
     );
   }
 }
