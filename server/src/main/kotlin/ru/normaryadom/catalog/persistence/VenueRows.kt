@@ -23,7 +23,7 @@ object VenueRows {
             WHERE shared.chain_id = v.chain_id AND shared.is_available AND NOT shared.under_review
         ) AS has_chain_items,
         (
-            SELECT min(item.source_kind)
+            SELECT mode() WITHIN GROUP (ORDER BY item.source_kind)
             FROM menu_item item
             WHERE (item.venue_id = v.id OR item.chain_id = v.chain_id) AND item.is_available AND NOT item.under_review
         ) AS data_quality

@@ -103,6 +103,29 @@ class VenueApiIT : IntegrationTest() {
     }
 
     @Test
+    fun `отмечает заведение уровнем данных, который у большинства его блюд`() {
+        catalog.chain("Боулы", BOWL_MENU, BOWL_VENUES)
+        listOf("Суп дня", "Каша овсяная", "Омлет", "Сырники").forEach { name ->
+            jdbc
+                .sql(
+                    """
+                    INSERT INTO menu_item (venue_id, name, category, kcal, protein_g, fat_g, carbs_g, source_kind)
+                    VALUES (:venueId, :name, 'main', 300, 15, 10, 38, 'B')
+                    """,
+                ).param("venueId", venueId("bowl-01"))
+                .param("name", name)
+                .update()
+        }
+
+        mockMvc
+            .get("/api/v1/venues") {
+                param("lat", "$CITY_LAT")
+                param("lon", "$CITY_LON")
+                param("radius", "1000")
+            }.andExpect { jsonPath("$.venues[0].dataQuality") { value("B") } }
+    }
+
+    @Test
     fun `не даёт уровень данных заведению без доступных блюд`() {
         catalog.chain("Гриль", GRILL_MENU, GRILL_VENUES)
         jdbc.sql("UPDATE menu_item SET is_available = FALSE").update()
