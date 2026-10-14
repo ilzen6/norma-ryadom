@@ -8,7 +8,7 @@ class MealPlanner {
   static const _toleranceShare = 0.1;
   static const _minTolerance = 50.0;
   static const _maxTolerance = 500.0;
-  static const _proteinShare = 0.8;
+  static const _proteinShare = 0.6;
   static const _limitShare = 1.2;
   static const _minKcal = 100.0;
   static const _maxKcal = 2000.0;

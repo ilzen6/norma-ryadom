@@ -27,7 +27,7 @@ test('сценарий защиты: от нормы до записи обед�
     await button(page, 'Снижение веса').click();
     await scrollDown(page, 2);
     await expect(text(page, '1800 ккал')).toBeVisible();
-    await expect(text(page, 'Белки 99 г · Жиры 56 г · Углеводы 225 г')).toBeVisible();
+    await expect(text(page, 'Белки 135 г · Жиры 60 г · Углеводы 180 г')).toBeVisible();
     await screenshot(page, 'app-01-norm');
     await button(page, 'Далее').click();
   });
@@ -46,7 +46,7 @@ test('сценарий защиты: от нормы до записи обед�
 
   await test.step('главный экран: остаток на сегодня и цель обеда', async () => {
     await expect(text(page, 'Осталось на сегодня')).toBeVisible();
-    await expect(text(page, '1800 ккал, белок 99 г')).toBeVisible();
+    await expect(text(page, '1800 ккал, белок 135 г')).toBeVisible();
     await button(page, 'Обед').click();
     await expect(text(page, /≈ 630 ккал ± 63/)).toBeVisible();
     await expect(text(page, 'Рядом с вами')).toBeVisible();
@@ -104,7 +104,7 @@ test('сценарий защиты: от нормы до записи обед�
   await test.step('главный экран показывает уменьшившийся остаток', async () => {
     await openTab(page, 'Что взять');
     await expect(text(page, /\d+ ккал, белок \d+ г/)).toBeVisible();
-    await expect(text(page, '1800 ккал, белок 99 г')).toBeHidden();
+    await expect(text(page, '1800 ккал, белок 135 г')).toBeHidden();
   });
 
   await test.step('карта: цветные точки и список заведений', async () => {

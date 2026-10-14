@@ -13,7 +13,7 @@ void main() {
 
     expect(target.kcal, 630);
     expect(target.kcalTolerance, 63);
-    expect(target.minProtein, 27.7);
+    expect(target.minProtein, 20.8);
     expect(target.maxFat, 23.5);
     expect(target.maxCarbs, 94.5);
     expect(target.excludeTags, isEmpty);
@@ -41,7 +41,7 @@ void main() {
     expect(snack.kcalTolerance, 50);
     expect(huge.kcal, 2000);
     expect(huge.kcalTolerance, 200);
-    expect(huge.minProtein, 252);
+    expect(huge.minProtein, 189);
     expect(huge.maxFat, 300);
     expect(huge.maxCarbs, 500);
   });
