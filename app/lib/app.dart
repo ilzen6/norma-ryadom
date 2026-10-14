@@ -49,5 +49,11 @@ class _NormaRyadomAppState extends ConsumerState<NormaRyadomApp> {
       GlobalCupertinoLocalizations.delegate,
     ],
     routerConfig: ref.watch(routerProvider),
+    builder: (context, child) => GestureDetector(
+      key: const Key('dismiss-keyboard'),
+      excludeFromSemantics: true,
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      child: child,
+    ),
   );
 }

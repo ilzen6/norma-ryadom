@@ -119,6 +119,19 @@ void main() {
     expect(find.text('ОСТАЛОСЬ НА СЕГОДНЯ'), findsOneWidget);
   });
 
+  testWidgets('прячет клавиатуру по нажатию мимо поля ввода', (tester) async {
+    final harness = TestHarness();
+    await harness.pump(tester);
+
+    await tester.tap(find.widgetWithText(TextFormField, 'Возраст, лет'));
+    await tester.pumpAndSettle();
+    expect(tester.testTextInput.isVisible, isTrue);
+
+    await tester.tap(find.text('Параметры и цель'));
+    await tester.pumpAndSettle();
+    expect(tester.testTextInput.isVisible, isFalse);
+  });
+
   testWidgets('с разрешённой геолокацией не просит выбирать район', (tester) async {
     final harness = TestHarness();
     await harness.pump(tester);
