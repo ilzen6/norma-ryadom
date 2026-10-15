@@ -95,6 +95,8 @@ cd app && flutter analyze --fatal-infos && flutter test --coverage && dart run t
 
 `python3 tool/team_archive/build.py --practicals <папка с .docx практических>` собирает в `~/Downloads` папку и zip «Норма рядом — архив для команды»: описание проекта, скриншоты, документацию и практические с исправлениями. Сами практические в репозиторий не кладутся. Файлы с меню сетей (HAR, HTML) складываются в `menus-inbox/` — эта папка в `.gitignore`.
 
+Word-версия описания обновляется из Markdown командой `python3 tool/docs/sync_docx.py docs/project-description.md docs/project-description.docx`: изменённые абзацы и таблицы переписываются с прежним оформлением, новые абзацы вставляются по соседним.
+
 ## Структура репозитория
 
 ```
