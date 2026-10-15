@@ -39,7 +39,7 @@ class DemoCatalogIT : IntegrationTest() {
         assertThat(jdbc.sql("SELECT count(*) FROM venue").query(Int::class.java).single()).isEqualTo(14285)
         assertThat(jdbc.sql("SELECT count(*) FROM venue WHERE chain_id IS NULL").query(Int::class.java).single()).isEqualTo(9569)
         assertThat(jdbc.sql("SELECT count(*) FROM venue WHERE confirmed_on IS NULL").query(Int::class.java).single()).isZero()
-        assertThat(jdbc.sql("SELECT count(*) FROM menu_item WHERE is_available").query(Int::class.java).single()).isEqualTo(596)
+        assertThat(jdbc.sql("SELECT count(*) FROM menu_item WHERE is_available").query(Int::class.java).single()).isEqualTo(2561)
     }
 
     @Test

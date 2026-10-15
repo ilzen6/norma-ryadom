@@ -1,0 +1,177 @@
+name;category;portion_g;kcal;protein_g;fat_g;carbs_g;price_rub;tags
+Павлова;dessert;131;315;4.2;15.1;40.7;739;egg,milk
+Блинный торт;dessert;145;445;7.5;28.1;40.5;599;egg,gluten,milk
+Шоколадный торт с орехами и карамелью;dessert;101;409;8.1;26.3;35;579;egg,gluten,milk,nuts
+Штрудель;dessert;101;247;3.6;10.9;33.7;609;gluten,nuts
+Ролл с фруктами;dessert;145;271;6.4;12.5;33.2;529;egg,gluten,milk
+Неоновый бенто с наггетсами + подарки;main;360;625;18.1;20.9;72.9;919;chicken,egg,gluten,meat
+Неоновый бенто с бургером + подарки;main;455;857;34.5;40.1;89.6;919;chicken,egg,gluten,meat,milk
+Куриные наггетсы;main;170;380;16;22.1;29.4;385;chicken,egg,gluten,meat,milk
+Хип-хоперы;main;260;333;17.2;16.6;28.8;385;chicken,egg,gluten,meat,milk
+Алфавитная туса;main;290;207;16.3;8.2;17.1;325;chicken,egg,meat,milk
+Ацуй;main;205;488;13.5;27.2;47.3;699;egg,fish,gluten,milk,soy
+Хьюстон;main;203;463;16.5;24.3;44.6;739;egg,fish,gluten,milk,soy
+Эби Такара;main;240;479;11.9;21.4;59.7;629;egg,fish,gluten,milk,seafood,soy
+Блю сякэ;main;200;458;12;25.7;44.8;699;egg,fish,gluten,milk,soy
+Кайсэн;main;195;581;14.2;25.1;74.6;719;egg,fish,gluten,milk,seafood,soy
+Персона грата;main;165;602;12.4;40.8;46.2;759;egg,fish,gluten,milk,soy
+Пинк сякэ;main;135;478;9;31.8;39;679;egg,fish,gluten,soy
+Темпура дракон;main;195;691;17.2;44.1;56.4;769;egg,fish,gluten,milk,soy
+Сякэ терияки;main;175;312;12.2;9.6;44.3;719;egg,fish,gluten,seafood,soy
+Ролл «Цезарь»;main;200;703;22;34.4;76.5;679;chicken,egg,fish,gluten,meat,milk,soy
+Майами;main;203;471;15;25.7;45;719;egg,fish,gluten,milk,soy
+Лапша Пад Тай;main;320;753;34.6;40.6;62.4;809;chicken,egg,fish,gluten,meat,nuts,seafood,soy
+Кобэ пирафу;main;270;527;23.6;17.9;67.9;829;beef,egg,meat,soy
+Тальятелле с креветками;main;315;589;29.2;36;37.1;809;fish,gluten,milk,nuts,seafood,soy
+Гречневая лапша с мясом цыпленка;main;300;382;28.5;8.8;47.1;709;chicken,gluten,meat,soy
+Удон с говядиной;main;325;620;24.1;34.5;53.2;839;beef,chicken,gluten,meat,milk,soy
+Гохан;main;180;226;6.1;1;48.2;349;
+Сифудо тяхан;main;280;498;24.7;13.3;70;809;fish,seafood,soy
+Тори гохан;main;260;502;19.7;15.2;71.7;639;chicken,fish,meat,soy
+Тяхан;main;230;407;7.7;9.9;71.8;509;fish,soy
+МЕГА Филадельфия;main;300;499;25.3;23.1;47.4;1389;egg,fish,milk
+МЕГА Калифорния;main;300;410;19.3;13.4;53.1;1239;egg,fish,gluten,milk,seafood,soy
+МЕГА Угорь;main;300;579;18.5;32.3;53.6;1089;egg,fish,gluten,milk,soy
+МЕГА Креветка;main;300;482;17.4;20.8;56.2;1239;egg,milk,seafood
+МЕГА Лосось-Креветка;main;300;583;24.6;28.6;56.8;1389;egg,fish,gluten,milk,seafood,soy
+Кальмар гриль;main;252;486;26.9;31.7;23.4;969;chicken,fish,meat,milk,seafood,soy
+Филе говядины с картофелем фри;main;190;397;31;20.8;21.4;1399;beef,egg,meat,milk
+Шницель;main;222;629;43.2;19;71.3;679;chicken,egg,gluten,meat,milk
+Мидии с фокаччей;main;210;493;13.2;41.7;16.3;870;gluten,milk,seafood,soy
+Суси-бургер;main;320;965;20.8;53.6;99.9;749;egg,fish,gluten,milk,soy
+Стейк из лосося;main;255;403;38.6;17.5;22.9;1469;beef,fish,meat,milk,soy
+Сякэ тиизу синоби;main;240;397;13.9;23;33.5;719;egg,fish,milk
+Шаурма;main;330;788;38.1;48.5;49.8;749;chicken,egg,gluten,meat,milk,soy
+Гратан с морским гребешком;main;273;538;18.2;33.1;41.8;750;egg,fish,seafood,soy
+Скерт стейк;main;252;410;28.1;26.4;15.1;1039;beef,chicken,meat,milk,soy
+Гратан с креветками;main;245;494;16.9;29.9;39.4;690;egg,fish,milk,seafood,soy
+Креветки темпура;main;270;786;28.9;23.3;98.3;769;egg,fish,gluten,seafood,soy
+Сок арбузный свежевыжатый;drink;500;180;0;0;45;507;
+Сок дынный свежевыжатый;drink;500;240;2;0;58;607;
+Сок грейпфрутовый свежевыжатый;drink;500;205;1.5;0.5;39.5;780;
+Сок апельсиновый свежевыжатый;drink;500;235;3.5;1.5;51;780;
+Сок морковный свежевыжатый;drink;500;140;5.5;0.5;32;670;
+Лимонад «Мята-Маракуйя»;drink;500;254;0.4;0.2;60.3;447;
+Лимонад Мандарин-Красная смородина;drink;500;114;0;0;35.3;447;
+Лимонад Скай блю;drink;500;248;0.1;0.1;53.3;447;
+Чай Малина-Имбирь-Лемонграсс;drink;500;183;0.8;0.2;44.4;507;
+Чай Чёрная смородина-Мята;drink;500;201;0.2;0;50;507;
+Чай Груша-Жасмин;drink;500;169;0.3;0.2;41.6;507;
+Чай Тибетский;drink;500;98;0.7;0.4;23;467;
+Смузи «Манго-Мята;drink;500;296;1.6;0.8;72.5;447;
+Смузи «Лесные Ягоды микс»;drink;500;340;0.3;0.1;76.7;447;
+Смузи «Пина Колада микс»;drink;500;375;1.8;9.1;71.6;447;milk
+Морс Клюквенный;drink;500;170;0;0;41;307;
+Добрый Кола 500 мл;drink;500;210;0;0;53;287;
+Добрый Кола без сахара 500 мл;drink;500;1.5;0;0;0;287;
+Добрый Лимон-лайм 500 мл;drink;500;90;0;0;23;277;
+Добрый Апельсин 500 мл;drink;500;160;0;0;40;277;
+Рич Индиан Тоник 330 мл;drink;330;119;0;0;29.7;297;
+Сок RICH апельсиновый;drink;1000;480;0;0;120;497;
+Сок RICH томатный;drink;1000;120;0;0;30;497;
+Сок RICH яблочный;drink;1000;420;0;0;105;497;
+Бургер Нью-Йорк;main;370;992;34.4;77.1;53.3;889;beef,egg,gluten,meat,milk
+Грин Бургер;main;240;741;28.2;65.9;8.9;789;beef,chicken,egg,gluten,meat,milk,soy
+Чизбургер;main;280;802;23.3;65.1;30.7;819;beef,egg,gluten,meat,milk
+Дьябло;main;445;1127;49.6;47.8;124.7;990;gluten,meat,milk,pork,soy
+Маргарита;main;320;817;34.5;41.2;77.5;880;gluten,milk
+Цезарь;salad;520;1351;61.4;75.3;106.9;960;chicken,egg,fish,gluten,meat,milk,soy
+Картофель фри;side;150;339;4.9;15.5;45;450;egg,milk
+Батат;main;170;435;7.5;27.9;38.4;670;egg,gluten,milk,nuts,soy
+Куросио;main;120;205;11.7;10.2;14.7;689;chicken,egg,fish,gluten,meat,milk,seafood,soy
+Калифорния севиче;main;210;396;15.1;18;43.4;789;egg,fish,gluten,milk,seafood,soy
+Гейша;main;165;325;12.4;14.2;36.8;679;egg,fish,gluten,milk,seafood,soy
+Айдахо;side;195;282;6.4;7.6;47.1;659;egg,fish,gluten,milk,seafood
+Бали;main;210;365;16.8;10.7;50.3;899;egg,fish,gluten,seafood,soy
+Дракон;main;215;452;14.9;21.9;48.9;899;egg,fish,gluten,milk,soy
+Калифорния;main;215;352;13.4;11.8;48;849;egg,fish,gluten,seafood,soy
+Киото;main;195;375;15.1;14.6;45.7;799;egg,fish,milk
+Лос-Анджелес;main;210;464;19.5;20.9;49.4;909;egg,fish,gluten,seafood,soy
+Нидзя;main;208;407;14.5;16.7;49.8;679;egg,fish,milk,soy
+О рицу;main;225;386;25.8;14.9;37.1;1229;egg,fish,milk
+Осака;main;210;352;22.9;13.8;34;1119;egg,fish,milk
+Красный дракон;main;210;443;16.6;20.5;48.1;779;egg,fish,gluten,milk,soy
+Лосось-карамель;main;190;392;17;16.1;44.8;790;egg,fish,milk,soy
+Калифорния сякэ;main;195;337;14.4;10.4;46.5;789;egg,fish,soy
+Тайга;main;195;400;17;15.7;47.7;849;egg,fish,gluten,soy
+Филадельфия унаги;main;195;337;14;12.7;41.7;839;egg,fish,gluten,milk,soy
+Филадельфия;main;225;398;16.2;15.4;48.6;899;egg,fish,milk,soy
+Филадельфия Прайм;main;235;432;18.9;17.2;50.5;939;egg,fish,milk
+Якитория;main;245;384;21.6;14.3;42.1;999;egg,fish,gluten,milk,seafood,soy
+Кани спайси;main;110;203;7;6.1;30;669;egg,seafood,soy
+Спайси ролл тунец;main;110;198;8.9;5.3;28.8;509;egg,fish,gluten,soy
+Спайси ролл лосось;main;110;211;8.1;7.1;28.8;529;egg,fish,gluten,soy
+Спайси ролл угорь;main;110;222;6.7;8.7;29.3;509;egg,fish,gluten,soy
+Сякэ;main;100;145;6.1;1.4;27;529;fish
+Унаги;main;110;180;7.2;4.2;28.4;509;fish,gluten,soy
+Тэкка;main;105;156;9.8;0.5;28;509;fish
+Абогадо;main;107;176;3.8;5.7;27.4;350;
+Каппа;main;105;125;3.1;0.3;27.6;340;
+Нисуаз;salad;275;370;14.6;23.3;25.5;910;egg,fish,milk,nuts,soy
+Тартар из тунца;salad;180;315;22.2;19.1;13.7;859;fish,gluten,soy
+Обжаренные баклажаны;salad;220;186;2.4;4.9;33.1;640;nuts,soy
+Теплый салат с морепродуктами;salad;150;280;15.2;17;16.5;809;gluten,milk,nuts,seafood
+Грин салат;salad;170;156;3.2;13.9;4.6;579;egg,gluten,nuts,soy
+Салат с угрем;salad;170;237;9.4;12.2;22.5;739;egg,fish,gluten,soy
+Цезарь с курицей;salad;240;597;30.6;45.1;17.3;679;chicken,egg,fish,gluten,meat,milk,soy
+Цезарь с креветками;salad;210;538;21.1;43;16.6;759;egg,fish,gluten,milk,seafood,soy
+Салат с креветками в авокадо;salad;130;245;4.4;24.4;1.9;739;egg,fish,seafood,soy
+Фокачча;salad;95;165;4.6;3.9;28;299;gluten
+Бородинские гренки;salad;150;454;12.2;22.8;50;559;gluten,milk
+Гедза с лососем и креветками;salad;105;191;10.9;3.8;28.4;739;chicken,egg,fish,gluten,meat,seafood,soy
+Гедза со свининой и мясом цыпленка;salad;105;201;8.5;6.1;28.1;739;chicken,egg,fish,gluten,meat,pork,seafood,soy
+Кольца кальмара;salad;108;471;12.9;29.3;38.8;630;egg,gluten,milk,seafood,soy
+Сырные шарики;salad;135;473;17.3;31.7;29.6;560;gluten,milk,soy
+Запеченные мидии;salad;160;368;16;32.6;2.6;809;egg,fish,milk,seafood,soy
+Попкорн из креветок;salad;107;277;11.6;16.2;21.2;560;chicken,fish,gluten,meat,pork,seafood,soy
+Поке с лососем;salad;330;464;14.8;29.5;34.8;919;fish,milk,soy
+Тори пирикара;salad;215;440;32.4;12.9;48.7;609;chicken,meat,soy
+Поке с креветками;salad;290;353;14.2;24.6;18.8;859;milk,seafood,soy
+Эдамамэ;salad;134;153;14;5.4;12;370;soy
+Эдамамэ чили;salad;135;189;15.9;7.8;13.8;370;soy
+Паровая булочка;salad;45;137;1.6;0.4;31.7;199;gluten
+Сякэ сасими;main;50;97;11.5;3.5;4.9;699;fish,soy
+Унаги сасими;main;40;105;7.7;5.5;6.2;609;fish,gluten,soy
+Магуро сасими;main;50;76;13.4;0.3;4.9;579;fish,soy
+Ассорти;main;166;250;36.6;5.2;14.1;1299;chicken,meat,seafood,soy
+Сердечки куриные;main;33;73;6.8;3.8;2.9;210;chicken,meat,soy
+Бедро куриное;main;37;98;11.1;4.5;3.3;210;chicken,meat,soy
+Кальмар;main;37;55;7.3;1.5;3;279;chicken,meat,seafood,soy
+Осьминожки бейби;main;43;74;13.5;1.1;2.5;459;chicken,meat,soy
+Кальмар с креветками;main;42;59;8.8;1.4;2.8;279;chicken,meat,seafood,soy
+Креветки;main;32;51;6.7;1.2;3.3;279;chicken,meat,seafood,soy
+Кетчуп;sauce;30;30;0.3;0;7;70;
+Соус Бальзамик;sauce;30;130;0.3;12.7;2.9;70;soy
+Соус Блю чиз;sauce;30;147;2.1;15.2;0.6;70;milk
+Соус Понзу;sauce;30;30;1.1;0;6.4;70;soy
+Соус Спайс цитрусовый;sauce;30;110;1;10;3;70;soy
+Соус Спайс;sauce;30;162;0.8;16.6;2.5;70;soy
+Соус Тартар;sauce;30;133;0.9;13.8;1.6;70;egg,soy
+Соус Цезарь;sauce;30;170;1.7;17.1;0.9;70;fish,milk
+Рамен с говядиной на воке;main;530;747;54.2;40.1;42.4;759;beef,gluten,meat,soy
+Чиз Рамен;main;440;483;23.3;24.7;42;809;beef,egg,gluten,meat,milk,soy
+Дзосуй;main;290;160;11.5;4.7;17.8;659;egg,fish,seafood,soy
+Рамен с мясом краба;main;510;283;15.7;5.3;43.3;759;chicken,egg,meat,seafood,soy
+Грибной суп;main;240;376;6.2;27.4;26.2;529;gluten,milk
+Мисо суп;main;210;51;4.3;0.9;6.3;250;fish,milk,soy
+Суимоно;main;200;27;3.3;0.3;2.8;250;fish,seafood,soy
+Том ям кунг;main;380;505;14.2;39.6;23.1;859;chicken,meat,milk,seafood,soy
+Суп Фо Бо;main;560;334;17.7;11.7;39.5;719;beef,chicken,fish,meat,soy
+Том ям набэ;main;300;400;14.3;26;27.2;759;chicken,meat,milk,seafood,soy
+Суп Янагава набэ;main;300;312;18.3;21.6;11;739;egg,fish,soy
+Унаги суси;main;30;58;2.3;2.4;6.9;199;fish,gluten,soy
+Сякэ суси;main;29;46;2.8;0.8;7;209;fish
+Сякэ кунсей суси;main;29;52;3;1.3;7;199;fish
+Магуро суси;main;30;43;3.5;0.1;7;189;fish
+Хотатэ суси;main;28;41;2.7;0.2;7;239;seafood
+Эби суси;main;28;39;2.4;0.1;7;189;seafood
+Тобико гункан;main;30;43;2.5;0.4;7.3;229;fish,soy
+Лосось спайси гункан;main;30;60;2.6;2.3;7.2;259;egg,fish,soy
+Угорь спайси гункан;main;30;63;2.2;2.8;7.3;259;egg,fish,soy
+Тунец спайси гункан;main;30;56;3;1.7;7.2;259;egg,fish,soy
+Икура гункан;main;32;60;4.5;1.6;7;479;fish
+Чука гункан;main;28;42;1.4;0.2;8.6;159;
+Морской гребешок спайси гункан;drink;30;55;2.6;1.8;7.2;269;egg,seafood,soy
+Эби гункан с авокадо;main;30;57;2.1;2.1;7.3;239;egg,seafood,soy
+Калифорния гункан;main;37;66;1.5;3.1;7.9;189;egg,fish,gluten,seafood
+Филадельфия гункан;main;36;62;2;2.8;7.1;229;egg,fish,milk,soy

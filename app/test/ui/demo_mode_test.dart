@@ -39,8 +39,8 @@ void main() {
     await tester.tap(find.byKey(const Key('find-nearby')));
     await tester.pumpAndSettle();
     await scrollTo(tester, find.byKey(const Key('search-results')));
-    expect(find.text('Бургер Кинг'), findsWidgets);
-    expect(find.text('Cofix'), findsWidgets);
+    expect(find.text('Prime'), findsWidgets);
+    expect(find.text('Кулинарная лавка братьев Караваевых'), findsWidgets);
 
     await tester.tap(find.descendant(of: find.byType(NavigationBar), matching: find.text('Профиль')));
     await tester.pumpAndSettle();
@@ -48,7 +48,8 @@ void main() {
     expect(
       find.text(
         'Встроенный демо-каталог: 14\u00a0285 реальных заведений из OpenStreetMap в Москве, области и Петербурге; '
-        'КБЖУ — с официальных сайтов Cofix, Бургер Кинга и Крошки Картошки; где вы — задаёт район выше',
+        'КБЖУ — с официальных сайтов 16 сетей: Cofix, Бургер Кинга, Якитории, Prime, Милти, Токио-Сити и других; '
+        'где вы — задаёт район выше',
       ),
       findsOneWidget,
     );

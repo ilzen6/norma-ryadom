@@ -124,11 +124,10 @@ class DemoComboContractTest {
         const val SCORE_SCALE = 1_000_000.0
 
         val DEMO_CHAINS =
-            listOf(
-                "Cofix" to "real/cofix",
-                "Бургер Кинг" to "real/burger-king",
-                "Крошка Картошка" to "real/kroska-kartoska",
-            )
+            Regex("""- name: "(.+?)"\n(?:\s+[a-z-]+: .+\n)*?\s+menu: classpath:demo/(\S+)-menu\.csv""")
+                .findAll(requireNotNull(DemoComboContractTest::class.java.getResource("/application-demo.yml")).readText())
+                .map { it.groupValues[1] to it.groupValues[2] }
+                .toList()
 
         val CASES =
             listOf(

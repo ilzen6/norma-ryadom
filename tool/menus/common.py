@@ -1,3 +1,4 @@
+import base64
 import csv
 import json
 import re
@@ -30,7 +31,7 @@ MEAT_WORDS = {
                 "твистер", "шефбургер", "байтс", "индейк"],
     "beef": ["говяд", "говяж", "воппер", "ангус", "биф", "beef", "телят", "стейк"],
     "pork": ["свин", "бекон", "ветчин", "карбонар", "пепперони", "буженин", "карбонад", "колбас", "сосиск", "хот-дог", "хот дог", "pork",
-             "сарделька", "салями"],
+             "сарделька", "салями", "окорок", "прошутто", "хамон"],
     "fish": ["рыб", "фиш", "fish", "лосос", "семг", "сёмг", "тунец", "тунц", "форел", "треск", "минтай", "угор", "анчоус"],
     "seafood": ["креветк", "шримп", "кальмар", "мидии", "краб", "морепрод", "осьминог", "гребеш"],
 }
@@ -56,6 +57,7 @@ NAME_ALLERGENS = {
 
 def clean_name(raw):
     name = re.sub(r"\s+", " ", raw).strip()
+    name = re.sub(r'"([^"]*)"', r"«\1»", name).replace('"', "")
     name = re.sub(r"(\w)-\s+(\w)", r"\1-\2", name)
     name = name.strip(" .,;")
     letters = [char for char in name if char.isalpha()]
@@ -67,6 +69,7 @@ def clean_name(raw):
 def declared(text):
     text = (text or "").lower()
     text = re.sub(r"яйц\w*\s+кур\w*|кур\w*\s+яйц\w*|яичн\w*", " яйцо ", text)
+    text = re.sub(r"орех\w*\s+мускатн\w*|мускатн\w*\s+орех\w*", " мускат ", text)
     for marker in ("может содержать следы", "может содержать", "следы", "производится на предприятии",
                    "изготовлено на предприятии", "на производстве также"):
         index = text.find(marker)
@@ -80,6 +83,19 @@ def category_of(name, default="main"):
     for category, words in CATEGORY_WORDS:
         if any(word in lowered for word in words):
             return category
+    return default
+
+
+def food_category(name, default="main"):
+    if default != "main":
+        return default
+    words = re.findall(r"\w+", name.lower())
+    first = words[0] if words else ""
+    lowered = name.lower()
+    savoury = any(word in lowered for words in MEAT_WORDS.values() for word in words)
+    for category, keywords in CATEGORY_WORDS:
+        if any(first.startswith(keyword.strip(" ,-")) for keyword in keywords if keyword.strip(" ,-")):
+            return default if category == "dessert" and savoury else category
     return default
 
 
@@ -129,6 +145,28 @@ def fmt(value):
         return ""
     rounded = round(value, 1)
     return str(int(rounded)) if rounded == int(rounded) else str(rounded)
+
+
+def har_bodies(path, url_part):
+    har = json.loads(Path(path).read_text(encoding="utf-8"))
+    for entry in har["log"]["entries"]:
+        content = entry["response"].get("content") or {}
+        if url_part not in entry["request"]["url"] or not content.get("text"):
+            continue
+        text = content["text"]
+        if content.get("encoding") == "base64":
+            text = base64.b64decode(text).decode("utf-8")
+        yield entry["request"]["url"], entry["startedDateTime"][:10], text
+
+
+def load_api_json(path, url_part):
+    path = Path(path)
+    if path.suffix == ".har":
+        for url, day, text in har_bodies(path, url_part):
+            return json.loads(text), url, day
+        raise SystemExit(f"в {path.name} нет ответа с адресом, содержащим {url_part}")
+    day = date.fromtimestamp(path.stat().st_mtime).isoformat()
+    return json.loads(path.read_text(encoding="utf-8")), None, day
 
 
 def write_menu(slug, chain, items, source_url, source_date=None, notes=""):

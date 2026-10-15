@@ -1,0 +1,26 @@
+{
+  "chain": "Up Sushi",
+  "source_url": "https://upsushi.ru/app-api/catalog?company=1&type_delivery=delivery&city=22&brand_id=1",
+  "source_date": "2026-10-15",
+  "fetched": "2026-10-15",
+  "items": 170,
+  "skipped": [
+    {
+      "name": "Бона Аква газированная",
+      "reason": "нет полного КБЖУ"
+    },
+    {
+      "name": "Бона Аква негазированная",
+      "reason": "нет полного КБЖУ"
+    },
+    {
+      "name": "Рис отварной",
+      "reason": "нет полного КБЖУ"
+    },
+    {
+      "name": "Франшиза UP SUSHI",
+      "reason": "нет полного КБЖУ"
+    }
+  ],
+  "notes": "Каталог сайта upsushi.ru для Москвы (city=22): calories/proteins/fats/carbohydrates в info — пищевая ценность на порцию, вес порции — из info.weight. Отметки исключений — по составу (consist); отдельного списка аллергенов сеть не публикует. Пропущены сеты и комбо."
+}
