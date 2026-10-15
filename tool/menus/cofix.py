@@ -2,6 +2,7 @@ import json
 import re
 import sys
 from collections import defaultdict
+from datetime import date
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
@@ -9,7 +10,6 @@ sys.path.insert(0, str(Path(__file__).parent))
 from common import tags_of, write_menu
 
 SOURCE_URL = "https://msk.cofix.global/"
-SOURCE_DATE = "2026-10-03"
 SKIPPED_GROUPS = ("мерч", "cofix at home")
 SWEET_GROUPS = ("десерт", "дeceрт", "сладк")
 PLAIN_DRINKS = re.compile(r"американо|эспрессо|^чай ", re.IGNORECASE)
@@ -124,7 +124,7 @@ def main(scratch):
         "Cofix",
         items,
         SOURCE_URL,
-        SOURCE_DATE,
+        date.fromtimestamp((Path(scratch) / "cofix-msk.html").stat().st_mtime).isoformat(),
         "Официальный сайт заказа Cofix для Москвы (встроен в https://cofix.global/ru-ru/menu/moscow/), данные __NEXT_DATA__ "
         "(nomenclatureJSON, menuJSON). Сайт показывает КБЖУ «на 100 г»; значения пересчитаны на порцию по весу/объёму "
         "позиции. Цены — московские цены сайта заказа. Пропущены позиции без цены, без веса, без КБЖУ, мерч и зерно, "

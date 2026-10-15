@@ -1,71 +1,71 @@
 name;category;portion_g;kcal;protein_g;fat_g;carbs_g;price_rub;tags
-Воппер;main;274;720;27;44;53;;beef,egg,gluten,meat
-Воппер с сыром;main;295;790;31;50;54;;beef,egg,gluten,meat,milk
-Двойной чизбургер;main;160;530;25;32;35;;beef,egg,gluten,meat,milk
-Гранд чиз;main;171;520;25;32;33;;beef,chicken,egg,gluten,meat,milk
-Гранд чиз фреш;main;199;520;25;32;34;;beef,chicken,egg,gluten,meat,milk
-Чизбургер;main;118;360;15;18;34;;beef,egg,gluten,meat,milk
-Гамбургер;main;108;320;13;15;34;;beef,egg,gluten,meat
-Воппер джуниор;main;143;370;13;21;33;;beef,egg,gluten,meat
-Гранд чиз двойной;main;251;810;42;55;36;;beef,chicken,egg,gluten,meat,milk
-Гранд чиз фреш двойной;main;279;810;42;55;37;;beef,chicken,egg,gluten,meat,milk
-Двойной воппер с сыром;main;388;1120;51;76;58;;beef,egg,gluten,meat,milk
-Двойной воппер;main;367;1050;47;70;57;;beef,egg,gluten,meat
-Тройной воппер;main;460;1380;66;97;61;;beef,egg,gluten,meat
+Воппер;main;274;720;27;44;53;;beef,egg,fish,gluten,meat
+Воппер с сыром;main;295;790;31;50;54;;beef,egg,fish,gluten,meat,milk
+Двойной чизбургер;main;160;530;25;32;35;;beef,egg,fish,gluten,meat,milk
+Гранд чиз;main;171;520;25;32;33;;beef,chicken,egg,fish,gluten,meat,milk
+Гранд чиз фреш;main;199;520;25;32;34;;beef,chicken,egg,fish,gluten,meat,milk
+Чизбургер;main;118;360;15;18;34;;beef,egg,fish,gluten,meat,milk
+Гамбургер;main;108;320;13;15;34;;beef,egg,fish,gluten,meat
+Воппер джуниор;main;143;370;13;21;33;;beef,egg,fish,gluten,meat
+Гранд чиз двойной;main;251;810;42;55;36;;beef,chicken,egg,fish,gluten,meat,milk
+Гранд чиз фреш двойной;main;279;810;42;55;37;;beef,chicken,egg,fish,gluten,meat,milk
+Двойной воппер с сыром;main;388;1120;51;76;58;;beef,egg,fish,gluten,meat,milk
+Двойной воппер;main;367;1050;47;70;57;;beef,egg,fish,gluten,meat
+Тройной воппер;main;460;1380;66;97;61;;beef,egg,fish,gluten,meat
 Ангус шеф;main;338;1060;42;72;62;;beef,egg,gluten,meat,milk,pork
 Ангус шеф двойной;main;446;1460;67;103;67;;beef,egg,gluten,meat,milk,pork
-А4 бургер;main;125;370;15;21;31;;beef,egg,gluten,meat,milk
-А4 чикенбургер;main;135;360;13;17;39;;chicken,egg,gluten,meat,milk
+А4 бургер;main;125;370;15;21;31;;beef,egg,fish,gluten,meat,milk
+А4 чикенбургер;main;135;360;13;17;39;;chicken,egg,fish,gluten,meat,milk
 Робокс бургер;main;125;400;15;24;31;;beef,egg,gluten,meat,milk
-Робокс чикенбургер;main;135;390;13;20;39;;chicken,egg,gluten,meat,milk
-Атомик воппер;main;266;710;27;42;56;;beef,egg,gluten,meat,milk
-Атомик воппер с курицей;main;290;630;24;27;72;;beef,chicken,egg,gluten,meat,milk
-Чикенбургер;main;137;380;12;18;42;;chicken,egg,gluten,meat
-Цезарь кинг;salad;153;450;13;25;44;;chicken,egg,gluten,meat,milk
-Чикен тар-тар;main;191;450;17;23;43;;chicken,egg,gluten,meat,milk
+Робокс чикенбургер;main;135;390;13;20;39;;chicken,egg,fish,gluten,meat,milk
+Атомик воппер;main;266;710;27;42;56;;beef,egg,fish,gluten,meat,milk
+Атомик воппер с курицей;main;290;630;24;27;72;;beef,chicken,egg,fish,gluten,meat,milk
+Чикенбургер;main;137;380;12;18;42;;chicken,egg,fish,gluten,meat
+Цезарь кинг;salad;153;450;13;25;44;;chicken,egg,fish,gluten,meat,milk
+Чикен тар-тар;main;191;450;17;23;43;;chicken,egg,fish,gluten,meat,milk
 Фиш бургер;main;168;400;14;20;42;;egg,fish,gluten,milk
 Фиш бургер двойной;main;245;580;23;30;54;;egg,fish,gluten,milk
 Острый фиш бургер;main;178;420;14;20;45;;egg,fish,gluten,milk
 Острый фиш ролл;main;179;410;14;19;45;;egg,fish,gluten
-Ангус пармеджано;main;313;880;37;55;59;;beef,egg,gluten,meat,milk
-Ангус пармеджано двойной;main;425;1300;62;90;61;;beef,egg,gluten,meat,milk
-Шавоппер;main;189;570;21;38;36;;beef,egg,gluten,meat
-Шавоппер с курицей;main;195;470;16;24;47;;beef,chicken,egg,gluten,meat
+Ангус пармеджано;main;313;880;37;55;59;;beef,egg,fish,gluten,meat,milk
+Ангус пармеджано двойной;main;425;1300;62;90;61;;beef,egg,fish,gluten,meat,milk
+Шавоппер;main;189;570;21;38;36;;beef,egg,fish,gluten,meat
+Шавоппер с курицей;main;195;470;16;24;47;;beef,chicken,egg,fish,gluten,meat
 Ангус по-итальянски;main;313;870;37;54;60;;beef,egg,gluten,meat,milk
-Ангус по-итальянски двойной;main;425;1300;62;89;62;;beef,egg,gluten,meat,milk
-Острый ангус по-итальянски;main;327;900;37;55;65;;beef,egg,gluten,meat,milk
-Острый ангус по-итальянски двойной;main;439;1320;62;90;66;;beef,egg,gluten,meat,milk
+Ангус по-итальянски двойной;main;425;1300;62;89;62;;beef,egg,fish,gluten,meat,milk
+Острый ангус по-итальянски;main;327;900;37;55;65;;beef,egg,fish,gluten,meat,milk
+Острый ангус по-итальянски двойной;main;439;1320;62;90;66;;beef,egg,fish,gluten,meat,milk
 Воппер по-итальянски;main;285;750;29;45;56;;beef,gluten,meat,milk
-Острый воппер по-итальянски;main;299;770;30;45;60;;beef,gluten,meat,milk
+Острый воппер по-итальянски;main;299;770;30;45;60;;beef,fish,gluten,meat,milk
 Воппер по-итальянски двойной;main;377;1120;49;76;59;;beef,gluten,meat,milk
-Острый воппер по-итальянски двойной;main;391;1140;49;77;62;;beef,gluten,meat,milk
-Песто чикен;main;309;670;26;31;72;;beef,chicken,gluten,meat,milk
-Острый песто чикен;main;323;690;26;31;76;;beef,chicken,gluten,meat,milk
-Песто чикен ролл;main;203;450;17;23;44;;chicken,gluten,meat,milk
-Острый песто чикен ролл;main;217;470;18;23;48;;chicken,gluten,meat,milk
+Острый воппер по-итальянски двойной;main;391;1140;49;77;62;;beef,fish,gluten,meat,milk
+Песто чикен;main;309;670;26;31;72;;beef,chicken,fish,gluten,meat,milk
+Острый песто чикен;main;323;690;26;31;76;;beef,chicken,fish,gluten,meat,milk
+Песто чикен ролл;main;203;450;17;23;44;;chicken,fish,gluten,meat,milk
+Острый песто чикен ролл;main;217;470;18;23;48;;chicken,fish,gluten,meat,milk
 Песто шримп ролл;main;182;380;12;15;48;;egg,gluten,milk,seafood,soy
-Острый песто шримп ролл;main;196;400;13;15;52;;egg,gluten,milk,seafood,soy
-Острый ангус пармеджано;main;327;900;37;55;63;;beef,egg,gluten,meat,milk
-Острый ангус пармеджано двойной;main;439;1310;62;90;64;;beef,egg,gluten,meat,milk
-Острый воппер;main;274;720;27;44;53;;beef,egg,gluten,meat
-Острый чизбургер;main;118;360;15;18;34;;beef,egg,gluten,meat,milk
-Острый чикенбургер;main;137;380;12;18;42;;chicken,egg,gluten,meat
-Острый воппер джуниор;main;143;370;13;21;33;;beef,egg,gluten,meat
-Острый гамбургер;main;108;320;13;15;34;;beef,egg,gluten,meat
-Острый чикен тар-тар;main;201;460;17;23;46;;chicken,egg,gluten,meat,milk
-Острый гранд чиз;main;171;520;25;32;33;;beef,chicken,egg,gluten,meat,milk
-Острый цезарь кинг;salad;163;410;13;19;46;;chicken,egg,gluten,meat,milk
-Острый гранд чиз фреш;main;199;520;25;32;34;;beef,chicken,egg,gluten,meat,milk
-Острый воппер с сыром;main;295;790;31;50;54;;beef,egg,gluten,meat,milk
+Острый песто шримп ролл;main;196;400;13;15;52;;egg,fish,gluten,milk,seafood,soy
+Острый ангус пармеджано;main;327;900;37;55;63;;beef,egg,fish,gluten,meat,milk
+Острый ангус пармеджано двойной;main;439;1310;62;90;64;;beef,egg,fish,gluten,meat,milk
+Острый воппер;main;274;720;27;44;53;;beef,egg,fish,gluten,meat
+Острый чизбургер;main;118;360;15;18;34;;beef,egg,fish,gluten,meat,milk
+Острый чикенбургер;main;137;380;12;18;42;;chicken,egg,fish,gluten,meat
+Острый воппер джуниор;main;143;370;13;21;33;;beef,egg,fish,gluten,meat
+Острый гамбургер;main;108;320;13;15;34;;beef,egg,fish,gluten,meat
+Острый чикен тар-тар;main;201;460;17;23;46;;chicken,egg,fish,gluten,meat,milk
+Острый гранд чиз;main;171;520;25;32;33;;beef,chicken,egg,fish,gluten,meat,milk
+Острый цезарь кинг;salad;163;410;13;19;46;;chicken,egg,fish,gluten,meat,milk
+Острый гранд чиз фреш;main;199;520;25;32;34;;beef,chicken,egg,fish,gluten,meat,milk
+Острый воппер с сыром;main;295;790;31;50;54;;beef,egg,fish,gluten,meat,milk
 Острый ангус шеф;main;352;1070;42;71;66;;beef,egg,gluten,meat,milk,pork
 Острый ангус шеф двойной;main;460;1470;67;103;68;;beef,egg,gluten,meat,milk,pork
-Острый двойной чизбургер;main;160;530;25;32;35;;beef,egg,gluten,meat,milk
-Острый воппер ролл;main;193;540;21;36;34;;beef,egg,gluten,meat
-Острый шримп ролл;main;163;390;12;16;49;;egg,gluten,milk,seafood,soy
-Острый цезарь ролл со стипсами;salad;197;450;17;22;45;;chicken,egg,gluten,meat,milk
-Воппер ролл;main;193;540;21;36;34;;beef,egg,gluten,meat
+Острый двойной чизбургер;main;160;530;25;32;35;;beef,egg,fish,gluten,meat,milk
+Острый воппер ролл;main;193;540;21;36;34;;beef,egg,fish,gluten,meat
+Острый шримп ролл;main;163;390;12;16;49;;egg,fish,gluten,milk,seafood,soy
+Острый цезарь ролл со стипсами;salad;197;450;17;22;45;;chicken,egg,fish,gluten,meat,milk
+Воппер ролл;main;193;540;21;36;34;;beef,egg,fish,gluten,meat
 Фиш ролл;main;165;390;14;19;41;;egg,fish,gluten
-Цезарь ролл со стрипсами;salad;183;430;17;22;41;;chicken,egg,gluten,meat,milk
+Цезарь ролл со стрипсами;salad;183;430;17;22;41;;chicken,egg,fish,gluten,meat,milk
 Шримп ролл;main;149;370;12;15;46;;egg,gluten,milk,seafood,soy
 Картофель деревенский джуниор;side;83;140;2;4.5;24;;gluten
 Картофель деревенский малый;side;120;220;3;7;35;;gluten
@@ -77,13 +77,13 @@ name;category;portion_g;kcal;protein_g;fat_g;carbs_g;price_rub;tags
 Кинг фри малый;side;67;130;2.5;4;22;;gluten
 Кинг фри стандартный;side;100;200;3.5;6.5;32;;gluten
 Кинг фри большой;side;154;310;5.5;9.5;50;;gluten
-Роял фри;side;238;590;9;31;69;;egg,gluten,meat,milk,pork
-Наггетсы (3 шт);main;41;120;6.5;7;8;;chicken,gluten,meat
-Наггетсы (6 шт);main;82;240;13;14;16;;chicken,gluten,meat
-Наггетсы (9 шт);main;124;360;19;21;24;;chicken,gluten,meat
-Наггетсы (12 шт);main;165;480;26;28;32;;chicken,gluten,meat
-Стрипсы (3 шт);main;103;240;16;12;16;;chicken,gluten,meat
-Стрипсы (6 шт);main;206;460;31;24;31;;chicken,gluten,meat
+Роял фри;side;238;590;9;31;69;;egg,fish,gluten,meat,milk,pork
+Наггетсы (3 шт);main;41;120;6.5;7;8;;chicken,fish,gluten,meat
+Наггетсы (6 шт);main;82;240;13;14;16;;chicken,fish,gluten,meat
+Наггетсы (9 шт);main;124;360;19;21;24;;chicken,fish,gluten,meat
+Наггетсы (12 шт);main;165;480;26;28;32;;chicken,fish,gluten,meat
+Стрипсы (3 шт);main;103;240;16;12;16;;chicken,fish,gluten,meat
+Стрипсы (6 шт);main;206;460;31;24;31;;chicken,fish,gluten,meat
 Креветки (3 шт);main;48;80;5.5;0.3;14;;egg,gluten,milk,seafood,soy
 Креветки (6 шт);main;96;160;11;0.5;29;;egg,gluten,milk,seafood,soy
 Креветки (9 шт);main;144;250;16;1;43;;egg,gluten,milk,seafood,soy
@@ -97,9 +97,9 @@ name;category;portion_g;kcal;protein_g;fat_g;carbs_g;price_rub;tags
 Крылышки (9 шт);main;191;740;59;51;11;;chicken,meat
 Крылышки (12 шт);main;471;990;78;69;15;;chicken,meat
 Кинг гоу деревенский;main;188;350;5.5;11;56;;gluten
-Кинг гоу наггетсы;main;156;400;16;19;40;;chicken,gluten,meat
+Кинг гоу наггетсы;main;156;400;16;19;40;;chicken,fish,gluten,meat
 Кинг букет «большой микс»;main;694;1460;80;71;126;;chicken,egg,gluten,meat
-Кинг букет «снек-микс»;main;440;1050;36;38;141;;chicken,egg,gluten,meat
+Кинг букет «снек-микс»;main;440;1050;36;38;141;;chicken,egg,fish,gluten,meat
 Кинг букет «креветки»;main;462;920;33;15;162;;egg,gluten,milk,seafood,soy
 Кинг букет креветки xxl;main;448;760;50;3;134;;egg,gluten,milk,seafood,soy
 Кинг букет крылышки xxl;main;1098;2300;182;159;34;;chicken,meat
@@ -112,13 +112,13 @@ name;category;portion_g;kcal;protein_g;fat_g;carbs_g;price_rub;tags
 Кинг фри малый + приправа «острая;side;67;130;2.5;4;22;;gluten
 Кинг фри стандартный + приправа;side;100;200;3.5;6.5;32;;gluten
 Кинг фри большой + приправа «острая;side;154;320;5.5;9.5;50;;gluten
-Острый роял фри;side;238;590;9;31;69;;egg,gluten,meat,milk,pork
-Наггетсы (3 шт) + приправа «острая;main;49;140;7.5;8.5;9.5;;chicken,gluten,meat
-Наггетсы (6 шт) + приправа «острая;main;98;290;15;17;19;;chicken,gluten,meat
-Наггетсы (9 шт) + приправа «острая;main;148;430;23;25;29;;chicken,gluten,meat
-Наггетсы (12 шт) + приправа «острая;main;197;580;31;33;39;;chicken,gluten,meat
-Стрипсы (3 шт) + приправа;main;103;240;16;12;16;;chicken,gluten,meat
-Стрипсы (6 шт) + приправа «острая;main;206;460;31;24;31;;chicken,gluten,meat
+Острый роял фри;side;238;590;9;31;69;;egg,fish,gluten,meat,milk,pork
+Наггетсы (3 шт) + приправа «острая;main;49;140;7.5;8.5;9.5;;chicken,fish,gluten,meat
+Наггетсы (6 шт) + приправа «острая;main;98;290;15;17;19;;chicken,fish,gluten,meat
+Наггетсы (9 шт) + приправа «острая;main;148;430;23;25;29;;chicken,fish,gluten,meat
+Наггетсы (12 шт) + приправа «острая;main;197;580;31;33;39;;chicken,fish,gluten,meat
+Стрипсы (3 шт) + приправа;main;103;240;16;12;16;;chicken,fish,gluten,meat
+Стрипсы (6 шт) + приправа «острая;main;206;460;31;24;31;;chicken,fish,gluten,meat
 Креветки (3 шт) + приправа «острая;main;48;80;5.5;0.3;14;;egg,gluten,milk,seafood,soy
 Креветки (6 шт) + приправа «острая;main;96;160;11;0.5;29;;egg,gluten,milk,seafood,soy
 Креветки (9 шт) + приправа «острая;main;144;250;16;1;43;;egg,gluten,milk,seafood,soy
@@ -132,7 +132,7 @@ name;category;portion_g;kcal;protein_g;fat_g;carbs_g;price_rub;tags
 Крылышки (9 шт) + приправа «острая;main;353;740;59;51;11;;chicken,meat
 Крылышки (12 шт) + приправа «острая;main;471;990;78;69;15;;chicken,meat
 Кинг букет «большой микс» + приправа «острая штука»;main;694;1460;80;71;126;;chicken,egg,gluten,meat
-Кинг букет «снек-микс» + приправа «острая;main;440;1050;36;38;141;;chicken,egg,gluten,meat
+Кинг букет «снек-микс» + приправа «острая;main;440;1050;36;38;141;;chicken,egg,fish,gluten,meat
 Кинг букет «креветки» + приправа;main;462;920;33;15;162;;egg,gluten,milk,seafood,soy
 Кинг букет креветки xxl+ приправа «острая штука»;main;448;760;50;3;134;;egg,gluten,milk,seafood,soy
 Кинг букет крылышки xxl+ приправа «острая штука»;main;1098;2300;182;159;34;;chicken,meat
@@ -143,12 +143,12 @@ name;category;portion_g;kcal;protein_g;fat_g;carbs_g;price_rub;tags
 Луковые кольца (12 шт) + приправа «сметана и лук»;side;133;320;9.5;3;63;;egg,gluten,milk
 Кинг фри малый + приправа «сметана и;side;67;130;2.5;4;22;;gluten,milk
 Кинг фри большой + приправа «сметана и;side;154;320;5.5;9.5;50;;gluten,milk
-Наггетсы (3 шт) + приправа «сметана и;main;41;120;6.5;7;8;;chicken,gluten,meat,milk
-Наггетсы (6 шт) + приправа «сметана и;main;82;240;13;14;16;;chicken,gluten,meat,milk
-Наггетсы (9 шт) + приправа;main;124;360;19;21;24;;chicken,gluten,meat
-Наггетсы (12 шт) + приправа «сметана и;main;165;480;26;28;32;;chicken,gluten,meat,milk
-Стрипсы (3 шт) + приправа «сметана и;main;103;240;16;12;16;;chicken,gluten,meat,milk
-Стрипсы (6 шт) + приправа «сметана и;main;206;460;31;24;31;;chicken,gluten,meat,milk
+Наггетсы (3 шт) + приправа «сметана и;main;41;120;6.5;7;8;;chicken,fish,gluten,meat,milk
+Наггетсы (6 шт) + приправа «сметана и;main;82;240;13;14;16;;chicken,fish,gluten,meat,milk
+Наггетсы (9 шт) + приправа;main;124;360;19;21;24;;chicken,fish,gluten,meat
+Наггетсы (12 шт) + приправа «сметана и;main;165;480;26;28;32;;chicken,fish,gluten,meat,milk
+Стрипсы (3 шт) + приправа «сметана и;main;103;240;16;12;16;;chicken,fish,gluten,meat,milk
+Стрипсы (6 шт) + приправа «сметана и;main;206;460;31;24;31;;chicken,fish,gluten,meat,milk
 Креветки (3 шт) + приправа «сметана и;main;48;80;5.5;0.3;14;;egg,gluten,milk,seafood,soy
 Креветки (6 шт) + приправа;main;96;160;11;0.5;29;;egg,gluten,milk,seafood,soy
 Креветки (9 шт) + приправа «сметана и;main;144;250;16;1;43;;egg,gluten,milk,seafood,soy
@@ -162,7 +162,7 @@ name;category;portion_g;kcal;protein_g;fat_g;carbs_g;price_rub;tags
 Крылышки (9 шт) + приправа «сметана и;main;353;740;59;51;11;;chicken,meat,milk
 Крылышки (12 шт) + приправа «сметана и;main;471;990;78;69;15;;chicken,meat,milk
 Кинг букет «большой микс» + приправа «сметана и лук»;main;694;1460;80;71;126;;chicken,egg,gluten,meat,milk
-Кинг букет «снек-микс» + приправа «сметана и;main;440;1050;36;38;141;;chicken,egg,gluten,meat,milk
+Кинг букет «снек-микс» + приправа «сметана и;main;440;1050;36;38;141;;chicken,egg,fish,gluten,meat,milk
 Кинг букет «креветки» + приправа «сметана и;main;462;920;33;15;162;;egg,gluten,milk,seafood,soy
 Кинг букет «креветки xxl» + приправа «сметана и лук»;main;448;760;50;3;134;;egg,gluten,milk,seafood,soy
 Кинг букет «крылышки xxl» + приправа «сметана и лук»;main;1098;2300;182;159;34;;chicken,gluten,meat,milk
@@ -270,20 +270,20 @@ name;category;portion_g;kcal;protein_g;fat_g;carbs_g;price_rub;tags
 Сырный соус пармеджано;sauce;25;95;0.5;10;1.5;;egg,gluten,milk
 Соус барбекю;sauce;25;35;0.3;0.8;8;;
 Соус 1000 островов;sauce;25;80;0.2;7.5;3;;gluten,milk
-Кетчуп;sauce;25;30;0.2;0;6.5;;
+Кетчуп;sauce;25;30;0.2;0;6.5;;fish
 Соус карри;sauce;25;85;0.1;8;4.5;;egg
 Соус горчичный;sauce;25;70;0.1;5;5.5;;egg
 Соус чесночный;sauce;25;110;0.2;11;2.5;;egg
 Соус брусничный;sauce;25;35;0;0;9;;egg,gluten,milk,soy
 Xxl соус 4 сыра;sauce;45;180;0.7;18;4.5;;egg,milk
-Острый томатный соус;sauce;25;30;0.4;0.3;6.5;;
+Острый томатный соус;sauce;25;30;0.4;0.3;6.5;;fish
 Экстра котлета гамбургер;main;48.2;130;8;11;0;;beef,gluten,meat
 Экстра котлета воппер;main;113.4;310;19;26;0;;beef,meat
 Экстра котлета гранд чиз;main;70;275;17;23;0;;beef,chicken,meat
 Экстра котлета ангус;main;102;380;24;32;0;;beef,meat
 Экстра бекон;main;16.3;50;1.5;5;0;;meat,pork
 Экстра креветки;main;32;52;5;0.2;8;;egg,gluten,milk,seafood,soy
-Экстра стрипс;main;40;80;5;4;5;;chicken,gluten,meat
+Экстра стрипс;main;40;80;5;4;5;;chicken,fish,gluten,meat
 Экстра сыр;main;10.5;35;2;3;0.4;;milk
 Экстра сыр двойной;main;21;70;4;6;0.8;;milk
 Экстра пармезан;main;10;35;3;2.5;0;;milk

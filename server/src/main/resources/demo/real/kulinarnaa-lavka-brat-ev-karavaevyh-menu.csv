@@ -3,8 +3,8 @@ name;category;portion_g;kcal;protein_g;fat_g;carbs_g;price_rub;tags
 Рис отварной;side;200;360;6;3;76;230;
 Лосось терияки;main;140;294;30.8;16.8;4.9;925;fish,soy
 Лосось слабосолёный;main;100;170;23;7.5;3;690;fish
-Оладьи куриные с зеленью;main;200;335;27.6;19;13.4;370;chicken,egg,meat
-Гречка с овощами;main;200;280;8;14;34;230;
+Оладьи куриные с зеленью;main;200;335;27.6;19;13.4;370;chicken,egg,fish,meat
+Гречка с овощами;main;200;280;8;14;34;230;fish
 Греческий йогурт с ягодами и мюсли;main;160;176;11.2;7.2;16;425;gluten,milk
 Творожная запеканка с маком;main;190;361;28.5;19;20.9;230;egg,milk
 Блин с бананом и соленой карамелью;main;110;235.4;4.4;14.5;21.9;155;beef,egg,gluten,meat,milk,soy
@@ -23,29 +23,29 @@ name;category;portion_g;kcal;protein_g;fat_g;carbs_g;price_rub;tags
 Блин рваная говядина;main;65;240.5;9.1;14.3;19.5;150;beef,chicken,gluten,meat,soy
 Ролл тунец половинка;main;150;240;9.8;12;24.8;205;egg,fish,gluten,milk
 Ролл тунец;main;300;480;19.5;24;49.5;410;egg,fish,gluten,milk
-Бутер с индейкой;main;295;855.5;38.4;35.4;94.4;380;chicken,egg,gluten,meat,soy
-Бутер сыр-ветчина-омлет;main;300;810;33;45;66;380;beef,chicken,egg,gluten,meat,milk,pork,soy
+Бутер с индейкой;main;295;855.5;38.4;35.4;94.4;380;chicken,egg,fish,gluten,meat,soy
+Бутер сыр-ветчина-омлет;main;300;810;33;45;66;380;beef,chicken,egg,fish,gluten,meat,milk,pork,soy
 Круассан с ветчиной и сыром моцарелла;main;160;448;16;30.4;25.6;300;chicken,egg,gluten,meat,milk,nuts,pork
 Круассан с лососем;main;140;322;13.3;19.6;23.8;485;egg,fish,gluten,milk,soy
-Салат Коул-слоу;salad;200;240;3;18;18;230;egg,milk,soy
-Салат с пиканьей;salad;200;180;10;10;11;510;beef,egg,meat,pork,soy
-Салат с сельдереем и брокколи;salad;200;260;4;24;8;460;
+Салат Коул-слоу;salad;200;240;3;18;18;230;egg,fish,milk,soy
+Салат с пиканьей;salad;200;180;10;10;11;510;beef,egg,fish,meat,pork,soy
+Салат с сельдереем и брокколи;salad;200;260;4;24;8;460;fish
 Салат Оливье;salad;200;520;11;46;13;270;chicken,egg,gluten,meat,pork
-Салат Сельдь под шубой;salad;300;780;18;66;30;405;egg
+Салат Сельдь под шубой;salad;300;780;18;66;30;405;egg,fish
 Салат Мимоза;salad;200;400;16;32;14;310;egg,fish
 Салат Весенний;salad;200;142;7;10;6;350;egg,milk
-Коктейль креветки-мандарин;salad;200;280;24;12;20;600;egg,gluten,seafood,soy
+Коктейль креветки-мандарин;salad;200;280;24;12;20;600;egg,fish,gluten,seafood,soy
 Кордон блю;main;150;263.2;16.8;16;12.8;235;chicken,gluten,meat,milk,pork,soy
 Говядина пикантная;main;200;220;22;12;6;650;beef,chicken,gluten,meat,milk,soy
 Казаречче с лососем и шпинатом;main;200;300;13;14;30;440;beef,fish,gluten,meat,milk,soy
-Рис с кальмаром и креветками;side;200;180;13;6;18;320;chicken,gluten,meat,milk,seafood,soy
-Фрикадельки куриные в сливочном соусе;side;200;220;22;11;9;240;beef,chicken,gluten,meat,milk
-Печень куриная по-строгановски;main;200;440;28;32;8;250;beef,chicken,gluten,meat,milk,soy
+Рис с кальмаром и креветками;side;200;180;13;6;18;320;chicken,fish,gluten,meat,milk,seafood,soy
+Фрикадельки куриные в сливочном соусе;side;200;220;22;11;9;240;beef,chicken,fish,gluten,meat,milk
+Печень куриная по-строгановски;main;200;440;28;32;8;250;beef,chicken,fish,gluten,meat,milk,soy
 Оладьи из печени;main;200;265.6;14.6;12.8;23;310;beef,chicken,egg,gluten,meat,milk
 Картофель жареный с грибами;side;200;340;8;18;38;270;gluten,milk,soy
-Крылья куриные по-сингапурски;main;140;295.3;20.7;16.1;16.9;195;chicken,egg,meat,seafood,soy
+Крылья куриные по-сингапурски;main;140;295.3;20.7;16.1;16.9;195;chicken,egg,fish,meat,seafood,soy
 Котлета куриная на пару;main;60;96;9;5.1;3.6;115;chicken,gluten,meat,milk
-Паста с грибами;main;200;420;15;17;52;360;chicken,gluten,meat,milk,soy
+Паста с грибами;main;200;420;15;17;52;360;chicken,fish,gluten,meat,milk,soy
 Удон с говядиной;main;200;400;14;24;32;370;beef,gluten,meat,soy
 Сочная курица;main;200;352;37.4;19.8;6;450;chicken,gluten,meat,soy
 Котлета мясная;main;80;200;9.6;15.2;6;195;beef,egg,gluten,meat,milk,pork,soy
@@ -54,7 +54,7 @@ name;category;portion_g;kcal;protein_g;fat_g;carbs_g;price_rub;tags
 Лосось слабосоленый;main;100;170;23;7.5;3;690;fish
 Котлета «Морская»;main;160;325.6;22.2;24.2;4.8;440;chicken,egg,meat,milk,seafood
 Рулет с копченой индейкой;main;200;540;22;40;24;320;beef,chicken,egg,fish,gluten,meat,milk
-Лазанья Мясная;main;270;459;21.6;24.3;35.1;470;beef,gluten,meat,milk
+Лазанья Мясная;main;270;459;21.6;24.3;35.1;470;beef,fish,gluten,meat,milk
 Плов с Уткой;main;200;280;6;5;53;340;meat,pork
 Пирог Мурманский палтус-треска;main;250;400;15;26.2;27.5;625;beef,egg,fish,gluten,meat,milk
 Печёные овощи;side;200;150;3;10;13;300;
@@ -93,7 +93,7 @@ name;category;portion_g;kcal;protein_g;fat_g;carbs_g;price_rub;tags
 Тарталетка Мандарин;dessert;120;350.4;4.8;16.8;44.4;265;egg,gluten,milk
 Медовик;dessert;100;332;4.5;17.7;38.7;230;egg,gluten,milk,soy
 Чизкейк Орео;dessert;105;315;5.2;28.4;10.5;280;beef,egg,gluten,meat,milk,soy
-Меренговый рулет с ягодами;dessert;140;518;11.9;29.4;50.4;455;beef,egg,meat,milk,nuts
+Меренговый рулет с ягодами;dessert;140;518;11.9;29.4;50.4;455;beef,egg,fish,meat,milk,nuts
 Шоколадная салями;dessert;100;460;7;29;42;175;egg,gluten,meat,milk,pork,soy
 Торт Три шоколада;dessert;140;520.5;8.7;33.7;45.5;285;beef,egg,gluten,meat,milk,soy
 Панна-котта манго-персик-кокос;dessert;130;221;2.6;16.9;13;290;milk,nuts

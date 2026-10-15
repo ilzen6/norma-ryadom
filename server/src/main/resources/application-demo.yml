@@ -3,7 +3,7 @@ demo:
   chains:
     - name: "Cofix"
       source-url: "https://msk.cofix.global/"
-      source-date: 2026-10-03
+      source-date: 2026-10-15
       menu: classpath:demo/real/cofix-menu.csv
       venues: classpath:demo/real/cofix-venues.csv
     - name: "Бургер Кинг"
@@ -26,6 +26,11 @@ demo:
       source-date: 2026-10-03
       menu: classpath:demo/real/kroska-kartoska-menu.csv
       venues: classpath:demo/real/kroska-kartoska-venues.csv
+    - name: "Цех85"
+      source-url: "https://tseh85.ru/catalog"
+      source-date: 2026-10-15
+      menu: classpath:demo/real/ceh85-menu.csv
+      venues: classpath:demo/real/ceh85-venues.csv
     - name: "Кулинарная лавка братьев Караваевых"
       source-url: "https://www.karavaevi.ru/menu/"
       source-date: 2026-10-15
@@ -56,6 +61,16 @@ demo:
       source-date: 2026-10-15
       menu: classpath:demo/real/stolle-menu.csv
       venues: classpath:demo/real/stolle-venues.csv
+    - name: "Евразия"
+      source-url: "https://evrasia.spb.ru/calorie/"
+      source-date: 2026-10-15
+      menu: classpath:demo/real/evrazia-menu.csv
+      venues: classpath:demo/real/evrazia-venues.csv
+    - name: "IL Патио"
+      source-url: "https://ilpatio.ru/"
+      source-date: 2026-10-15
+      menu: classpath:demo/real/il-patio-menu.csv
+      venues: classpath:demo/real/il-patio-venues.csv
     - name: "Coffee Like"
       source-url: "https://coffee-like.com/menu/drinks"
       source-date: 2026-10-15
@@ -76,11 +91,36 @@ demo:
       source-date: 2026-07-02
       menu: classpath:demo/real/cinnabon-menu.csv
       venues: classpath:demo/real/cinnabon-venues.csv
+    - name: "Hatimaki"
+      source-url: "https://hatimaki.ru/catalog/"
+      source-date: 2026-10-15
+      menu: classpath:demo/real/hatimaki-menu.csv
+      venues: classpath:demo/real/hatimaki-venues.csv
+    - name: "Zotman Pizza"
+      source-url: "https://zotmanpizza.ru/menu"
+      source-date: 2026-10-15
+      menu: classpath:demo/real/zotman-pizza-menu.csv
+      venues: classpath:demo/real/zotman-pizza-venues.csv
     - name: "Якитория"
       source-url: "https://yakitoriya.ru/menu-dostavki/"
       source-date: 2026-10-15
       menu: classpath:demo/real/akitoria-menu.csv
       venues: classpath:demo/real/akitoria-venues.csv
+    - name: "Vasilchuki Chaihona №1"
+      source-url: "https://chaihona.ru/catalog"
+      source-date: 2026-10-15
+      menu: classpath:demo/real/vasilchuki-chaihona-1-menu.csv
+      venues: classpath:demo/real/vasilchuki-chaihona-1-venues.csv
+    - name: "ПхалиХинкали"
+      source-url: "https://dostavka.phali-hinkali.ru/menu/calorie"
+      source-date: 2026-10-15
+      menu: classpath:demo/real/phalihinkali-menu.csv
+      venues: classpath:demo/real/phalihinkali-venues.csv
+    - name: "TGI Fridays"
+      source-url: "https://tgifridays.ru/"
+      source-date: 2026-10-15
+      menu: classpath:demo/real/tgi-fridays-menu.csv
+      venues: classpath:demo/real/tgi-fridays-venues.csv
     - name: "Вкусно — и точка"
       source-url: "https://www.openstreetmap.org/copyright"
       venues: classpath:demo/real/vkusno-i-tocka-venues.csv
@@ -105,9 +145,6 @@ demo:
     - name: "Стардогs"
       source-url: "https://www.openstreetmap.org/copyright"
       venues: classpath:demo/real/stardogs-venues.csv
-    - name: "Цех85"
-      source-url: "https://www.openstreetmap.org/copyright"
-      venues: classpath:demo/real/ceh85-venues.csv
     - name: "Суши Wok"
       source-url: "https://www.openstreetmap.org/copyright"
       venues: classpath:demo/real/susi-wok-venues.csv
@@ -141,12 +178,6 @@ demo:
     - name: "Влаваше"
       source-url: "https://www.openstreetmap.org/copyright"
       venues: classpath:demo/real/vlavase-venues.csv
-    - name: "Евразия"
-      source-url: "https://www.openstreetmap.org/copyright"
-      venues: classpath:demo/real/evrazia-venues.csv
-    - name: "IL Патио"
-      source-url: "https://www.openstreetmap.org/copyright"
-      venues: classpath:demo/real/il-patio-venues.csv
     - name: "Stars Coffee"
       source-url: "https://www.openstreetmap.org/copyright"
       venues: classpath:demo/real/stars-coffee-venues.csv
@@ -198,9 +229,6 @@ demo:
     - name: "Пироговый дворик"
       source-url: "https://www.openstreetmap.org/copyright"
       venues: classpath:demo/real/pirogovyi-dvorik-venues.csv
-    - name: "Hatimaki"
-      source-url: "https://www.openstreetmap.org/copyright"
-      venues: classpath:demo/real/hatimaki-venues.csv
     - name: "Брусника"
       source-url: "https://www.openstreetmap.org/copyright"
       venues: classpath:demo/real/brusnika-venues.csv
@@ -210,9 +238,6 @@ demo:
     - name: "Farsh"
       source-url: "https://www.openstreetmap.org/copyright"
       venues: classpath:demo/real/farsh-venues.csv
-    - name: "Zotman Pizza"
-      source-url: "https://www.openstreetmap.org/copyright"
-      venues: classpath:demo/real/zotman-pizza-venues.csv
     - name: "Север-Метрополь"
       source-url: "https://www.openstreetmap.org/copyright"
       venues: classpath:demo/real/sever-metropol-venues.csv
@@ -252,9 +277,6 @@ demo:
     - name: "Зерно"
       source-url: "https://www.openstreetmap.org/copyright"
       venues: classpath:demo/real/zerno-venues.csv
-    - name: "Vasilchuki Chaihona №1"
-      source-url: "https://www.openstreetmap.org/copyright"
-      venues: classpath:demo/real/vasilchuki-chaihona-1-venues.csv
     - name: "Корчма"
       source-url: "https://www.openstreetmap.org/copyright"
       venues: classpath:demo/real/korcma-venues.csv
@@ -273,9 +295,6 @@ demo:
     - name: "Skuratov Coffee"
       source-url: "https://www.openstreetmap.org/copyright"
       venues: classpath:demo/real/skuratov-coffee-venues.csv
-    - name: "ПхалиХинкали"
-      source-url: "https://www.openstreetmap.org/copyright"
-      venues: classpath:demo/real/phalihinkali-venues.csv
     - name: "Британские пекарни"
       source-url: "https://www.openstreetmap.org/copyright"
       venues: classpath:demo/real/britanskie-pekarni-venues.csv
@@ -345,9 +364,6 @@ demo:
     - name: "Андерсон"
       source-url: "https://www.openstreetmap.org/copyright"
       venues: classpath:demo/real/anderson-venues.csv
-    - name: "TGI Fridays"
-      source-url: "https://www.openstreetmap.org/copyright"
-      venues: classpath:demo/real/tgi-fridays-venues.csv
     - name: "Мидийное место"
       source-url: "https://www.openstreetmap.org/copyright"
       venues: classpath:demo/real/midiinoe-mesto-venues.csv

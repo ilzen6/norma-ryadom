@@ -15,8 +15,8 @@ name;category;portion_g;kcal;protein_g;fat_g;carbs_g;price_rub;tags
 Наполнитель «Сосиски в горчичном соусе»;side;62;162.4;3.4;14.2;6.7;;chicken,meat,milk,pork,soy
 Наполнитель «Сырный с ветчиной»;side;62;220.8;7.7;20.2;0.9;;chicken,egg,meat,milk,pork,soy
 Наполнитель «Закусочный с грибами»;side;58;78.5;1.2;7.7;1;;
-Наполнитель «Мясное ассорти»;side;62;163.5;5.2;15.5;0.7;;chicken,egg,meat,milk,nuts,pork,soy
-Наполнитель «Цыпленок с жареными грибами»;side;62;187.1;6.4;15.4;5.5;;chicken,egg,meat,milk,nuts
+Наполнитель «Мясное ассорти»;side;62;163.5;5.2;15.5;0.7;;chicken,egg,meat,milk,pork,soy
+Наполнитель «Цыпленок с жареными грибами»;side;62;187.1;6.4;15.4;5.5;;chicken,egg,meat,milk
 Наполнитель Треска по-северному;side;61;150.4;6.2;13.3;1.5;;egg,fish,milk,soy
 Наполнитель «Цыпленок песто»;side;64;222.4;8.5;20.5;0.9;;chicken,egg,meat,milk,nuts
 Наполнитель «Том Ям с курицей и креветкой»;side;62;241.7;14;19.3;3;;chicken,egg,fish,meat,milk,nuts,seafood,soy
@@ -27,13 +27,13 @@ name;category;portion_g;kcal;protein_g;fat_g;carbs_g;price_rub;tags
 Цезарь Боул;salad;158;193.6;10.3;14.4;5.7;;chicken,egg,gluten,meat,milk
 Борщ;main;256;100.7;6.2;3;12.3;;beef,chicken,meat
 Суп Лапша куриная;main;261;72.9;4.4;3.4;6.1;;chicken,gluten,meat
-Суп Гороховый;main;276;117.8;4.6;5.4;12.7;;chicken,meat,milk,pork,soy
+Суп Гороховый;main;276;117.8;4.6;5.4;12.7;;chicken,fish,meat,milk,pork,soy
 Суп «Чечевичный с курицей»;main;300;256.2;13.6;9.7;28.7;;chicken,meat,milk,soy
 Хлеб с чесночным маслом;side;55;136.9;2.1;9.4;11;;gluten
 Гренки «8 злаков»;side;55;152.3;2.2;9;15.5;;gluten,soy
 Сэндвич Классический с ветчиной;main;135;360.4;12.8;19.7;32.9;;chicken,egg,gluten,meat,milk,pork,soy
-Патата Сосиска Голландский сыр;main;170;419;12.9;23.9;38.1;;chicken,egg,gluten,meat,milk,nuts,pork,soy
-Сэндвич «Пепперони с сыром»;main;135;218;10.9;8.5;24.6;;chicken,egg,gluten,meat,milk,nuts,pork,soy
+Патата Сосиска Голландский сыр;main;170;419;12.9;23.9;38.1;;chicken,egg,fish,gluten,meat,milk,pork,soy
+Сэндвич «Пепперони с сыром»;main;135;218;10.9;8.5;24.6;;chicken,egg,fish,gluten,meat,milk,nuts,pork,soy
 Патата «Люля Кебаб»;main;192;525.7;21;30.6;41.6;;chicken,egg,gluten,meat,milk,nuts,soy
 Патата «Бургер»;main;192;548.5;20.2;31;47.2;;beef,chicken,egg,gluten,meat,milk,nuts,soy
 Патата «Том Ям с курицей и креветкой»;main;185;435.5;20.1;21;41.5;;chicken,egg,fish,gluten,meat,milk,nuts,seafood,soy

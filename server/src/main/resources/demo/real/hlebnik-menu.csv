@@ -150,19 +150,19 @@ name;category;portion_g;kcal;protein_g;fat_g;carbs_g;price_rub;tags
 Сэндвич горячий с бужениной;main;180;469.8;17.1;31;30.4;295;gluten,meat,milk,pork
 Сэндвич летний с моцареллой;main;220;437.8;19.6;24.9;33.9;265;gluten,milk
 Фокачча с тунцом и печеной паприкой;main;170;312.8;16.5;15.1;27.7;265;fish,gluten
-Темаки краб;main;140;392;8.4;21;42;207;milk,seafood
-Темаки цыплёнок;main;130;273;7.8;14.3;28.6;207;chicken,meat,milk
+Темаки краб;main;140;392;8.4;21;42;207;fish,milk,seafood
+Темаки цыплёнок;main;130;273;7.8;14.3;28.6;207;chicken,fish,meat,milk
 Ролл запеченный с крабом;main;240;624;9.6;38.4;57.6;329;fish,gluten,milk,seafood
 Ролл запеченный с лососем;main;230;483;11.5;34.5;34.5;405;fish,gluten,milk
 Ролл запеченный с креветкой;main;250;575;12.5;35;52.5;405;fish,gluten,milk,seafood
 Ролл запеченный с курицей;main;270;621;13.5;35.1;59.4;339;chicken,fish,gluten,meat,milk
-Боул снежный краб;main;200;360;7;19;42;329;nuts,seafood
-Боул с цыпленком;main;230;414;13.8;19.5;46;345;chicken,meat,nuts
-Онигири с цыпленком терияки;main;120;204;9;4.8;30;166;chicken,egg,meat,soy
+Боул снежный краб;main;200;360;7;19;42;329;fish,nuts,seafood
+Боул с цыпленком;main;230;414;13.8;19.5;46;345;chicken,fish,meat,nuts
+Онигири с цыпленком терияки;main;120;204;9;4.8;30;166;chicken,egg,fish,meat,soy
 Онигири с огурцом и сливочным сыром;main;120;216;3.6;8.4;32.4;147;fish,milk
 Онигири с лососем;main;110;220;7.2;8.2;28.6;328;fish,milk
-Онигири с креветкой;main;110;187;7.2;3.3;33;200;seafood
-Онигири краб;main;120;228;6;9;31.2;154;seafood
+Онигири с креветкой;main;110;187;7.2;3.3;33;200;fish,seafood
+Онигири краб;main;120;228;6;9;31.2;154;fish,seafood
 Тяхан с курицей;main;250;450;13.8;16.2;65;236;chicken,egg,meat,soy
 Курица терияки с рисом;main;270;567;18.9;13.5;91.8;256;chicken,meat,soy
 Вок с курицей;main;250;375;15;10;55;278;chicken,gluten,meat,soy
@@ -170,7 +170,7 @@ name;category;portion_g;kcal;protein_g;fat_g;carbs_g;price_rub;tags
 Вок с говядиной;main;250;550;13.8;23.8;70;340;beef,gluten,meat,soy
 Соба с курицей и овощами;main;240;336;16.8;12;40.8;278;chicken,gluten,meat,soy
 Паста Карбонара;main;250;575;20;32.5;52.5;258;egg,gluten,meat,milk,pork
-Паста с грибами в сливочном соусе и сыром Пармезан;main;230;529;11.5;32.2;48.3;231;gluten,milk
+Паста с грибами в сливочном соусе и сыром Пармезан;main;230;529;11.5;32.2;48.3;231;gluten,milk,seafood
 Паста Болоньезе;main;240;384;16.8;14.4;45.6;284;beef,chicken,gluten,meat,milk
 Паста с цыпленком и грибами;main;240;528;16.8;33.6;36;263;chicken,gluten,meat,milk
 Люля-кебаб из мяса цыпленка;main;250;250;25;6.2;25;296;chicken,gluten,meat,milk
@@ -198,7 +198,7 @@ name;category;portion_g;kcal;protein_g;fat_g;carbs_g;price_rub;tags
 Салат грибной с мясом цыпленка;salad;180;360;10.8;30.6;9.9;253;chicken,egg,meat
 Салат с крабовыми палочками;salad;170;357;6.8;25.5;25.5;193;seafood
 Салат свекольный с грецким орехом;salad;180;288;2.7;23.4;14.4;129;nuts
-Сельдь под шубой;main;180;288;10.8;21.6;13.5;207;
+Сельдь под шубой;main;180;288;10.8;21.6;13.5;207;fish
 Суп крем из шпината с миндалем;main;250;225;7.5;15;13.8;218;milk,nuts
 Куриный суп-лапша;main;300;105;6;4.5;12;121;chicken,gluten,meat
 Грибной крем-суп;main;250;237.5;5;20;10;204;milk,soy
