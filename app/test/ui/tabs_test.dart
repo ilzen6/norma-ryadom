@@ -269,6 +269,33 @@ void main() {
     expect(harness.diary.entries, hasLength(1));
   });
 
+  testWidgets('дневник принимает запись вручную и учитывает её в остатке', (tester) async {
+    final harness = TestHarness(profile: TestData.profile);
+    await harness.pump(tester);
+
+    await openTab(tester, 'Дневник');
+    await tester.tap(find.byKey(const Key('diary-add-manual')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('manual-save')));
+    await tester.pumpAndSettle();
+    expect(find.text('Допустимо от 1 до 5000'), findsOneWidget);
+    expect(harness.diary.entries, isEmpty);
+
+    await tester.tap(find.byKey(const Key('manual-meal-breakfast')));
+    await tester.enterText(find.byKey(const Key('manual-title')), 'Овсянка дома');
+    await tester.enterText(find.byKey(const Key('manual-kcal')), '350');
+    await tester.enterText(find.byKey(const Key('manual-protein')), '12,5');
+    await tester.enterText(find.byKey(const Key('manual-carbs')), '55');
+    await tester.tap(find.byKey(const Key('manual-save')));
+    await tester.pumpAndSettle();
+
+    final entry = harness.diary.entries.single;
+    expect(entry.title, 'Овсянка дома');
+    expect(entry.meal, MealType.breakfast);
+    expect(entry.intake, const Intake(kcal: 350, protein: 12.5, fat: 0, carbs: 55));
+    expect(find.text('350 из 1800'), findsOneWidget);
+  });
+
   testWidgets('пустой дневник подсказывает, что записей нет', (tester) async {
     final harness = TestHarness(profile: TestData.profile);
     await harness.pump(tester);
@@ -329,6 +356,58 @@ void main() {
     await tester.tap(find.byKey(const Key('location-consent')));
     await tester.pumpAndSettle();
     expect(harness.profiles.profile?.locationConsent, isTrue);
+  });
+
+  testWidgets('профиль подключает «Здоровье» только после разрешения', (tester) async {
+    final harness = TestHarness(profile: TestData.profile)..health.granted = false;
+    await harness.pump(tester);
+    await openTab(tester, 'Профиль');
+    await tester.scrollUntilVisible(find.byKey(const Key('health-sync')), 120);
+
+    await tester.tap(find.byKey(const Key('health-sync')));
+    await tester.pumpAndSettle();
+    expect(harness.settings.health, isFalse);
+    expect(find.textContaining('Не удалось подключиться к «Здоровью»'), findsOneWidget);
+
+    harness.health.granted = true;
+    await tester.tap(find.byKey(const Key('health-sync')));
+    await tester.pumpAndSettle();
+    expect(harness.settings.health, isTrue);
+    expect(tester.widget<SwitchListTile>(find.byKey(const Key('health-sync'))).value, isTrue);
+  });
+
+  testWidgets('дневник учитывает еду из других приложений и отправляет туда свои записи', (tester) async {
+    final harness = TestHarness(profile: TestData.profile)
+      ..healthSync = true
+      ..health.elsewhere = const Intake(kcal: 800, protein: 40, fat: 30, carbs: 90);
+    await harness.pump(tester);
+
+    await openTab(tester, 'Дневник');
+    expect(find.text('800 из 1800'), findsOneWidget);
+    expect(find.text('Учтено из других приложений через «Здоровье»: 800 ккал'), findsOneWidget);
+
+    await tester.tap(find.byKey(const Key('diary-add-manual')));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byKey(const Key('manual-kcal')), '200');
+    await tester.tap(find.byKey(const Key('manual-save')));
+    await tester.pumpAndSettle();
+    expect(find.text('1000 из 1800'), findsOneWidget);
+    expect(harness.health.exported.single.intake.kcal, 200);
+  });
+
+  testWidgets('без подключения к «Здоровью» записи туда не уходят', (tester) async {
+    final harness = TestHarness(profile: TestData.profile);
+    await harness.pump(tester);
+
+    await openTab(tester, 'Дневник');
+    await tester.tap(find.byKey(const Key('diary-add-manual')));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byKey(const Key('manual-kcal')), '200');
+    await tester.tap(find.byKey(const Key('manual-save')));
+    await tester.pumpAndSettle();
+    expect(harness.diary.entries, hasLength(1));
+    expect(harness.health.exported, isEmpty);
+    expect(find.byKey(const Key('diary-external')), findsNothing);
   });
 
   testWidgets('список заведений разворачивается на весь экран, а «Назад» сворачивает его к карте', (tester) async {

@@ -15,7 +15,7 @@ android {
 
     defaultConfig {
         applicationId = "ru.normaryadom.norma_ryadom"
-        minSdk = flutter.minSdkVersion
+        minSdk = 26
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName

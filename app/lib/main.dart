@@ -16,10 +16,19 @@ Future<void> main() async {
       overrides: [
         databaseProvider.overrideWithValue(database),
         initialServerAddressProvider.overrideWithValue(await _savedServerAddress(database)),
+        initialHealthSyncProvider.overrideWithValue(await _savedHealthSync(database)),
       ],
       child: const NormaRyadomApp(),
     ),
   );
+}
+
+Future<bool> _savedHealthSync(AppDatabase database) async {
+  try {
+    return await LocalSettingsRepository(database).healthSync();
+  } on Exception {
+    return false;
+  }
 }
 
 Future<String?> _savedServerAddress(AppDatabase database) async {

@@ -27,6 +27,8 @@ class TestHarness {
   final picker = FakePhotoPicker();
   final settings = InMemorySettingsRepository();
   final probe = FakeServerProbe();
+  final health = FakeHealthSyncService();
+  bool healthSync = false;
   bool allowCleartextServer = false;
   DateTime now = DateTime(2026, 10, 2, 13, 5);
 
@@ -41,6 +43,8 @@ class TestHarness {
     ),
     settingsRepositoryProvider.overrideWithValue(settings),
     serverProbeProvider.overrideWithValue(probe.call),
+    healthSyncServiceProvider.overrideWithValue(health),
+    initialHealthSyncProvider.overrideWithValue(healthSync),
     clockProvider.overrideWithValue(() => now),
     profileRepositoryProvider.overrideWithValue(profiles),
     diaryRepositoryProvider.overrideWithValue(diary),

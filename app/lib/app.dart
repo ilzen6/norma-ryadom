@@ -20,6 +20,7 @@ class _NormaRyadomAppState extends ConsumerState<NormaRyadomApp> {
   void _refreshSession() {
     ref.read(currentDayProvider.notifier).refresh();
     ref.invalidate(locationProvider);
+    ref.invalidate(externalIntakeProvider);
   }
 
   @override

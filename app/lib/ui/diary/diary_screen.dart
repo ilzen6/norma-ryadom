@@ -16,6 +16,7 @@ import '../core/widgets/nutrients_text.dart';
 import '../core/widgets/state_views.dart';
 import '../core/widgets/visuals.dart';
 import 'diary_view_model.dart';
+import 'manual_entry_sheet.dart';
 
 class DiaryScreen extends ConsumerWidget {
   const DiaryScreen({super.key});
@@ -102,8 +103,31 @@ class DiaryScreen extends ConsumerWidget {
                       ),
                     ],
                   ),
+                  if (summary.external.kcal > 0) ...[
+                    const SizedBox(height: 14),
+                    Row(
+                      key: const Key('diary-external'),
+                      children: [
+                        Icon(Icons.favorite_rounded, size: 18, color: palette.brand),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Text(
+                            l10n.diaryExternal(summary.external.kcal.round()),
+                            style: Theme.of(context).textTheme.bodySmall,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ],
               ),
+            ),
+            const SizedBox(height: Layout.gap),
+            OutlinedButton.icon(
+              key: const Key('diary-add-manual'),
+              onPressed: () => ManualEntrySheet.show(context),
+              icon: const Icon(Icons.edit_note_rounded),
+              label: Text(l10n.diaryAddManual),
             ),
             const SizedBox(height: Layout.section),
             if (summary.entries.isEmpty)

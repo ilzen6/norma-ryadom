@@ -531,6 +531,22 @@
   "diaryEmpty": "Пока ничего не записано",
   "diaryEaten": "Съедено",
   "diaryQuickAdd": "Быстро добавить",
+  "diaryAddManual": "Добавить вручную",
+  "diaryExternal": "Учтено из других приложений через «Здоровье»: {kcal} ккал",
+  "@diaryExternal": {
+    "placeholders": {
+      "kcal": {
+        "type": "int"
+      }
+    }
+  },
+  "profileHealthSync": "Еда из других приложений",
+  "profileHealthSyncHint": "Apple Здоровье или Health Connect: учитываем съеденное в других приложениях и записываем туда приёмы пищи отсюда",
+  "healthSyncUnavailable": "Не удалось подключиться к «Здоровью»: проверьте, что оно есть на телефоне и доступ разрешён",
+  "diaryManualTitle": "Запись вручную",
+  "diaryManualHint": "Домашняя еда или итог из другого приложения — чтобы остаток на сегодня был честным.",
+  "diaryManualName": "Что съели",
+  "diaryManualDefaultName": "Своя запись",
   "diaryAddAgain": "Добавить снова «{title}»",
   "@diaryAddAgain": {
     "placeholders": {

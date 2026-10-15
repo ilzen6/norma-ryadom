@@ -16,6 +16,7 @@ import 'repositories/profile_repository.dart';
 import 'repositories/settings_repository.dart';
 import 'repositories/venue_repository.dart';
 import 'services/location_service.dart';
+import 'services/health_sync_service.dart';
 import 'services/norma_api.dart';
 import 'services/photo_picker_service.dart';
 
@@ -48,6 +49,37 @@ class ServerAddressController extends Notifier<String> {
   Future<void> save(String address) async {
     await ref.read(settingsRepositoryProvider).saveServerAddress(address);
     state = address;
+  }
+}
+
+final healthSyncServiceProvider = Provider<HealthSyncService>(
+  (ref) => PlatformHealthSyncService.supported ? PlatformHealthSyncService() : const UnavailableHealthSyncService(),
+);
+
+final initialHealthSyncProvider = Provider<bool>((ref) => false);
+
+final healthSyncProvider = NotifierProvider<HealthSyncController, bool>(HealthSyncController.new);
+
+class HealthSyncController extends Notifier<bool> {
+  @override
+  bool build() => ref.watch(initialHealthSyncProvider);
+
+  Future<bool> enable() async {
+    final bool granted;
+    try {
+      granted = await ref.read(healthSyncServiceProvider).connect();
+    } on Exception {
+      return false;
+    }
+    if (!granted) return false;
+    await ref.read(settingsRepositoryProvider).saveHealthSync(enabled: true);
+    state = true;
+    return true;
+  }
+
+  Future<void> disable() async {
+    await ref.read(settingsRepositoryProvider).saveHealthSync(enabled: false);
+    state = false;
   }
 }
 

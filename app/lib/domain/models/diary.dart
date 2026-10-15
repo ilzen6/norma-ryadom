@@ -35,9 +35,13 @@ abstract class NewDiaryEntry with _$NewDiaryEntry {
 abstract class DaySummary with _$DaySummary {
   const DaySummary._();
 
-  const factory DaySummary({required NutritionNorm norm, required List<DiaryEntry> entries}) = _DaySummary;
+  const factory DaySummary({
+    required NutritionNorm norm,
+    required List<DiaryEntry> entries,
+    @Default(Intake.zero) Intake external,
+  }) = _DaySummary;
 
-  Intake get eaten => entries.fold(Intake.zero, (sum, entry) => sum + entry.intake);
+  Intake get eaten => entries.fold(external, (sum, entry) => sum + entry.intake);
 
   NutritionNorm get remaining => norm.minus(eaten);
 }

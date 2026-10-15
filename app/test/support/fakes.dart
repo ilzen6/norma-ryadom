@@ -6,6 +6,7 @@ import 'package:norma_ryadom/data/repositories/feedback_repository.dart';
 import 'package:norma_ryadom/data/repositories/profile_repository.dart';
 import 'package:norma_ryadom/data/repositories/settings_repository.dart';
 import 'package:norma_ryadom/data/repositories/venue_repository.dart';
+import 'package:norma_ryadom/data/services/health_sync_service.dart';
 import 'package:norma_ryadom/data/services/location_service.dart';
 import 'package:norma_ryadom/data/services/norma_api.dart';
 import 'package:norma_ryadom/data/services/photo_picker_service.dart';
@@ -14,6 +15,7 @@ import 'package:norma_ryadom/domain/models/combo.dart';
 import 'package:norma_ryadom/domain/models/diary.dart';
 import 'package:norma_ryadom/domain/models/geo_location.dart';
 import 'package:norma_ryadom/domain/models/meal.dart';
+import 'package:norma_ryadom/domain/models/nutrition_norm.dart';
 import 'package:norma_ryadom/domain/models/profile.dart';
 import 'package:norma_ryadom/utils/result.dart';
 
@@ -107,12 +109,37 @@ class InMemoryDiaryRepository implements DiaryRepository {
 
 class InMemorySettingsRepository implements SettingsRepository {
   String? address;
+  bool health = false;
 
   @override
   Future<String?> serverAddress() async => address;
 
   @override
   Future<void> saveServerAddress(String address) async => this.address = address;
+
+  @override
+  Future<bool> healthSync() async => health;
+
+  @override
+  Future<void> saveHealthSync({required bool enabled}) async => health = enabled;
+}
+
+class FakeHealthSyncService implements HealthSyncService {
+  bool granted = true;
+  Intake elsewhere = Intake.zero;
+  final List<NewDiaryEntry> exported = [];
+
+  @override
+  Future<bool> isAvailable() async => true;
+
+  @override
+  Future<bool> connect() async => granted;
+
+  @override
+  Future<Intake> eatenElsewhere(DateTime day) async => elsewhere;
+
+  @override
+  Future<void> export(NewDiaryEntry entry, DateTime at) async => exported.add(entry);
 }
 
 class FakeServerProbe {

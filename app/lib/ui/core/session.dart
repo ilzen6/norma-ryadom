@@ -147,9 +147,19 @@ final todayProvider = StreamProvider<List<DiaryEntry>>((ref) {
   return ref.watch(diaryRepositoryProvider).watchDay(today);
 });
 
+final externalIntakeProvider = FutureProvider<Intake>((ref) async {
+  final day = ref.watch(currentDayProvider);
+  if (!ref.watch(healthSyncProvider)) return Intake.zero;
+  try {
+    return await ref.watch(healthSyncServiceProvider).eatenElsewhere(day);
+  } on Exception {
+    return Intake.zero;
+  }
+});
+
 final daySummaryProvider = Provider<DaySummary?>((ref) {
   final norm = ref.watch(normProvider);
   final entries = ref.watch(todayProvider).value;
   if (norm == null || entries == null) return null;
-  return DaySummary(norm: norm, entries: entries);
+  return DaySummary(norm: norm, entries: entries, external: ref.watch(externalIntakeProvider).value ?? Intake.zero);
 });

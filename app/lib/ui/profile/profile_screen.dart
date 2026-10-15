@@ -153,6 +153,19 @@ class ProfileScreen extends ConsumerWidget {
                     },
                   ),
                   const Divider(indent: 72, endIndent: 16),
+                  SwitchListTile(
+                    key: const Key('health-sync'),
+                    secondary: Icon(Icons.favorite_rounded, color: palette.brand),
+                    title: Text(l10n.profileHealthSync),
+                    subtitle: Text(l10n.profileHealthSyncHint),
+                    value: ref.watch(healthSyncProvider),
+                    onChanged: (enabled) async {
+                      final sync = ref.read(healthSyncProvider.notifier);
+                      if (!enabled) return sync.disable();
+                      if (!await sync.enable() && context.mounted) showMessage(context, l10n.healthSyncUnavailable);
+                    },
+                  ),
+                  const Divider(indent: 72, endIndent: 16),
                   DistrictField(
                     key: const Key('district-field'),
                     inset: true,
