@@ -75,7 +75,7 @@ def practical_number(path):
     return int(found[-1]) if found else None
 
 
-def build(out_dir, practicals_dir):
+def build(out_dir, practicals_dir, apk=None):
     folder = out_dir / NAME
     if folder.exists():
         shutil.rmtree(folder)
@@ -89,6 +89,13 @@ def build(out_dir, practicals_dir):
     shutil.copyfile(ROOT / "docs/project-description.docx", description / f"Описание проекта «{NAME}».docx")
     shutil.copyfile(ROOT / "docs/project-description.md", description / f"Описание проекта «{NAME}».md")
     shutil.copytree(ROOT / "docs/description-images", description / "description-images")
+    shutil.copyfile(ROOT / "docs/overview.docx", description / f"Кратко о проекте и стеке «{NAME}».docx")
+    shutil.copyfile(ROOT / "docs/overview.md", description / f"Кратко о проекте и стеке «{NAME}».md")
+    if apk:
+        install = folder / "0. Приложение для Android"
+        install.mkdir()
+        shutil.copyfile(apk, install / f"{NAME} (Android, без сервера).apk")
+        shutil.copyfile(HERE / "install-apk.md", install / "Как установить.md")
     for number, title in APP_SCREENS.items():
         shutil.copyfile(glob.glob(f"{SHOTS}/app-{number}-*.png")[0], shots / "Приложение — светлая тема" / f"{number} {title}.png")
         shutil.copyfile(glob.glob(f"{SHOTS}/app-dark-{number}-*.png")[0], shots / "Приложение — тёмная тема" / f"{number} {title}.png")
@@ -115,11 +122,12 @@ def build(out_dir, practicals_dir):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Собирает архив для команды: описание, скриншоты, документацию и практические")
+    parser = argparse.ArgumentParser(description="Собирает архив для команды: APK, описание, скриншоты, документацию и практические")
     parser.add_argument("--out", default=str(Path.home() / "Downloads"))
     parser.add_argument("--practicals", help="папка с исходными .docx практических 2–8")
+    parser.add_argument("--apk", help="демо-APK без сервера (norma-ryadom-offline.apk из GitHub Releases)")
     args = parser.parse_args()
-    build(Path(args.out).expanduser(), args.practicals)
+    build(Path(args.out).expanduser(), args.practicals, args.apk)
 
 
 if __name__ == "__main__":
