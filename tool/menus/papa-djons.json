@@ -2,7 +2,7 @@
   "chain": "Папа Джонс",
   "source_url": "https://api.papajohns.ru/catalog/goods?city_id=1&lang=ru",
   "source_date": "2026-10-15",
-  "fetched": "2026-10-15",
+  "fetched": "2026-10-18",
   "items": 119,
   "skipped": [
     {

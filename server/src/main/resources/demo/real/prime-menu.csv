@@ -10,7 +10,7 @@ name;category;portion_g;kcal;protein_g;fat_g;carbs_g;price_rub;tags
 Бефстроганов из говядины с картофельным пюре;main;230;218.5;9.2;6.9;29.9;499;beef,gluten,meat,milk
 Бейби котлетки из индейки с гречкой и овощами;main;250;455;22.5;25;35;429;chicken,gluten,meat,milk
 Домашняя котлета с гречкой и овощами;main;220;534.6;19.8;33;39.6;409;beef,chicken,gluten,meat,milk,pork
-Феттучини с лимонной курицей и соусом песто;main;230;358.8;16.1;18.4;32.2;419;chicken,meat,milk
+Феттучини с лимонной курицей и соусом песто;main;230;358.8;16.1;18.4;32.2;419;chicken,gluten,meat,milk
 Фунчоза с цыпленком и овощами;main;250;325;10;15;37.5;429;chicken,meat,soy
 Индейка Том Ям с рисом басмати;main;250;390;37.5;20;15;519;chicken,meat,milk,nuts,seafood
 Пожарская котлета с картофельным пюре;main;270;483.3;18.9;24.3;48.6;489;chicken,gluten,meat,milk
@@ -21,8 +21,8 @@ name;category;portion_g;kcal;protein_g;fat_g;carbs_g;price_rub;tags
 Говядина с черносливом и гречкой;main;220;356.4;22;13.2;37.4;419;beef,meat,soy
 Паста Качо э Пэпэ;main;285;1094.4;17.1;68.4;62.7;419;chicken,gluten,meat,milk
 Паста Карбонара;main;300;564;18;24;63;419;egg,gluten,meat,milk,pork
-Рамен с говядиной и овощами;main;252;388.3;12.3;16.1;48.6;459;beef,chicken,egg,meat,nuts,soy
-Рамен с куриным бедром и кунжутом;main;250;382.5;15;12.5;52.5;459;chicken,egg,meat,soy
+Рамен с говядиной и овощами;main;252;388.3;12.3;16.1;48.6;459;beef,chicken,egg,gluten,meat,nuts,soy
+Рамен с куриным бедром и кунжутом;main;250;382.5;15;12.5;52.5;459;chicken,egg,gluten,meat,soy
 Шведские фрикадельки с фарфалле;main;280;610.4;25.2;28;64.4;429;chicken,egg,gluten,meat,milk,pork
 Цыпленок в соусе Чоп-Суэй с рисом;main;261;549.4;23.5;17.5;74.4;359;chicken,gluten,meat,soy
 Цыплёнок Гун Бао с рисом;main;250;337.5;15;7.5;52.5;439;chicken,meat,nuts,soy

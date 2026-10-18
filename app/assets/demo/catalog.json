@@ -1339,6 +1339,7 @@
           "carbs": 44.4,
           "priceMinor": 65000,
           "tags": [
+            "gluten",
             "seafood"
           ]
         },
@@ -24688,6 +24689,7 @@
           "tags": [
             "chicken",
             "egg",
+            "gluten",
             "meat",
             "milk"
           ]
@@ -24856,6 +24858,7 @@
           "tags": [
             "beef",
             "fish",
+            "gluten",
             "meat",
             "pork"
           ]
@@ -25008,6 +25011,7 @@
           "priceMinor": 29000,
           "tags": [
             "egg",
+            "gluten",
             "meat",
             "milk",
             "pork"
@@ -25236,6 +25240,7 @@
           "priceMinor": 21000,
           "tags": [
             "chicken",
+            "gluten",
             "meat"
           ]
         },
@@ -25314,6 +25319,7 @@
           "priceMinor": 21000,
           "tags": [
             "egg",
+            "gluten",
             "meat",
             "milk",
             "pork"
@@ -25431,6 +25437,7 @@
           "tags": [
             "beef",
             "fish",
+            "gluten",
             "meat",
             "milk",
             "pork"
@@ -30002,6 +30009,7 @@
           "priceMinor": 33300,
           "tags": [
             "chicken",
+            "gluten",
             "meat"
           ]
         },
@@ -31423,6 +31431,7 @@
           "tags": [
             "chicken",
             "egg",
+            "gluten",
             "meat",
             "milk"
           ]
@@ -31820,6 +31829,7 @@
           "priceMinor": 50000,
           "tags": [
             "chicken",
+            "gluten",
             "meat"
           ]
         },
@@ -31833,6 +31843,7 @@
           "carbs": 69.0,
           "priceMinor": 44000,
           "tags": [
+            "gluten",
             "meat",
             "pork"
           ]
@@ -35336,6 +35347,7 @@
           "priceMinor": 68000,
           "tags": [
             "fish",
+            "gluten",
             "milk"
           ]
         },
@@ -35786,6 +35798,7 @@
           "priceMinor": 39000,
           "tags": [
             "fish",
+            "gluten",
             "milk"
           ]
         },
@@ -36949,6 +36962,7 @@
           "priceMinor": 59500,
           "tags": [
             "egg",
+            "gluten",
             "meat",
             "milk",
             "pork"
@@ -36965,6 +36979,7 @@
           "priceMinor": null,
           "tags": [
             "beef",
+            "gluten",
             "meat"
           ]
         },
@@ -36979,6 +36994,7 @@
           "priceMinor": 59500,
           "tags": [
             "chicken",
+            "gluten",
             "meat",
             "milk"
           ]
@@ -37400,6 +37416,7 @@
           "carbs": 25.0,
           "priceMinor": 19500,
           "tags": [
+            "gluten",
             "milk"
           ]
         },
@@ -37753,6 +37770,7 @@
           "carbs": 48.0,
           "priceMinor": 59500,
           "tags": [
+            "gluten",
             "seafood"
           ]
         },
@@ -37765,7 +37783,9 @@
           "fat": 16.0,
           "carbs": 46.0,
           "priceMinor": 44500,
-          "tags": []
+          "tags": [
+            "gluten"
+          ]
         },
         {
           "name": "Чебуреки с говядиной и томатным соусом",
@@ -38045,6 +38065,7 @@
           "tags": [
             "chicken",
             "egg",
+            "gluten",
             "meat",
             "soy"
           ]
@@ -38059,6 +38080,7 @@
           "carbs": 82.0,
           "priceMinor": null,
           "tags": [
+            "gluten",
             "milk"
           ]
         },
@@ -38122,7 +38144,9 @@
           "fat": 5.0,
           "carbs": 22.0,
           "priceMinor": null,
-          "tags": []
+          "tags": [
+            "gluten"
+          ]
         },
         {
           "name": "Уха из трех видов рыбы",
@@ -42528,6 +42552,7 @@
           "priceMinor": 41900,
           "tags": [
             "chicken",
+            "gluten",
             "meat",
             "milk"
           ]
@@ -42704,6 +42729,7 @@
             "beef",
             "chicken",
             "egg",
+            "gluten",
             "meat",
             "nuts",
             "soy"
@@ -42721,6 +42747,7 @@
           "tags": [
             "chicken",
             "egg",
+            "gluten",
             "meat",
             "soy"
           ]
@@ -45759,6 +45786,7 @@
           "priceMinor": 59900,
           "tags": [
             "chicken",
+            "gluten",
             "meat"
           ]
         },
@@ -45773,6 +45801,7 @@
           "priceMinor": 64900,
           "tags": [
             "chicken",
+            "gluten",
             "meat",
             "seafood"
           ]
@@ -46100,6 +46129,7 @@
           "priceMinor": 64900,
           "tags": [
             "beef",
+            "gluten",
             "meat"
           ]
         },
@@ -46393,6 +46423,7 @@
           "tags": [
             "chicken",
             "egg",
+            "gluten",
             "meat"
           ]
         },
@@ -46423,6 +46454,7 @@
           "tags": [
             "beef",
             "egg",
+            "gluten",
             "meat"
           ]
         },
@@ -46492,6 +46524,7 @@
           "carbs": 104.7,
           "priceMinor": 64900,
           "tags": [
+            "gluten",
             "seafood"
           ]
         },
@@ -48857,6 +48890,1462 @@
       ]
     },
     {
+      "name": "Моремания",
+      "sourceUrl": "https://moremania.info/menu",
+      "verifiedAt": "2026-10-18T00:00:00Z",
+      "items": [
+        {
+          "name": "Тартар с тунцом и авокадо",
+          "category": "main",
+          "portionGrams": 230.0,
+          "kcal": 618.7,
+          "protein": 29.9,
+          "fat": 50.6,
+          "carbs": 6.9,
+          "priceMinor": 54900,
+          "tags": [
+            "fish"
+          ]
+        },
+        {
+          "name": "Поке с тунцом",
+          "category": "main",
+          "portionGrams": 375.0,
+          "kcal": 502.5,
+          "protein": 30.0,
+          "fat": 15.0,
+          "carbs": 56.2,
+          "priceMinor": 48900,
+          "tags": [
+            "fish",
+            "soy"
+          ]
+        },
+        {
+          "name": "Поке с форелью",
+          "category": "main",
+          "portionGrams": 395.0,
+          "kcal": 497.7,
+          "protein": 31.6,
+          "fat": 15.8,
+          "carbs": 55.3,
+          "priceMinor": 54900,
+          "tags": [
+            "fish",
+            "soy"
+          ]
+        },
+        {
+          "name": "Боул с морскими водорослями и авокадо",
+          "category": "main",
+          "portionGrams": 284.0,
+          "kcal": 448.7,
+          "protein": 8.2,
+          "fat": 33.8,
+          "carbs": 30.7,
+          "priceMinor": 41900,
+          "tags": [
+            "fish",
+            "nuts",
+            "soy"
+          ]
+        },
+        {
+          "name": "Кобб салат с тунцом",
+          "category": "main",
+          "portionGrams": 301.0,
+          "kcal": 499.7,
+          "protein": 18.7,
+          "fat": 43.3,
+          "carbs": 9.6,
+          "priceMinor": 44900,
+          "tags": [
+            "egg",
+            "fish",
+            "soy"
+          ]
+        },
+        {
+          "name": "Салат деревенский, с помидорами и огурцом",
+          "category": "salad",
+          "portionGrams": 277.0,
+          "kcal": 160.7,
+          "protein": 2.8,
+          "fat": 11.1,
+          "carbs": 11.1,
+          "priceMinor": 33900,
+          "tags": []
+        },
+        {
+          "name": "Салат зелёный из листовых салатов и огурца",
+          "category": "salad",
+          "portionGrams": 176.0,
+          "kcal": 89.8,
+          "protein": 2.1,
+          "fat": 7.4,
+          "carbs": 4.2,
+          "priceMinor": 32900,
+          "tags": []
+        },
+        {
+          "name": "Салат с крабом и авокадо",
+          "category": "salad",
+          "portionGrams": 220.0,
+          "kcal": 279.4,
+          "protein": 13.0,
+          "fat": 24.0,
+          "carbs": 7.0,
+          "priceMinor": 54900,
+          "tags": [
+            "fish",
+            "seafood"
+          ]
+        },
+        {
+          "name": "Салат с креветками и рукколой",
+          "category": "salad",
+          "portionGrams": 185.0,
+          "kcal": 284.9,
+          "protein": 18.5,
+          "fat": 20.4,
+          "carbs": 5.6,
+          "priceMinor": 54900,
+          "tags": [
+            "milk",
+            "seafood"
+          ]
+        },
+        {
+          "name": "Салат цезарь с морепродуктами",
+          "category": "salad",
+          "portionGrams": 264.0,
+          "kcal": 580.8,
+          "protein": 23.5,
+          "fat": 48.8,
+          "carbs": 13.5,
+          "priceMinor": 49900,
+          "tags": [
+            "milk",
+            "seafood"
+          ]
+        },
+        {
+          "name": "Татаки тунец на гриле с овощным салатом",
+          "category": "main",
+          "portionGrams": 218.0,
+          "kcal": 150.4,
+          "protein": 19.0,
+          "fat": 2.2,
+          "carbs": 10.9,
+          "priceMinor": 49900,
+          "tags": [
+            "fish"
+          ]
+        },
+        {
+          "name": "Тёплый угорь с пикантным салатом из огурца, яблока и хвороста",
+          "category": "main",
+          "portionGrams": 300.0,
+          "kcal": 486.0,
+          "protein": 12.0,
+          "fat": 33.0,
+          "carbs": 30.0,
+          "priceMinor": 52900,
+          "tags": [
+            "fish"
+          ]
+        },
+        {
+          "name": "Батат фри с вашим любимым соусом",
+          "category": "main",
+          "portionGrams": 159.0,
+          "kcal": 95.4,
+          "protein": 1.6,
+          "fat": 0.2,
+          "carbs": 21.1,
+          "priceMinor": 24900,
+          "tags": [
+            "milk"
+          ]
+        },
+        {
+          "name": "Жаренный рис с овощами и яйцом",
+          "category": "main",
+          "portionGrams": 270.0,
+          "kcal": 513.0,
+          "protein": 13.5,
+          "fat": 44.6,
+          "carbs": 35.1,
+          "priceMinor": 31900,
+          "tags": [
+            "egg",
+            "soy"
+          ]
+        },
+        {
+          "name": "Картофель дольками по-деревенски",
+          "category": "side",
+          "portionGrams": 150.0,
+          "kcal": 537.0,
+          "protein": 6.0,
+          "fat": 22.5,
+          "carbs": 62.8,
+          "priceMinor": 16900,
+          "tags": []
+        },
+        {
+          "name": "Картофель фри с сыром и трюфельным маслом",
+          "category": "side",
+          "portionGrams": 150.0,
+          "kcal": 339.0,
+          "protein": 6.0,
+          "fat": 16.5,
+          "carbs": 40.5,
+          "priceMinor": 16900,
+          "tags": [
+            "milk"
+          ]
+        },
+        {
+          "name": "Овощи гриль",
+          "category": "side",
+          "portionGrams": 150.0,
+          "kcal": 165.0,
+          "protein": 5.2,
+          "fat": 9.0,
+          "carbs": 15.8,
+          "priceMinor": 29900,
+          "tags": []
+        },
+        {
+          "name": "Рис отварной",
+          "category": "side",
+          "portionGrams": 146.0,
+          "kcal": 270.1,
+          "protein": 7.3,
+          "fat": 2.5,
+          "carbs": 54.6,
+          "priceMinor": 12900,
+          "tags": []
+        },
+        {
+          "name": "Лапша с морепродуктами",
+          "category": "main",
+          "portionGrams": 392.0,
+          "kcal": 705.6,
+          "protein": 39.2,
+          "fat": 12.2,
+          "carbs": 111.3,
+          "priceMinor": 57900,
+          "tags": [
+            "egg",
+            "fish",
+            "gluten",
+            "seafood",
+            "soy"
+          ]
+        },
+        {
+          "name": "Лапша с морепродуктами 1/2",
+          "category": "main",
+          "portionGrams": 196.0,
+          "kcal": 352.8,
+          "protein": 19.6,
+          "fat": 6.1,
+          "carbs": 55.7,
+          "priceMinor": 39900,
+          "tags": [
+            "egg",
+            "fish",
+            "gluten",
+            "seafood",
+            "soy"
+          ]
+        },
+        {
+          "name": "Спагетти с вонголе",
+          "category": "main",
+          "portionGrams": 444.0,
+          "kcal": 599.4,
+          "protein": 31.1,
+          "fat": 26.6,
+          "carbs": 26.6,
+          "priceMinor": 52900,
+          "tags": [
+            "fish",
+            "gluten",
+            "milk",
+            "seafood"
+          ]
+        },
+        {
+          "name": "Спагетти с вонголе 1/2",
+          "category": "main",
+          "portionGrams": 266.0,
+          "kcal": 359.1,
+          "protein": 18.6,
+          "fat": 16.0,
+          "carbs": 16.0,
+          "priceMinor": 39900,
+          "tags": [
+            "fish",
+            "gluten",
+            "milk",
+            "seafood"
+          ]
+        },
+        {
+          "name": "Спагетти с томатным соусом, креветками, лососем и треской",
+          "category": "main",
+          "portionGrams": 483.0,
+          "kcal": 492.7,
+          "protein": 24.1,
+          "fat": 29.0,
+          "carbs": 33.8,
+          "priceMinor": 52900,
+          "tags": [
+            "fish",
+            "gluten",
+            "seafood"
+          ]
+        },
+        {
+          "name": "Феттучини со сливочным соусом и лососем",
+          "category": "main",
+          "portionGrams": 374.0,
+          "kcal": 658.2,
+          "protein": 22.4,
+          "fat": 48.6,
+          "carbs": 29.9,
+          "priceMinor": 56900,
+          "tags": [
+            "fish",
+            "gluten",
+            "milk"
+          ]
+        },
+        {
+          "name": "Феттучини со сливочным соусом и лососем 1/2",
+          "category": "main",
+          "portionGrams": 231.0,
+          "kcal": 406.6,
+          "protein": 13.9,
+          "fat": 30.0,
+          "carbs": 18.5,
+          "priceMinor": 39900,
+          "tags": [
+            "fish",
+            "gluten",
+            "milk"
+          ]
+        },
+        {
+          "name": "Мидии в сливочном соусе",
+          "category": "main",
+          "portionGrams": 489.0,
+          "kcal": 909.5,
+          "protein": 48.9,
+          "fat": 68.5,
+          "carbs": 19.6,
+          "priceMinor": 58900,
+          "tags": [
+            "fish",
+            "milk",
+            "seafood"
+          ]
+        },
+        {
+          "name": "Мидии в соусе блю-чиз",
+          "category": "main",
+          "portionGrams": 433.0,
+          "kcal": 814.0,
+          "protein": 47.6,
+          "fat": 56.3,
+          "carbs": 26.4,
+          "priceMinor": 59900,
+          "tags": [
+            "seafood"
+          ]
+        },
+        {
+          "name": "Мидии в соусе Том ям",
+          "category": "main",
+          "portionGrams": 475.0,
+          "kcal": 560.5,
+          "protein": 42.3,
+          "fat": 26.6,
+          "carbs": 33.7,
+          "priceMinor": 59900,
+          "tags": [
+            "seafood"
+          ]
+        },
+        {
+          "name": "Мидии в томатном соусе",
+          "category": "main",
+          "portionGrams": 489.0,
+          "kcal": 909.5,
+          "protein": 48.9,
+          "fat": 68.5,
+          "carbs": 19.6,
+          "priceMinor": 58900,
+          "tags": [
+            "fish",
+            "seafood"
+          ]
+        },
+        {
+          "name": "Пельмени жареные с лососем",
+          "category": "main",
+          "portionGrams": 199.0,
+          "kcal": 433.8,
+          "protein": 19.9,
+          "fat": 19.9,
+          "carbs": 35.8,
+          "priceMinor": 39900,
+          "tags": [
+            "fish",
+            "gluten",
+            "milk"
+          ]
+        },
+        {
+          "name": "Пельмени из кеты с пармезаном и рукколой",
+          "category": "main",
+          "portionGrams": 223.0,
+          "kcal": 394.7,
+          "protein": 18.1,
+          "fat": 21.2,
+          "carbs": 40.8,
+          "priceMinor": 39900,
+          "tags": [
+            "gluten",
+            "milk"
+          ]
+        },
+        {
+          "name": "Пельмени с креветкой и кальмаром, икрой масаго и кинзой",
+          "category": "main",
+          "portionGrams": 198.0,
+          "kcal": 306.9,
+          "protein": 29.7,
+          "fat": 2.0,
+          "carbs": 41.6,
+          "priceMinor": 39900,
+          "tags": [
+            "fish",
+            "gluten",
+            "milk",
+            "seafood"
+          ]
+        },
+        {
+          "name": "Вареники с творогом, манго и кокосовой сметаной",
+          "category": "main",
+          "portionGrams": 296.0,
+          "kcal": 574.2,
+          "protein": 22.2,
+          "fat": 23.7,
+          "carbs": 71.0,
+          "priceMinor": 36900,
+          "tags": [
+            "gluten",
+            "milk"
+          ]
+        },
+        {
+          "name": "Буйабес с гренками и соусом руй",
+          "category": "main",
+          "portionGrams": 400.0,
+          "kcal": 616.0,
+          "protein": 32.0,
+          "fat": 44.0,
+          "carbs": 26.0,
+          "priceMinor": 56900,
+          "tags": [
+            "fish",
+            "gluten",
+            "seafood"
+          ]
+        },
+        {
+          "name": "Буйабес с гренками и соусом руй 1/2",
+          "category": "main",
+          "portionGrams": 233.0,
+          "kcal": 358.8,
+          "protein": 18.6,
+          "fat": 25.6,
+          "carbs": 15.1,
+          "priceMinor": 39900,
+          "tags": [
+            "fish",
+            "gluten",
+            "seafood"
+          ]
+        },
+        {
+          "name": "Рыбная уха",
+          "category": "main",
+          "portionGrams": 450.0,
+          "kcal": 328.5,
+          "protein": 29.7,
+          "fat": 16.7,
+          "carbs": 10.3,
+          "priceMinor": 38900,
+          "tags": [
+            "fish"
+          ]
+        },
+        {
+          "name": "Солянка рыбная",
+          "category": "main",
+          "portionGrams": 332.0,
+          "kcal": 255.6,
+          "protein": 23.2,
+          "fat": 12.9,
+          "carbs": 8.0,
+          "priceMinor": 41900,
+          "tags": [
+            "fish"
+          ]
+        },
+        {
+          "name": "Суп Том-ям",
+          "category": "main",
+          "portionGrams": 403.0,
+          "kcal": 378.8,
+          "protein": 20.2,
+          "fat": 20.2,
+          "carbs": 34.3,
+          "priceMinor": 54900,
+          "tags": [
+            "fish",
+            "milk",
+            "seafood"
+          ]
+        },
+        {
+          "name": "Суп Том-ям 1/2",
+          "category": "main",
+          "portionGrams": 217.0,
+          "kcal": 204.0,
+          "protein": 10.8,
+          "fat": 10.8,
+          "carbs": 18.4,
+          "priceMinor": 41900,
+          "tags": [
+            "fish",
+            "milk",
+            "seafood"
+          ]
+        },
+        {
+          "name": "Том-ям для милых дам",
+          "category": "main",
+          "portionGrams": 388.0,
+          "kcal": 391.9,
+          "protein": 19.4,
+          "fat": 19.4,
+          "carbs": 31.0,
+          "priceMinor": 54900,
+          "tags": [
+            "fish",
+            "milk",
+            "seafood"
+          ]
+        },
+        {
+          "name": "Том-ям для милых дам 1/2",
+          "category": "main",
+          "portionGrams": 208.0,
+          "kcal": 210.1,
+          "protein": 10.4,
+          "fat": 10.4,
+          "carbs": 16.6,
+          "priceMinor": 41900,
+          "tags": [
+            "fish",
+            "milk",
+            "seafood"
+          ]
+        },
+        {
+          "name": "Тыквенный крем-суп с креветками и хворостом (острый)",
+          "category": "main",
+          "portionGrams": 330.0,
+          "kcal": 310.2,
+          "protein": 23.1,
+          "fat": 19.8,
+          "carbs": 19.8,
+          "priceMinor": 39900,
+          "tags": [
+            "gluten",
+            "milk",
+            "seafood"
+          ]
+        },
+        {
+          "name": "Глазированная форель с рисом и риетом из авокадо",
+          "category": "main",
+          "portionGrams": 328.0,
+          "kcal": 787.2,
+          "protein": 26.2,
+          "fat": 42.6,
+          "carbs": 78.7,
+          "priceMinor": 54900,
+          "tags": [
+            "fish"
+          ]
+        },
+        {
+          "name": "Жаренные щупальца кальмара с картофелем и каперсами",
+          "category": "main",
+          "portionGrams": 295.0,
+          "kcal": 563.5,
+          "protein": 26.6,
+          "fat": 32.5,
+          "carbs": 41.3,
+          "priceMinor": 49900,
+          "tags": [
+            "fish",
+            "seafood"
+          ]
+        },
+        {
+          "name": "Камбала в кисло-сладком соусе",
+          "category": "main",
+          "portionGrams": 300.0,
+          "kcal": 369.0,
+          "protein": 30.0,
+          "fat": 6.0,
+          "carbs": 45.0,
+          "priceMinor": 52900,
+          "tags": []
+        },
+        {
+          "name": "Креветки Лангустино на гриле",
+          "category": "main",
+          "portionGrams": 205.0,
+          "kcal": 332.1,
+          "protein": 26.4,
+          "fat": 23.4,
+          "carbs": 3.7,
+          "priceMinor": 59900,
+          "tags": [
+            "beef",
+            "meat",
+            "seafood"
+          ]
+        },
+        {
+          "name": "Треска с эдамаме под сливочным соусом",
+          "category": "main",
+          "portionGrams": 300.0,
+          "kcal": 342.0,
+          "protein": 34.5,
+          "fat": 19.8,
+          "carbs": 9.0,
+          "priceMinor": 54900,
+          "tags": [
+            "fish",
+            "milk",
+            "soy"
+          ]
+        },
+        {
+          "name": "Угорь на рисе",
+          "category": "main",
+          "portionGrams": 334.0,
+          "kcal": 514.4,
+          "protein": 22.4,
+          "fat": 10.7,
+          "carbs": 71.1,
+          "priceMinor": 49900,
+          "tags": [
+            "fish"
+          ]
+        },
+        {
+          "name": "Угорь на рисе 1/2",
+          "category": "main",
+          "portionGrams": 174.0,
+          "kcal": 268.0,
+          "protein": 11.7,
+          "fat": 5.6,
+          "carbs": 37.1,
+          "priceMinor": 35900,
+          "tags": [
+            "fish"
+          ]
+        },
+        {
+          "name": "Филе камбалы со шпинатом, молодыми кабачками и сливочным соусом",
+          "category": "main",
+          "portionGrams": 416.0,
+          "kcal": 507.5,
+          "protein": 33.3,
+          "fat": 37.4,
+          "carbs": 8.3,
+          "priceMinor": 54900,
+          "tags": [
+            "milk"
+          ]
+        },
+        {
+          "name": "Сашими из форели",
+          "category": "main",
+          "portionGrams": 145.0,
+          "kcal": 205.9,
+          "protein": 19.6,
+          "fat": 12.3,
+          "carbs": 1.4,
+          "priceMinor": 49900,
+          "tags": [
+            "fish"
+          ]
+        },
+        {
+          "name": "Ролл филадельфия",
+          "category": "main",
+          "portionGrams": 221.0,
+          "kcal": 313.8,
+          "protein": 6.6,
+          "fat": 15.5,
+          "carbs": 35.4,
+          "priceMinor": 59900,
+          "tags": [
+            "fish",
+            "gluten",
+            "milk"
+          ]
+        },
+        {
+          "name": "Ролл с лососем, сливочным сыром и икрой масаго",
+          "category": "main",
+          "portionGrams": 230.0,
+          "kcal": 402.5,
+          "protein": 13.8,
+          "fat": 18.4,
+          "carbs": 43.7,
+          "priceMinor": 49900,
+          "tags": [
+            "fish",
+            "gluten",
+            "milk"
+          ]
+        },
+        {
+          "name": "Ролл горячий с крабом",
+          "category": "main",
+          "portionGrams": 206.0,
+          "kcal": 350.2,
+          "protein": 16.5,
+          "fat": 10.3,
+          "carbs": 51.5,
+          "priceMinor": 54900,
+          "tags": [
+            "fish",
+            "gluten",
+            "seafood"
+          ]
+        },
+        {
+          "name": "Бургер Дальний Восток",
+          "category": "main",
+          "portionGrams": 269.0,
+          "kcal": 414.3,
+          "protein": 18.0,
+          "fat": 8.6,
+          "carbs": 57.3,
+          "priceMinor": 52900,
+          "tags": [
+            "gluten",
+            "milk",
+            "seafood"
+          ]
+        },
+        {
+          "name": "Бургер с треской",
+          "category": "main",
+          "portionGrams": 232.0,
+          "kcal": 656.6,
+          "protein": 18.8,
+          "fat": 29.7,
+          "carbs": 60.8,
+          "priceMinor": 44900,
+          "tags": [
+            "fish",
+            "gluten",
+            "milk"
+          ]
+        },
+        {
+          "name": "Ролл горячий с лососем и угрем",
+          "category": "main",
+          "portionGrams": 237.0,
+          "kcal": 419.5,
+          "protein": 14.2,
+          "fat": 14.2,
+          "carbs": 49.8,
+          "priceMinor": 54900,
+          "tags": [
+            "fish",
+            "gluten",
+            "milk"
+          ]
+        },
+        {
+          "name": "Ролл Дракон с угрем",
+          "category": "main",
+          "portionGrams": 227.0,
+          "kcal": 306.4,
+          "protein": 18.2,
+          "fat": 4.5,
+          "carbs": 47.7,
+          "priceMinor": 54900,
+          "tags": [
+            "fish",
+            "gluten"
+          ]
+        },
+        {
+          "name": "Ролл с авокадо",
+          "category": "main",
+          "portionGrams": 106.0,
+          "kcal": 120.8,
+          "protein": 2.7,
+          "fat": 4.0,
+          "carbs": 19.2,
+          "priceMinor": 22900,
+          "tags": [
+            "gluten"
+          ]
+        },
+        {
+          "name": "Ролл с копченой форелью",
+          "category": "main",
+          "portionGrams": 228.0,
+          "kcal": 342.0,
+          "protein": 13.7,
+          "fat": 11.4,
+          "carbs": 45.6,
+          "priceMinor": 39900,
+          "tags": [
+            "fish",
+            "gluten",
+            "milk"
+          ]
+        },
+        {
+          "name": "Ролл с креветкой темпура",
+          "category": "main",
+          "portionGrams": 216.0,
+          "kcal": 317.5,
+          "protein": 17.3,
+          "fat": 8.6,
+          "carbs": 47.5,
+          "priceMinor": 39900,
+          "tags": [
+            "fish",
+            "gluten",
+            "seafood"
+          ]
+        },
+        {
+          "name": "Ролл с огурцом",
+          "category": "main",
+          "portionGrams": 110.0,
+          "kcal": 88.0,
+          "protein": 2.6,
+          "fat": 0.7,
+          "carbs": 18.2,
+          "priceMinor": 19900,
+          "tags": [
+            "gluten"
+          ]
+        },
+        {
+          "name": "Ролл с тунцом",
+          "category": "main",
+          "portionGrams": 105.0,
+          "kcal": 154.3,
+          "protein": 9.5,
+          "fat": 1.1,
+          "carbs": 24.2,
+          "priceMinor": 29900,
+          "tags": [
+            "fish",
+            "gluten"
+          ]
+        },
+        {
+          "name": "Ролл с угрем и сливочным сыром",
+          "category": "main",
+          "portionGrams": 222.0,
+          "kcal": 344.1,
+          "protein": 8.9,
+          "fat": 15.5,
+          "carbs": 42.2,
+          "priceMinor": 54900,
+          "tags": [
+            "fish",
+            "gluten",
+            "milk"
+          ]
+        },
+        {
+          "name": "Ролл с форелью",
+          "category": "main",
+          "portionGrams": 107.0,
+          "kcal": 147.7,
+          "protein": 8.6,
+          "fat": 1.1,
+          "carbs": 24.6,
+          "priceMinor": 33900,
+          "tags": [
+            "fish",
+            "gluten"
+          ]
+        },
+        {
+          "name": "Спайси суши гребешок",
+          "category": "main",
+          "portionGrams": 95.0,
+          "kcal": 141.5,
+          "protein": 9.5,
+          "fat": 5.7,
+          "carbs": 9.5,
+          "priceMinor": 39900,
+          "tags": [
+            "fish",
+            "seafood"
+          ]
+        },
+        {
+          "name": "Спайси суши креветка",
+          "category": "main",
+          "portionGrams": 109.0,
+          "kcal": 160.2,
+          "protein": 12.0,
+          "fat": 5.5,
+          "carbs": 19.6,
+          "priceMinor": 39900,
+          "tags": [
+            "fish",
+            "seafood"
+          ]
+        },
+        {
+          "name": "Спайси суши лосось",
+          "category": "main",
+          "portionGrams": 95.0,
+          "kcal": 247.0,
+          "protein": 8.5,
+          "fat": 9.5,
+          "carbs": 17.1,
+          "priceMinor": 39900,
+          "tags": [
+            "fish"
+          ]
+        },
+        {
+          "name": "Спайси суши тунец",
+          "category": "main",
+          "portionGrams": 95.0,
+          "kcal": 247.0,
+          "protein": 8.5,
+          "fat": 9.5,
+          "carbs": 17.1,
+          "priceMinor": 34900,
+          "tags": [
+            "fish"
+          ]
+        },
+        {
+          "name": "Спайси суши угорь",
+          "category": "main",
+          "portionGrams": 95.0,
+          "kcal": 181.4,
+          "protein": 8.5,
+          "fat": 6.6,
+          "carbs": 21.8,
+          "priceMinor": 39900,
+          "tags": [
+            "fish"
+          ]
+        },
+        {
+          "name": "Кольца кальмара в хрустящей корочке",
+          "category": "side",
+          "portionGrams": 205.0,
+          "kcal": 520.7,
+          "protein": 20.5,
+          "fat": 22.5,
+          "carbs": 59.4,
+          "priceMinor": 37900,
+          "tags": [
+            "gluten",
+            "seafood"
+          ]
+        },
+        {
+          "name": "Креветки васаби",
+          "category": "main",
+          "portionGrams": 158.0,
+          "kcal": 317.6,
+          "protein": 20.5,
+          "fat": 10.3,
+          "carbs": 36.3,
+          "priceMinor": 44900,
+          "tags": [
+            "gluten",
+            "milk",
+            "seafood"
+          ]
+        },
+        {
+          "name": "Тигровые креветки в темпуре",
+          "category": "main",
+          "portionGrams": 169.0,
+          "kcal": 339.7,
+          "protein": 22.0,
+          "fat": 11.0,
+          "carbs": 38.9,
+          "priceMinor": 42900,
+          "tags": [
+            "gluten",
+            "seafood"
+          ]
+        },
+        {
+          "name": "Фритто-мисто с соусом тар-тар",
+          "category": "side",
+          "portionGrams": 294.0,
+          "kcal": 590.9,
+          "protein": 38.2,
+          "fat": 19.1,
+          "carbs": 67.6,
+          "priceMinor": 54900,
+          "tags": [
+            "fish",
+            "gluten",
+            "seafood"
+          ]
+        },
+        {
+          "name": "Хрустящая моцарелла с деревенским соусом",
+          "category": "main",
+          "portionGrams": 260.0,
+          "kcal": 626.6,
+          "protein": 54.6,
+          "fat": 36.4,
+          "carbs": 15.6,
+          "priceMinor": 43900,
+          "tags": [
+            "gluten",
+            "milk"
+          ]
+        },
+        {
+          "name": "Чесночные гренки из бородинского хлеба",
+          "category": "main",
+          "portionGrams": 100.0,
+          "kcal": 219.0,
+          "protein": 6.0,
+          "fat": 7.5,
+          "carbs": 37.0,
+          "priceMinor": 16900,
+          "tags": [
+            "gluten"
+          ]
+        },
+        {
+          "name": "Тартар из карельской форели с икрой масаго",
+          "category": "main",
+          "portionGrams": 165.0,
+          "kcal": 245.8,
+          "protein": 19.8,
+          "fat": 9.9,
+          "carbs": 18.1,
+          "priceMinor": 54900,
+          "tags": [
+            "fish",
+            "gluten",
+            "soy"
+          ]
+        },
+        {
+          "name": "Сырники ванильные со сметаной и земляникой",
+          "category": "dessert",
+          "portionGrams": 220.0,
+          "kcal": 420.2,
+          "protein": 17.6,
+          "fat": 19.8,
+          "carbs": 44.0,
+          "priceMinor": 42900,
+          "tags": [
+            "egg",
+            "gluten",
+            "milk"
+          ]
+        },
+        {
+          "name": "Драники с форелью и яйцом пашот",
+          "category": "main",
+          "portionGrams": 320.0,
+          "kcal": 550.4,
+          "protein": 19.2,
+          "fat": 41.6,
+          "carbs": 25.6,
+          "priceMinor": 49900,
+          "tags": [
+            "egg",
+            "fish",
+            "gluten",
+            "milk"
+          ]
+        },
+        {
+          "name": "Чиабатта с яйцом пашот и слабосолёной форелью",
+          "category": "main",
+          "portionGrams": 230.0,
+          "kcal": 466.9,
+          "protein": 20.7,
+          "fat": 16.1,
+          "carbs": 59.8,
+          "priceMinor": 49900,
+          "tags": [
+            "egg",
+            "fish",
+            "gluten",
+            "milk"
+          ]
+        },
+        {
+          "name": "Яичница с креветками",
+          "category": "main",
+          "portionGrams": 250.0,
+          "kcal": 545.0,
+          "protein": 22.5,
+          "fat": 47.5,
+          "carbs": 7.5,
+          "priceMinor": 42900,
+          "tags": [
+            "egg",
+            "fish",
+            "milk",
+            "seafood"
+          ]
+        },
+        {
+          "name": "Омлет с подкопчённым лососем",
+          "category": "main",
+          "portionGrams": 450.0,
+          "kcal": 940.5,
+          "protein": 40.5,
+          "fat": 72.0,
+          "carbs": 27.0,
+          "priceMinor": 49900,
+          "tags": [
+            "egg",
+            "fish",
+            "milk"
+          ]
+        },
+        {
+          "name": "Блины с слабосолёной форелью",
+          "category": "main",
+          "portionGrams": 270.0,
+          "kcal": 477.9,
+          "protein": 27.0,
+          "fat": 29.7,
+          "carbs": 24.3,
+          "priceMinor": 44900,
+          "tags": [
+            "egg",
+            "fish",
+            "gluten",
+            "milk"
+          ]
+        },
+        {
+          "name": "Блины с земляникой",
+          "category": "main",
+          "portionGrams": 270.0,
+          "kcal": 380.7,
+          "protein": 8.1,
+          "fat": 10.8,
+          "carbs": 59.4,
+          "priceMinor": 39900,
+          "tags": [
+            "egg",
+            "gluten",
+            "milk"
+          ]
+        },
+        {
+          "name": "Блины с красной икрой",
+          "category": "main",
+          "portionGrams": 230.0,
+          "kcal": 349.6,
+          "protein": 9.2,
+          "fat": 23.0,
+          "carbs": 25.3,
+          "priceMinor": 52900,
+          "tags": [
+            "egg",
+            "fish",
+            "gluten",
+            "milk"
+          ]
+        },
+        {
+          "name": "Каша пшенная с угрем",
+          "category": "main",
+          "portionGrams": 450.0,
+          "kcal": 819.0,
+          "protein": 18.0,
+          "fat": 49.5,
+          "carbs": 72.0,
+          "priceMinor": 42900,
+          "tags": [
+            "fish",
+            "milk"
+          ]
+        },
+        {
+          "name": "Аво-тост",
+          "category": "main",
+          "portionGrams": 200.0,
+          "kcal": 458.0,
+          "protein": 6.0,
+          "fat": 32.0,
+          "carbs": 32.0,
+          "priceMinor": 39900,
+          "tags": [
+            "gluten",
+            "milk"
+          ]
+        },
+        {
+          "name": "Круассан со слабосоленой форелью",
+          "category": "main",
+          "portionGrams": 150.0,
+          "kcal": 333.0,
+          "protein": 10.5,
+          "fat": 21.0,
+          "carbs": 19.5,
+          "priceMinor": 39900,
+          "tags": [
+            "fish",
+            "gluten",
+            "milk"
+          ]
+        },
+        {
+          "name": "Яйцо «Атлантик» с форелью",
+          "category": "main",
+          "portionGrams": 200.0,
+          "kcal": 548.0,
+          "protein": 18.0,
+          "fat": 38.0,
+          "carbs": 28.0,
+          "priceMinor": 39900,
+          "tags": [
+            "egg",
+            "fish",
+            "gluten",
+            "milk",
+            "soy"
+          ]
+        },
+        {
+          "name": "Утро в Моремании",
+          "category": "main",
+          "portionGrams": 260.0,
+          "kcal": 470.6,
+          "protein": 20.8,
+          "fat": 28.6,
+          "carbs": 28.6,
+          "priceMinor": 49900,
+          "tags": [
+            "egg",
+            "fish"
+          ]
+        }
+      ],
+      "venues": [
+        {
+          "name": "Моремания",
+          "address": "Калужское ш., 5",
+          "lat": 55.429692,
+          "lon": 37.276747,
+          "confirmedOn": "2025-01-11"
+        },
+        {
+          "name": "Моремания",
+          "address": "ул. Куликовская, 6",
+          "lat": 55.574073,
+          "lon": 37.565456,
+          "confirmedOn": "2025-01-11"
+        },
+        {
+          "name": "Моремания",
+          "address": "Каширское ш., 80",
+          "lat": 55.624595,
+          "lon": 37.709472,
+          "confirmedOn": "2025-01-11"
+        },
+        {
+          "name": "Моремания",
+          "address": "ул. Профсоюзная, 126 к3",
+          "lat": 55.630479,
+          "lon": 37.517409,
+          "confirmedOn": "2026-02-23"
+        },
+        {
+          "name": "Моремания",
+          "address": "МКАД, 47-й километр, с20",
+          "lat": 55.65881,
+          "lon": 37.431026,
+          "confirmedOn": "2025-01-11"
+        },
+        {
+          "name": "Моремания",
+          "address": "Боровское ш., с20 пав63",
+          "lat": 55.65997,
+          "lon": 37.42864,
+          "confirmedOn": "2025-01-11"
+        },
+        {
+          "name": "Моремания",
+          "address": "Ленинский просп., 109",
+          "lat": 55.664254,
+          "lon": 37.511469,
+          "confirmedOn": "2026-06-27"
+        },
+        {
+          "name": "Моремания",
+          "address": "Мичуринский просп., 22 к1",
+          "lat": 55.701249,
+          "lon": 37.50395,
+          "confirmedOn": "2025-01-11"
+        },
+        {
+          "name": "Моремания",
+          "address": "ул. Ленинская Слобода, 26 с2",
+          "lat": 55.711902,
+          "lon": 37.656511,
+          "confirmedOn": "2026-01-09"
+        },
+        {
+          "name": "Моремания",
+          "address": "Рублёвское ш., 48/1",
+          "lat": 55.75386,
+          "lon": 37.406511,
+          "confirmedOn": "2025-01-11"
+        },
+        {
+          "name": "Моремания",
+          "address": "ул. Электродная, 2 с32",
+          "lat": 55.754699,
+          "lon": 37.752367,
+          "confirmedOn": "2025-01-11"
+        },
+        {
+          "name": "Моремания",
+          "address": "Реутов, МКАД, 2-й километр, 2",
+          "lat": 55.764014,
+          "lon": 37.844365,
+          "confirmedOn": "2025-01-11"
+        },
+        {
+          "name": "Моремания",
+          "address": "Страстной бул., 8А",
+          "lat": 55.76646,
+          "lon": 37.610625,
+          "confirmedOn": "2026-07-02"
+        },
+        {
+          "name": "Моремания",
+          "address": "ул. Маршала Бирюзова, 32",
+          "lat": 55.799754,
+          "lon": 37.482453,
+          "confirmedOn": "2025-01-11"
+        },
+        {
+          "name": "Моремания",
+          "address": "Красногорск, ул. Ленина, 2",
+          "lat": 55.819803,
+          "lon": 37.320373,
+          "confirmedOn": "2026-09-07"
+        },
+        {
+          "name": "Моремания",
+          "address": "ул. Международная, 12",
+          "lat": 55.82092,
+          "lon": 37.387306,
+          "confirmedOn": "2025-01-11"
+        },
+        {
+          "name": "Моремания",
+          "address": "ул. Тушинская, вл17",
+          "lat": 55.827078,
+          "lon": 37.442696,
+          "confirmedOn": "2025-01-11"
+        },
+        {
+          "name": "Моремания",
+          "address": "Кронштадтский бул., 3 с3",
+          "lat": 55.841059,
+          "lon": 37.485429,
+          "confirmedOn": "2025-01-11"
+        },
+        {
+          "name": "Моремания",
+          "address": "Путилково, ул. Митинская, 29",
+          "lat": 55.846974,
+          "lon": 37.357233,
+          "confirmedOn": "2025-08-12"
+        },
+        {
+          "name": "Моремания",
+          "address": "Дмитровское ш., 89",
+          "lat": 55.863675,
+          "lon": 37.546063,
+          "confirmedOn": "2025-01-11"
+        },
+        {
+          "name": "Моремания",
+          "address": "Ленинградское ш., вл5",
+          "lat": 55.888938,
+          "lon": 37.43388,
+          "confirmedOn": "2025-01-11"
+        },
+        {
+          "name": "Моремания",
+          "address": "Путилково, ул. Воротынская, 18",
+          "lat": 55.889889,
+          "lon": 37.388799,
+          "confirmedOn": "2026-04-12"
+        },
+        {
+          "name": "Моремания",
+          "address": "Мытищи, ул. Щербакова, 2 к1",
+          "lat": 55.906117,
+          "lon": 37.73859,
+          "confirmedOn": "2025-01-11"
+        },
+        {
+          "name": "Моремания",
+          "address": "Долгопрудный, ул. Дирижабельная, 23",
+          "lat": 55.945943,
+          "lon": 37.505777,
+          "confirmedOn": "2025-01-11"
+        }
+      ]
+    },
+    {
       "name": "Hatimaki",
       "sourceUrl": "https://hatimaki.ru/catalog/",
       "verifiedAt": "2026-10-15T00:00:00Z",
@@ -49488,6 +50977,7 @@
           "priceMinor": 54100,
           "tags": [
             "egg",
+            "gluten",
             "meat",
             "milk",
             "pork"
@@ -49803,6 +51293,7 @@
           "tags": [
             "beef",
             "egg",
+            "gluten",
             "meat",
             "soy"
           ]
@@ -55114,6 +56605,7 @@
           "tags": [
             "chicken",
             "egg",
+            "gluten",
             "meat",
             "seafood",
             "soy"
@@ -78167,181 +79659,6 @@
           "lat": 60.001166,
           "lon": 30.296651,
           "confirmedOn": "2026-09-02"
-        }
-      ]
-    },
-    {
-      "name": "Моремания",
-      "sourceUrl": "https://www.openstreetmap.org/copyright",
-      "items": [],
-      "venues": [
-        {
-          "name": "Моремания",
-          "address": "Калужское ш., 5",
-          "lat": 55.429692,
-          "lon": 37.276747,
-          "confirmedOn": "2025-01-11"
-        },
-        {
-          "name": "Моремания",
-          "address": "ул. Куликовская, 6",
-          "lat": 55.574073,
-          "lon": 37.565456,
-          "confirmedOn": "2025-01-11"
-        },
-        {
-          "name": "Моремания",
-          "address": "Каширское ш., 80",
-          "lat": 55.624595,
-          "lon": 37.709472,
-          "confirmedOn": "2025-01-11"
-        },
-        {
-          "name": "Моремания",
-          "address": "ул. Профсоюзная, 126 к3",
-          "lat": 55.630479,
-          "lon": 37.517409,
-          "confirmedOn": "2026-02-23"
-        },
-        {
-          "name": "Моремания",
-          "address": "МКАД, 47-й километр, с20",
-          "lat": 55.65881,
-          "lon": 37.431026,
-          "confirmedOn": "2025-01-11"
-        },
-        {
-          "name": "Моремания",
-          "address": "Боровское ш., с20 пав63",
-          "lat": 55.65997,
-          "lon": 37.42864,
-          "confirmedOn": "2025-01-11"
-        },
-        {
-          "name": "Моремания",
-          "address": "Ленинский просп., 109",
-          "lat": 55.664254,
-          "lon": 37.511469,
-          "confirmedOn": "2026-06-27"
-        },
-        {
-          "name": "Моремания",
-          "address": "Мичуринский просп., 22 к1",
-          "lat": 55.701249,
-          "lon": 37.50395,
-          "confirmedOn": "2025-01-11"
-        },
-        {
-          "name": "Моремания",
-          "address": "ул. Ленинская Слобода, 26 с2",
-          "lat": 55.711902,
-          "lon": 37.656511,
-          "confirmedOn": "2026-01-09"
-        },
-        {
-          "name": "Моремания",
-          "address": "Рублёвское ш., 48/1",
-          "lat": 55.75386,
-          "lon": 37.406511,
-          "confirmedOn": "2025-01-11"
-        },
-        {
-          "name": "Моремания",
-          "address": "ул. Электродная, 2 с32",
-          "lat": 55.754699,
-          "lon": 37.752367,
-          "confirmedOn": "2025-01-11"
-        },
-        {
-          "name": "Моремания",
-          "address": "Реутов, МКАД, 2-й километр, 2",
-          "lat": 55.764014,
-          "lon": 37.844365,
-          "confirmedOn": "2025-01-11"
-        },
-        {
-          "name": "Моремания",
-          "address": "Страстной бул., 8А",
-          "lat": 55.76646,
-          "lon": 37.610625,
-          "confirmedOn": "2026-07-02"
-        },
-        {
-          "name": "Моремания",
-          "address": "ул. Маршала Бирюзова, 32",
-          "lat": 55.799754,
-          "lon": 37.482453,
-          "confirmedOn": "2025-01-11"
-        },
-        {
-          "name": "Моремания",
-          "address": "Красногорск, ул. Ленина, 2",
-          "lat": 55.819803,
-          "lon": 37.320373,
-          "confirmedOn": "2026-09-07"
-        },
-        {
-          "name": "Моремания",
-          "address": "ул. Международная, 12",
-          "lat": 55.82092,
-          "lon": 37.387306,
-          "confirmedOn": "2025-01-11"
-        },
-        {
-          "name": "Моремания",
-          "address": "ул. Тушинская, вл17",
-          "lat": 55.827078,
-          "lon": 37.442696,
-          "confirmedOn": "2025-01-11"
-        },
-        {
-          "name": "Моремания",
-          "address": "Кронштадтский бул., 3 с3",
-          "lat": 55.841059,
-          "lon": 37.485429,
-          "confirmedOn": "2025-01-11"
-        },
-        {
-          "name": "Моремания",
-          "address": "Путилково, ул. Митинская, 29",
-          "lat": 55.846974,
-          "lon": 37.357233,
-          "confirmedOn": "2025-08-12"
-        },
-        {
-          "name": "Моремания",
-          "address": "Дмитровское ш., 89",
-          "lat": 55.863675,
-          "lon": 37.546063,
-          "confirmedOn": "2025-01-11"
-        },
-        {
-          "name": "Моремания",
-          "address": "Ленинградское ш., вл5",
-          "lat": 55.888938,
-          "lon": 37.43388,
-          "confirmedOn": "2025-01-11"
-        },
-        {
-          "name": "Моремания",
-          "address": "Путилково, ул. Воротынская, 18",
-          "lat": 55.889889,
-          "lon": 37.388799,
-          "confirmedOn": "2026-04-12"
-        },
-        {
-          "name": "Моремания",
-          "address": "Мытищи, ул. Щербакова, 2 к1",
-          "lat": 55.906117,
-          "lon": 37.73859,
-          "confirmedOn": "2025-01-11"
-        },
-        {
-          "name": "Моремания",
-          "address": "Долгопрудный, ул. Дирижабельная, 23",
-          "lat": 55.945943,
-          "lon": 37.505777,
-          "confirmedOn": "2025-01-11"
         }
       ]
     },

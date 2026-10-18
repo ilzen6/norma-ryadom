@@ -2,7 +2,7 @@
 
 Меню попадает в демо-каталог только из официальных данных сети: её сайта, приложения или опубликованной таблицы. Цифры не придумываются и не берутся из агрегаторов.
 
-В каталоге 24 сети, 3592 блюда и 1422 точки с меню.
+В каталоге 25 сетей, 3682 блюда и 1446 точек с меню.
 
 | Сеть | Источник | Как задано КБЖУ | Дата данных | Позиций | Пропущено | Точек |
 |---|---|---|---|---|---|---|
@@ -25,6 +25,7 @@
 | Up Sushi | https://upsushi.ru/ (каталог Москвы) | на порцию | 15.10.2026 | 170 | 4 | 30 |
 | Cinnabon | «Сведения о составе и пищевой ценности меню кафе-пекарен Синнабон», июль 2026 (PDF) | на 100 г × вес | 02.07.2026 | 102 | 4 | 27 |
 | Hatimaki | карточки блюд https://hatimaki.ru/catalog/ | на порцию («Всего») | 15.10.2026 | 119 | 31 | 23 |
+| Моремания | меню https://moremania.info/menu (Tilda Store) | на 100 г × вес (видно по данным) | 18.10.2026 | 90 | 120 | 24 |
 | Zotman Pizza | меню https://zotmanpizza.ru/menu | на 100 г × вес | 15.10.2026 | 132 | 7 | 22 |
 | Якитория | меню доставки https://yakitoriya.ru/menu-dostavki/ | на порцию | 15.10.2026 | 176 | 14 | 19 |
 | Vasilchuki Chaihona №1 | карточки блюд https://chaihona.ru/catalog | на 100 г × вес | 15.10.2026 | 140 | 23 | 17 |
@@ -57,6 +58,7 @@
 | Евразия | таблицу `calorie.html` и страницы меню `menu_<раздел>.html` (состав и цены) | `python3 tool/menus/evrazia.py menus-inbox/evrazia/calorie.html` |
 | IL Патио, TGI Fridays | разделы `cat_*.html`, карточки `pages/*.html` и `links.tsv` (ссылка → раздел) | `python3 tool/menus/rosinter.py il-patio menus-inbox/il-patio`, `… tgi-fridays menus-inbox/tgi-fridays` |
 | Hatimaki | карточки `pages/catalog_<раздел>_<блюдо>.html` | `python3 tool/menus/hatimaki.py menus-inbox/hatimaki` |
+| Моремания | ответ Tilda Store `getproductslist` (storepartuid 802342951042) | `python3 tool/menus/moremania.py <файл.json>` |
 | Zotman Pizza | страницу меню с данными Nuxt | `python3 tool/menus/zotman.py menus-inbox/zotman/menu.html` |
 | Vasilchuki Chaihona №1 | карточки блюд `pages/<блюдо>.html` | `python3 tool/menus/chaihona.py menus-inbox/chaihona` |
 | ПхалиХинкали | таблицу `calorie.html`, страницу «Все блюда» `all.html` (цены) и разделы `cat_*.html` | `python3 tool/menus/phali_hinkali.py menus-inbox/phalihinkali` |

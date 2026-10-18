@@ -63,7 +63,7 @@ name;category;portion_g;kcal;protein_g;fat_g;carbs_g;price_rub;tags
 Пицца Марго;main;160;474;16;19;58;260;gluten,milk
 Пицца Аризона;main;210;489;17;19;61;200;gluten,meat,milk,pork
 Домашний суп с цыплёнком;main;370;226;15;7;26;222;chicken,egg,meat
-Удон с цыплёнком;main;280;459;17;11;73;333;chicken,meat
+Удон с цыплёнком;main;280;459;17;11;73;333;chicken,gluten,meat
 Ролл с угрём и крабом;main;310;685;22;34;74;600;fish,gluten,milk,seafood
 Ассорти сыров 1/2;salad;230;644;46;42;21;480;milk,nuts
 Оливье с ветчиной;salad;200;284;10;20;16;380;egg,meat,pork
@@ -163,7 +163,7 @@ name;category;portion_g;kcal;protein_g;fat_g;carbs_g;price_rub;tags
 Чечевичный крем-суп;main;;275;10;15;28;360;chicken,meat
 Азиатский суп с цыплёнком, фунчозой, овощами и яйцом;main;350;214;18;11;18;380;chicken,egg,meat
 Тыквенный крем-суп;main;265;151;3;11;13;370;milk
-Рамен с цыплёнком;main;580;427;28;13;49;600;chicken,egg,meat,milk
+Рамен с цыплёнком;main;580;427;28;13;49;600;chicken,egg,gluten,meat,milk
 Том Ям с морепродуктами;main;;387;18;18;40;670;chicken,meat,milk,seafood
 Грибной крем-суп;main;;260;8;16;23;420;chicken,meat,milk
 Сборная солянка;main;;470;29;24;33;560;beef,chicken,meat,milk,pork
@@ -190,8 +190,8 @@ name;category;portion_g;kcal;protein_g;fat_g;carbs_g;price_rub;tags
 Соберите свой ВОК;main;300;418;18;9;67;380;seafood
 Фунчоза с морепродуктами, овощами и соусом терияки;main;320;400;18;6;67;550;seafood
 Рис со свининой, овощами и соусом терияки;side;290;427;17;9;69;440;meat,pork
-Удон с цыплёнком, овощами и соусом терияки;main;240;405;8;7;80;500;chicken,meat
-Рис со свининой и соусом удон;side;280;427;17;9;69;440;meat,pork
+Удон с цыплёнком, овощами и соусом терияки;main;240;405;8;7;80;500;chicken,gluten,meat
+Рис со свининой и соусом удон;side;280;427;17;9;69;440;gluten,meat,pork
 Пад тай с цыплёнком и креветками;main;370;502;18;9;88;540;chicken,meat,seafood
 Паста с томатами и страчателлой;main;295;430;14;19;51;420;gluten,milk
 Паста Карбонара;main;260;692;23;47;44;580;egg,gluten,meat,milk,pork

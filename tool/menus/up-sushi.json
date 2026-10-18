@@ -2,7 +2,7 @@
   "chain": "Up Sushi",
   "source_url": "https://upsushi.ru/app-api/catalog?company=1&type_delivery=delivery&city=22&brand_id=1",
   "source_date": "2026-10-15",
-  "fetched": "2026-10-15",
+  "fetched": "2026-10-18",
   "items": 170,
   "skipped": [
     {

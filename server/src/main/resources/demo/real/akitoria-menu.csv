@@ -151,7 +151,7 @@ name;category;portion_g;kcal;protein_g;fat_g;carbs_g;price_rub;tags
 Рамен с говядиной на воке;main;530;747;54.2;40.1;42.4;759;beef,gluten,meat,soy
 Чиз Рамен;main;440;483;23.3;24.7;42;809;beef,egg,gluten,meat,milk,soy
 Дзосуй;main;290;160;11.5;4.7;17.8;659;egg,fish,seafood,soy
-Рамен с мясом краба;main;510;283;15.7;5.3;43.3;759;chicken,egg,meat,seafood,soy
+Рамен с мясом краба;main;510;283;15.7;5.3;43.3;759;chicken,egg,gluten,meat,seafood,soy
 Грибной суп;main;240;376;6.2;27.4;26.2;529;gluten,milk
 Мисо суп;main;210;51;4.3;0.9;6.3;250;fish,milk,soy
 Суимоно;main;200;27;3.3;0.3;2.8;250;fish,seafood,soy

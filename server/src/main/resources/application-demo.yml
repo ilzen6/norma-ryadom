@@ -91,6 +91,11 @@ demo:
       source-date: 2026-07-02
       menu: classpath:demo/real/cinnabon-menu.csv
       venues: classpath:demo/real/cinnabon-venues.csv
+    - name: "Моремания"
+      source-url: "https://moremania.info/menu"
+      source-date: 2026-10-18
+      menu: classpath:demo/real/moremania-menu.csv
+      venues: classpath:demo/real/moremania-venues.csv
     - name: "Hatimaki"
       source-url: "https://hatimaki.ru/catalog/"
       source-date: 2026-10-15
@@ -220,9 +225,6 @@ demo:
     - name: "The Бык"
       source-url: "https://www.openstreetmap.org/copyright"
       venues: classpath:demo/real/the-byk-venues.csv
-    - name: "Моремания"
-      source-url: "https://www.openstreetmap.org/copyright"
-      venues: classpath:demo/real/moremania-venues.csv
     - name: "Буше"
       source-url: "https://www.openstreetmap.org/copyright"
       venues: classpath:demo/real/buse-venues.csv

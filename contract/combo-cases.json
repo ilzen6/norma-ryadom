@@ -11682,6 +11682,403 @@
         "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
       } ]
     }, {
+      "chain" : "Моремания",
+      "fit" : "GOOD",
+      "nearby" : [ {
+        "dishes" : [ "Овощи гриль", "Овощи гриль", "Пельмени с креветкой и кальмаром, икрой масаго и кинзой" ],
+        "score" : 0.753109
+      }, {
+        "dishes" : [ "Пельмени с креветкой и кальмаром, икрой масаго и кинзой", "Картофель фри с сыром и трюфельным маслом" ],
+        "score" : 0.907695
+      }, {
+        "dishes" : [ "Рис отварной", "Рыбная уха" ],
+        "score" : 1.152101
+      }, {
+        "dishes" : [ "Фритто-мисто с соусом тар-тар" ],
+        "score" : 1.277207
+      }, {
+        "dishes" : [ "Татаки тунец на гриле с овощным салатом", "Овощи гриль", "Рис отварной" ],
+        "score" : 1.330183
+      } ],
+      "atVenue" : [ {
+        "dishes" : [ "Салат деревенский, с помидорами и огурцом", "Овощи гриль", "Пельмени с креветкой и кальмаром, икрой масаго и кинзой" ],
+        "score" : 0.650013
+      }, {
+        "dishes" : [ "Салат зелёный из листовых салатов и огурца", "Овощи гриль", "Камбала в кисло-сладком соусе" ],
+        "score" : 0.708846
+      }, {
+        "dishes" : [ "Овощи гриль", "Овощи гриль", "Ролл Дракон с угрем" ],
+        "score" : 0.767941
+      }, {
+        "dishes" : [ "Пельмени с креветкой и кальмаром, икрой масаго и кинзой", "Картофель фри с сыром и трюфельным маслом" ],
+        "score" : 0.837575
+      }, {
+        "dishes" : [ "Салат зелёный из листовых салатов и огурца", "Солянка рыбная", "Рис отварной" ],
+        "score" : 0.867532
+      } ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Фритто-мисто с соусом тар-тар",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Угорь на рисе",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Кольца кальмара в хрустящей корочке",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Поке с тунцом",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Поке с форелью",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Чиабатта с яйцом пашот и слабосолёной форелью",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Пельмени жареные с лососем",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Бургер Дальний Восток",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Ролл горячий с лососем и угрем",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Сырники ванильные со сметаной и земляникой",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Ролл с лососем, сливочным сыром и икрой масаго",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Пельмени из кеты с пармезаном и рукколой",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Том-ям для милых дам",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Камбала в кисло-сладком соусе",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Суп Том-ям",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Спагетти с вонголе 1/2",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Лапша с морепродуктами 1/2",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Ролл горячий с крабом",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Треска с эдамаме под сливочным соусом",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Тигровые креветки в темпуре",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Ролл с копченой форелью",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Рыбная уха",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Креветки Лангустино на гриле",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Креветки васаби",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Пельмени с креветкой и кальмаром, икрой масаго и кинзой",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Ролл с креветкой темпура",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Ролл Дракон с угрем",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Тыквенный крем-суп с креветками и хворостом (острый)",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Салат с креветками и рукколой",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Угорь на рисе 1/2",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Солянка рыбная",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Тартар из карельской форели с икрой масаго",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Спайси суши лосось",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Спайси суши тунец",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Сашими из форели",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Том-ям для милых дам 1/2",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Суп Том-ям 1/2",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Спайси суши угорь",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Спайси суши креветка",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Татаки тунец на гриле с овощным салатом",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Ролл с тунцом",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Ролл с форелью",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Спайси суши гребешок",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Картофель дольками по-деревенски",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Блины с земляникой",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Блины с красной икрой",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Ролл с угрем и сливочным сыром",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Картофель фри с сыром и трюфельным маслом",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Круассан со слабосоленой форелью",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Ролл филадельфия",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Рис отварной",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Чесночные гренки из бородинского хлеба",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Овощи гриль",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Салат деревенский, с помидорами и огурцом",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Ролл с авокадо",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Батат фри с вашим любимым соусом",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Ролл с огурцом",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Салат зелёный из листовых салатов и огурца",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Хрустящая моцарелла с деревенским соусом",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Буйабес с гренками и соусом руй",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Тартар с тунцом и авокадо",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Спагетти с вонголе",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Бургер с треской",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Феттучини со сливочным соусом и лососем",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Вареники с творогом, манго и кокосовой сметаной",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Мидии в соусе Том ям",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Лапша с морепродуктами",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Салат цезарь с морепродуктами",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Жаренные щупальца кальмара с картофелем и каперсами",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Драники с форелью и яйцом пашот",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Яйцо «Атлантик» с форелью",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Яичница с креветками",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Филе камбалы со шпинатом, молодыми кабачками и сливочным соусом",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Жаренный рис с овощами и яйцом",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Спагетти с томатным соусом, креветками, лососем и треской",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Кобб салат с тунцом",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Блины с слабосолёной форелью",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Тёплый угорь с пикантным салатом из огурца, яблока и хвороста",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Утро в Моремании",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Глазированная форель с рисом и риетом из авокадо",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Аво-тост",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Боул с морскими водорослями и авокадо",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Мидии в соусе блю-чиз",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Каша пшенная с угрем",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Феттучини со сливочным соусом и лососем 1/2",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Буйабес с гренками и соусом руй 1/2",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Мидии в сливочном соусе",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Мидии в томатном соусе",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Омлет с подкопчённым лососем",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Салат с крабом и авокадо",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      } ]
+    }, {
       "chain" : "Hatimaki",
       "fit" : "GOOD",
       "nearby" : [ {
@@ -26841,6 +27238,403 @@
         "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
       } ]
     }, {
+      "chain" : "Моремания",
+      "fit" : "GOOD",
+      "nearby" : [ {
+        "dishes" : [ "Пельмени с креветкой и кальмаром, икрой масаго и кинзой", "Картофель фри с сыром и трюфельным маслом" ],
+        "score" : 1.191695
+      }, {
+        "dishes" : [ "Овощи гриль", "Овощи гриль", "Пельмени с креветкой и кальмаром, икрой масаго и кинзой" ],
+        "score" : 1.251609
+      }, {
+        "dishes" : [ "Рис отварной", "Рыбная уха" ],
+        "score" : 1.411101
+      }, {
+        "dishes" : [ "Фритто-мисто с соусом тар-тар" ],
+        "score" : 1.551707
+      }, {
+        "dishes" : [ "Татаки тунец на гриле с овощным салатом", "Овощи гриль", "Рис отварной" ],
+        "score" : 1.793683
+      } ],
+      "atVenue" : [ {
+        "dishes" : [ "Пельмени с креветкой и кальмаром, икрой масаго и кинзой", "Картофель фри с сыром и трюфельным маслом" ],
+        "score" : 1.121575
+      }, {
+        "dishes" : [ "Рис отварной", "Тигровые креветки в темпуре" ],
+        "score" : 1.162496
+      }, {
+        "dishes" : [ "Салат деревенский, с помидорами и огурцом", "Овощи гриль", "Пельмени с креветкой и кальмаром, икрой масаго и кинзой" ],
+        "score" : 1.168513
+      }, {
+        "dishes" : [ "Рис отварной", "Треска с эдамаме под сливочным соусом" ],
+        "score" : 1.214246
+      }, {
+        "dishes" : [ "Салат зелёный из листовых салатов и огурца", "Овощи гриль", "Камбала в кисло-сладком соусе" ],
+        "score" : 1.287346
+      } ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Фритто-мисто с соусом тар-тар",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Кольца кальмара в хрустящей корочке",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Угорь на рисе",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Поке с тунцом",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Поке с форелью",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Чиабатта с яйцом пашот и слабосолёной форелью",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Пельмени жареные с лососем",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Сырники ванильные со сметаной и земляникой",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Бургер Дальний Восток",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Ролл горячий с лососем и угрем",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Ролл с лососем, сливочным сыром и икрой масаго",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Пельмени из кеты с пармезаном и рукколой",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Том-ям для милых дам",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Камбала в кисло-сладком соусе",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Суп Том-ям",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Спагетти с вонголе 1/2",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Лапша с морепродуктами 1/2",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Ролл горячий с крабом",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Тигровые креветки в темпуре",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Ролл с копченой форелью",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Треска с эдамаме под сливочным соусом",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Рыбная уха",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Креветки Лангустино на гриле",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Пельмени с креветкой и кальмаром, икрой масаго и кинзой",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Ролл с креветкой темпура",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Креветки васаби",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Тыквенный крем-суп с креветками и хворостом (острый)",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Ролл Дракон с угрем",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Салат с креветками и рукколой",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Угорь на рисе 1/2",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Солянка рыбная",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Спайси суши тунец",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Тартар из карельской форели с икрой масаго",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Спайси суши лосось",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Том-ям для милых дам 1/2",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Сашими из форели",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Суп Том-ям 1/2",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Спайси суши угорь",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Спайси суши креветка",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Ролл с тунцом",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Татаки тунец на гриле с овощным салатом",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Ролл с форелью",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Спайси суши гребешок",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Картофель дольками по-деревенски",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Блины с земляникой",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Картофель фри с сыром и трюфельным маслом",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Блины с красной икрой",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Ролл с угрем и сливочным сыром",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Круассан со слабосоленой форелью",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Ролл филадельфия",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Рис отварной",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Чесночные гренки из бородинского хлеба",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Овощи гриль",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Салат деревенский, с помидорами и огурцом",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Ролл с авокадо",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Батат фри с вашим любимым соусом",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Ролл с огурцом",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Салат зелёный из листовых салатов и огурца",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Хрустящая моцарелла с деревенским соусом",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Буйабес с гренками и соусом руй",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Тартар с тунцом и авокадо",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Спагетти с вонголе",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Бургер с треской",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Феттучини со сливочным соусом и лососем",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Вареники с творогом, манго и кокосовой сметаной",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Салат цезарь с морепродуктами",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Лапша с морепродуктами",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Мидии в соусе Том ям",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Жаренные щупальца кальмара с картофелем и каперсами",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Яйцо «Атлантик» с форелью",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Драники с форелью и яйцом пашот",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Яичница с креветками",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Филе камбалы со шпинатом, молодыми кабачками и сливочным соусом",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Жаренный рис с овощами и яйцом",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Спагетти с томатным соусом, креветками, лососем и треской",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Кобб салат с тунцом",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Блины с слабосолёной форелью",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Тёплый угорь с пикантным салатом из огурца, яблока и хвороста",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Утро в Моремании",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Глазированная форель с рисом и риетом из авокадо",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Аво-тост",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Боул с морскими водорослями и авокадо",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Мидии в соусе блю-чиз",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Каша пшенная с угрем",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Феттучини со сливочным соусом и лососем 1/2",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Буйабес с гренками и соусом руй 1/2",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Мидии в сливочном соусе",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Мидии в томатном соусе",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Омлет с подкопчённым лососем",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Салат с крабом и авокадо",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      } ]
+    }, {
       "chain" : "Hatimaki",
       "fit" : "GOOD",
       "nearby" : [ {
@@ -41985,6 +42779,403 @@
         "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
       } ]
     }, {
+      "chain" : "Моремания",
+      "fit" : "GOOD",
+      "nearby" : [ {
+        "dishes" : [ "Салат зелёный из листовых салатов и огурца", "Камбала в кисло-сладком соусе" ],
+        "score" : 0.769574
+      }, {
+        "dishes" : [ "Салат зелёный из листовых салатов и огурца", "Лапша с морепродуктами 1/2" ],
+        "score" : 0.814368
+      }, {
+        "dishes" : [ "Салат деревенский, с помидорами и огурцом", "Пельмени с креветкой и кальмаром, икрой масаго и кинзой" ],
+        "score" : 0.962759
+      }, {
+        "dishes" : [ "Овощи гриль", "Пельмени с креветкой и кальмаром, икрой масаго и кинзой" ],
+        "score" : 1.013554
+      }, {
+        "dishes" : [ "Овощи гриль", "Ролл Дракон с угрем" ],
+        "score" : 1.119746
+      } ],
+      "atVenue" : [ {
+        "dishes" : [ "Салат зелёный из листовых салатов и огурца", "Камбала в кисло-сладком соусе" ],
+        "score" : 0.736632
+      }, {
+        "dishes" : [ "Салат зелёный из листовых салатов и огурца", "Лапша с морепродуктами 1/2" ],
+        "score" : 0.780522
+      }, {
+        "dishes" : [ "Салат деревенский, с помидорами и огурцом", "Пельмени с креветкой и кальмаром, икрой масаго и кинзой" ],
+        "score" : 0.930265
+      }, {
+        "dishes" : [ "Овощи гриль", "Пельмени с креветкой и кальмаром, икрой масаго и кинзой" ],
+        "score" : 0.985317
+      }, {
+        "dishes" : [ "Салат деревенский, с помидорами и огурцом", "Ролл Дракон с угрем" ],
+        "score" : 1.036859
+      } ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Чиабатта с яйцом пашот и слабосолёной форелью",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Бургер Дальний Восток",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Ролл горячий с лососем и угрем",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Камбала в кисло-сладком соусе",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Спагетти с вонголе 1/2",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Лапша с морепродуктами 1/2",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Ролл горячий с крабом",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Тигровые креветки в темпуре",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Ролл с копченой форелью",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Рыбная уха",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Креветки васаби",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Ролл с креветкой темпура",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Пельмени с креветкой и кальмаром, икрой масаго и кинзой",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Ролл Дракон с угрем",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Угорь на рисе 1/2",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Солянка рыбная",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Тартар из карельской форели с икрой масаго",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Спайси суши лосось",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Спайси суши тунец",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Том-ям для милых дам 1/2",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Сашими из форели",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Суп Том-ям 1/2",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Спайси суши угорь",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Спайси суши креветка",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Татаки тунец на гриле с овощным салатом",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Ролл с тунцом",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Ролл с форелью",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Спайси суши гребешок",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Блины с земляникой",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Ролл с угрем и сливочным сыром",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Картофель фри с сыром и трюфельным маслом",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Ролл филадельфия",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Рис отварной",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Чесночные гренки из бородинского хлеба",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Овощи гриль",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Салат деревенский, с помидорами и огурцом",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Ролл с авокадо",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Батат фри с вашим любимым соусом",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Ролл с огурцом",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Салат зелёный из листовых салатов и огурца",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Пельмени жареные с лососем",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Боул с морскими водорослями и авокадо",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Аво-тост",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Утро в Моремании",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Сырники ванильные со сметаной и земляникой",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Блины с слабосолёной форелью",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Поке с форелью",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE" ]
+      }, {
+        "dish" : "Поке с тунцом",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE" ]
+      }, {
+        "dish" : "Спагетти с томатным соусом, креветками, лососем и треской",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Ролл с лососем, сливочным сыром и икрой масаго",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Тёплый угорь с пикантным салатом из огурца, яблока и хвороста",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Феттучини со сливочным соусом и лососем 1/2",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Пельмени из кеты с пармезаном и рукколой",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Том-ям для милых дам",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Угорь на рисе",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Филе камбалы со шпинатом, молодыми кабачками и сливочным соусом",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Кобб салат с тунцом",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Суп Том-ям",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Кольца кальмара в хрустящей корочке",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Жаренный рис с овощами и яйцом",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Буйабес с гренками и соусом руй 1/2",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Картофель дольками по-деревенски",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Треска с эдамаме под сливочным соусом",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Блины с красной икрой",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Мидии в соусе Том ям",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Яйцо «Атлантик» с форелью",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Яичница с креветками",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Креветки Лангустино на гриле",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Драники с форелью и яйцом пашот",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Круассан со слабосоленой форелью",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Жаренные щупальца кальмара с картофелем и каперсами",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Вареники с творогом, манго и кокосовой сметаной",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Тыквенный крем-суп с креветками и хворостом (острый)",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Фритто-мисто с соусом тар-тар",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Спагетти с вонголе",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Салат цезарь с морепродуктами",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Салат с креветками и рукколой",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Салат с крабом и авокадо",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Буйабес с гренками и соусом руй",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Хрустящая моцарелла с деревенским соусом",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Тартар с тунцом и авокадо",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Бургер с треской",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Феттучини со сливочным соусом и лососем",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Лапша с морепродуктами",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Глазированная форель с рисом и риетом из авокадо",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Мидии в соусе блю-чиз",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Каша пшенная с угрем",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Мидии в сливочном соусе",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Мидии в томатном соусе",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Омлет с подкопчённым лососем",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      } ]
+    }, {
       "chain" : "Hatimaki",
       "fit" : "GOOD",
       "nearby" : [ {
@@ -56887,6 +58078,388 @@
         "dish" : "Пеканбон",
         "verdict" : "NOT_FITS",
         "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      } ]
+    }, {
+      "chain" : "Моремания",
+      "fit" : "GOOD",
+      "nearby" : [ {
+        "dishes" : [ "Овощи гриль", "Камбала в кисло-сладком соусе" ],
+        "score" : 0.670169
+      }, {
+        "dishes" : [ "Салат деревенский, с помидорами и огурцом", "Камбала в кисло-сладком соусе" ],
+        "score" : 0.792141
+      } ],
+      "atVenue" : [ {
+        "dishes" : [ "Овощи гриль", "Камбала в кисло-сладком соусе" ],
+        "score" : 0.650979
+      }, {
+        "dishes" : [ "Салат деревенский, с помидорами и огурцом", "Камбала в кисло-сладком соусе" ],
+        "score" : 0.766257
+      } ],
+      "replaceFirst" : [ {
+        "dishes" : [ "Салат деревенский, с помидорами и огурцом", "Камбала в кисло-сладком соусе" ],
+        "score" : 0.792141
+      } ],
+      "assessment" : [ {
+        "dish" : "Сырники ванильные со сметаной и земляникой",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Камбала в кисло-сладком соусе",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Блины с земляникой",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Картофель фри с сыром и трюфельным маслом",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Рис отварной",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Чесночные гренки из бородинского хлеба",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Овощи гриль",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Салат деревенский, с помидорами и огурцом",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Ролл с авокадо",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Батат фри с вашим любимым соусом",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Ролл с огурцом",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Салат зелёный из листовых салатов и огурца",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Картофель дольками по-деревенски",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Угорь на рисе",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Мидии в соусе Том ям",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Кольца кальмара в хрустящей корочке",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Яйцо «Атлантик» с форелью",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Яичница с креветками",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Драники с форелью и яйцом пашот",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Поке с тунцом",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Жаренные щупальца кальмара с картофелем и каперсами",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Поке с форелью",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Вареники с творогом, манго и кокосовой сметаной",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Филе камбалы со шпинатом, молодыми кабачками и сливочным соусом",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Фритто-мисто с соусом тар-тар",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Жаренный рис с овощами и яйцом",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Спагетти с томатным соусом, креветками, лососем и треской",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Кобб салат с тунцом",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Спагетти с вонголе",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Салат цезарь с морепродуктами",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Блины с слабосолёной форелью",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Тёплый угорь с пикантным салатом из огурца, яблока и хвороста",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Чиабатта с яйцом пашот и слабосолёной форелью",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Утро в Моремании",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Хрустящая моцарелла с деревенским соусом",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Буйабес с гренками и соусом руй",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Тартар с тунцом и авокадо",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Аво-тост",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Пельмени жареные с лососем",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Боул с морскими водорослями и авокадо",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Бургер Дальний Восток",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Ролл горячий с лососем и угрем",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Бургер с треской",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Ролл с лососем, сливочным сыром и икрой масаго",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Феттучини со сливочным соусом и лососем",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Феттучини со сливочным соусом и лососем 1/2",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Пельмени из кеты с пармезаном и рукколой",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Том-ям для милых дам",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Лапша с морепродуктами",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "KCAL_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Суп Том-ям",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Спагетти с вонголе 1/2",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Лапша с морепродуктами 1/2",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Ролл горячий с крабом",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Буйабес с гренками и соусом руй 1/2",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Треска с эдамаме под сливочным соусом",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Тигровые креветки в темпуре",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Ролл с копченой форелью",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Блины с красной икрой",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Ролл с угрем и сливочным сыром",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Рыбная уха",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Креветки Лангустино на гриле",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Круассан со слабосоленой форелью",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Креветки васаби",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Ролл с креветкой темпура",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Пельмени с креветкой и кальмаром, икрой масаго и кинзой",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Ролл Дракон с угрем",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Тыквенный крем-суп с креветками и хворостом (острый)",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Ролл филадельфия",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Салат с креветками и рукколой",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Угорь на рисе 1/2",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Салат с крабом и авокадо",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Глазированная форель с рисом и риетом из авокадо",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Солянка рыбная",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Тартар из карельской форели с икрой масаго",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Спайси суши лосось",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Спайси суши тунец",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Мидии в соусе блю-чиз",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Каша пшенная с угрем",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Сашими из форели",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Том-ям для милых дам 1/2",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Суп Том-ям 1/2",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Спайси суши угорь",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Спайси суши креветка",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Татаки тунец на гриле с овощным салатом",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Ролл с тунцом",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Ролл с форелью",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Спайси суши гребешок",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Мидии в сливочном соусе",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Мидии в томатном соусе",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Омлет с подкопчённым лососем",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "KCAL_ABOVE", "FAT_ABOVE" ]
       } ]
     }, {
       "chain" : "Hatimaki",
@@ -72082,6 +73655,412 @@
         "dish" : "Пеканбон",
         "verdict" : "NOT_FITS",
         "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      } ]
+    }, {
+      "chain" : "Моремания",
+      "fit" : "GOOD",
+      "nearby" : [ {
+        "dishes" : [ "Спайси суши угорь" ],
+        "score" : 0.539556
+      }, {
+        "dishes" : [ "Спайси суши креветка" ],
+        "score" : 1.066804
+      }, {
+        "dishes" : [ "Овощи гриль" ],
+        "score" : 1.116784
+      }, {
+        "dishes" : [ "Ролл с тунцом" ],
+        "score" : 1.17723
+      }, {
+        "dishes" : [ "Татаки тунец на гриле с овощным салатом" ],
+        "score" : 1.214
+      } ],
+      "atVenue" : [ {
+        "dishes" : [ "Спайси суши угорь" ],
+        "score" : 0.539556
+      }, {
+        "dishes" : [ "Спайси суши креветка" ],
+        "score" : 1.066804
+      }, {
+        "dishes" : [ "Овощи гриль" ],
+        "score" : 1.116784
+      }, {
+        "dishes" : [ "Ролл с тунцом" ],
+        "score" : 1.17723
+      }, {
+        "dishes" : [ "Татаки тунец на гриле с овощным салатом" ],
+        "score" : 1.214
+      } ],
+      "replaceFirst" : [ {
+        "dishes" : [ "Спайси суши креветка" ],
+        "score" : 1.066804
+      }, {
+        "dishes" : [ "Овощи гриль" ],
+        "score" : 1.116784
+      }, {
+        "dishes" : [ "Ролл с тунцом" ],
+        "score" : 1.17723
+      } ],
+      "assessment" : [ {
+        "dish" : "Спайси суши угорь",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Спайси суши креветка",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Овощи гриль",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Ролл с тунцом",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Татаки тунец на гриле с овощным салатом",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Ролл с форелью",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Спайси суши гребешок",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Ролл с авокадо",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Ролл с огурцом",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Салат зелёный из листовых салатов и огурца",
+        "verdict" : "FITS",
+        "reasons" : [ ]
+      }, {
+        "dish" : "Батат фри с вашим любимым соусом",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN" ]
+      }, {
+        "dish" : "Сашими из форели",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Суп Том-ям 1/2",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Салат деревенский, с помидорами и огурцом",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Том-ям для милых дам 1/2",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Чесночные гренки из бородинского хлеба",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Тартар из карельской форели с икрой масаго",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE" ]
+      }, {
+        "dish" : "Спайси суши лосось",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE" ]
+      }, {
+        "dish" : "Спайси суши тунец",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE" ]
+      }, {
+        "dish" : "Солянка рыбная",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Угорь на рисе 1/2",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Рис отварной",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Салат с крабом и авокадо",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Салат с креветками и рукколой",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Пельмени с креветкой и кальмаром, икрой масаго и кинзой",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Ролл Дракон с угрем",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Тыквенный крем-суп с креветками и хворостом (острый)",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Ролл с креветкой темпура",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Креветки васаби",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Ролл филадельфия",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Рыбная уха",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Креветки Лангустино на гриле",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Тигровые креветки в темпуре",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Круассан со слабосоленой форелью",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Ролл с копченой форелью",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Треска с эдамаме под сливочным соусом",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Картофель фри с сыром и трюфельным маслом",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Лапша с морепродуктами 1/2",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Ролл с угрем и сливочным сыром",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Ролл горячий с крабом",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Спагетти с вонголе 1/2",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Блины с красной икрой",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Камбала в кисло-сладком соусе",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Буйабес с гренками и соусом руй 1/2",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Блины с земляникой",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Суп Том-ям",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Том-ям для милых дам",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Пельмени из кеты с пармезаном и рукколой",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Ролл с лососем, сливочным сыром и икрой масаго",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Бургер Дальний Восток",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Феттучини со сливочным соусом и лососем 1/2",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Ролл горячий с лососем и угрем",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Сырники ванильные со сметаной и земляникой",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Пельмени жареные с лососем",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Боул с морскими водорослями и авокадо",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Чиабатта с яйцом пашот и слабосолёной форелью",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Аво-тост",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Утро в Моремании",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Блины с слабосолёной форелью",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Поке с форелью",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Тёплый угорь с пикантным салатом из огурца, яблока и хвороста",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Поке с тунцом",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Спагетти с томатным соусом, креветками, лососем и треской",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Угорь на рисе",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Кобб салат с тунцом",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Филе камбалы со шпинатом, молодыми кабачками и сливочным соусом",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Кольца кальмара в хрустящей корочке",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Жаренный рис с овощами и яйцом",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Картофель дольками по-деревенски",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Яйцо «Атлантик» с форелью",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Мидии в соусе Том ям",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Яичница с креветками",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Драники с форелью и яйцом пашот",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Жаренные щупальца кальмара с картофелем и каперсами",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Вареники с творогом, манго и кокосовой сметаной",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Фритто-мисто с соусом тар-тар",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Спагетти с вонголе",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Салат цезарь с морепродуктами",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Буйабес с гренками и соусом руй",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Хрустящая моцарелла с деревенским соусом",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Тартар с тунцом и авокадо",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Бургер с треской",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Феттучини со сливочным соусом и лососем",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Лапша с морепродуктами",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Глазированная форель с рисом и риетом из авокадо",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Мидии в соусе блю-чиз",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Каша пшенная с угрем",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Мидии в сливочном соусе",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Мидии в томатном соусе",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Омлет с подкопчённым лососем",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
       } ]
     }, {
       "chain" : "Hatimaki",
