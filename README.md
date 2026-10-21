@@ -95,7 +95,7 @@ cd app && flutter analyze --fatal-infos && flutter test --coverage && dart run t
 
 `python3 tool/team_archive/build.py --practicals <папка с .docx практических> --apk <norma-ryadom-offline.apk>` собирает в `~/Downloads` папку и zip «Норма рядом — архив для команды»: демо-APK, краткий обзор и полное описание проекта, скриншоты, документацию и практические с исправлениями. Сами практические в репозиторий не кладутся. Файлы с меню сетей (HAR, HTML) складываются в `menus-inbox/` — эта папка в `.gitignore`.
 
-Как показать код (что открыть в IntelliJ IDEA и VS Code, команды запуска, откуда данные) — `docs/code-tour.md`. Краткий обзор проекта и стека для курсовой и защиты — `docs/overview.md`; его Word-версия собирается командой `python3 tool/docs/md_to_docx.py docs/overview.md docs/overview.docx` (нужен macOS: конвертирует `textutil`).
+Как показать код (что открыть в IntelliJ IDEA и VS Code, команды запуска, откуда данные) — `docs/code-tour.md`. Краткий обзор проекта и стека для курсовой и защиты — `docs/overview.md`; его Word-версия собирается командой `python3 tool/docs/md_to_docx.py docs/overview.md docs/overview.docx` (стили, поля и номера страниц берутся из `docs/project-description.docx`).
 
 Word-версия описания обновляется из Markdown командой `python3 tool/docs/sync_docx.py docs/project-description.md docs/project-description.docx`: изменённые абзацы и таблицы переписываются с прежним оформлением, новые абзацы вставляются по соседним.
 

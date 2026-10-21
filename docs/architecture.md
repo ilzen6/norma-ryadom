@@ -65,7 +65,7 @@ sequenceDiagram
         end
         K-->>C: наборы
     end
-    C-->>A: 3–5 вариантов с учётом расстояния, appliedTarget
+    C-->>A: до 20 вариантов с учётом расстояния, appliedTarget
     A-->>U: карточки наборов
 ```
 
