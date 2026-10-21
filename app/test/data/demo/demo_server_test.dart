@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:norma_ryadom/data/demo/demo_server.dart';
-import 'package:norma_ryadom/data/services/location_service.dart';
 import 'package:norma_ryadom/data/services/norma_api.dart';
 import 'package:norma_ryadom/domain/models/catalog.dart';
 import 'package:norma_ryadom/domain/models/combo.dart';
@@ -16,7 +15,7 @@ void main() {
     NormaApi.createDio('http://demo')
       ..httpClientAdapter = DemoServerAdapter(() async => File('assets/demo/catalog.json').readAsStringSync()),
   );
-  const center = DemoLocationService.moscowCity;
+  const center = GeoLocation(lat: 55.7495, lon: 37.5374, source: LocationSource.device);
 
   T valueOf<T>(Result<T> result) => switch (result) {
     Ok(:final value) => value,
@@ -64,7 +63,7 @@ void main() {
     expect(result.appliedTarget.kcal, 630);
     expect(result.appliedTarget.kcalTolerance, 60);
     expect(result.options, isNotEmpty);
-    expect(result.options.length, lessThanOrEqualTo(5));
+    expect(result.options.length, lessThanOrEqualTo(NormaApi.nearbyLimit));
     for (final option in result.options) {
       expect(option.combo.dishes.expand((dish) => dish.tags), isNot(contains('pork')));
       expect(option.combo.checks.map((check) => check.metric), [Metric.kcal, Metric.protein, Metric.fat, Metric.carbs]);

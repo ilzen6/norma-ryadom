@@ -376,6 +376,23 @@ void main() {
     expect(tester.widget<SwitchListTile>(find.byKey(const Key('health-sync'))).value, isTrue);
   });
 
+  testWidgets('профиль переключает тему и запоминает выбор', (tester) async {
+    final harness = TestHarness(profile: TestData.profile);
+    await harness.pump(tester);
+    await openTab(tester, 'Профиль');
+    await scrollTo(tester, find.byKey(const Key('theme-setting')));
+    expect(find.text('Как в системе'), findsOneWidget);
+
+    await tester.tap(find.byKey(const Key('theme-setting')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('theme-dark')));
+    await tester.pumpAndSettle();
+
+    expect(tester.widget<MaterialApp>(find.byType(MaterialApp)).themeMode, ThemeMode.dark);
+    expect(harness.settings.savedTheme, 'dark');
+    expect(find.text('Тёмная'), findsOneWidget);
+  });
+
   testWidgets('дневник учитывает еду из других приложений и отправляет туда свои записи', (tester) async {
     final harness = TestHarness(profile: TestData.profile)
       ..healthSync = true

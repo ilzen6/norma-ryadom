@@ -30,6 +30,7 @@ class TestHarness {
   final health = FakeHealthSyncService();
   bool healthSync = false;
   bool allowCleartextServer = false;
+  bool demoServer = false;
   DateTime now = DateTime(2026, 10, 2, 13, 5);
 
   List<Override> get overrides => [
@@ -39,6 +40,7 @@ class TestHarness {
         tileUrlTemplate: '',
         searchRadiusMeters: 1500,
         allowCleartextServer: allowCleartextServer,
+        demoServer: demoServer,
       ),
     ),
     settingsRepositoryProvider.overrideWithValue(settings),

@@ -8,6 +8,10 @@ abstract interface class SettingsRepository {
   Future<bool> healthSync();
 
   Future<void> saveHealthSync({required bool enabled});
+
+  Future<String?> theme();
+
+  Future<void> saveTheme(String theme);
 }
 
 class LocalSettingsRepository implements SettingsRepository {
@@ -15,6 +19,7 @@ class LocalSettingsRepository implements SettingsRepository {
 
   static const _serverAddressKey = 'server_address';
   static const _healthSyncKey = 'health_sync';
+  static const _themeKey = 'theme';
 
   final AppDatabase _db;
 
@@ -43,4 +48,14 @@ class LocalSettingsRepository implements SettingsRepository {
   Future<void> saveHealthSync({required bool enabled}) => _db
       .into(_db.settingRecords)
       .insertOnConflictUpdate(SettingRecordsCompanion.insert(key: _healthSyncKey, value: enabled ? 'on' : 'off'));
+
+  @override
+  Future<String?> theme() async {
+    final record = await (_db.select(_db.settingRecords)..where((row) => row.key.equals(_themeKey))).getSingleOrNull();
+    return record?.value;
+  }
+
+  @override
+  Future<void> saveTheme(String theme) =>
+      _db.into(_db.settingRecords).insertOnConflictUpdate(SettingRecordsCompanion.insert(key: _themeKey, value: theme));
 }

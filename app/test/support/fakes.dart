@@ -122,6 +122,14 @@ class InMemorySettingsRepository implements SettingsRepository {
 
   @override
   Future<void> saveHealthSync({required bool enabled}) async => health = enabled;
+
+  String? savedTheme;
+
+  @override
+  Future<String?> theme() async => savedTheme;
+
+  @override
+  Future<void> saveTheme(String theme) async => savedTheme = theme;
 }
 
 class FakeHealthSyncService implements HealthSyncService {

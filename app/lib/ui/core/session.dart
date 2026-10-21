@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:latlong2/latlong.dart';
 
 import '../../data/providers.dart';
 import '../../data/services/norma_api.dart';
@@ -129,16 +130,24 @@ class LocationController extends AsyncNotifier<ResolvedLocation> {
     final profile = await ref.watch(profileProvider.future);
     final district = profile?.district ?? District.moscowCity;
     final fallback = GeoLocation(lat: district.lat, lon: district.lon, source: LocationSource.district);
-    if (ref.watch(appConfigProvider).demoServer) {
-      return ResolvedLocation(GeoLocation(lat: district.lat, lon: district.lon, source: LocationSource.device));
-    }
     if (profile == null || !profile.locationConsent) {
       return ResolvedLocation(fallback);
     }
-    return switch (await ref.read(locationServiceProvider).currentLocation()) {
-      Ok(:final value) => ResolvedLocation(value),
+    final current = await ref.read(locationServiceProvider).currentLocation();
+    return switch (current) {
+      Ok(:final value) =>
+        await _covered(value)
+            ? ResolvedLocation(value)
+            : ResolvedLocation(fallback, notice: AppFailure.outsideCoverage),
       Err(:final failure) => ResolvedLocation(fallback, notice: failure),
     };
+  }
+
+  Future<bool> _covered(GeoLocation location) async {
+    if (!ref.read(appConfigProvider).demoServer) return true;
+    final atlas = await ref.read(mapAtlasProvider.future);
+    if (atlas == null) return true;
+    return atlas.regions.any((region) => region.covers(LatLng(location.lat, location.lon)));
   }
 }
 

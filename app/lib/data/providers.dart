@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart' show ThemeMode;
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -51,6 +52,23 @@ class ServerAddressController extends Notifier<String> {
     state = address;
   }
 }
+
+final initialThemeModeProvider = Provider<ThemeMode>((ref) => ThemeMode.system);
+
+final themeModeProvider = NotifierProvider<ThemeModeController, ThemeMode>(ThemeModeController.new);
+
+class ThemeModeController extends Notifier<ThemeMode> {
+  @override
+  ThemeMode build() => ref.watch(initialThemeModeProvider);
+
+  Future<void> select(ThemeMode mode) async {
+    state = mode;
+    await ref.read(settingsRepositoryProvider).saveTheme(mode.name);
+  }
+}
+
+ThemeMode themeModeFrom(String? value) =>
+    ThemeMode.values.firstWhere((mode) => mode.name == value, orElse: () => ThemeMode.system);
 
 final healthSyncServiceProvider = Provider<HealthSyncService>(
   (ref) => PlatformHealthSyncService.supported ? PlatformHealthSyncService() : const UnavailableHealthSyncService(),
@@ -154,8 +172,6 @@ final feedbackRepositoryProvider = Provider<FeedbackRepository>(
   (ref) => RemoteFeedbackRepository(ref.watch(normaApiProvider)),
 );
 
-final locationServiceProvider = Provider<LocationService>(
-  (ref) => ref.watch(appConfigProvider).demoServer ? const DemoLocationService() : const DeviceLocationService(),
-);
+final locationServiceProvider = Provider<LocationService>((ref) => const DeviceLocationService());
 
 final photoPickerProvider = Provider<PhotoPickerService>((ref) => DevicePhotoPickerService());

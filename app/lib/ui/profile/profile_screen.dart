@@ -189,6 +189,15 @@ class ProfileScreen extends ConsumerWidget {
                             if (saved != null && context.mounted) showMessage(context, l10n.serverSaved);
                           },
                   ),
+                  const Divider(indent: 72, endIndent: 16),
+                  ListTile(
+                    key: const Key('theme-setting'),
+                    leading: Icon(Icons.contrast_rounded, color: palette.brand),
+                    title: Text(l10n.profileTheme),
+                    subtitle: Text(l10n.themeName(ref.watch(themeModeProvider))),
+                    trailing: Icon(Icons.chevron_right_rounded, color: palette.inkSubtle),
+                    onTap: () => _chooseTheme(context, ref),
+                  ),
                 ],
               ),
             ),
@@ -225,6 +234,32 @@ class ProfileScreen extends ConsumerWidget {
         ),
       ),
     );
+  }
+
+  Future<void> _chooseTheme(BuildContext context, WidgetRef ref) async {
+    final l10n = context.l10n;
+    final current = ref.read(themeModeProvider);
+    final chosen = await showModalBottomSheet<ThemeMode>(
+      context: context,
+      showDragHandle: true,
+      builder: (sheetContext) => SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            for (final mode in ThemeMode.values)
+              ListTile(
+                key: Key('theme-${mode.name}'),
+                title: Text(l10n.themeName(mode)),
+                trailing: mode == current
+                    ? Icon(Icons.check_rounded, color: Theme.of(context).colorScheme.primary)
+                    : null,
+                onTap: () => Navigator.of(sheetContext).pop(mode),
+              ),
+          ],
+        ),
+      ),
+    );
+    if (chosen != null) await ref.read(themeModeProvider.notifier).select(chosen);
   }
 
   Future<void> _confirmDelete(BuildContext context, WidgetRef ref) async {

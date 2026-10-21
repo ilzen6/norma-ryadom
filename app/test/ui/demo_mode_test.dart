@@ -30,6 +30,7 @@ void main() {
           profileRepositoryProvider.overrideWithValue(InMemoryProfileRepository(TestData.profile)),
           diaryRepositoryProvider.overrideWithValue(diary),
           settingsRepositoryProvider.overrideWithValue(InMemorySettingsRepository()),
+          locationServiceProvider.overrideWithValue(FakeLocationService()),
         ],
         child: const NormaRyadomApp(),
       ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'data/providers.dart';
 import 'l10n/generated/app_localizations.dart';
 import 'routing/app_router.dart';
 import 'ui/core/session.dart';
@@ -40,7 +41,7 @@ class _NormaRyadomAppState extends ConsumerState<NormaRyadomApp> {
     onGenerateTitle: (context) => AppLocalizations.of(context).appTitle,
     theme: buildTheme(Brightness.light),
     darkTheme: buildTheme(Brightness.dark),
-    themeMode: ThemeMode.system,
+    themeMode: ref.watch(themeModeProvider),
     locale: const Locale('ru'),
     supportedLocales: AppLocalizations.supportedLocales,
     localizationsDelegates: const [

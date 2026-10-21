@@ -170,7 +170,7 @@ class ComboApiIT : IntegrationTest() {
                 contentType = MediaType.APPLICATION_JSON
                 content =
                     """{"target": {"kcal": 50, "kcalTolerance": 60, "minProtein": 30, "maxFat": 25, "maxCarbs": 90,
-                    "excludeTags": ["pork"]}, "limit": 6}"""
+                    "excludeTags": ["pork"]}, "limit": 31}"""
             }.andExpect {
                 status { isBadRequest() }
                 content { contentType("application/problem+json") }
@@ -181,7 +181,7 @@ class ComboApiIT : IntegrationTest() {
         mockMvc
             .post("/api/v1/combos/search") {
                 contentType = MediaType.APPLICATION_JSON
-                content = """{"target": $TARGET, "venueId": 1, "location": {"lat": 55, "lon": 37, "radiusMeters": 6000}}"""
+                content = """{"target": $TARGET, "venueId": 1, "location": {"lat": 55, "lon": 37, "radiusMeters": 10001}}"""
             }.andExpect {
                 status { isBadRequest() }
                 jsonPath("$.errors[*].field") { value(hasItem("location.radiusMeters")) }

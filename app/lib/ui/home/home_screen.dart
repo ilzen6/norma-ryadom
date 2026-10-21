@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../data/providers.dart';
 import '../../data/services/norma_api.dart';
 import '../../domain/models/geo_location.dart';
 import '../../domain/models/meal.dart';
@@ -456,6 +457,12 @@ class _SearchResults extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           SectionTitle(title: l10n.resultsTitle, trailing: '${result.options.length}'),
+          if (result.radiusMeters case final radius? when radius > ref.watch(appConfigProvider).searchRadiusMeters)
+            Padding(
+              key: const Key('wider-search'),
+              padding: const EdgeInsets.only(bottom: Layout.gap),
+              child: Text(l10n.resultsWiderRadius(l10n.distance(radius)), style: Theme.of(context).textTheme.bodySmall),
+            ),
           for (final (index, option) in result.options.indexed) ...[
             Appear(
               index: index,

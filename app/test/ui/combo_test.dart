@@ -33,6 +33,25 @@ void main() {
     return harness;
   }
 
+  testWidgets('сообщает, что поиск расширили, когда рядом было мало вариантов', (tester) async {
+    final harness = TestHarness(profile: TestData.profile)
+      ..combos.nearbyResult = Ok(
+        ComboSearchResult(
+          appliedTarget: TestData.lunchTarget,
+          options: [
+            TestData.option([chicken, mors]),
+          ],
+          radiusMeters: 3000,
+        ),
+      );
+    await harness.pump(tester);
+    await tester.tap(find.byKey(const Key('find-nearby')));
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const Key('wider-search')), findsOneWidget);
+    expect(find.text('Рядом было мало вариантов — расширили поиск до 3 км'), findsOneWidget);
+  });
+
   testWidgets('объясняет попадание в цель по каждому показателю', (tester) async {
     await openCombo(tester);
 

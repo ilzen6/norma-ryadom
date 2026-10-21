@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart' show ThemeMode;
 import 'package:flutter/widgets.dart';
 
 import '../../domain/models/catalog.dart';
@@ -118,6 +119,12 @@ extension MealLabels on AppLocalizations {
     _ => tagOther,
   };
 
+  String themeName(ThemeMode mode) => switch (mode) {
+    ThemeMode.system => themeSystem,
+    ThemeMode.light => themeLight,
+    ThemeMode.dark => themeDark,
+  };
+
   String failure(AppFailure failure) => switch (failure) {
     AppFailure.offline => errorOffline,
     AppFailure.notFound => errorNotFound,
@@ -128,6 +135,7 @@ extension MealLabels on AppLocalizations {
     AppFailure.serviceUnavailable => errorUnavailable,
     AppFailure.locationDenied => errorLocationDenied,
     AppFailure.locationUnavailable => errorLocationUnavailable,
+    AppFailure.outsideCoverage => errorOutsideCoverage,
     AppFailure.photoAccessDenied => errorPhotoAccessDenied,
     AppFailure.unexpected => errorUnexpected,
   };

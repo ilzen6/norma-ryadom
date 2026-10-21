@@ -21,7 +21,7 @@ data class LocationRequest(
     @field:DecimalMax("180")
     val lon: Double,
     @field:Min(100)
-    @field:Max(5000)
+    @field:Max(MAX_SEARCH_RADIUS_METERS)
     val radiusMeters: Int,
 )
 
@@ -36,7 +36,7 @@ data class ComboSearchRequest(
     val preferCheaper: Boolean = false,
     @field:Schema(requiredMode = Schema.RequiredMode.NOT_REQUIRED)
     @field:Min(1)
-    @field:Max(5)
+    @field:Max(MAX_NEARBY_COMBOS)
     val limit: Int = 5,
 ) {
     fun criteria(): SearchCriteria = SearchCriteria(target.toTarget(), PricePreferences.of(preferCheaper))
@@ -69,3 +69,6 @@ data class ComboReplaceRequest(
 object PricePreferences {
     fun of(preferCheaper: Boolean): PricePreference = if (preferCheaper) PricePreference.PREFER_CHEAPER else PricePreference.IGNORE
 }
+
+const val MAX_SEARCH_RADIUS_METERS = 10_000L
+const val MAX_NEARBY_COMBOS = 30L

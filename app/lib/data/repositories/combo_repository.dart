@@ -29,6 +29,9 @@ abstract interface class ComboRepository {
 class RemoteComboRepository implements ComboRepository {
   const RemoteComboRepository(this._api, {required this.radiusMeters});
 
+  static const wideRadiiMeters = [3000, 6000];
+  static const enoughOptions = 8;
+
   final NormaApi _api;
   final int radiusMeters;
 
@@ -37,7 +40,22 @@ class RemoteComboRepository implements ComboRepository {
     required GeoLocation location,
     required MealTarget target,
     required PricePreference price,
-  }) => _api.searchNearby(location: location, radiusMeters: radiusMeters, target: target, price: price);
+  }) async {
+    final radii = [radiusMeters, ...wideRadiiMeters.where((radius) => radius > radiusMeters)];
+    late Result<ComboSearchResult> found;
+    for (final radius in radii) {
+      found = await _api.searchNearby(location: location, radiusMeters: radius, target: target, price: price);
+      switch (found) {
+        case Ok(:final value) when value.options.length >= enoughOptions || radius == radii.last:
+          return Ok(value.copyWith(radiusMeters: radius));
+        case Ok():
+          continue;
+        case Err():
+          return found;
+      }
+    }
+    return found;
+  }
 
   @override
   Future<Result<ComboSearchResult>> atVenue({

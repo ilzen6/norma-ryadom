@@ -540,6 +540,10 @@
       }
     }
   },
+  "profileTheme": "Тема",
+  "themeSystem": "Как в системе",
+  "themeLight": "Светлая",
+  "themeDark": "Тёмная",
   "profileHealthSync": "Еда из других приложений",
   "profileHealthSyncHint": "Apple Здоровье или Health Connect: учитываем съеденное в других приложениях и записываем туда приёмы пищи отсюда",
   "healthSyncUnavailable": "Не удалось подключиться к «Здоровью»: проверьте, что оно есть на телефоне и доступ разрешён",
@@ -607,6 +611,7 @@
   "errorUnavailable": "Сервис временно недоступен. Попробуйте позже.",
   "errorLocationDenied": "Нет доступа к геолокации — выберите район вручную в профиле.",
   "errorLocationUnavailable": "Не удалось определить местоположение — используем выбранный район.",
+  "errorOutsideCoverage": "Вы вне зоны каталога (Москва, область и Петербург) — ищем от выбранного района.",
   "errorPhotoAccessDenied": "Нет доступа к камере или галерее. Разрешите доступ в настройках телефона.",
   "goHome": "На главную",
   "serverTitle": "Сервер",
@@ -682,6 +687,8 @@
     }
   },
   "resultsTitle": "Варианты рядом",
+  "resultsWiderRadius": "Рядом было мало вариантов — расширили поиск до {distance}",
+  "@resultsWiderRadius": {"placeholders": {"distance": {"type": "String"}}},
   "fitOnTarget": "В цели",
   "fitCompromise": "Компромисс",
   "eatenOfNorm": "съедено {eaten} из {norm} ккал",

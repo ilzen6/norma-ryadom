@@ -17,10 +17,19 @@ Future<void> main() async {
         databaseProvider.overrideWithValue(database),
         initialServerAddressProvider.overrideWithValue(await _savedServerAddress(database)),
         initialHealthSyncProvider.overrideWithValue(await _savedHealthSync(database)),
+        initialThemeModeProvider.overrideWithValue(await _savedTheme(database)),
       ],
       child: const NormaRyadomApp(),
     ),
   );
+}
+
+Future<ThemeMode> _savedTheme(AppDatabase database) async {
+  try {
+    return themeModeFrom(await LocalSettingsRepository(database).theme());
+  } on Exception {
+    return ThemeMode.system;
+  }
 }
 
 Future<bool> _savedHealthSync(AppDatabase database) async {

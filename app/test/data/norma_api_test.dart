@@ -258,11 +258,34 @@ void main() {
     await feedback.reportItem(3, '  Другие цифры  ');
 
     final bodies = adapter.requests.map((request) => request.data).toList();
-    expect(((bodies[0] as Map<String, dynamic>)['location'] as Map<String, dynamic>)['radiusMeters'], 900);
-    expect((bodies[1] as Map<String, dynamic>)['venueId'], 7);
-    expect(adapter.requests[2].path, '/api/v1/combos/replace');
-    expect(adapter.requests[3].path, '/api/v1/venues/7/menu-photos');
-    expect(bodies[4], {'reason': 'Другие цифры'});
+    final radii = [
+      for (final body in bodies.take(3))
+        ((body as Map<String, dynamic>)['location'] as Map<String, dynamic>)['radiusMeters'],
+    ];
+    expect(radii, [900, 3000, 6000]);
+    expect((bodies[0] as Map<String, dynamic>)['limit'], NormaApi.nearbyLimit);
+    expect((bodies[3] as Map<String, dynamic>)['venueId'], 7);
+    expect(adapter.requests[4].path, '/api/v1/combos/replace');
+    expect(adapter.requests[5].path, '/api/v1/venues/7/menu-photos');
+    expect(bodies[6], {'reason': 'Другие цифры'});
+  });
+
+  test('не расширяет радиус, если рядом хватает вариантов, и запоминает радиус поиска', () async {
+    final option = TestData.option([TestData.dish(1, 'Салат', 300)]).toJson();
+    api = apiWith(
+      (options) => json({
+        'appliedTarget': TestData.lunchTarget.toJson(),
+        'options': List.filled(RemoteComboRepository.enoughOptions, option),
+      }),
+    );
+
+    final result = await RemoteComboRepository(
+      api,
+      radiusMeters: 1500,
+    ).nearby(location: TestData.deviceLocation, target: TestData.lunchTarget, price: PricePreference.any);
+
+    expect(adapter.requests, hasLength(1));
+    expect((result as Ok<ComboSearchResult>).value.radiusMeters, 1500);
   });
 
   test('репозиторий заведений передаёт радиус и признак «показать все»', () async {

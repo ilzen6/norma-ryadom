@@ -85,6 +85,7 @@ abstract class ComboSearchResult with _$ComboSearchResult {
   const factory ComboSearchResult({
     required MealTarget appliedTarget,
     @Default(<ComboOption>[]) List<ComboOption> options,
+    @JsonKey(includeFromJson: false, includeToJson: false) int? radiusMeters,
   }) = _ComboSearchResult;
 
   factory ComboSearchResult.fromJson(Map<String, dynamic> json) => _$ComboSearchResultFromJson(json);

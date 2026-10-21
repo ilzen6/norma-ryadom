@@ -49,6 +49,8 @@ class NormaApi {
     VenueMenu.fromJson,
   );
 
+  static const nearbyLimit = 20;
+
   Future<Result<ComboSearchResult>> searchNearby({
     required GeoLocation location,
     required int radiusMeters,
@@ -61,7 +63,7 @@ class NormaApi {
         'target': target.toJson(),
         'location': {'lat': location.lat, 'lon': location.lon, 'radiusMeters': radiusMeters},
         'preferCheaper': price == PricePreference.cheaper,
-        'limit': 5,
+        'limit': nearbyLimit,
       },
     ),
     ComboSearchResult.fromJson,

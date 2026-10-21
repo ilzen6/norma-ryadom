@@ -24,7 +24,7 @@ MAP_SCREENS = [
     ("app-19-map-russia", "5 Карта России"),
 ]
 ADMIN_SCREENS = {"01": "Обзор", "02": "Ошибки CSV", "03": "Сеть и меню", "04": "Модерация фото", "05": "Жалобы"}
-DOCS = ["decisions", "architecture", "requirements-matrix", "testing", "menus", "demo", "install-phone"]
+DOCS = ["code-tour", "decisions", "architecture", "requirements-matrix", "testing", "menus", "demo", "install-phone"]
 
 PRACTICAL_FIXES = {
     3: [(">Рисунок 3. <", ">Рисунок 4. <", 2)],
