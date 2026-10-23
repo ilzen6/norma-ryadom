@@ -20,6 +20,17 @@ class DemoCatalogLoader(
     private val venues: VenueRepository,
 ) : ApplicationRunner {
     override fun run(args: ApplicationArguments) {
+        properties.templates.forEach { template ->
+            if (chains.findByName(template.name) != null) {
+                log.info("Demo template already present, skipped: code={}", template.code)
+                return@forEach
+            }
+            val chainId = chains.create(template.name, template.sourceUrl, template.code)
+            val verifiedAt = template.sourceDate?.atStartOfDay(ZoneOffset.UTC)?.toInstant()
+            val menu = imports.importChainMenu(chainId, template.menu.contentAsByteArray, template.sourceUrl, verifiedAt)
+            check(menu is ImportOutcome.Imported) { "Demo template ${template.code} is invalid" }
+            log.info("Demo template loaded: code={}, items={}", template.code, menu.upserted)
+        }
         properties.chains.forEach { demo ->
             if (chains.findByName(demo.name) != null) {
                 log.info("Demo chain already present, skipped: name={}", demo.name)

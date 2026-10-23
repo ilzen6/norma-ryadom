@@ -68,6 +68,20 @@ class CsvRowReader(
         return runCatching { LocalDate.parse(value) }.getOrNull().also { if (it == null) fail(column, CsvErrorCode.NOT_A_DATE) }
     }
 
+    fun <T : Any> optionalCode(
+        column: String,
+        unknown: CsvErrorCode,
+        resolve: (String) -> T?,
+    ): T? {
+        val value = text(column).takeIf { it.isNotEmpty() } ?: return null
+        return resolve(value).also { if (it == null) fail(column, unknown) }
+    }
+
+    fun reject(
+        column: String,
+        code: CsvErrorCode,
+    ) = fail(column, code)
+
     fun <T : Any> codes(
         column: String,
         unknown: CsvErrorCode,

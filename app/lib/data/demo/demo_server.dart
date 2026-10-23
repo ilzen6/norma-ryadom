@@ -17,6 +17,7 @@ class DemoVenue {
     required this.lat,
     required this.lon,
     this.confirmedOn,
+    this.template,
   });
 
   final int id;
@@ -26,6 +27,7 @@ class DemoVenue {
   final double lat;
   final double lon;
   final String? confirmedOn;
+  final String? template;
 }
 
 class DemoChain {
@@ -35,6 +37,7 @@ class DemoChain {
     required this.menu,
     required this.venues,
     this.verifiedAt,
+    this.templateCode,
   });
 
   final String name;
@@ -42,38 +45,46 @@ class DemoChain {
   final String sourceUrl;
   final List<DemoDish> menu;
   final List<DemoVenue> venues;
+  final String? templateCode;
+
+  bool get isTemplate => templateCode != null;
 }
 
 class DemoCatalog {
-  const DemoCatalog({required this.verifiedAt, required this.chains});
+  DemoCatalog({required this.verifiedAt, required this.chains, this.templates = const []})
+    : _templatesByCode = {for (final template in templates) template.templateCode!: template};
 
   factory DemoCatalog.fromJson(String json) {
     final root = jsonDecode(json) as Map<String, dynamic>;
     var nextDishId = 1;
     var nextVenueId = 1;
+    List<DemoDish> menuOf(Map<String, dynamic> chain, {required String sourceKind}) => [
+      for (final item in (chain['items'] as List<dynamic>? ?? const []).cast<Map<String, dynamic>>())
+        DemoDish(
+          id: nextDishId++,
+          name: item['name'] as String,
+          category: item['category'] as String,
+          portionGrams: (item['portionGrams'] as num?)?.toDouble(),
+          nutrients: DemoNutrients(
+            (item['kcal'] as num).toDouble(),
+            (item['protein'] as num).toDouble(),
+            (item['fat'] as num).toDouble(),
+            (item['carbs'] as num).toDouble(),
+          ),
+          priceMinor: item['priceMinor'] as int?,
+          tags: (item['tags'] as List<dynamic>).cast<String>(),
+          sourceKind: sourceKind,
+          kcalLow: (item['kcalLow'] as num?)?.toDouble(),
+          kcalHigh: (item['kcalHigh'] as num?)?.toDouble(),
+        ),
+    ];
     final chains = [
       for (final chain in (root['chains'] as List<dynamic>).cast<Map<String, dynamic>>())
         DemoChain(
           name: chain['name'] as String,
           sourceUrl: chain['sourceUrl'] as String,
           verifiedAt: chain['verifiedAt'] as String?,
-          menu: [
-            for (final item in (chain['items'] as List<dynamic>? ?? const []).cast<Map<String, dynamic>>())
-              DemoDish(
-                id: nextDishId++,
-                name: item['name'] as String,
-                category: item['category'] as String,
-                portionGrams: (item['portionGrams'] as num?)?.toDouble(),
-                nutrients: DemoNutrients(
-                  (item['kcal'] as num).toDouble(),
-                  (item['protein'] as num).toDouble(),
-                  (item['fat'] as num).toDouble(),
-                  (item['carbs'] as num).toDouble(),
-                ),
-                priceMinor: item['priceMinor'] as int?,
-                tags: (item['tags'] as List<dynamic>).cast<String>(),
-              ),
-          ],
+          menu: menuOf(chain, sourceKind: 'A'),
           venues: [
             for (final venue in (chain['venues'] as List<dynamic>).cast<Map<String, dynamic>>())
               DemoVenue(
@@ -84,6 +95,7 @@ class DemoCatalog {
                 lat: (venue['lat'] as num).toDouble(),
                 lon: (venue['lon'] as num).toDouble(),
                 confirmedOn: venue['confirmedOn'] as String?,
+                template: venue['template'] as String?,
               ),
           ],
         ),
@@ -100,17 +112,40 @@ class DemoCatalog {
               lat: (venue['lat'] as num).toDouble(),
               lon: (venue['lon'] as num).toDouble(),
               confirmedOn: venue['confirmedOn'] as String?,
+              template: venue['template'] as String?,
             ),
         ],
       ),
     ];
-    return DemoCatalog(verifiedAt: root['verifiedAt'] as String, chains: chains);
+    final templates = [
+      for (final template in (root['templates'] as List<dynamic>? ?? const []).cast<Map<String, dynamic>>())
+        DemoChain(
+          name: template['name'] as String,
+          sourceUrl: template['sourceUrl'] as String,
+          verifiedAt: template['verifiedAt'] as String?,
+          templateCode: template['code'] as String,
+          menu: menuOf(template, sourceKind: 'C'),
+          venues: const [],
+        ),
+    ];
+    return DemoCatalog(verifiedAt: root['verifiedAt'] as String, chains: chains, templates: templates);
   }
 
   final String verifiedAt;
   final List<DemoChain> chains;
+  final List<DemoChain> templates;
+  final Map<String, DemoChain> _templatesByCode;
 
   DemoChain? chainOfVenue(int venueId) => chains.where((chain) => chain.venues.any((v) => v.id == venueId)).firstOrNull;
+
+  DemoChain menuSource(DemoChain chain, DemoVenue venue) =>
+      chain.menu.isNotEmpty ? chain : _templatesByCode[venue.template] ?? chain;
+
+  DemoChain? menuSourceOfVenue(int venueId) {
+    final chain = chainOfVenue(venueId);
+    final venue = this.venue(venueId);
+    return chain == null || venue == null ? null : menuSource(chain, venue);
+  }
 
   DemoVenue? venue(int venueId) =>
       chains.expand((chain) => chain.venues).where((venue) => venue.id == venueId).firstOrNull;
@@ -122,6 +157,7 @@ class DemoServerAdapter implements HttpClientAdapter {
   static const _maxNearby = 100;
   static const _maxLimit = 500;
   static const _combosPerVenue = 2;
+  static const _combosPerTemplateVenue = 1;
   static const _cachedCombos = 5;
   static const _distanceWeightPerKm = 0.5;
   static const _dietTagOrder = [
@@ -205,14 +241,14 @@ class DemoServerAdapter implements HttpClientAdapter {
             'distanceMeters': distance.round(),
             'hasMenu': chain.menu.isNotEmpty,
             'fit': chain.menu.isEmpty ? null : fitOf(chain),
-            'dataQuality': chain.menu.isEmpty ? null : 'A',
+            'dataQuality': chain.menu.isEmpty ? null : (chain.isTemplate ? 'C' : 'A'),
           },
       ],
     });
   }
 
   ResponseBody _venueMenu(DemoCatalog catalog, int venueId, Map<String, String> query) {
-    final chain = catalog.chainOfVenue(venueId);
+    final chain = catalog.menuSourceOfVenue(venueId);
     final venue = catalog.venue(venueId);
     if (chain == null || venue == null) return _problem(404);
     final target = _queryTarget(query);
@@ -233,7 +269,7 @@ class DemoServerAdapter implements HttpClientAdapter {
     final location = body['location'] as Map<String, dynamic>?;
     if (location == null) {
       final venueId = body['venueId'] as int;
-      final chain = catalog.chainOfVenue(venueId);
+      final chain = catalog.menuSourceOfVenue(venueId);
       final venue = catalog.venue(venueId);
       if (chain == null || venue == null) return _problem(404);
       return _searchResponse(target, [
@@ -244,10 +280,13 @@ class DemoServerAdapter implements HttpClientAdapter {
     final center = ((location['lat'] as num).toDouble(), (location['lon'] as num).toDouble());
     final ranked =
         <(double, DemoVenue, double, DemoCombo)>[
-          for (final (chain, venue, distance) in _closestPerChain(
-            _within(catalog, center, (location['radiusMeters'] as num).toDouble()),
+          for (final (chain, venue, distance) in _closestPerMenu(
+            _within(catalog, center, (location['radiusMeters'] as num).toDouble(), limitEachMenuKind: true),
           ))
-            for (final combo in optimizer.bestCombos(chain.menu, applied, _cachedCombos).take(_combosPerVenue))
+            for (final combo
+                in optimizer
+                    .bestCombos(chain.menu, applied, _cachedCombos)
+                    .take(chain.isTemplate ? _combosPerTemplateVenue : _combosPerVenue))
               (combo.score + _distanceWeightPerKm * distance / 1000, venue, distance, combo),
         ]..sort((left, right) {
           final byRank = left.$1.compareTo(right.$1);
@@ -260,7 +299,7 @@ class DemoServerAdapter implements HttpClientAdapter {
 
   ResponseBody _replace(DemoCatalog catalog, Map<String, dynamic> body) {
     final venueId = body['venueId'] as int;
-    final chain = catalog.chainOfVenue(venueId);
+    final chain = catalog.menuSourceOfVenue(venueId);
     final venue = catalog.venue(venueId);
     if (chain == null || venue == null) return _problem(404);
     final target = _bodyTarget(body['target'] as Map<String, dynamic>);
@@ -287,26 +326,33 @@ class DemoServerAdapter implements HttpClientAdapter {
     double radius, {
     int limit = _maxNearby,
     bool withMenuOnly = true,
+    bool limitEachMenuKind = false,
   }) {
     final found =
         [
           for (final chain in catalog.chains)
-            if (!withMenuOnly || chain.menu.isNotEmpty)
-              for (final venue in chain.venues)
+            for (final venue in chain.venues)
+              if (catalog.menuSource(chain, venue) case final source when !withMenuOnly || source.menu.isNotEmpty)
                 if (_distanceMeters(center, (venue.lat, venue.lon)) case final distance when distance <= radius)
-                  (chain, venue, distance),
+                  (source, venue, distance),
         ]..sort((left, right) {
           final byDistance = left.$3.compareTo(right.$3);
           return byDistance != 0 ? byDistance : left.$2.id.compareTo(right.$2.id);
         });
-    return found.take(limit).toList();
+    if (!limitEachMenuKind) return found.take(limit).toList();
+    final taken = <bool, int>{};
+    return [
+      for (final entry in found)
+        if (entry.$1.isTemplate || entry.$1.menu.isEmpty case final typical)
+          if ((taken[typical] = (taken[typical] ?? 0) + 1) <= limit) entry,
+    ];
   }
 
-  static List<(DemoChain, DemoVenue, double)> _closestPerChain(List<(DemoChain, DemoVenue, double)> venues) {
-    final seen = <DemoChain>{};
+  static List<(DemoChain, DemoVenue, double)> _closestPerMenu(List<(DemoChain, DemoVenue, double)> venues) {
+    final seen = <Object>{};
     return [
       for (final entry in venues)
-        if (seen.add(entry.$1)) entry,
+        if (seen.add(entry.$1.isTemplate ? entry.$2.id : entry.$1)) entry,
     ];
   }
 
@@ -347,13 +393,13 @@ class DemoServerAdapter implements HttpClientAdapter {
                   'portionGrams': dish.portionGrams,
                   'nutrients': _nutrientsJson(dish.nutrients),
                   'priceMinor': dish.priceMinor,
-                  'sourceKind': 'A',
+                  'sourceKind': dish.sourceKind,
                   'tags': _sortedTags(dish.tags),
                 },
             ],
             'totals': _nutrientsJson(combo.totals),
             'priceMinor': combo.priceMinor,
-            'sourceKind': 'A',
+            'sourceKind': combo.sourceKind,
             'score': _round(combo.score, 4),
             'checks': [
               for (final check in DemoExplanation.explain(combo.totals, applied))
@@ -379,7 +425,13 @@ class DemoServerAdapter implements HttpClientAdapter {
         'nutrients': _nutrientsJson(dish.nutrients),
         'priceMinor': dish.priceMinor,
         'tags': _sortedTags(dish.tags),
-        'source': {'kind': 'A', 'url': chain.sourceUrl, 'verifiedAt': chain.verifiedAt ?? catalog.verifiedAt},
+        'source': {
+          'kind': dish.sourceKind,
+          'url': chain.sourceUrl,
+          'verifiedAt': chain.verifiedAt ?? catalog.verifiedAt,
+          'kcalLow': ?dish.kcalLow,
+          'kcalHigh': ?dish.kcalHigh,
+        },
         if (assessment != null)
           'assessment': {
             'verdict': switch (assessment.verdict) {

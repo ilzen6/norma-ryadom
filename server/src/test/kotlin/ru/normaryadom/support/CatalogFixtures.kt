@@ -24,6 +24,31 @@ class CatalogFixtures(
         return chainId
     }
 
+    fun template(
+        code: String,
+        menu: List<String>,
+    ): Long {
+        val templateId = chains.create("Типичное меню: $code", SOURCE_URL, code)
+        val outcome = imports.importChainMenu(templateId, menuCsv(menu, MenuCsvParser.OPTIONAL), SOURCE_URL)
+        check(outcome is ImportOutcome.Imported) { "Fixture template is invalid" }
+        return templateId
+    }
+
+    fun places(venues: List<String>) {
+        val outcome = imports.importStandaloneVenues(venueCsv(venues, VenueCsvParser.OPTIONAL))
+        check(outcome is ImportOutcome.Imported) { "Fixture places are invalid" }
+    }
+
+    fun menuCsv(
+        rows: List<String>,
+        optional: List<String>,
+    ): ByteArray = (listOf((MenuCsvParser.HEADER + optional).joinToString(";")) + rows).joinToString("\n").toByteArray()
+
+    fun venueCsv(
+        rows: List<String>,
+        optional: List<String>,
+    ): ByteArray = (listOf((VenueCsvParser.HEADER + optional).joinToString(";")) + rows).joinToString("\n").toByteArray()
+
     fun menuCsv(rows: List<String>): ByteArray = (listOf(MenuCsvParser.HEADER.joinToString(";")) + rows).joinToString("\n").toByteArray()
 
     fun venueCsv(rows: List<String>): ByteArray = (listOf(VenueCsvParser.HEADER.joinToString(";")) + rows).joinToString("\n").toByteArray()
@@ -58,5 +83,20 @@ class CatalogFixtures(
             )
 
         val BOWL_VENUES = listOf("Боулы, Сити;Пресненская наб., 10;55.7480;37.5376;bowl-01")
+
+        val CAFE_TEMPLATE =
+            listOf(
+                "Куриная грудка запечённая;main;150;220;36;7;2;290;chicken;187;253",
+                "Рис отварной;side;150;190;4;2;40;120;;160;230",
+                "Салат из свежих овощей;salad;180;120;2;9;8;220;;90;160",
+                "Морс;drink;300;110;0;0;27;150;;90;130",
+            )
+
+        val CAFE_PLACES =
+            listOf(
+                "Кафе у моста;Пресненская наб., 6;55.7490;37.5380;osm-cafe-1;2026-05-01;cafe",
+                "Кафе на углу;Пресненская наб., 8;55.7488;37.5385;osm-cafe-2;2026-05-01;cafe",
+                "Буфет без вида;Пресненская наб., 12;55.7492;37.5370;osm-cafe-3;2026-05-01;",
+            )
     }
 }

@@ -25,6 +25,11 @@
     "count": 202
   },
   {
+    "name": "ВкусВилл",
+    "venues": "demo/real/vkusvill-venues.csv",
+    "count": 177
+  },
+  {
     "name": "Бургер Кинг",
     "venues": "demo/real/burger-king-venues.csv",
     "count": 164
@@ -48,6 +53,11 @@
     "name": "Baggins Coffee",
     "venues": "demo/real/baggins-coffee-venues.csv",
     "count": 128
+  },
+  {
+    "name": "Перекрёсток",
+    "venues": "demo/real/perekrestok-venues.csv",
+    "count": 124
   },
   {
     "name": "Хлебник",
@@ -327,6 +337,11 @@
   {
     "name": "Beer House",
     "venues": "demo/real/beer-house-venues.csv",
+    "count": 20
+  },
+  {
+    "name": "Азбука вкуса",
+    "venues": "demo/real/azbuka-vkusa-venues.csv",
     "count": 20
   },
   {

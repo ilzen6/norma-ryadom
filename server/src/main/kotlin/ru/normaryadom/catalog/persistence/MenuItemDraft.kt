@@ -2,6 +2,7 @@ package ru.normaryadom.catalog.persistence
 
 import ru.normaryadom.catalog.domain.DietTag
 import ru.normaryadom.catalog.domain.DishCategory
+import ru.normaryadom.catalog.domain.KcalRange
 import ru.normaryadom.catalog.domain.Nutrients
 
 data class MenuItemDraft(
@@ -11,4 +12,5 @@ data class MenuItemDraft(
     val nutrients: Nutrients,
     val priceMinor: Int?,
     val tags: Set<DietTag>,
+    val kcalRange: KcalRange? = null,
 )

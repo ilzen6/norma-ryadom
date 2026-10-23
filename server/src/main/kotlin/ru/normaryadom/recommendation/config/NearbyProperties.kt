@@ -17,4 +17,7 @@ data class NearbyProperties(
     @field:Min(1)
     @field:Max(5)
     val combosPerVenue: Int,
+    @field:Min(1)
+    @field:Max(5)
+    val combosPerTemplateVenue: Int = 1,
 )

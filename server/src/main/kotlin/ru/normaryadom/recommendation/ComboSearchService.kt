@@ -42,11 +42,11 @@ class ComboSearchService(
         limit: Int,
     ): ComboSearchResult {
         val applied = criteria.copy(target = TargetRounding.round(criteria.target))
-        val query = NearbyQuery(center, radiusMeters, MenuCoverage.WITH_MENU_ONLY, nearby.maxResults)
+        val query = NearbyQuery(center, radiusMeters, MenuCoverage.WITH_MENU_ONLY, nearby.maxResults, limitEachMenuKind = true)
         val options =
             nearbyVenues
                 .findNearby(query)
-                .groupBy { it.venue.menuScope }
+                .groupBy(::menuGroup)
                 .values
                 .map { venuesWithSameMenu -> venuesWithSameMenu.minBy(NearbyVenue::distanceMeters) }
                 .flatMap { closest -> optionsFor(closest, applied) }
@@ -86,6 +86,9 @@ class ComboSearchService(
         return dishIds.map(byId::getValue)
     }
 
+    private fun menuGroup(nearbyVenue: NearbyVenue): Any =
+        if (nearbyVenue.venue.usesTemplateMenu) nearbyVenue.venue.id else nearbyVenue.venue.menuScope
+
     private fun optionsFor(
         nearbyVenue: NearbyVenue,
         criteria: SearchCriteria,
@@ -93,7 +96,7 @@ class ComboSearchService(
         val distancePenalty = nearby.distanceWeightPerKm * nearbyVenue.distanceMeters / METERS_PER_KILOMETER
         return comboCache
             .bestCombos(nearbyVenue.venue.menuScope, criteria)
-            .take(nearby.combosPerVenue)
+            .take(if (nearbyVenue.venue.usesTemplateMenu) nearby.combosPerTemplateVenue else nearby.combosPerVenue)
             .map { combo ->
                 RankedOption(
                     option = ComboOption(nearbyVenue.venue, nearbyVenue.distanceMeters, combo),

@@ -1,4 +1,65 @@
 demo:
+  templates:
+    - code: coffee
+      name: "Типичное меню кофейни"
+      source-url: "https://github.com/ilzen6/norma-ryadom/blob/main/docs/approximate-menus.md"
+      menu: classpath:demo/templates/coffee-menu.csv
+    - code: bakery
+      name: "Типичное меню пекарни"
+      source-url: "https://github.com/ilzen6/norma-ryadom/blob/main/docs/approximate-menus.md"
+      menu: classpath:demo/templates/bakery-menu.csv
+    - code: pizza
+      name: "Типичное меню пиццерии"
+      source-url: "https://github.com/ilzen6/norma-ryadom/blob/main/docs/approximate-menus.md"
+      menu: classpath:demo/templates/pizza-menu.csv
+    - code: sushi
+      name: "Типичное меню суши-бара"
+      source-url: "https://github.com/ilzen6/norma-ryadom/blob/main/docs/approximate-menus.md"
+      menu: classpath:demo/templates/sushi-menu.csv
+    - code: asian
+      name: "Типичное меню паназиатского кафе"
+      source-url: "https://github.com/ilzen6/norma-ryadom/blob/main/docs/approximate-menus.md"
+      menu: classpath:demo/templates/asian-menu.csv
+    - code: burger
+      name: "Типичное меню бургерной и фастфуда"
+      source-url: "https://github.com/ilzen6/norma-ryadom/blob/main/docs/approximate-menus.md"
+      menu: classpath:demo/templates/burger-menu.csv
+    - code: shawarma
+      name: "Типичное меню шаурмичной"
+      source-url: "https://github.com/ilzen6/norma-ryadom/blob/main/docs/approximate-menus.md"
+      menu: classpath:demo/templates/shawarma-menu.csv
+    - code: georgian
+      name: "Типичное меню грузинского кафе"
+      source-url: "https://github.com/ilzen6/norma-ryadom/blob/main/docs/approximate-menus.md"
+      menu: classpath:demo/templates/georgian-menu.csv
+    - code: central-asian
+      name: "Типичное меню чайханы"
+      source-url: "https://github.com/ilzen6/norma-ryadom/blob/main/docs/approximate-menus.md"
+      menu: classpath:demo/templates/central-asian-menu.csv
+    - code: italian
+      name: "Типичное меню итальянского ресторана"
+      source-url: "https://github.com/ilzen6/norma-ryadom/blob/main/docs/approximate-menus.md"
+      menu: classpath:demo/templates/italian-menu.csv
+    - code: canteen
+      name: "Типичное меню столовой"
+      source-url: "https://github.com/ilzen6/norma-ryadom/blob/main/docs/approximate-menus.md"
+      menu: classpath:demo/templates/canteen-menu.csv
+    - code: blini
+      name: "Типичное меню блинной"
+      source-url: "https://github.com/ilzen6/norma-ryadom/blob/main/docs/approximate-menus.md"
+      menu: classpath:demo/templates/blini-menu.csv
+    - code: cafe
+      name: "Типичное меню кафе"
+      source-url: "https://github.com/ilzen6/norma-ryadom/blob/main/docs/approximate-menus.md"
+      menu: classpath:demo/templates/cafe-menu.csv
+    - code: bar
+      name: "Типичное меню бара"
+      source-url: "https://github.com/ilzen6/norma-ryadom/blob/main/docs/approximate-menus.md"
+      menu: classpath:demo/templates/bar-menu.csv
+    - code: ready-food
+      name: "Типичная готовая еда в магазине"
+      source-url: "https://github.com/ilzen6/norma-ryadom/blob/main/docs/approximate-menus.md"
+      menu: classpath:demo/templates/ready-food-menu.csv
   places: classpath:demo/real/places-venues.csv
   chains:
     - name: "Cofix"
@@ -138,6 +199,9 @@ demo:
     - name: "Додо Пицца"
       source-url: "https://www.openstreetmap.org/copyright"
       venues: classpath:demo/real/dodo-picca-venues.csv
+    - name: "ВкусВилл"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/vkusvill-venues.csv
     - name: "Теремок"
       source-url: "https://www.openstreetmap.org/copyright"
       venues: classpath:demo/real/teremok-venues.csv
@@ -147,6 +211,9 @@ demo:
     - name: "Baggins Coffee"
       source-url: "https://www.openstreetmap.org/copyright"
       venues: classpath:demo/real/baggins-coffee-venues.csv
+    - name: "Перекрёсток"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/perekrestok-venues.csv
     - name: "Стардогs"
       source-url: "https://www.openstreetmap.org/copyright"
       venues: classpath:demo/real/stardogs-venues.csv
@@ -261,6 +328,9 @@ demo:
     - name: "Beer House"
       source-url: "https://www.openstreetmap.org/copyright"
       venues: classpath:demo/real/beer-house-venues.csv
+    - name: "Азбука вкуса"
+      source-url: "https://www.openstreetmap.org/copyright"
+      venues: classpath:demo/real/azbuka-vkusa-venues.csv
     - name: "Чито Гврито"
       source-url: "https://www.openstreetmap.org/copyright"
       venues: classpath:demo/real/cito-gvrito-venues.csv

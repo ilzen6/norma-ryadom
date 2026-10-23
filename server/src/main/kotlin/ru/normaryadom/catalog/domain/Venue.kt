@@ -16,4 +16,5 @@ data class Venue(
     val confirmedOn: LocalDate? = null,
     val underReview: Boolean = false,
     val dataQuality: SourceKind? = null,
+    val usesTemplateMenu: Boolean = false,
 )

@@ -1,0 +1,13 @@
+name;category;portion_g;kcal;protein_g;fat_g;carbs_g;price_rub;tags;kcal_low;kcal_high
+Круассан классический;dessert;65;318.4;4.8;18.2;33.8;170;egg,gluten,milk,soy;270.6;366.2
+Круассан с ветчиной и сыром;main;170;464.1;8.3;34.5;30.3;250;gluten,meat,milk,pork;359.5;587.8
+Булочка с корицей;dessert;80;334.3;3.7;13.6;49.4;140;egg,gluten,milk;284.2;384.4
+Пирожок с капустой;side;100;190;5;6.5;28;80;egg,gluten;161.5;218.5
+Пирог с курицей;main;100;330;10;11;46;110;chicken,egg,gluten,meat,milk;280.5;379.5
+Киш;main;110;329.6;6.7;27.7;23.5;200;chicken,egg,gluten,meat,milk,pork;280.2;445.4
+Слойка сладкая;dessert;150;510;6.8;34.5;45;290;gluten,milk;340.5;645
+Сэндвич с курицей;main;180;558;21.6;32.4;45;260;chicken,gluten,meat,milk;384.8;666.7
+Эклер;dessert;70;203;3.1;14;16.1;180;beef,egg,gluten,meat,milk,soy;172.5;248
+Капучино, около 300 мл;drink;300;162;8;8.6;13;270;milk;112;216
+Американо, около 300 мл;drink;400;7.6;0.2;0.2;1.4;200;;6.5;78
+Чай чёрный или зелёный;drink;300;15;0;0;6;90;;12.8;26.4

@@ -13,7 +13,7 @@ ATLAS = ROOT / "app/assets/map/index.json"
 PLACES = Path(__file__).with_name("places")
 AREAS = Path(__file__).with_name("areas.json")
 TOWN_REACH_METERS = 15_000
-HEADER = ["name", "address", "lat", "lon", "external_id", "confirmed_on"]
+HEADER = ["name", "address", "lat", "lon", "external_id", "confirmed_on", "template"]
 FRESH_YEARS = 3
 MASS_EDIT_PLACES = 100
 

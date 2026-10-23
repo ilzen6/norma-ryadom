@@ -25,6 +25,9 @@ class DemoDish {
     required this.nutrients,
     required this.priceMinor,
     required this.tags,
+    this.sourceKind = 'A',
+    this.kcalLow,
+    this.kcalHigh,
   });
 
   final int id;
@@ -34,6 +37,9 @@ class DemoDish {
   final DemoNutrients nutrients;
   final int? priceMinor;
   final List<String> tags;
+  final String sourceKind;
+  final double? kcalLow;
+  final double? kcalHigh;
 }
 
 class DemoTarget {
@@ -112,6 +118,8 @@ class DemoCombo {
 
   List<int> get dishIds => [for (final dish in dishes) dish.id];
 
+  String get sourceKind => DemoScorer.worstKind(dishes);
+
   static int compare(DemoCombo left, DemoCombo right) {
     final byScore = left.score.compareTo(right.score);
     if (byScore != 0) return byScore;
@@ -156,18 +164,27 @@ class DemoScorer {
   static const _carbsWeight = 0.1;
   static const _priceWeight = 0.5;
   static const _priceScaleMinor = 100000.0;
+  static const _trustPenalty = {'A': 0.0, 'B': 0.15, 'C': 0.6};
 
   final bool preferCheaper;
+
+  static String worstKind(List<DemoDish> dishes) =>
+      dishes.map((dish) => dish.sourceKind).reduce((worst, kind) => kind.compareTo(worst) > 0 ? kind : worst);
 
   DemoCombo combo(List<DemoDish> dishes, DemoTarget target) {
     final totals = dishes.fold(DemoNutrients.zero, (sum, dish) => sum + dish.nutrients);
     final priceMinor = dishes.any((dish) => dish.priceMinor == null)
         ? null
         : dishes.fold<int>(0, (sum, dish) => sum + dish.priceMinor!);
-    return DemoCombo(dishes: dishes, totals: totals, priceMinor: priceMinor, score: score(totals, priceMinor, target));
+    return DemoCombo(
+      dishes: dishes,
+      totals: totals,
+      priceMinor: priceMinor,
+      score: score(totals, priceMinor, target, sourceKind: worstKind(dishes)),
+    );
   }
 
-  double score(DemoNutrients totals, int? priceMinor, DemoTarget target) {
+  double score(DemoNutrients totals, int? priceMinor, DemoTarget target, {String sourceKind = 'A'}) {
     final kcalTerm = (totals.kcal - target.kcal).abs() / target.kcalTolerance;
     final proteinTerm = target.minProtein <= 0 ? 0.0 : target.minProtein / (target.minProtein + totals.protein);
     final fatTerm = target.maxFat <= 0 ? 0.0 : totals.fat / target.maxFat;
@@ -179,6 +196,7 @@ class DemoScorer {
         _proteinWeight * proteinTerm +
         _fatWeight * fatTerm +
         _carbsWeight * carbsTerm +
+        (_trustPenalty[sourceKind] ?? 0.0) +
         pricePenalty;
   }
 }
@@ -344,6 +362,7 @@ class DemoAssessor {
         : [
             if (dish.nutrients.protein < proportionalProtein * _lowProteinShare)
               DemoReason('LOW_PROTEIN', amount: proportionalProtein - dish.nutrients.protein),
+            if (dish.sourceKind == 'C') const DemoReason('ESTIMATED_DATA'),
           ];
     final verdict = blocking.isNotEmpty
         ? DemoVerdict.notFits
@@ -354,7 +373,7 @@ class DemoAssessor {
       dish: dish,
       verdict: verdict,
       reasons: [...blocking, ...warnings],
-      closeness: _scorer.score(dish.nutrients, dish.priceMinor, target),
+      closeness: _scorer.score(dish.nutrients, dish.priceMinor, target, sourceKind: dish.sourceKind),
     );
   }
 

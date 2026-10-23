@@ -15,8 +15,8 @@
     <section th:replace="~{admin/fragments :: csvErrors(${csvErrors})}"></section>
     <div class="columns">
         <section class="card">
-            <h2>Импорт меню (уровень A)</h2>
-            <p class="muted">CSV в UTF-8 с разделителем «;»: <code>name;category;portion_g;kcal;protein_g;fat_g;carbs_g;price_rub;tags</code></p>
+            <h2 th:text="${chain.isTemplate} ? 'Импорт типичного меню (уровень C)' : 'Импорт меню (уровень A)'">Импорт меню (уровень A)</h2>
+            <p class="muted">CSV в UTF-8 с разделителем «;»: <code>name;category;portion_g;kcal;protein_g;fat_g;carbs_g;price_rub;tags</code>, по желанию <code>kcal_low;kcal_high</code> — диапазон калорий для оценки</p>
             <form th:action="@{/admin/chains/{id}/menu(id=${chain.id})}" method="post" enctype="multipart/form-data">
                 <label for="menuFile">Файл меню</label>
                 <input id="menuFile" name="file" type="file" accept=".csv,text/csv" required>
@@ -25,9 +25,13 @@
                 <button type="submit">Загрузить меню</button>
             </form>
         </section>
-        <section class="card">
+        <section class="card" th:if="${chain.isTemplate}" data-testid="template-usage">
+            <h2>Где используется</h2>
+            <p>Меню показывается в <span th:text="${templateVenues}">0</span> заведениях без своего меню. Точки получают его колонкой <code>template</code> = <code th:text="${chain.templateCode}">cafe</code> в CSV точек.</p>
+        </section>
+        <section class="card" th:unless="${chain.isTemplate}">
             <h2>Импорт точек</h2>
-            <p class="muted">CSV: <code>name;address;lat;lon;external_id</code>, по желанию последней колонкой <code>confirmed_on</code> — дата, когда точку последний раз подтвердили (ГГГГ-ММ-ДД)</p>
+            <p class="muted">CSV: <code>name;address;lat;lon;external_id</code>, по желанию <code>confirmed_on</code> — дата, когда точку последний раз подтвердили (ГГГГ-ММ-ДД), и <code>template</code> — код типичного меню для точки без своего меню</p>
             <form th:action="@{/admin/chains/{id}/venues(id=${chain.id})}" method="post" enctype="multipart/form-data">
                 <label for="venueFile">Файл точек</label>
                 <input id="venueFile" name="file" type="file" accept=".csv,text/csv" required>
@@ -54,8 +58,8 @@
         <tr th:if="${#lists.isEmpty(items)}"><td colspan="8">Меню ещё не загружено</td></tr>
         </tbody>
     </table>
-    <h2>Точки</h2>
-    <table data-testid="venue-table">
+    <h2 th:unless="${chain.isTemplate}">Точки</h2>
+    <table data-testid="venue-table" th:unless="${chain.isTemplate}">
         <thead><tr><th scope="col">Название</th><th scope="col">Адрес</th><th scope="col">Координаты</th><th scope="col">Состояние</th></tr></thead>
         <tbody>
         <tr th:each="v : ${venues}" th:classappend="${!v.isActive} ? 'withdrawn'">

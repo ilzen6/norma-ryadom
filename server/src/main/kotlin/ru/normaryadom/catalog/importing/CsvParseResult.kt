@@ -28,4 +28,6 @@ enum class CsvErrorCode {
     UNKNOWN_CATEGORY,
     UNKNOWN_TAG,
     DUPLICATE,
+    RANGE_MISMATCH,
+    UNKNOWN_TEMPLATE,
 }

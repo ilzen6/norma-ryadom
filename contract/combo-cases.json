@@ -15548,6 +15548,805 @@
         "verdict" : "NOT_FITS",
         "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
       } ]
+    }, {
+      "chain" : "Типичное меню кофейни",
+      "fit" : "NONE",
+      "nearby" : [ ],
+      "atVenue" : [ ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Маффин",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Круассан классический",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Овсяная каша",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Какао, около 300 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Латте, около 400 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Капучино, около 300 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Чай чёрный или зелёный",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Американо, около 300 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Сырники со сметаной или вареньем",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Сэндвич с курицей",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Круассан с ветчиной и сыром",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Чизкейк",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      } ]
+    }, {
+      "chain" : "Типичное меню пекарни",
+      "fit" : "NONE",
+      "nearby" : [ ],
+      "atVenue" : [ ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Пирог с курицей",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Булочка с корицей",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Круассан классический",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Эклер",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Пирожок с капустой",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Капучино, около 300 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Чай чёрный или зелёный",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Американо, около 300 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Сэндвич с курицей",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Слойка сладкая",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Круассан с ветчиной и сыром",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Киш",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      } ]
+    }, {
+      "chain" : "Типичное меню пиццерии",
+      "fit" : "NONE",
+      "nearby" : [ ],
+      "atVenue" : [ ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Картофель фри",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Морс, около 300 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Лимонад, около 400 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Куриные крылья",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Пицца с ветчиной и грибами, небольшая",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Пицца Четыре сыра, небольшая",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Пицца Маргарита, небольшая",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Пицца Пепперони, небольшая",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Чизкейк",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Салат Цезарь с курицей",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      } ]
+    }, {
+      "chain" : "Типичное меню суши-бара",
+      "fit" : "COMPROMISE",
+      "nearby" : [ ],
+      "atVenue" : [ ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Лапша вок с курицей",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Ролл Филадельфия",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Ролл Калифорния",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Ролл с лососем",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Суши с лососем, 2 шт.",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Ролл с огурцом",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Мисо-суп",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Чай чёрный или зелёный",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Суп Том ям",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Салат чука",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      } ]
+    }, {
+      "chain" : "Типичное меню паназиатского кафе",
+      "fit" : "COMPROMISE",
+      "nearby" : [ ],
+      "atVenue" : [ ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Рис с курицей и овощами",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Лапша удон с говядиной",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Лапша вок с курицей",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Ролл Филадельфия",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Рамен",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Гёдза или дим-самы",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Мисо-суп",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Чай чёрный или зелёный",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Суп Том ям",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Салат чука",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      } ]
+    }, {
+      "chain" : "Типичное меню бургерной и фастфуда",
+      "fit" : "NONE",
+      "nearby" : [ ],
+      "atVenue" : [ ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Бургер с курицей",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Ролл с курицей в лаваше",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Наггетсы, 6 шт.",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Чизбургер",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Молочный коктейль, около 400 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Картофель фри",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Картофель по-деревенски",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Мороженое",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Кола, около 500 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Салат овощной",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Бургер с говядиной",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      } ]
+    }, {
+      "chain" : "Типичное меню шаурмичной",
+      "fit" : "NONE",
+      "nearby" : [ ],
+      "atVenue" : [ ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Шаурма с курицей",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Ролл с курицей в лаваше",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Лепёшка",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Картофель фри",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Кола, около 500 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Салат овощной",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Чай чёрный или зелёный",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Шашлык из курицы",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Люля-кебаб из говядины",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      } ]
+    }, {
+      "chain" : "Типичное меню грузинского кафе",
+      "fit" : "COMPROMISE",
+      "nearby" : [ ],
+      "atVenue" : [ ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Хачапури по-аджарски",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Лобио",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Пхали ассорти",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Морс, около 300 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Салат из овощей с орехами",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Чай чёрный или зелёный",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Шашлык из курицы",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Хинкали с говядиной и свининой, 4 шт.",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Хинкали с сыром, 4 шт.",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Суп харчо",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Хачапури по-имеретински",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      } ]
+    }, {
+      "chain" : "Типичное меню чайханы",
+      "fit" : "NONE",
+      "nearby" : [ ],
+      "atVenue" : [ ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Плов",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Лепёшка",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Салат Ачичук из томатов",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Чай чёрный или зелёный",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Лагман",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Шашлык из курицы",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Шурпа",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Люля-кебаб из говядины",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Самса",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      } ]
+    }, {
+      "chain" : "Типичное меню итальянского ресторана",
+      "fit" : "COMPROMISE",
+      "nearby" : [ ],
+      "atVenue" : [ ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Паста болоньезе",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Капучино, около 300 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Минестроне или томатный суп",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Лимонад, около 400 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Паста с курицей и грибами",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Паста карбонара",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Пицца Маргарита, небольшая",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Пицца Пепперони, небольшая",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Лазанья",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Салат Цезарь с курицей",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Тирамису",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      } ]
+    }, {
+      "chain" : "Типичное меню столовой",
+      "fit" : "GOOD",
+      "nearby" : [ {
+        "dishes" : [ "Морс, около 300 мл", "Котлета куриная" ],
+        "score" : 1.671667
+      }, {
+        "dishes" : [ "Морс, около 300 мл", "Картофельное пюре", "Куриная грудка запечённая" ],
+        "score" : 1.833547
+      }, {
+        "dishes" : [ "Куриная грудка запечённая", "Рис отварной" ],
+        "score" : 1.862778
+      } ],
+      "atVenue" : [ {
+        "dishes" : [ "Картофельное пюре", "Картофельное пюре", "Куриная грудка запечённая" ],
+        "score" : 1.411144
+      }, {
+        "dishes" : [ "Морс, около 300 мл", "Котлета куриная" ],
+        "score" : 1.592567
+      }, {
+        "dishes" : [ "Куриная грудка запечённая", "Рис отварной" ],
+        "score" : 1.790101
+      } ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Котлета куриная",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Блины с творогом",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Рис отварной",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Куриная грудка запечённая",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Борщ со сметаной",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Картофельное пюре",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Суп куриный с лапшой",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Морс, около 300 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Винегрет",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Салат из свежих овощей",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Компот, около 300 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Сырники со сметаной",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Гречка с курицей или овощами",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Котлета с картофельным пюре",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Пельмени",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Салат Оливье",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      } ]
+    }, {
+      "chain" : "Типичное меню блинной",
+      "fit" : "NONE",
+      "nearby" : [ ],
+      "atVenue" : [ ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Блин с творогом",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Блин со сгущёнкой или вареньем",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Блины со сметаной",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Борщ со сметаной",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Морс, около 300 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Чай чёрный или зелёный",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Блин с ветчиной и сыром",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Блин с курицей и грибами",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Салат Оливье",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      } ]
+    }, {
+      "chain" : "Типичное меню кафе",
+      "fit" : "GOOD",
+      "nearby" : [ {
+        "dishes" : [ "Чай чёрный или зелёный", "Куриная грудка запечённая", "Рис отварной" ],
+        "score" : 1.619444
+      }, {
+        "dishes" : [ "Морс, около 300 мл", "Картофельное пюре", "Куриная грудка запечённая" ],
+        "score" : 1.833547
+      } ],
+      "atVenue" : [ {
+        "dishes" : [ "Картофельное пюре", "Картофельное пюре", "Куриная грудка запечённая" ],
+        "score" : 1.411144
+      }, {
+        "dishes" : [ "Чай чёрный или зелёный", "Куриная грудка запечённая", "Рис отварной" ],
+        "score" : 1.558355
+      } ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Рис отварной",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Картофель фри",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Куриная грудка запечённая",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Борщ со сметаной",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Картофельное пюре",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Суп куриный с лапшой",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Морс, около 300 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Капучино, около 300 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Салат из свежих овощей",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Чай чёрный или зелёный",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Паста с курицей и грибами",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Сырники со сметаной",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Паста карбонара",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Котлета с картофельным пюре",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Чизкейк",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Салат Цезарь с курицей",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      } ]
+    }, {
+      "chain" : "Типичное меню бара",
+      "fit" : "NONE",
+      "nearby" : [ ],
+      "atVenue" : [ ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Наггетсы, 6 шт.",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Луковые кольца",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Гренки чесночные",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Картофель фри",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Морс, около 300 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Лимонад, около 400 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Куриные крылья",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Бургер с говядиной",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Колбаски гриль",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Салат Цезарь с курицей",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      } ]
+    }, {
+      "chain" : "Типичная готовая еда в магазине",
+      "fit" : "NONE",
+      "nearby" : [ ],
+      "atVenue" : [ ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Плов",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Блины с творогом",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Овсяная каша",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Куриная грудка запечённая",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Морс, около 300 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Сырники",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Сэндвич с курицей",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Гречка с курицей или овощами",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Салат Цезарь с курицей",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Салат Оливье",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      } ]
     } ]
   }, {
     "name" : "обед без свинины подешевле",
@@ -31101,6 +31900,805 @@
         "verdict" : "NOT_FITS",
         "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
       } ]
+    }, {
+      "chain" : "Типичное меню кофейни",
+      "fit" : "NONE",
+      "nearby" : [ ],
+      "atVenue" : [ ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Маффин",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Круассан классический",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Овсяная каша",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Какао, около 300 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Латте, около 400 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Капучино, около 300 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Чай чёрный или зелёный",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Американо, около 300 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Сырники со сметаной или вареньем",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Сэндвич с курицей",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Круассан с ветчиной и сыром",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Чизкейк",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      } ]
+    }, {
+      "chain" : "Типичное меню пекарни",
+      "fit" : "NONE",
+      "nearby" : [ ],
+      "atVenue" : [ ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Пирог с курицей",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Булочка с корицей",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Круассан классический",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Эклер",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Пирожок с капустой",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Капучино, около 300 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Чай чёрный или зелёный",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Американо, около 300 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Сэндвич с курицей",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Слойка сладкая",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Круассан с ветчиной и сыром",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Киш",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      } ]
+    }, {
+      "chain" : "Типичное меню пиццерии",
+      "fit" : "NONE",
+      "nearby" : [ ],
+      "atVenue" : [ ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Картофель фри",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Морс, около 300 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Лимонад, около 400 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Куриные крылья",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Пицца с ветчиной и грибами, небольшая",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Пицца Четыре сыра, небольшая",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Пицца Маргарита, небольшая",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Пицца Пепперони, небольшая",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Чизкейк",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Салат Цезарь с курицей",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      } ]
+    }, {
+      "chain" : "Типичное меню суши-бара",
+      "fit" : "COMPROMISE",
+      "nearby" : [ ],
+      "atVenue" : [ ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Лапша вок с курицей",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Ролл Филадельфия",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Ролл Калифорния",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Ролл с лососем",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Суши с лососем, 2 шт.",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Ролл с огурцом",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Мисо-суп",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Чай чёрный или зелёный",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Суп Том ям",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Салат чука",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      } ]
+    }, {
+      "chain" : "Типичное меню паназиатского кафе",
+      "fit" : "COMPROMISE",
+      "nearby" : [ ],
+      "atVenue" : [ ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Рис с курицей и овощами",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Лапша удон с говядиной",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Лапша вок с курицей",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Ролл Филадельфия",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Рамен",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Гёдза или дим-самы",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Мисо-суп",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Чай чёрный или зелёный",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Суп Том ям",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Салат чука",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      } ]
+    }, {
+      "chain" : "Типичное меню бургерной и фастфуда",
+      "fit" : "NONE",
+      "nearby" : [ ],
+      "atVenue" : [ ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Бургер с курицей",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Ролл с курицей в лаваше",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Наггетсы, 6 шт.",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Чизбургер",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Молочный коктейль, около 400 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Картофель фри",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Картофель по-деревенски",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Мороженое",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Кола, около 500 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Салат овощной",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Бургер с говядиной",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      } ]
+    }, {
+      "chain" : "Типичное меню шаурмичной",
+      "fit" : "NONE",
+      "nearby" : [ ],
+      "atVenue" : [ ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Шаурма с курицей",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Ролл с курицей в лаваше",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Лепёшка",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Картофель фри",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Кола, около 500 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Салат овощной",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Чай чёрный или зелёный",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Шашлык из курицы",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Люля-кебаб из говядины",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      } ]
+    }, {
+      "chain" : "Типичное меню грузинского кафе",
+      "fit" : "COMPROMISE",
+      "nearby" : [ ],
+      "atVenue" : [ ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Хачапури по-аджарски",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Лобио",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Пхали ассорти",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Морс, около 300 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Салат из овощей с орехами",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Чай чёрный или зелёный",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Шашлык из курицы",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Хинкали с говядиной и свининой, 4 шт.",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Хинкали с сыром, 4 шт.",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Суп харчо",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Хачапури по-имеретински",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      } ]
+    }, {
+      "chain" : "Типичное меню чайханы",
+      "fit" : "NONE",
+      "nearby" : [ ],
+      "atVenue" : [ ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Плов",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Лепёшка",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Салат Ачичук из томатов",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Чай чёрный или зелёный",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Лагман",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Шашлык из курицы",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Шурпа",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Люля-кебаб из говядины",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Самса",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      } ]
+    }, {
+      "chain" : "Типичное меню итальянского ресторана",
+      "fit" : "COMPROMISE",
+      "nearby" : [ ],
+      "atVenue" : [ ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Паста болоньезе",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Капучино, около 300 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Минестроне или томатный суп",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Лимонад, около 400 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Паста с курицей и грибами",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Паста карбонара",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Пицца Маргарита, небольшая",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Пицца Пепперони, небольшая",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Лазанья",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Салат Цезарь с курицей",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Тирамису",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      } ]
+    }, {
+      "chain" : "Типичное меню столовой",
+      "fit" : "GOOD",
+      "nearby" : [ {
+        "dishes" : [ "Морс, около 300 мл", "Котлета куриная" ],
+        "score" : 2.006667
+      }, {
+        "dishes" : [ "Куриная грудка запечённая", "Рис отварной" ],
+        "score" : 2.207778
+      }, {
+        "dishes" : [ "Морс, около 300 мл", "Картофельное пюре", "Куриная грудка запечённая" ],
+        "score" : 2.298547
+      } ],
+      "atVenue" : [ {
+        "dishes" : [ "Картофельное пюре", "Картофельное пюре", "Куриная грудка запечённая" ],
+        "score" : 1.891144
+      }, {
+        "dishes" : [ "Морс, около 300 мл", "Котлета куриная" ],
+        "score" : 1.927567
+      }, {
+        "dishes" : [ "Куриная грудка запечённая", "Рис отварной" ],
+        "score" : 2.135101
+      } ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Блины с творогом",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Котлета куриная",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Рис отварной",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Куриная грудка запечённая",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Борщ со сметаной",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Картофельное пюре",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Суп куриный с лапшой",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Морс, около 300 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Винегрет",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Салат из свежих овощей",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Компот, около 300 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Сырники со сметаной",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Гречка с курицей или овощами",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Котлета с картофельным пюре",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Пельмени",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Салат Оливье",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      } ]
+    }, {
+      "chain" : "Типичное меню блинной",
+      "fit" : "NONE",
+      "nearby" : [ ],
+      "atVenue" : [ ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Блин с творогом",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Блин со сгущёнкой или вареньем",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Блины со сметаной",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Борщ со сметаной",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Морс, около 300 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Чай чёрный или зелёный",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Блин с ветчиной и сыром",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Блин с курицей и грибами",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Салат Оливье",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      } ]
+    }, {
+      "chain" : "Типичное меню кафе",
+      "fit" : "GOOD",
+      "nearby" : [ {
+        "dishes" : [ "Чай чёрный или зелёный", "Куриная грудка запечённая", "Рис отварной" ],
+        "score" : 2.009444
+      }, {
+        "dishes" : [ "Морс, около 300 мл", "Картофельное пюре", "Куриная грудка запечённая" ],
+        "score" : 2.298547
+      } ],
+      "atVenue" : [ {
+        "dishes" : [ "Картофельное пюре", "Картофельное пюре", "Куриная грудка запечённая" ],
+        "score" : 1.891144
+      }, {
+        "dishes" : [ "Чай чёрный или зелёный", "Куриная грудка запечённая", "Рис отварной" ],
+        "score" : 1.948355
+      } ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Рис отварной",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Картофель фри",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Куриная грудка запечённая",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Борщ со сметаной",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Картофельное пюре",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Суп куриный с лапшой",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Морс, около 300 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Капучино, около 300 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Салат из свежих овощей",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Чай чёрный или зелёный",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Паста с курицей и грибами",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Сырники со сметаной",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Паста карбонара",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Котлета с картофельным пюре",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Чизкейк",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Салат Цезарь с курицей",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      } ]
+    }, {
+      "chain" : "Типичное меню бара",
+      "fit" : "NONE",
+      "nearby" : [ ],
+      "atVenue" : [ ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Наггетсы, 6 шт.",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Луковые кольца",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Гренки чесночные",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Картофель фри",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Морс, около 300 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Лимонад, около 400 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Куриные крылья",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Бургер с говядиной",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Колбаски гриль",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Салат Цезарь с курицей",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      } ]
+    }, {
+      "chain" : "Типичная готовая еда в магазине",
+      "fit" : "NONE",
+      "nearby" : [ ],
+      "atVenue" : [ ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Плов",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Блины с творогом",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Овсяная каша",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Куриная грудка запечённая",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Морс, около 300 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Сырники",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Сэндвич с курицей",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Гречка с курицей или овощами",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Салат Цезарь с курицей",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Салат Оливье",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      } ]
     } ]
   }, {
     "name" : "завтрак",
@@ -46648,6 +48246,793 @@
         "verdict" : "NOT_FITS",
         "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
       } ]
+    }, {
+      "chain" : "Типичное меню кофейни",
+      "fit" : "COMPROMISE",
+      "nearby" : [ ],
+      "atVenue" : [ ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Овсяная каша",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Какао, около 300 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Латте, около 400 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Капучино, около 300 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Чай чёрный или зелёный",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Американо, около 300 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Маффин",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Чизкейк",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Круассан с ветчиной и сыром",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Сэндвич с курицей",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Сырники со сметаной или вареньем",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Круассан классический",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      } ]
+    }, {
+      "chain" : "Типичное меню пекарни",
+      "fit" : "NONE",
+      "nearby" : [ ],
+      "atVenue" : [ ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Пирог с курицей",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Булочка с корицей",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Эклер",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Пирожок с капустой",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Капучино, около 300 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Чай чёрный или зелёный",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Американо, около 300 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Круассан с ветчиной и сыром",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Слойка сладкая",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Сэндвич с курицей",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Киш",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Круассан классический",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      } ]
+    }, {
+      "chain" : "Типичное меню пиццерии",
+      "fit" : "NONE",
+      "nearby" : [ ],
+      "atVenue" : [ ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Картофель фри",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Морс, около 300 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Лимонад, около 400 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Чизкейк",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Салат Цезарь с курицей",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Куриные крылья",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Пицца с ветчиной и грибами, небольшая",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Пицца Четыре сыра, небольшая",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Пицца Маргарита, небольшая",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Пицца Пепперони, небольшая",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      } ]
+    }, {
+      "chain" : "Типичное меню суши-бара",
+      "fit" : "COMPROMISE",
+      "nearby" : [ ],
+      "atVenue" : [ ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Ролл Калифорния",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Ролл с лососем",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Суши с лососем, 2 шт.",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Ролл с огурцом",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Мисо-суп",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Чай чёрный или зелёный",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Ролл Филадельфия",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Суп Том ям",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Лапша вок с курицей",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Салат чука",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      } ]
+    }, {
+      "chain" : "Типичное меню паназиатского кафе",
+      "fit" : "COMPROMISE",
+      "nearby" : [ ],
+      "atVenue" : [ ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Рамен",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Гёдза или дим-самы",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Мисо-суп",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Чай чёрный или зелёный",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Ролл Филадельфия",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Суп Том ям",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Лапша вок с курицей",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Салат чука",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Лапша удон с говядиной",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Рис с курицей и овощами",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      } ]
+    }, {
+      "chain" : "Типичное меню бургерной и фастфуда",
+      "fit" : "NONE",
+      "nearby" : [ ],
+      "atVenue" : [ ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Молочный коктейль, около 400 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Картофель фри",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Картофель по-деревенски",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Мороженое",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Кола, около 500 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Салат овощной",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Ролл с курицей в лаваше",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Бургер с курицей",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Наггетсы, 6 шт.",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Чизбургер",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Бургер с говядиной",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      } ]
+    }, {
+      "chain" : "Типичное меню шаурмичной",
+      "fit" : "NONE",
+      "nearby" : [ ],
+      "atVenue" : [ ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Лепёшка",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Картофель фри",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Кола, около 500 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Салат овощной",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Чай чёрный или зелёный",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Люля-кебаб из говядины",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Ролл с курицей в лаваше",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Шашлык из курицы",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Шаурма с курицей",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      } ]
+    }, {
+      "chain" : "Типичное меню грузинского кафе",
+      "fit" : "COMPROMISE",
+      "nearby" : [ ],
+      "atVenue" : [ {
+        "dishes" : [ "Лобио" ],
+        "score" : 1.394113
+      } ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Лобио",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Суп харчо",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Пхали ассорти",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Морс, около 300 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Салат из овощей с орехами",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Чай чёрный или зелёный",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Хачапури по-аджарски",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Шашлык из курицы",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Хинкали с говядиной и свининой, 4 шт.",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Хинкали с сыром, 4 шт.",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Хачапури по-имеретински",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      } ]
+    }, {
+      "chain" : "Типичное меню чайханы",
+      "fit" : "NONE",
+      "nearby" : [ ],
+      "atVenue" : [ ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Лепёшка",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Салат Ачичук из томатов",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Чай чёрный или зелёный",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Люля-кебаб из говядины",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Шурпа",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Шашлык из курицы",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Лагман",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Самса",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Плов",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      } ]
+    }, {
+      "chain" : "Типичное меню итальянского ресторана",
+      "fit" : "COMPROMISE",
+      "nearby" : [ ],
+      "atVenue" : [ ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Паста болоньезе",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Капучино, около 300 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Минестроне или томатный суп",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Лимонад, около 400 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Лазанья",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Салат Цезарь с курицей",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Тирамису",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Паста с курицей и грибами",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Паста карбонара",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Пицца Маргарита, небольшая",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Пицца Пепперони, небольшая",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      } ]
+    }, {
+      "chain" : "Типичное меню столовой",
+      "fit" : "GOOD",
+      "nearby" : [ {
+        "dishes" : [ "Картофельное пюре", "Куриная грудка запечённая" ],
+        "score" : 1.829804
+      } ],
+      "atVenue" : [ {
+        "dishes" : [ "Компот, около 300 мл", "Салат из свежих овощей", "Куриная грудка запечённая" ],
+        "score" : 1.533875
+      }, {
+        "dishes" : [ "Картофельное пюре", "Куриная грудка запечённая" ],
+        "score" : 1.797073
+      } ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Пельмени",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Куриная грудка запечённая",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Борщ со сметаной",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Картофельное пюре",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Суп куриный с лапшой",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Морс, около 300 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Винегрет",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Салат из свежих овощей",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Компот, около 300 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Котлета куриная",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Блины с творогом",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Котлета с картофельным пюре",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Гречка с курицей или овощами",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Рис отварной",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Сырники со сметаной",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Салат Оливье",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      } ]
+    }, {
+      "chain" : "Типичное меню блинной",
+      "fit" : "NONE",
+      "nearby" : [ ],
+      "atVenue" : [ ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Блины со сметаной",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Борщ со сметаной",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Морс, около 300 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Чай чёрный или зелёный",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Блин с творогом",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Блин с ветчиной и сыром",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Блин с курицей и грибами",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Блин со сгущёнкой или вареньем",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Салат Оливье",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      } ]
+    }, {
+      "chain" : "Типичное меню кафе",
+      "fit" : "GOOD",
+      "nearby" : [ {
+        "dishes" : [ "Чай чёрный или зелёный", "Картофельное пюре", "Куриная грудка запечённая" ],
+        "score" : 1.505701
+      } ],
+      "atVenue" : [ {
+        "dishes" : [ "Чай чёрный или зелёный", "Картофельное пюре", "Куриная грудка запечённая" ],
+        "score" : 1.472629
+      } ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Картофель фри",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Куриная грудка запечённая",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Борщ со сметаной",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Картофельное пюре",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Суп куриный с лапшой",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Морс, около 300 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Капучино, около 300 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Салат из свежих овощей",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Чай чёрный или зелёный",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Чизкейк",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Котлета с картофельным пюре",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Салат Цезарь с курицей",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Рис отварной",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Сырники со сметаной",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Паста с курицей и грибами",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Паста карбонара",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      } ]
+    }, {
+      "chain" : "Типичное меню бара",
+      "fit" : "NONE",
+      "nearby" : [ ],
+      "atVenue" : [ ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Луковые кольца",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Гренки чесночные",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Картофель фри",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Морс, около 300 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Лимонад, около 400 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Колбаски гриль",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Салат Цезарь с курицей",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Наггетсы, 6 шт.",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Куриные крылья",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Бургер с говядиной",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      } ]
+    }, {
+      "chain" : "Типичная готовая еда в магазине",
+      "fit" : "COMPROMISE",
+      "nearby" : [ ],
+      "atVenue" : [ ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Овсяная каша",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Куриная грудка запечённая",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Морс, около 300 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Блины с творогом",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Салат Цезарь с курицей",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Гречка с курицей или овощами",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Сэндвич с курицей",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Сырники",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Плов",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Салат Оливье",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      } ]
     } ]
   }, {
     "name" : "вегетарианский ужин",
@@ -61825,6 +64210,778 @@
         "dish" : "Маргарита бургер",
         "verdict" : "NOT_FITS",
         "reasons" : [ "EXCLUDED_TAG", "KCAL_ABOVE", "FAT_ABOVE" ]
+      } ]
+    }, {
+      "chain" : "Типичное меню кофейни",
+      "fit" : "COMPROMISE",
+      "nearby" : [ ],
+      "atVenue" : [ ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Круассан классический",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Овсяная каша",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Какао, около 300 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Латте, около 400 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Капучино, около 300 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Чай чёрный или зелёный",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Американо, около 300 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Сэндвич с курицей",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Сырники со сметаной или вареньем",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Круассан с ветчиной и сыром",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Маффин",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Чизкейк",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      } ]
+    }, {
+      "chain" : "Типичное меню пекарни",
+      "fit" : "NONE",
+      "nearby" : [ ],
+      "atVenue" : [ ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Булочка с корицей",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Круассан классический",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Пирожок с капустой",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Капучино, около 300 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Чай чёрный или зелёный",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Американо, около 300 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Сэндвич с курицей",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Слойка сладкая",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Круассан с ветчиной и сыром",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Пирог с курицей",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Киш",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Эклер",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      } ]
+    }, {
+      "chain" : "Типичное меню пиццерии",
+      "fit" : "NONE",
+      "nearby" : [ ],
+      "atVenue" : [ ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Картофель фри",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Морс, около 300 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Лимонад, около 400 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Куриные крылья",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Чизкейк",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Салат Цезарь с курицей",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Пицца с ветчиной и грибами, небольшая",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Пицца Четыре сыра, небольшая",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Пицца Маргарита, небольшая",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Пицца Пепперони, небольшая",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      } ]
+    }, {
+      "chain" : "Типичное меню суши-бара",
+      "fit" : "NONE",
+      "nearby" : [ ],
+      "atVenue" : [ ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Ролл с огурцом",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Чай чёрный или зелёный",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Лапша вок с курицей",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Ролл Филадельфия",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Суп Том ям",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Ролл Калифорния",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Салат чука",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Ролл с лососем",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Суши с лососем, 2 шт.",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Мисо-суп",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      } ]
+    }, {
+      "chain" : "Типичное меню паназиатского кафе",
+      "fit" : "NONE",
+      "nearby" : [ ],
+      "atVenue" : [ ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Чай чёрный или зелёный",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Лапша вок с курицей",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Лапша удон с говядиной",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Рис с курицей и овощами",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "KCAL_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Ролл Филадельфия",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Суп Том ям",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Рамен",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Салат чука",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Гёдза или дим-самы",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Мисо-суп",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      } ]
+    }, {
+      "chain" : "Типичное меню бургерной и фастфуда",
+      "fit" : "NONE",
+      "nearby" : [ ],
+      "atVenue" : [ ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Молочный коктейль, около 400 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Картофель фри",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Мороженое",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Кола, около 500 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Салат овощной",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Бургер с курицей",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Ролл с курицей в лаваше",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Бургер с говядиной",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Наггетсы, 6 шт.",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Чизбургер",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Картофель по-деревенски",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      } ]
+    }, {
+      "chain" : "Типичное меню шаурмичной",
+      "fit" : "NONE",
+      "nearby" : [ ],
+      "atVenue" : [ ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Лепёшка",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Картофель фри",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Кола, около 500 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Салат овощной",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Чай чёрный или зелёный",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Шаурма с курицей",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Ролл с курицей в лаваше",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Шашлык из курицы",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Люля-кебаб из говядины",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      } ]
+    }, {
+      "chain" : "Типичное меню грузинского кафе",
+      "fit" : "COMPROMISE",
+      "nearby" : [ ],
+      "atVenue" : [ {
+        "dishes" : [ "Салат из овощей с орехами", "Лобио" ],
+        "score" : 2.014256
+      } ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Лобио",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Пхали ассорти",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Морс, около 300 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Салат из овощей с орехами",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Чай чёрный или зелёный",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Хачапури по-аджарски",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Шашлык из курицы",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Хинкали с говядиной и свининой, 4 шт.",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "KCAL_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Суп харчо",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Хинкали с сыром, 4 шт.",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Хачапури по-имеретински",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      } ]
+    }, {
+      "chain" : "Типичное меню чайханы",
+      "fit" : "NONE",
+      "nearby" : [ ],
+      "atVenue" : [ ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Лепёшка",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Салат Ачичук из томатов",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Чай чёрный или зелёный",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Плов",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Лагман",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Шашлык из курицы",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Шурпа",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Люля-кебаб из говядины",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Самса",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      } ]
+    }, {
+      "chain" : "Типичное меню итальянского ресторана",
+      "fit" : "NONE",
+      "nearby" : [ ],
+      "atVenue" : [ ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Капучино, около 300 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Минестроне или томатный суп",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Лимонад, около 400 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Лазанья",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Паста болоньезе",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Салат Цезарь с курицей",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Паста с курицей и грибами",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Паста карбонара",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Тирамису",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Пицца Маргарита, небольшая",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Пицца Пепперони, небольшая",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      } ]
+    }, {
+      "chain" : "Типичное меню столовой",
+      "fit" : "COMPROMISE",
+      "nearby" : [ ],
+      "atVenue" : [ ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Рис отварной",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Картофельное пюре",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Морс, около 300 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Салат из свежих овощей",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Компот, около 300 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Гречка с курицей или овощами",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Сырники со сметаной",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Котлета с картофельным пюре",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Котлета куриная",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Блины с творогом",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Пельмени",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Салат Оливье",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Куриная грудка запечённая",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Борщ со сметаной",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Суп куриный с лапшой",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Винегрет",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      } ]
+    }, {
+      "chain" : "Типичное меню блинной",
+      "fit" : "NONE",
+      "nearby" : [ ],
+      "atVenue" : [ ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Блины со сметаной",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Морс, около 300 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Чай чёрный или зелёный",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Блин с творогом",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Блин с ветчиной и сыром",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Блин с курицей и грибами",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Блин со сгущёнкой или вареньем",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Салат Оливье",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Борщ со сметаной",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      } ]
+    }, {
+      "chain" : "Типичное меню кафе",
+      "fit" : "COMPROMISE",
+      "nearby" : [ ],
+      "atVenue" : [ ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Рис отварной",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Картофель фри",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Картофельное пюре",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Морс, около 300 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Капучино, около 300 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Салат из свежих овощей",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Чай чёрный или зелёный",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Сырники со сметаной",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Котлета с картофельным пюре",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Чизкейк",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Салат Цезарь с курицей",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Паста с курицей и грибами",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Паста карбонара",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Куриная грудка запечённая",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Борщ со сметаной",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Суп куриный с лапшой",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      } ]
+    }, {
+      "chain" : "Типичное меню бара",
+      "fit" : "NONE",
+      "nearby" : [ ],
+      "atVenue" : [ ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Луковые кольца",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Гренки чесночные",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Картофель фри",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Морс, около 300 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Лимонад, около 400 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Куриные крылья",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Колбаски гриль",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Салат Цезарь с курицей",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Бургер с говядиной",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Наггетсы, 6 шт.",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      } ]
+    }, {
+      "chain" : "Типичная готовая еда в магазине",
+      "fit" : "COMPROMISE",
+      "nearby" : [ ],
+      "atVenue" : [ ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Овсяная каша",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Морс, около 300 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Сэндвич с курицей",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Гречка с курицей или овощами",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Сырники",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Плов",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Блины с творогом",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Салат Цезарь с курицей",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Салат Оливье",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Куриная грудка запечённая",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
       } ]
     } ]
   }, {
@@ -77544,6 +80701,838 @@
         "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
       }, {
         "dish" : "Маргарита бургер",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      } ]
+    }, {
+      "chain" : "Типичное меню кофейни",
+      "fit" : "GOOD",
+      "nearby" : [ {
+        "dishes" : [ "Капучино, около 300 мл" ],
+        "score" : 1.732103
+      } ],
+      "atVenue" : [ {
+        "dishes" : [ "Капучино, около 300 мл" ],
+        "score" : 1.732103
+      } ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Капучино, около 300 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Чай чёрный или зелёный",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Американо, около 300 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Латте, около 400 мл",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Какао, около 300 мл",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Овсяная каша",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Круассан классический",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Чизкейк",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Маффин",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Круассан с ветчиной и сыром",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Сэндвич с курицей",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Сырники со сметаной или вареньем",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      } ]
+    }, {
+      "chain" : "Типичное меню пекарни",
+      "fit" : "GOOD",
+      "nearby" : [ {
+        "dishes" : [ "Пирожок с капустой" ],
+        "score" : 1.521667
+      }, {
+        "dishes" : [ "Капучино, около 300 мл" ],
+        "score" : 1.732103
+      }, {
+        "dishes" : [ "Американо, около 300 мл", "Пирожок с капустой" ],
+        "score" : 1.779784
+      } ],
+      "atVenue" : [ {
+        "dishes" : [ "Пирожок с капустой" ],
+        "score" : 1.521667
+      }, {
+        "dishes" : [ "Капучино, около 300 мл" ],
+        "score" : 1.732103
+      }, {
+        "dishes" : [ "Американо, около 300 мл", "Пирожок с капустой" ],
+        "score" : 1.779784
+      } ],
+      "replaceFirst" : [ {
+        "dishes" : [ "Капучино, около 300 мл" ],
+        "score" : 1.732103
+      } ],
+      "assessment" : [ {
+        "dish" : "Пирожок с капустой",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Капучино, около 300 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Чай чёрный или зелёный",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Американо, около 300 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Эклер",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Круассан классический",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Пирог с курицей",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Булочка с корицей",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Киш",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Круассан с ветчиной и сыром",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Слойка сладкая",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Сэндвич с курицей",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      } ]
+    }, {
+      "chain" : "Типичное меню пиццерии",
+      "fit" : "NONE",
+      "nearby" : [ ],
+      "atVenue" : [ ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Лимонад, около 400 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Морс, около 300 мл",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Картофель фри",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Салат Цезарь с курицей",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Чизкейк",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Куриные крылья",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Пицца с ветчиной и грибами, небольшая",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Пицца Четыре сыра, небольшая",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Пицца Маргарита, небольшая",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Пицца Пепперони, небольшая",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      } ]
+    }, {
+      "chain" : "Типичное меню суши-бара",
+      "fit" : "GOOD",
+      "nearby" : [ {
+        "dishes" : [ "Суши с лососем, 2 шт." ],
+        "score" : 1.134286
+      } ],
+      "atVenue" : [ {
+        "dishes" : [ "Суши с лососем, 2 шт." ],
+        "score" : 1.134286
+      } ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Суши с лососем, 2 шт.",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Мисо-суп",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Чай чёрный или зелёный",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Ролл с лососем",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Ролл с огурцом",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Салат чука",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Ролл Калифорния",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Суп Том ям",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Ролл Филадельфия",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Лапша вок с курицей",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      } ]
+    }, {
+      "chain" : "Типичное меню паназиатского кафе",
+      "fit" : "NONE",
+      "nearby" : [ ],
+      "atVenue" : [ ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Мисо-суп",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Чай чёрный или зелёный",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Гёдза или дим-самы",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Салат чука",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Рамен",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Суп Том ям",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Ролл Филадельфия",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Лапша вок с курицей",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Лапша удон с говядиной",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Рис с курицей и овощами",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      } ]
+    }, {
+      "chain" : "Типичное меню бургерной и фастфуда",
+      "fit" : "NONE",
+      "nearby" : [ ],
+      "atVenue" : [ ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Кола, около 500 мл",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Мороженое",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Салат овощной",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Картофель по-деревенски",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Картофель фри",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Молочный коктейль, около 400 мл",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Чизбургер",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Наггетсы, 6 шт.",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Ролл с курицей в лаваше",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Бургер с курицей",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Бургер с говядиной",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      } ]
+    }, {
+      "chain" : "Типичное меню шаурмичной",
+      "fit" : "NONE",
+      "nearby" : [ ],
+      "atVenue" : [ ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Чай чёрный или зелёный",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Кола, около 500 мл",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Салат овощной",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Лепёшка",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Картофель фри",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Люля-кебаб из говядины",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Ролл с курицей в лаваше",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Шашлык из курицы",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Шаурма с курицей",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      } ]
+    }, {
+      "chain" : "Типичное меню грузинского кафе",
+      "fit" : "COMPROMISE",
+      "nearby" : [ ],
+      "atVenue" : [ ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Салат из овощей с орехами",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Чай чёрный или зелёный",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Морс, около 300 мл",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Пхали ассорти",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Суп харчо",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Лобио",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Хачапури по-аджарски",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Шашлык из курицы",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Хинкали с говядиной и свининой, 4 шт.",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Хинкали с сыром, 4 шт.",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Хачапури по-имеретински",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      } ]
+    }, {
+      "chain" : "Типичное меню чайханы",
+      "fit" : "NONE",
+      "nearby" : [ ],
+      "atVenue" : [ ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Салат Ачичук из томатов",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Чай чёрный или зелёный",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Лепёшка",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Самса",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Люля-кебаб из говядины",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Шурпа",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Шашлык из курицы",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Лагман",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Плов",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      } ]
+    }, {
+      "chain" : "Типичное меню итальянского ресторана",
+      "fit" : "GOOD",
+      "nearby" : [ {
+        "dishes" : [ "Капучино, около 300 мл" ],
+        "score" : 1.732103
+      } ],
+      "atVenue" : [ {
+        "dishes" : [ "Капучино, около 300 мл" ],
+        "score" : 1.732103
+      } ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Капучино, около 300 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Минестроне или томатный суп",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Лимонад, около 400 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Тирамису",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Салат Цезарь с курицей",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Паста болоньезе",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Лазанья",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Паста с курицей и грибами",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Паста карбонара",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Пицца Маргарита, небольшая",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Пицца Пепперони, небольшая",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      } ]
+    }, {
+      "chain" : "Типичное меню столовой",
+      "fit" : "GOOD",
+      "nearby" : [ {
+        "dishes" : [ "Суп куриный с лапшой" ],
+        "score" : 1.389085
+      } ],
+      "atVenue" : [ {
+        "dishes" : [ "Суп куриный с лапшой" ],
+        "score" : 1.389085
+      } ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Суп куриный с лапшой",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Картофельное пюре",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Компот, около 300 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Морс, около 300 мл",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Винегрет",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Куриная грудка запечённая",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE" ]
+      }, {
+        "dish" : "Борщ со сметаной",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Салат из свежих овощей",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Салат Оливье",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Пельмени",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Рис отварной",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Котлета куриная",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Блины с творогом",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Котлета с картофельным пюре",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Гречка с курицей или овощами",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Сырники со сметаной",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      } ]
+    }, {
+      "chain" : "Типичное меню блинной",
+      "fit" : "COMPROMISE",
+      "nearby" : [ ],
+      "atVenue" : [ ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Чай чёрный или зелёный",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Морс, около 300 мл",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Борщ со сметаной",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Блины со сметаной",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Салат Оливье",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Блин со сгущёнкой или вареньем",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Блин с курицей и грибами",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Блин с творогом",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Блин с ветчиной и сыром",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      } ]
+    }, {
+      "chain" : "Типичное меню кафе",
+      "fit" : "GOOD",
+      "nearby" : [ {
+        "dishes" : [ "Чай чёрный или зелёный", "Суп куриный с лапшой" ],
+        "score" : 1.315752
+      }, {
+        "dishes" : [ "Суп куриный с лапшой" ],
+        "score" : 1.389085
+      }, {
+        "dishes" : [ "Капучино, около 300 мл" ],
+        "score" : 1.732103
+      } ],
+      "atVenue" : [ {
+        "dishes" : [ "Чай чёрный или зелёный", "Суп куриный с лапшой" ],
+        "score" : 1.315752
+      }, {
+        "dishes" : [ "Суп куриный с лапшой" ],
+        "score" : 1.389085
+      }, {
+        "dishes" : [ "Капучино, около 300 мл" ],
+        "score" : 1.732103
+      } ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Суп куриный с лапшой",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Капучино, около 300 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Картофельное пюре",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Чай чёрный или зелёный",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Морс, около 300 мл",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Куриная грудка запечённая",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE" ]
+      }, {
+        "dish" : "Борщ со сметаной",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Салат из свежих овощей",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Картофель фри",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Рис отварной",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Салат Цезарь с курицей",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Чизкейк",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Котлета с картофельным пюре",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Сырники со сметаной",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Паста с курицей и грибами",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Паста карбонара",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      } ]
+    }, {
+      "chain" : "Типичное меню бара",
+      "fit" : "NONE",
+      "nearby" : [ ],
+      "atVenue" : [ ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Лимонад, около 400 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Морс, около 300 мл",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Луковые кольца",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Картофель фри",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Гренки чесночные",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Наггетсы, 6 шт.",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Колбаски гриль",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Салат Цезарь с курицей",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Куриные крылья",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Бургер с говядиной",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      } ]
+    }, {
+      "chain" : "Типичная готовая еда в магазине",
+      "fit" : "COMPROMISE",
+      "nearby" : [ ],
+      "atVenue" : [ ],
+      "replaceFirst" : [ ],
+      "assessment" : [ {
+        "dish" : "Морс, около 300 мл",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Куриная грудка запечённая",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE" ]
+      }, {
+        "dish" : "Овсяная каша",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Салат Оливье",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Салат Цезарь с курицей",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Блины с творогом",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Гречка с курицей или овощами",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Сэндвич с курицей",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Сырники",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Плов",
         "verdict" : "NOT_FITS",
         "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
       } ]

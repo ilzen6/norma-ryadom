@@ -7,6 +7,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 
+from venue_kinds import kind_of, majority_kind
 from venue_sources import (
     FRESH_YEARS,
     HEADER,
@@ -50,11 +51,13 @@ def fresh_places():
     sources = {region: json.loads((PLACES / f"{region}.json").read_text(encoding="utf-8"))
                for region, _, _ in regions() if (PLACES / f"{region}.json").exists()}
     newest = max(place["confirmed"] for places in sources.values() for place in places if place.get("confirmed"))
+    shops = {region: json.loads((PLACES / f"{region}-shops.json").read_text(encoding="utf-8"))
+             for region, _, _ in regions() if (PLACES / f"{region}-shops.json").exists()}
     fresh_since = f"{int(newest[:4]) - FRESH_YEARS}{newest[4:]}"
     zones = areas()
     towns = {region: labels for region, _, labels in regions()}
     stats = Counter()
-    for region, places in sources.items():
+    for region, places in [*sources.items(), *shops.items()]:
         bulk = {day for day, count in Counter(place.get("confirmed") for place in places).items()
                 if day and count > MASS_EDIT_PLACES}
         for place in places:
@@ -109,6 +112,13 @@ def main():
                    if key not in chains and sum(spellings.values()) >= MIN_UNBRANDED_CHAIN_PLACES})
     rows = defaultdict(list)
     seen = set()
+    members = defaultdict(list)
+    for place, _ in kept:
+        key = key_of(place.get("brand")) or key_of(place["name"])
+        if key in chains:
+            members[key].append(place)
+    with_menu = {key for key, name in chains.items() if (OUT / f"{slug_of(name)}-menu.csv").exists()}
+    chain_kinds = {key: majority_kind(name, places) for key, places in members.items() if key not in with_menu}
     for place, town in kept:
         key = key_of(place.get("brand")) or key_of(place["name"])
         chain = key if key in chains else None
@@ -126,8 +136,10 @@ def main():
             "lon": f"{place['lon']:.6f}",
             "external_id": f"osm-{place['lat']:.5f}-{place['lon']:.5f}",
             "confirmed_on": place["confirmed"],
+            "template": chain_kinds.get(chain, "") if chain else kind_of(place),
         })
     OUT.mkdir(parents=True, exist_ok=True)
+    print("kinds", dict(Counter(row["template"] for venues in rows.values() for row in venues)), file=sys.stderr)
     for old in OUT.glob("*-venues.csv"):
         old.unlink()
     brands = []

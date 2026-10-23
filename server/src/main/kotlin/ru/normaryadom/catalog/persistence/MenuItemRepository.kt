@@ -91,15 +91,15 @@ class MenuItemRepository(
         batchJdbc.batchUpdate(
             """
             INSERT INTO menu_item (chain_id, name, category, portion_g, kcal, protein_g, fat_g, carbs_g,
-                                   price_minor, tags, source_kind, source_url, verified_at)
+                                   price_minor, tags, source_kind, source_url, verified_at, kcal_low, kcal_high)
             VALUES (:ownerId, :name, :category, :portion, :kcal, :protein, :fat, :carbs,
-                    :price, :tags, :sourceKind, :sourceUrl, :verifiedAt)
+                    :price, :tags, :sourceKind, :sourceUrl, :verifiedAt, :kcalLow, :kcalHigh)
             ON CONFLICT (chain_id, name) WHERE chain_id IS NOT NULL DO UPDATE SET
                 category = EXCLUDED.category, portion_g = EXCLUDED.portion_g, kcal = EXCLUDED.kcal,
                 protein_g = EXCLUDED.protein_g, fat_g = EXCLUDED.fat_g, carbs_g = EXCLUDED.carbs_g,
                 price_minor = EXCLUDED.price_minor, tags = EXCLUDED.tags, source_kind = EXCLUDED.source_kind,
                 source_url = EXCLUDED.source_url, verified_at = EXCLUDED.verified_at,
-                kcal_low = NULL, kcal_high = NULL, is_available = TRUE
+                kcal_low = EXCLUDED.kcal_low, kcal_high = EXCLUDED.kcal_high, is_available = TRUE
             """,
             drafts.map { draftParams(chainId, it, provenance) }.toTypedArray(),
         )
@@ -113,9 +113,9 @@ class MenuItemRepository(
         batchJdbc.batchUpdate(
             """
             INSERT INTO menu_item (venue_id, name, category, portion_g, kcal, protein_g, fat_g, carbs_g,
-                                   price_minor, tags, source_kind, source_url, verified_at)
+                                   price_minor, tags, source_kind, source_url, verified_at, kcal_low, kcal_high)
             VALUES (:ownerId, :name, :category, :portion, :kcal, :protein, :fat, :carbs,
-                    :price, :tags, :sourceKind, :sourceUrl, :verifiedAt)
+                    :price, :tags, :sourceKind, :sourceUrl, :verifiedAt, :kcalLow, :kcalHigh)
             ON CONFLICT (venue_id, name) WHERE venue_id IS NOT NULL DO UPDATE SET
                 category = EXCLUDED.category, portion_g = EXCLUDED.portion_g, kcal = EXCLUDED.kcal,
                 protein_g = EXCLUDED.protein_g, fat_g = EXCLUDED.fat_g, carbs_g = EXCLUDED.carbs_g,
@@ -208,6 +208,8 @@ class MenuItemRepository(
             ).addValue("sourceKind", provenance.kind.code)
             .addValue("sourceUrl", provenance.url)
             .addValue("verifiedAt", Timestamp.from(provenance.verifiedAt))
+            .addValue("kcalLow", draft.kcalRange?.low?.takeIf { provenance.kind == SourceKind.C })
+            .addValue("kcalHigh", draft.kcalRange?.high?.takeIf { provenance.kind == SourceKind.C })
 }
 
 data class Provenance(

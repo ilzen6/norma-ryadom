@@ -18,17 +18,23 @@ class NearbyVenueRepository(
                     ${VenueRows.FROM}
                     WHERE v.is_active AND NOT v.under_review
                       AND ST_DWithin(v.location, ST_SetSRID(ST_MakePoint(:lon, :lat), 4326)::geography, :radius)
+                ),
+                ranked AS (
+                    SELECT *, row_number() OVER (PARTITION BY has_own_items OR has_chain_items ORDER BY distance_m, id) AS kind_rank
+                    FROM nearby
+                    WHERE :includeWithoutMenu OR has_own_items OR has_chain_items OR has_template_items
                 )
-                SELECT * FROM nearby
-                WHERE :includeWithoutMenu OR has_own_items OR has_chain_items
+                SELECT * FROM ranked
+                WHERE NOT :limitEachMenuKind OR kind_rank <= :limit
                 ORDER BY distance_m, id
-                LIMIT :limit
+                LIMIT CASE WHEN :limitEachMenuKind THEN 2 * :limit ELSE :limit END
                 """,
             ).param("lat", query.center.lat)
             .param("lon", query.center.lon)
             .param("radius", query.radiusMeters)
             .param("includeWithoutMenu", query.coverage == MenuCoverage.ALL)
             .param("limit", query.limit)
+            .param("limitEachMenuKind", query.limitEachMenuKind)
             .query { rs, _ -> NearbyVenue(venue = VenueRows.map(rs), distanceMeters = rs.getDouble("distance_m")) }
             .list()
 }

@@ -1,0 +1,12 @@
+name;category;portion_g;kcal;protein_g;fat_g;carbs_g;price_rub;tags;kcal_low;kcal_high
+Чизбургер;main;118;360;15;18;34;;beef,egg,fish,gluten,meat,milk;306;414
+Бургер с говядиной;main;220;664;22;34;48;560;beef,gluten,meat,milk;534.4;770
+Бургер с курицей;main;200;488;20;19;65;440;chicken,gluten,meat,milk;380;837
+Ролл с курицей в лаваше;main;230;483;20.7;23;50.6;300;chicken,gluten,meat,milk;410.6;680.4
+Наггетсы, 6 шт.;main;170;380;16;22.1;29.4;350;chicken,egg,gluten,meat,milk;275.8;508
+Картофель фри;side;175;318.5;5.2;12.2;45.5;280;;188.6;366.3
+Картофель по-деревенски;side;195;282;6.4;7.6;47.1;280;egg,fish,gluten,milk,seafood;209.9;468.4
+Салат овощной;salad;150;120;1.4;10.2;5.4;350;;89.2;197.1
+Молочный коктейль, около 400 мл;drink;400;338.8;8;12;48.4;340;milk;288;492.8
+Кола, около 500 мл;drink;500;210;0;0;53;180;;138.6;241.5
+Мороженое;dessert;97;240;4;7.5;38;;gluten,milk,soy;185;280

@@ -53,6 +53,7 @@ class AdminChainController(
         model.addAttribute("chain", chains.get(chainId))
         model.addAttribute("items", chains.items(chainId))
         model.addAttribute("venues", chains.venues(chainId))
+        model.addAttribute("templateVenues", chains.venuesUsingTemplate(chainId))
         return "admin/chain"
     }
 

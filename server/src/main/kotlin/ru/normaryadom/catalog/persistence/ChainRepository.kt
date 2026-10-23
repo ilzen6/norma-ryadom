@@ -13,9 +13,9 @@ class ChainRepository(
         jdbc
             .sql(
                 """
-                SELECT c.id, c.name, c.currency, c.source_url, c.menu_version,
+                SELECT c.id, c.name, c.currency, c.source_url, c.menu_version, c.template_code,
                        (SELECT count(*) FROM menu_item m WHERE m.chain_id = c.id AND m.is_available) AS item_count,
-                       (SELECT count(*) FROM venue v WHERE v.chain_id = c.id AND v.is_active) AS venue_count
+                       (SELECT count(*) FROM venue v WHERE (v.chain_id = c.id OR v.template_id = c.id) AND v.is_active) AS venue_count
                 FROM chain c
                 ORDER BY c.name
                 """,
@@ -29,7 +29,7 @@ class ChainRepository(
 
     fun findById(id: Long): Chain? =
         jdbc
-            .sql("SELECT c.id, c.name, c.currency, c.source_url, c.menu_version FROM chain c WHERE c.id = :id")
+            .sql("SELECT c.id, c.name, c.currency, c.source_url, c.menu_version, c.template_code FROM chain c WHERE c.id = :id")
             .param("id", id)
             .query { rs, _ -> mapChain(rs) }
             .optional()
@@ -37,7 +37,7 @@ class ChainRepository(
 
     fun findByName(name: String): Chain? =
         jdbc
-            .sql("SELECT c.id, c.name, c.currency, c.source_url, c.menu_version FROM chain c WHERE c.name = :name")
+            .sql("SELECT c.id, c.name, c.currency, c.source_url, c.menu_version, c.template_code FROM chain c WHERE c.name = :name")
             .param("name", name)
             .query { rs, _ -> mapChain(rs) }
             .optional()
@@ -46,13 +46,22 @@ class ChainRepository(
     fun create(
         name: String,
         sourceUrl: String?,
+        templateCode: String? = null,
     ): Long =
         jdbc
-            .sql("INSERT INTO chain (name, source_url) VALUES (:name, :sourceUrl) RETURNING id")
+            .sql("INSERT INTO chain (name, source_url, template_code) VALUES (:name, :sourceUrl, :templateCode) RETURNING id")
             .param("name", name)
             .param("sourceUrl", sourceUrl)
+            .param("templateCode", templateCode)
             .query(Long::class.java)
             .single()
+
+    fun findTemplateIds(): Map<String, Long> =
+        jdbc
+            .sql("SELECT template_code, id FROM chain WHERE template_code IS NOT NULL")
+            .query { rs, _ -> rs.getString("template_code") to rs.getLong("id") }
+            .list()
+            .toMap()
 
     fun updateSourceUrl(
         id: Long,
@@ -79,6 +88,7 @@ class ChainRepository(
             currency = rs.getString("currency"),
             sourceUrl = rs.getString("source_url"),
             menuVersion = rs.getLong("menu_version"),
+            templateCode = rs.getString("template_code"),
         )
 }
 

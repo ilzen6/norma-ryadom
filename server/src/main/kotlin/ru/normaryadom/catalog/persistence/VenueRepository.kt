@@ -34,14 +34,15 @@ class VenueRepository(
     ) {
         batchJdbc.batchUpdate(
             """
-            INSERT INTO venue (chain_id, name, address, location, external_id, confirmed_on)
+            INSERT INTO venue (chain_id, name, address, location, external_id, confirmed_on, template_id)
             VALUES (:chainId, :name, :address, ST_SetSRID(ST_MakePoint(:lon, :lat), 4326)::geography, :externalId,
-                    :confirmedOn)
+                    :confirmedOn, :templateId)
             ON CONFLICT (chain_id, external_id) WHERE external_id IS NOT NULL DO UPDATE SET
                 name = EXCLUDED.name, address = EXCLUDED.address, location = EXCLUDED.location,
                 is_active = venue.closed_on IS NULL OR coalesce(EXCLUDED.confirmed_on > venue.closed_on, FALSE),
                 closed_on = CASE WHEN EXCLUDED.confirmed_on > venue.closed_on THEN NULL ELSE venue.closed_on END,
-                confirmed_on = coalesce(EXCLUDED.confirmed_on, venue.confirmed_on)
+                confirmed_on = coalesce(EXCLUDED.confirmed_on, venue.confirmed_on),
+                template_id = EXCLUDED.template_id
             """,
             drafts
                 .map { draft ->
@@ -53,6 +54,7 @@ class VenueRepository(
                         .addValue("lon", draft.location.lon)
                         .addValue("externalId", draft.externalId)
                         .addValue("confirmedOn", draft.confirmedOn, Types.DATE)
+                        .addValue("templateId", draft.templateId, Types.BIGINT)
                 }.toTypedArray(),
         )
     }
@@ -60,14 +62,15 @@ class VenueRepository(
     fun upsertStandalone(drafts: List<VenueDraft>) {
         batchJdbc.batchUpdate(
             """
-            INSERT INTO venue (chain_id, name, address, location, external_id, confirmed_on)
+            INSERT INTO venue (chain_id, name, address, location, external_id, confirmed_on, template_id)
             VALUES (NULL, :name, :address, ST_SetSRID(ST_MakePoint(:lon, :lat), 4326)::geography, :externalId,
-                    :confirmedOn)
+                    :confirmedOn, :templateId)
             ON CONFLICT (external_id) WHERE chain_id IS NULL AND external_id IS NOT NULL DO UPDATE SET
                 name = EXCLUDED.name, address = EXCLUDED.address, location = EXCLUDED.location,
                 is_active = venue.closed_on IS NULL OR coalesce(EXCLUDED.confirmed_on > venue.closed_on, FALSE),
                 closed_on = CASE WHEN EXCLUDED.confirmed_on > venue.closed_on THEN NULL ELSE venue.closed_on END,
-                confirmed_on = coalesce(EXCLUDED.confirmed_on, venue.confirmed_on)
+                confirmed_on = coalesce(EXCLUDED.confirmed_on, venue.confirmed_on),
+                template_id = EXCLUDED.template_id
             """,
             drafts
                 .map { draft ->
@@ -78,6 +81,7 @@ class VenueRepository(
                         .addValue("lon", draft.location.lon)
                         .addValue("externalId", draft.externalId)
                         .addValue("confirmedOn", draft.confirmedOn, Types.DATE)
+                        .addValue("templateId", draft.templateId, Types.BIGINT)
                 }.toTypedArray(),
         )
     }
@@ -92,6 +96,13 @@ class VenueRepository(
                 """,
             ).param("externalIds", keptExternalIds.toTypedArray())
             .update()
+
+    fun countUsingTemplate(templateId: Long): Int =
+        jdbc
+            .sql("SELECT count(*) FROM venue WHERE template_id = :templateId AND is_active")
+            .param("templateId", templateId)
+            .query(Int::class.java)
+            .single()
 
     fun countStandalone(): Int =
         jdbc

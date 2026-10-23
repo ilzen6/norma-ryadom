@@ -31,7 +31,7 @@ class CsvTable private constructor(
                 format.parse(StringReader(text.removePrefix("\uFEFF"))).use { parser ->
                     val header = parser.headerNames.map { it.trim().lowercase() }
                     when {
-                        header != expectedHeader && header != expectedHeader + optionalColumns ->
+                        (0..optionalColumns.size).none { header == expectedHeader + optionalColumns.take(it) } ->
                             CsvTableResult.Rejected(
                                 CsvError(HEADER_LINE, CsvErrorCode.HEADER_MISMATCH, null),
                             )

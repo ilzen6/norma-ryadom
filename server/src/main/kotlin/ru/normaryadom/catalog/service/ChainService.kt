@@ -25,9 +25,10 @@ class ChainService(
     fun create(
         name: String,
         sourceUrl: String?,
+        templateCode: String? = null,
     ): Long =
         try {
-            chains.create(name.trim(), sourceUrl?.trim()?.takeIf(String::isNotEmpty))
+            chains.create(name.trim(), sourceUrl?.trim()?.takeIf(String::isNotEmpty), templateCode)
         } catch (e: DuplicateKeyException) {
             throw ChainNameTakenException(name.trim())
         }
@@ -35,4 +36,6 @@ class ChainService(
     fun items(chainId: Long): List<MenuItemRecord> = items.findByChain(get(chainId).id)
 
     fun venues(chainId: Long): List<Venue> = venues.findByChain(get(chainId).id)
+
+    fun venuesUsingTemplate(chainId: Long): Int = venues.countUsingTemplate(get(chainId).id)
 }

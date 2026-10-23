@@ -4,6 +4,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 REAL = ROOT / "server/src/main/resources/demo/real"
 MENUS = ROOT / "tool/menus"
+TEMPLATES = MENUS / "templates.json"
 PROFILE = ROOT / "server/src/main/resources/application-demo.yml"
 BRANDS = Path(__file__).with_name("brands.json")
 OSM = "https://www.openstreetmap.org/copyright"
@@ -23,7 +24,13 @@ def main():
         meta = json.loads(meta_file.read_text(encoding="utf-8")) if meta_file.exists() and menu.exists() else None
         chains.append((brand, slug, meta))
     chains.sort(key=lambda entry: (entry[2] is None, -entry[0]["count"]))
-    lines = ["demo:", "  places: classpath:demo/real/places-venues.csv", "  chains:"]
+    lines = ["demo:", "  templates:"]
+    for template in json.loads(TEMPLATES.read_text(encoding="utf-8")):
+        lines.append(f"    - code: {template['code']}")
+        lines.append(f"      name: {quoted(template['name'])}")
+        lines.append(f"      source-url: {quoted(template['source_url'])}")
+        lines.append(f"      menu: classpath:demo/templates/{template['code']}-menu.csv")
+    lines += ["  places: classpath:demo/real/places-venues.csv", "  chains:"]
     for brand, slug, meta in chains:
         lines.append(f"    - name: {quoted(brand['name'])}")
         lines.append(f"      source-url: {quoted(meta['source_url'] if meta else OSM)}")

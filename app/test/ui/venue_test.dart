@@ -95,6 +95,38 @@ void main() {
     expect(find.text('цена не указана'), findsOneWidget);
   });
 
+  testWidgets('предупреждает, что меню примерное, если все блюда — оценка, и не пишет дату проверки', (tester) async {
+    final typical = VenueMenu(
+      venue: TestData.venue,
+      items: [
+        MenuItem(
+          id: 21,
+          name: 'Борщ со сметаной',
+          category: DishCategory.main,
+          nutrients: const Nutrients(kcal: 227, protein: 12, fat: 10, carbs: 22),
+          source: DataSource(
+            kind: SourceKind.estimate,
+            verifiedAt: DateTime.utc(2026, 10, 23),
+            kcalLow: 154,
+            kcalHigh: 355,
+          ),
+        ),
+      ],
+    );
+
+    await openVenue(tester, result: Ok(typical));
+    await scrollTo(tester, find.byKey(const Key('typical-menu-note')));
+
+    expect(find.byKey(const Key('typical-menu-note')), findsOneWidget);
+    expect(find.text('оценка · ≈ 154–355 ккал'), findsOneWidget);
+  });
+
+  testWidgets('не называет меню примерным, если в нём есть данные сети', (tester) async {
+    await openVenue(tester);
+
+    expect(find.byKey(const Key('typical-menu-note')), findsNothing);
+  });
+
   testWidgets('собирает обед в этом заведении', (tester) async {
     final harness = await openVenue(tester);
     harness.combos.venueResult = Ok(

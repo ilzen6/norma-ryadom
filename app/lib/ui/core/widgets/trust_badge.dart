@@ -22,7 +22,8 @@ class TrustBadge extends StatelessWidget {
     };
     final details = <String>[
       l10n.trust(kind),
-      if (source?.verifiedAt case final verifiedAt?) l10n.trustVerifiedAt(Formatting.date(verifiedAt)),
+      if (source?.verifiedAt case final verifiedAt? when kind != SourceKind.estimate)
+        l10n.trustVerifiedAt(Formatting.date(verifiedAt)),
       if ((source?.kcalLow, source?.kcalHigh) case (final low?, final high?))
         l10n.trustEstimateRange(low.round(), high.round()),
     ];

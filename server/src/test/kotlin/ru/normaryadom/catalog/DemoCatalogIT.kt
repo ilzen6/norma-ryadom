@@ -35,11 +35,18 @@ class DemoCatalogIT : IntegrationTest() {
         loader.run(args)
         loader.run(args)
 
-        assertThat(jdbc.sql("SELECT count(*) FROM chain").query(Int::class.java).single()).isEqualTo(113)
-        assertThat(jdbc.sql("SELECT count(*) FROM venue").query(Int::class.java).single()).isEqualTo(14285)
-        assertThat(jdbc.sql("SELECT count(*) FROM venue WHERE chain_id IS NULL").query(Int::class.java).single()).isEqualTo(9569)
+        assertThat(jdbc.sql("SELECT count(*) FROM chain WHERE template_code IS NULL").query(Int::class.java).single()).isEqualTo(116)
+        assertThat(jdbc.sql("SELECT count(*) FROM chain WHERE template_code IS NOT NULL").query(Int::class.java).single()).isEqualTo(15)
+        assertThat(jdbc.sql("SELECT count(*) FROM venue").query(Int::class.java).single()).isEqualTo(14604)
+        assertThat(jdbc.sql("SELECT count(*) FROM venue WHERE chain_id IS NULL").query(Int::class.java).single()).isEqualTo(9567)
+        assertThat(jdbc.sql("SELECT count(*) FROM venue WHERE template_id IS NOT NULL").query(Int::class.java).single()).isEqualTo(13158)
         assertThat(jdbc.sql("SELECT count(*) FROM venue WHERE confirmed_on IS NULL").query(Int::class.java).single()).isZero()
-        assertThat(jdbc.sql("SELECT count(*) FROM menu_item WHERE is_available").query(Int::class.java).single()).isEqualTo(3682)
+        assertThat(
+            jdbc.sql("SELECT count(*) FROM menu_item WHERE is_available AND source_kind = 'A'").query(Int::class.java).single(),
+        ).isEqualTo(3682)
+        assertThat(
+            jdbc.sql("SELECT count(*) FROM menu_item WHERE is_available AND source_kind = 'C'").query(Int::class.java).single(),
+        ).isEqualTo(166)
     }
 
     @Test

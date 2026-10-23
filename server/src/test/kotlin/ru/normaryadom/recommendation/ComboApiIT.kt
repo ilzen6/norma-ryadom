@@ -2,6 +2,9 @@ package ru.normaryadom.recommendation
 
 import org.assertj.core.api.Assertions.assertThat
 import org.hamcrest.Matchers.allOf
+import org.hamcrest.Matchers.containsInAnyOrder
+import org.hamcrest.Matchers.equalTo
+import org.hamcrest.Matchers.everyItem
 import org.hamcrest.Matchers.greaterThan
 import org.hamcrest.Matchers.hasItem
 import org.hamcrest.Matchers.lessThanOrEqualTo
@@ -14,6 +17,8 @@ import org.springframework.test.web.servlet.post
 import ru.normaryadom.catalog.service.CatalogImportService
 import ru.normaryadom.support.CatalogFixtures.Companion.BOWL_MENU
 import ru.normaryadom.support.CatalogFixtures.Companion.BOWL_VENUES
+import ru.normaryadom.support.CatalogFixtures.Companion.CAFE_PLACES
+import ru.normaryadom.support.CatalogFixtures.Companion.CAFE_TEMPLATE
 import ru.normaryadom.support.CatalogFixtures.Companion.CITY_LAT
 import ru.normaryadom.support.CatalogFixtures.Companion.CITY_LON
 import ru.normaryadom.support.CatalogFixtures.Companion.GRILL_MENU
@@ -68,6 +73,39 @@ class ComboApiIT : IntegrationTest() {
                 jsonPath("$.options[*].venue.name") { value(not(hasItem("Гриль, Тверская"))) }
             }
         assertThat(cachedEntries()).isPositive()
+    }
+
+    @Test
+    fun `подбирает рядом и в заведениях без своего меню по типичному меню, каждое заведение отдельно`() {
+        catalog.template("cafe", CAFE_TEMPLATE)
+        catalog.places(CAFE_PLACES)
+
+        mockMvc
+            .post("/api/v1/combos/search") {
+                contentType = MediaType.APPLICATION_JSON
+                content = """{"target": $TARGET, "location": {"lat": $CITY_LAT, "lon": $CITY_LON, "radiusMeters": 1000}, "limit": 10}"""
+            }.andExpect {
+                status { isOk() }
+                jsonPath("$.options[*].venue.name") { value(containsInAnyOrder("Кафе у моста", "Кафе на углу")) }
+                jsonPath("$.options[*].combo.sourceKind") { value(everyItem(equalTo("C"))) }
+            }
+    }
+
+    @Test
+    fun `ставит официальное меню выше типичного у соседнего заведения`() {
+        catalog.chain("Гриль", GRILL_MENU, GRILL_VENUES)
+        catalog.template("cafe", GRILL_MENU.map { "$it;0;5000" })
+        catalog.places(CAFE_PLACES)
+
+        mockMvc
+            .post("/api/v1/combos/search") {
+                contentType = MediaType.APPLICATION_JSON
+                content = """{"target": $TARGET, "location": {"lat": $CITY_LAT, "lon": $CITY_LON, "radiusMeters": 1000}, "limit": 10}"""
+            }.andExpect {
+                status { isOk() }
+                jsonPath("$.options[0].venue.name") { value("Гриль, Сити") }
+                jsonPath("$.options[0].combo.sourceKind") { value("A") }
+            }
     }
 
     @Test

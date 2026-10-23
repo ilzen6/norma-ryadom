@@ -8,16 +8,30 @@ const _meatKinds = {'pork', 'beef', 'chicken'};
 String buildDemoCatalog(Directory serverResources) {
   final config = File('${serverResources.path}/application-demo.yml').readAsLinesSync();
   final chains = <Map<String, Object?>>[];
+  final templates = <Map<String, Object?>>[];
   var places = <Map<String, Object?>>[];
+  String? code;
   String? name;
   String? sourceUrl;
   String? menu;
   String? sourceDate;
   for (final line in config.map((line) => line.trim())) {
+    if (line.startsWith('- code:')) code = _value(line);
+    if (code != null && line.startsWith('name:')) name = _value(line);
     if (line.startsWith('- name:')) name = _value(line);
     if (line.startsWith('source-url:')) sourceUrl = _value(line);
     if (line.startsWith('menu:')) menu = _value(line).replaceFirst('classpath:', '');
     if (line.startsWith('source-date:')) sourceDate = _value(line);
+    if (line.startsWith('menu:') && code != null && name != null && sourceUrl != null && menu != null) {
+      templates.add({
+        'code': code,
+        'name': name,
+        'sourceUrl': sourceUrl,
+        'verifiedAt': ?(sourceDate == null ? null : '${sourceDate}T00:00:00Z'),
+        'items': _rows(File('${serverResources.path}/$menu')).map(_item).toList(),
+      });
+      code = name = sourceUrl = menu = sourceDate = null;
+    }
     if (line.startsWith('places:')) {
       places = _rows(File('${serverResources.path}/${_value(line).replaceFirst('classpath:', '')}'))
           .map(_venue)
@@ -35,7 +49,7 @@ String buildDemoCatalog(Directory serverResources) {
       name = sourceUrl = menu = sourceDate = null;
     }
   }
-  return '${const JsonEncoder.withIndent('  ').convert({'verifiedAt': demoVerifiedAt, 'chains': chains, 'places': places})}\n';
+  return '${const JsonEncoder.withIndent('  ').convert({'verifiedAt': demoVerifiedAt, 'templates': templates, 'chains': chains, 'places': places})}\n';
 }
 
 String _value(String line) {
@@ -69,6 +83,8 @@ Map<String, Object?> _item(Map<String, String> row) {
     'carbs': double.parse(row['carbs_g']!),
     'priceMinor': price.isEmpty ? null : (double.parse(price) * 100).round(),
     'tags': tags.toList()..sort(),
+    if (row['kcal_low'] case final low? when low.isNotEmpty) 'kcalLow': double.parse(low),
+    if (row['kcal_high'] case final high? when high.isNotEmpty) 'kcalHigh': double.parse(high),
   };
 }
 
@@ -78,4 +94,5 @@ Map<String, Object?> _venue(Map<String, String> row) => {
   'lat': double.parse(row['lat']!),
   'lon': double.parse(row['lon']!),
   if (row['confirmed_on'] case final confirmed? when confirmed.isNotEmpty) 'confirmedOn': confirmed,
+  if (row['template'] case final template? when template.isNotEmpty) 'template': template,
 };

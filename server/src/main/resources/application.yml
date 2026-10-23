@@ -79,6 +79,7 @@ nearby:
   max-results: 100
   distance-weight-per-km: 0.5
   combos-per-venue: 2
+  combos-per-template-venue: 1
 
 intake:
   photo:

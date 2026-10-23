@@ -6,4 +6,7 @@ data class Chain(
     val currency: String,
     val sourceUrl: String?,
     val menuVersion: Long,
-)
+    val templateCode: String? = null,
+) {
+    val isTemplate: Boolean get() = templateCode != null
+}

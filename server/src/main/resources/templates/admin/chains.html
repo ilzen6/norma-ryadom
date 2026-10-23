@@ -11,7 +11,7 @@
         </thead>
         <tbody>
         <tr th:each="s : ${chains}">
-            <td><a th:href="@{/admin/chains/{id}(id=${s.chain.id})}" th:text="${s.chain.name}">Сеть</a></td>
+            <td><a th:href="@{/admin/chains/{id}(id=${s.chain.id})}" th:text="${s.chain.name}">Сеть</a><span th:if="${s.chain.isTemplate}" class="muted" data-testid="template-mark"> · типичное меню</span></td>
             <td th:text="${s.itemCount}">0</td>
             <td th:text="${s.venueCount}">0</td>
             <td th:text="${s.chain.menuVersion}">0</td>

@@ -5,14 +5,18 @@ import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import ru.normaryadom.catalog.domain.DietTag
+import ru.normaryadom.catalog.domain.KcalRange
 import ru.normaryadom.catalog.domain.SourceKind
+import ru.normaryadom.catalog.importing.CsvError
 import ru.normaryadom.catalog.importing.CsvErrorCode
+import ru.normaryadom.catalog.importing.VenueCsvParser
 import ru.normaryadom.catalog.service.CatalogImportService
 import ru.normaryadom.catalog.service.ChainNameTakenException
 import ru.normaryadom.catalog.service.ChainNotFoundException
 import ru.normaryadom.catalog.service.ChainService
 import ru.normaryadom.catalog.service.ImportOutcome
 import ru.normaryadom.support.CatalogFixtures
+import ru.normaryadom.support.CatalogFixtures.Companion.CAFE_TEMPLATE
 import ru.normaryadom.support.CatalogFixtures.Companion.GRILL_MENU
 import ru.normaryadom.support.CatalogFixtures.Companion.GRILL_VENUES
 import ru.normaryadom.support.IntegrationTest
@@ -38,6 +42,31 @@ class CatalogImportIT : IntegrationTest() {
         assertThat(items.first { it.item.name == "Свиные рёбрышки" }.item.tags).containsExactlyInAnyOrder(DietTag.PORK, DietTag.MEAT)
         assertThat(chains.venues(chainId)).hasSize(2)
         assertThat(chains.get(chainId).menuVersion).isEqualTo(1)
+    }
+
+    @Test
+    fun `импортирует типичное меню с уровнем доверия C и диапазоном калорий`() {
+        val templateId = catalog.template("cafe", CAFE_TEMPLATE)
+        val outcome = imports.importChainMenu(templateId, catalog.menuCsv(listOf("Чай;drink;300;0;0;0;0;99;")), CatalogFixtures.SOURCE_URL)
+
+        val item = chains.items(templateId).single { it.isAvailable }.item
+        assertThat(outcome).isEqualTo(ImportOutcome.Imported(upserted = 1, withdrawn = CAFE_TEMPLATE.size))
+        assertThat(item.source.kind).isEqualTo(SourceKind.C)
+        assertThat(item.source.kcalRange).isEqualTo(KcalRange(low = 0.0, high = 0.0))
+        assertThat(chains.get(templateId).isTemplate).isTrue()
+    }
+
+    @Test
+    fun `отклоняет точки с неизвестным кодом типичного меню`() {
+        catalog.template("cafe", CAFE_TEMPLATE)
+
+        val outcome =
+            imports.importStandaloneVenues(
+                catalog.venueCsv(listOf("Кафе;Тверская, 18;55.7663;37.6046;osm-node-2;;pizza"), VenueCsvParser.OPTIONAL),
+            )
+
+        assertThat(outcome).isEqualTo(ImportOutcome.Rejected(listOf(CsvError(2, CsvErrorCode.UNKNOWN_TEMPLATE, "template"))))
+        assertThat(jdbc.sql("SELECT count(*) FROM venue").query(Int::class.java).single()).isZero()
     }
 
     @Test

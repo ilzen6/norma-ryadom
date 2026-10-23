@@ -50,10 +50,31 @@ class VenueCsvParserTest {
     }
 
     @Test
-    fun `не принимает лишние колонки кроме даты подтверждения`() {
+    fun `не принимает лишние колонки кроме даты подтверждения и типичного меню`() {
         val result = parser.parse("$HEADER;rating\nА;адрес;55;37;a-1;5\n")
 
         assertThat((result as CsvParseResult.Invalid).errors.single().code).isEqualTo(CsvErrorCode.HEADER_MISMATCH)
+    }
+
+    @Test
+    fun `связывает точку с типичным меню по коду`() {
+        val result =
+            parser.parse(
+                "$HEADER;confirmed_on;template\nА;адрес;55;37;a-1;2026-05-01;cafe\nБ;адрес;55;37;a-2;;\n",
+                mapOf(
+                    "cafe" to 7L,
+                ),
+            )
+
+        val drafts = (result as CsvParseResult.Parsed<VenueDraft>).rows
+        assertThat(drafts.map { it.templateId }).containsExactly(7L, null)
+    }
+
+    @Test
+    fun `отклоняет неизвестный код типичного меню и называет колонку`() {
+        val result = parser.parse("$HEADER;confirmed_on;template\nА;адрес;55;37;a-1;;sushi\n", mapOf("cafe" to 7L))
+
+        assertThat((result as CsvParseResult.Invalid).errors).containsExactly(CsvError(2, CsvErrorCode.UNKNOWN_TEMPLATE, "template"))
     }
 
     @Test

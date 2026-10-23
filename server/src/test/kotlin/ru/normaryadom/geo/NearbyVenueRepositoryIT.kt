@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired
 import ru.normaryadom.catalog.domain.GeoPoint
 import ru.normaryadom.support.CatalogFixtures.Companion.BOWL_MENU
 import ru.normaryadom.support.CatalogFixtures.Companion.BOWL_VENUES
+import ru.normaryadom.support.CatalogFixtures.Companion.CAFE_PLACES
+import ru.normaryadom.support.CatalogFixtures.Companion.CAFE_TEMPLATE
 import ru.normaryadom.support.CatalogFixtures.Companion.CITY_LAT
 import ru.normaryadom.support.CatalogFixtures.Companion.CITY_LON
 import ru.normaryadom.support.CatalogFixtures.Companion.GRILL_MENU
@@ -42,6 +44,20 @@ class NearbyVenueRepositoryIT : IntegrationTest() {
 
         assertThat(repository.findNearby(NearbyQuery(city, 5000, MenuCoverage.WITH_MENU_ONLY, 50))).hasSize(3)
         assertThat(repository.findNearby(NearbyQuery(city, 5000, MenuCoverage.WITH_MENU_ONLY, 2))).hasSize(2)
+    }
+
+    @Test
+    fun `для подбора берёт ближайшие точки отдельно с официальным и с типичным меню`() {
+        catalog.chain("Гриль", GRILL_MENU, GRILL_VENUES)
+        catalog.template("cafe", CAFE_TEMPLATE)
+        catalog.places(CAFE_PLACES)
+
+        val nearest = repository.findNearby(NearbyQuery(city, 5000, MenuCoverage.WITH_MENU_ONLY, 1))
+        val eachKind = repository.findNearby(NearbyQuery(city, 5000, MenuCoverage.WITH_MENU_ONLY, 1, limitEachMenuKind = true))
+
+        assertThat(nearest.map { it.venue.name }).containsExactly("Кафе у моста")
+        assertThat(eachKind.map { it.venue.name }).containsExactly("Кафе у моста", "Гриль, Сити")
+        assertThat(eachKind.map { it.venue.usesTemplateMenu }).containsExactly(true, false)
     }
 
     @Test

@@ -7,6 +7,7 @@ data class NearbyQuery(
     val radiusMeters: Int,
     val coverage: MenuCoverage,
     val limit: Int,
+    val limitEachMenuKind: Boolean = false,
 )
 
 enum class MenuCoverage {

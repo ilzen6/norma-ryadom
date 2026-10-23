@@ -269,6 +269,12 @@ class _VenueBody extends ConsumerWidget {
         const SizedBox(height: Layout.section),
         SectionTitle(title: l10n.venueMenu, trailing: menu.items.isEmpty ? null : l10n.menuCount(menu.items.length)),
         if (menu.items.isEmpty) MessageView(message: l10n.venueMenuEmpty),
+        if (menu.items.isNotEmpty && menu.items.every((item) => item.source.kind == SourceKind.estimate))
+          MessageView(
+            key: const Key('typical-menu-note'),
+            icon: Icons.restaurant_menu_rounded,
+            message: l10n.venueMenuTypical,
+          ),
         for (final item in menu.items) ...[_MenuItemCard(item: item), const SizedBox(height: Layout.gap)],
       ],
     );

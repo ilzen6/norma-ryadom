@@ -1,0 +1,77 @@
+[
+  {
+    "code": "coffee",
+    "name": "Типичное меню кофейни",
+    "source_url": "https://github.com/ilzen6/norma-ryadom/blob/main/docs/approximate-menus.md"
+  },
+  {
+    "code": "bakery",
+    "name": "Типичное меню пекарни",
+    "source_url": "https://github.com/ilzen6/norma-ryadom/blob/main/docs/approximate-menus.md"
+  },
+  {
+    "code": "pizza",
+    "name": "Типичное меню пиццерии",
+    "source_url": "https://github.com/ilzen6/norma-ryadom/blob/main/docs/approximate-menus.md"
+  },
+  {
+    "code": "sushi",
+    "name": "Типичное меню суши-бара",
+    "source_url": "https://github.com/ilzen6/norma-ryadom/blob/main/docs/approximate-menus.md"
+  },
+  {
+    "code": "asian",
+    "name": "Типичное меню паназиатского кафе",
+    "source_url": "https://github.com/ilzen6/norma-ryadom/blob/main/docs/approximate-menus.md"
+  },
+  {
+    "code": "burger",
+    "name": "Типичное меню бургерной и фастфуда",
+    "source_url": "https://github.com/ilzen6/norma-ryadom/blob/main/docs/approximate-menus.md"
+  },
+  {
+    "code": "shawarma",
+    "name": "Типичное меню шаурмичной",
+    "source_url": "https://github.com/ilzen6/norma-ryadom/blob/main/docs/approximate-menus.md"
+  },
+  {
+    "code": "georgian",
+    "name": "Типичное меню грузинского кафе",
+    "source_url": "https://github.com/ilzen6/norma-ryadom/blob/main/docs/approximate-menus.md"
+  },
+  {
+    "code": "central-asian",
+    "name": "Типичное меню чайханы",
+    "source_url": "https://github.com/ilzen6/norma-ryadom/blob/main/docs/approximate-menus.md"
+  },
+  {
+    "code": "italian",
+    "name": "Типичное меню итальянского ресторана",
+    "source_url": "https://github.com/ilzen6/norma-ryadom/blob/main/docs/approximate-menus.md"
+  },
+  {
+    "code": "canteen",
+    "name": "Типичное меню столовой",
+    "source_url": "https://github.com/ilzen6/norma-ryadom/blob/main/docs/approximate-menus.md"
+  },
+  {
+    "code": "blini",
+    "name": "Типичное меню блинной",
+    "source_url": "https://github.com/ilzen6/norma-ryadom/blob/main/docs/approximate-menus.md"
+  },
+  {
+    "code": "cafe",
+    "name": "Типичное меню кафе",
+    "source_url": "https://github.com/ilzen6/norma-ryadom/blob/main/docs/approximate-menus.md"
+  },
+  {
+    "code": "bar",
+    "name": "Типичное меню бара",
+    "source_url": "https://github.com/ilzen6/norma-ryadom/blob/main/docs/approximate-menus.md"
+  },
+  {
+    "code": "ready-food",
+    "name": "Типичная готовая еда в магазине",
+    "source_url": "https://github.com/ilzen6/norma-ryadom/blob/main/docs/approximate-menus.md"
+  }
+]

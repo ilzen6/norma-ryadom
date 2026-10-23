@@ -9,4 +9,5 @@ data class VenueDraft(
     val location: GeoPoint,
     val externalId: String,
     val confirmedOn: LocalDate? = null,
+    val templateId: Long? = null,
 )

@@ -3,11 +3,13 @@ package ru.normaryadom.catalog.service
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import org.springframework.transaction.support.TransactionOperations
+import ru.normaryadom.catalog.domain.KcalRange
 import ru.normaryadom.catalog.domain.SourceKind
 import ru.normaryadom.catalog.importing.CsvParseResult
 import ru.normaryadom.catalog.importing.MenuCsvParser
 import ru.normaryadom.catalog.importing.VenueCsvParser
 import ru.normaryadom.catalog.persistence.ChainRepository
+import ru.normaryadom.catalog.persistence.MenuItemDraft
 import ru.normaryadom.catalog.persistence.MenuItemRepository
 import ru.normaryadom.catalog.persistence.Provenance
 import ru.normaryadom.catalog.persistence.VenueRepository
@@ -30,14 +32,16 @@ class CatalogImportService(
         sourceUrl: String,
         verifiedAt: Instant? = null,
     ): ImportOutcome {
-        chains.findById(chainId) ?: throw ChainNotFoundException(chainId)
+        val chain = chains.findById(chainId) ?: throw ChainNotFoundException(chainId)
         return when (val parsed = menuParser.parse(csv)) {
             is CsvParseResult.Invalid -> ImportOutcome.Rejected(parsed.errors)
             is CsvParseResult.Parsed -> {
-                val provenance = Provenance(kind = SourceKind.A, url = sourceUrl, verifiedAt = verifiedAt ?: clock.instant())
+                val kind = if (chain.isTemplate) SourceKind.C else SourceKind.A
+                val provenance = Provenance(kind = kind, url = sourceUrl, verifiedAt = verifiedAt ?: clock.instant())
+                val drafts = parsed.rows.map { draft -> withRangeFor(kind, draft) }
                 val withdrawn =
                     transactions.execute {
-                        items.upsertForChain(chainId, parsed.rows, provenance)
+                        items.upsertForChain(chainId, drafts, provenance)
                         val withdrawnCount = items.withdrawChainItemsExcept(chainId, parsed.rows.map { it.name })
                         chains.updateSourceUrl(chainId, sourceUrl)
                         chains.bumpMenuVersion(chainId)
@@ -54,7 +58,7 @@ class CatalogImportService(
         csv: ByteArray,
     ): ImportOutcome {
         chains.findById(chainId) ?: throw ChainNotFoundException(chainId)
-        return when (val parsed = venueParser.parse(csv)) {
+        return when (val parsed = venueParser.parse(csv, chains.findTemplateIds())) {
             is CsvParseResult.Invalid -> ImportOutcome.Rejected(parsed.errors)
             is CsvParseResult.Parsed -> {
                 val closed =
@@ -69,7 +73,7 @@ class CatalogImportService(
     }
 
     fun importStandaloneVenues(csv: ByteArray): ImportOutcome =
-        when (val parsed = venueParser.parse(csv)) {
+        when (val parsed = venueParser.parse(csv, chains.findTemplateIds())) {
             is CsvParseResult.Invalid -> ImportOutcome.Rejected(parsed.errors)
             is CsvParseResult.Parsed -> {
                 val closed =
@@ -82,7 +86,21 @@ class CatalogImportService(
             }
         }
 
+    private fun withRangeFor(
+        kind: SourceKind,
+        draft: MenuItemDraft,
+    ): MenuItemDraft =
+        when {
+            kind != SourceKind.C -> draft.copy(kcalRange = null)
+            draft.kcalRange != null -> draft
+            else -> {
+                val kcal = draft.nutrients.kcal
+                draft.copy(kcalRange = KcalRange(low = kcal * (1 - DEFAULT_SPREAD), high = kcal * (1 + DEFAULT_SPREAD)))
+            }
+        }
+
     private companion object {
+        const val DEFAULT_SPREAD = 0.15
         val log = LoggerFactory.getLogger(CatalogImportService::class.java)
     }
 }

@@ -3,6 +3,7 @@ package ru.normaryadom.catalog.importing
 import org.springframework.stereotype.Component
 import ru.normaryadom.catalog.domain.DietTag
 import ru.normaryadom.catalog.domain.DishCategory
+import ru.normaryadom.catalog.domain.KcalRange
 import ru.normaryadom.catalog.domain.Nutrients
 import ru.normaryadom.catalog.persistence.MenuItemDraft
 import java.math.BigDecimal
@@ -10,13 +11,14 @@ import java.math.RoundingMode
 
 @Component
 class MenuCsvParser {
-    private val document = CsvDocument(HEADER, NAME, MenuItemDraft::name, ::parseRow)
+    private val document = CsvDocument(HEADER, NAME, MenuItemDraft::name, ::parseRow, OPTIONAL)
 
     fun parse(text: String): CsvParseResult<MenuItemDraft> = document.parse(text)
 
     fun parse(content: ByteArray): CsvParseResult<MenuItemDraft> = document.parse(content)
 
     private fun parseRow(row: CsvRowReader): MenuItemDraft? {
+        val kcal = row.requiredNumber(KCAL, KCAL_RANGE)
         val draft =
             MenuItemDraft(
                 name = row.requiredText(NAME, MAX_NAME_LENGTH),
@@ -24,15 +26,31 @@ class MenuCsvParser {
                 portionGrams = row.optionalNumber(PORTION, POSITIVE_PORTION)?.toDouble(),
                 nutrients =
                     Nutrients(
-                        kcal = row.requiredNumber(KCAL, KCAL_RANGE).toDouble(),
+                        kcal = kcal.toDouble(),
                         protein = row.requiredNumber(PROTEIN, MACRO_RANGE).toDouble(),
                         fat = row.requiredNumber(FAT, MACRO_RANGE).toDouble(),
                         carbs = row.requiredNumber(CARBS, MACRO_RANGE).toDouble(),
                     ),
                 priceMinor = row.optionalNumber(PRICE, PRICE_RANGE)?.let(::toMinorUnits),
                 tags = DietTag.withImplied(row.codes(TAGS, CsvErrorCode.UNKNOWN_TAG, DietTag::fromCode)),
+                kcalRange = kcalRange(row, kcal),
             )
         return draft.takeIf { row.isValid }
+    }
+
+    private fun kcalRange(
+        row: CsvRowReader,
+        kcal: BigDecimal,
+    ): KcalRange? {
+        val low = row.optionalNumber(KCAL_LOW, KCAL_RANGE)
+        val high = row.optionalNumber(KCAL_HIGH, KCAL_RANGE)
+        return when {
+            low == null && high == null -> null
+            low == null -> null.also { row.reject(KCAL_LOW, CsvErrorCode.REQUIRED) }
+            high == null -> null.also { row.reject(KCAL_HIGH, CsvErrorCode.REQUIRED) }
+            low > kcal || kcal > high -> null.also { row.reject(KCAL_LOW, CsvErrorCode.RANGE_MISMATCH) }
+            else -> KcalRange(low = low.toDouble(), high = high.toDouble())
+        }
     }
 
     private fun toMinorUnits(rubles: BigDecimal): Int = rubles.movePointRight(2).setScale(0, RoundingMode.HALF_UP).toInt()
@@ -47,7 +65,10 @@ class MenuCsvParser {
         const val CARBS = "carbs_g"
         const val PRICE = "price_rub"
         const val TAGS = "tags"
+        const val KCAL_LOW = "kcal_low"
+        const val KCAL_HIGH = "kcal_high"
         val HEADER = listOf(NAME, CATEGORY, PORTION, KCAL, PROTEIN, FAT, CARBS, PRICE, TAGS)
+        val OPTIONAL = listOf(KCAL_LOW, KCAL_HIGH)
 
         private const val MAX_NAME_LENGTH = 200
         private val POSITIVE_PORTION = BigDecimal("0.1")..BigDecimal("5000")

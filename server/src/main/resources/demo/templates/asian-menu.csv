@@ -1,0 +1,11 @@
+name;category;portion_g;kcal;protein_g;fat_g;carbs_g;price_rub;tags;kcal_low;kcal_high
+Лапша вок с курицей;main;340;510;25;14;71;430;chicken,gluten,meat;420.5;610.1
+Лапша удон с говядиной;main;300;571.8;24.6;19.1;75.5;550;beef,gluten,meat,soy;364.8;665.3
+Рис с курицей и овощами;main;320;610;19.1;18.5;91.7;350;chicken,meat;462.5;701.5
+Рамен;main;420;370;25.7;13.2;38.7;670;chicken,egg,gluten,meat,soy;314.5;657.5
+Суп Том ям;main;380;421;15;25;33;610;chicken,meat,milk,seafood;357.8;532.5
+Мисо-суп;main;296;77;6;2;8;300;fish,milk,soy;55.5;434
+Гёдза или дим-самы;main;150;282.9;11.2;13.8;28.4;440;chicken,gluten,meat,milk,soy;240.5;337.5
+Салат чука;salad;140;347;5;24;20;370;nuts;177;399
+Ролл Филадельфия;main;235;432;18.9;17.2;50.5;700;egg,fish,milk;367.2;496.8
+Чай чёрный или зелёный;drink;300;15;0;0;6;90;;12.8;26.4

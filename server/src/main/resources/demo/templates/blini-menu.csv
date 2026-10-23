@@ -1,0 +1,10 @@
+name;category;portion_g;kcal;protein_g;fat_g;carbs_g;price_rub;tags;kcal_low;kcal_high
+Блин с ветчиной и сыром;main;160;438.4;19.2;28.8;25.6;300;egg,gluten,meat,milk,pork;312.3;504.2
+Блин с курицей и грибами;main;160;364.8;14.4;25.6;19.2;220;chicken,egg,gluten,meat,milk;213.4;605.7
+Блин с творогом;dessert;190;437;16.1;20.9;47.5;210;egg,gluten,milk;342.4;525
+Блин со сгущёнкой или вареньем;dessert;100;330;5;23;27;210;egg,gluten,milk,soy;240;424
+Блины со сметаной;dessert;200;248;6;12;22;210;egg,gluten,milk;210.8;285.2
+Борщ со сметаной;main;400;227.2;12;10.4;21.6;440;beef,chicken,meat,milk;153.8;355.2
+Салат Оливье;salad;200;284;10;20;16;270;egg,meat,pork;241.4;467.5
+Чай чёрный или зелёный;drink;300;15;0;0;6;90;;12.8;26.4
+Морс, около 300 мл;drink;500;170;0;0;42.5;230;;144.5;213.6

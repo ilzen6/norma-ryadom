@@ -1,11 +1,15 @@
 package ru.normaryadom.recommendation
 
+import org.hamcrest.Matchers.equalTo
+import org.hamcrest.Matchers.everyItem
 import org.hamcrest.Matchers.hasItem
 import org.hamcrest.Matchers.not
 import org.junit.jupiter.api.Test
 import org.springframework.test.web.servlet.get
 import ru.normaryadom.support.CatalogFixtures.Companion.BOWL_MENU
 import ru.normaryadom.support.CatalogFixtures.Companion.BOWL_VENUES
+import ru.normaryadom.support.CatalogFixtures.Companion.CAFE_PLACES
+import ru.normaryadom.support.CatalogFixtures.Companion.CAFE_TEMPLATE
 import ru.normaryadom.support.CatalogFixtures.Companion.CITY_LAT
 import ru.normaryadom.support.CatalogFixtures.Companion.CITY_LON
 import ru.normaryadom.support.CatalogFixtures.Companion.GRILL_MENU
@@ -140,6 +144,69 @@ class VenueApiIT : IntegrationTest() {
                 jsonPath("$.venues[0].hasMenu") { value(false) }
                 jsonPath("$.venues[0].dataQuality") { doesNotExist() }
             }
+    }
+
+    @Test
+    fun `отмечает заведение без своего меню, но с типичным, как имеющее меню уровня C`() {
+        catalog.template("cafe", CAFE_TEMPLATE)
+        catalog.places(CAFE_PLACES)
+
+        mockMvc
+            .get("/api/v1/venues") {
+                param("lat", "55.7490")
+                param("lon", "37.5380")
+                param("radius", "1000")
+                param("includeWithoutMenu", "true")
+            }.andExpect {
+                status { isOk() }
+                jsonPath("$.venues[0].venue.name") { value("Кафе у моста") }
+                jsonPath("$.venues[0].hasMenu") { value(true) }
+                jsonPath("$.venues[0].dataQuality") { value("C") }
+                jsonPath("$.venues[?(@.venue.name == 'Буфет без вида')].hasMenu") { value(hasItem(false)) }
+            }
+    }
+
+    @Test
+    fun `отдаёт типичное меню с оценкой калорий и пометкой о примерных данных`() {
+        catalog.template("cafe", CAFE_TEMPLATE)
+        catalog.places(CAFE_PLACES)
+
+        mockMvc
+            .get("/api/v1/venues/${venueId("osm-cafe-1")}/menu") {
+                param("kcal", "600")
+                param("kcalTolerance", "60")
+                param("minProtein", "30")
+                param("maxFat", "25")
+                param("maxCarbs", "90")
+            }.andExpect {
+                status { isOk() }
+                jsonPath("$.items.length()") { value(CAFE_TEMPLATE.size) }
+                jsonPath("$.items[*].source.kind") { value(everyItem(equalTo("C"))) }
+                jsonPath("$.items[?(@.name == 'Морс')].source.kcalLow") { value(hasItem(90.0)) }
+                jsonPath("$.items[?(@.name == 'Морс')].source.kcalHigh") { value(hasItem(130.0)) }
+                jsonPath("$.items[*].assessment.reasons[*].code") { value(hasItem("ESTIMATED_DATA")) }
+            }
+    }
+
+    @Test
+    fun `показывает собственное меню заведения вместо типичного`() {
+        catalog.template("cafe", CAFE_TEMPLATE)
+        catalog.places(CAFE_PLACES)
+        jdbc
+            .sql(
+                """
+                INSERT INTO menu_item (venue_id, name, category, kcal, protein_g, fat_g, carbs_g, source_kind)
+                VALUES (:venueId, 'Суп дня', 'main', 300, 15, 10, 38, 'B')
+                """,
+            ).param("venueId", venueId("osm-cafe-1"))
+            .update()
+
+        mockMvc.get("/api/v1/venues/${venueId("osm-cafe-1")}/menu").andExpect {
+            status { isOk() }
+            jsonPath("$.items.length()") { value(1) }
+            jsonPath("$.items[0].name") { value("Суп дня") }
+            jsonPath("$.items[0].source.kind") { value("B") }
+        }
     }
 
     @Test

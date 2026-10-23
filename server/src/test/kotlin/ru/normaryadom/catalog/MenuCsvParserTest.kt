@@ -6,6 +6,7 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 import ru.normaryadom.catalog.domain.DietTag
 import ru.normaryadom.catalog.domain.DishCategory
+import ru.normaryadom.catalog.domain.KcalRange
 import ru.normaryadom.catalog.importing.CsvError
 import ru.normaryadom.catalog.importing.CsvErrorCode
 import ru.normaryadom.catalog.importing.CsvParseResult
@@ -26,6 +27,28 @@ class MenuCsvParserTest {
         assertThat(draft.nutrients.protein).isEqualTo(21.5)
         assertThat(draft.priceMinor).isEqualTo(24_990)
         assertThat(draft.tags).containsExactlyInAnyOrder(DietTag.PORK, DietTag.MILK, DietTag.MEAT)
+    }
+
+    @Test
+    fun `читает диапазон калорий для оценки`() {
+        val result = parser.parse("$HEADER;kcal_low;kcal_high\nПлов;main;300;574,5;18;17;85;390;;416;820\n")
+
+        val draft = (result as CsvParseResult.Parsed<MenuItemDraft>).rows.single()
+        assertThat(draft.kcalRange).isEqualTo(KcalRange(low = 416.0, high = 820.0))
+    }
+
+    @Test
+    fun `отклоняет диапазон калорий, в который не попадает само значение`() {
+        val result = parser.parse("$HEADER;kcal_low;kcal_high\nПлов;main;300;574;18;17;85;390;;600;820\n")
+
+        assertThat((result as CsvParseResult.Invalid).errors).containsExactly(CsvError(2, CsvErrorCode.RANGE_MISMATCH, "kcal_low"))
+    }
+
+    @Test
+    fun `требует обе границы диапазона калорий`() {
+        val result = parser.parse("$HEADER;kcal_low;kcal_high\nПлов;main;300;574;18;17;85;390;;416;\n")
+
+        assertThat((result as CsvParseResult.Invalid).errors).containsExactly(CsvError(2, CsvErrorCode.REQUIRED, "kcal_high"))
     }
 
     @Test

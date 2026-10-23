@@ -11,6 +11,7 @@ void main() {
   final catalog = DemoCatalog.fromJson(File('assets/demo/catalog.json').readAsStringSync());
   final contract = jsonDecode(File('../contract/combo-cases.json').readAsStringSync()) as Map<String, dynamic>;
   final cases = (contract['cases'] as List<dynamic>).cast<Map<String, dynamic>>();
+  final menus = [...catalog.chains.where((chain) => chain.menu.isNotEmpty), ...catalog.templates];
 
   DemoTarget targetOf(Map<String, dynamic> json) => DemoTarget(
     kcal: (json['kcal'] as num).toDouble(),
@@ -36,9 +37,10 @@ void main() {
     );
   });
 
-  test('эталон покрывает все сети и несколько целей', () {
+  test('эталон покрывает все сети, типичные меню и несколько целей', () {
     expect(cases.length, greaterThanOrEqualTo(5));
-    expect(catalog.chains.where((chain) => chain.menu.isNotEmpty).map((chain) => chain.name), [
+    expect(catalog.templates, isNotEmpty);
+    expect(menus.map((chain) => chain.name), [
       for (final chain in (cases.first['chains'] as List<dynamic>).cast<Map<String, dynamic>>()) chain['chain'],
     ]);
   });
@@ -52,7 +54,7 @@ void main() {
       expect(_targetJson(rounded), contractCase['roundedTarget']);
 
       for (final (index, expected) in (contractCase['chains'] as List<dynamic>).cast<Map<String, dynamic>>().indexed) {
-        final menu = catalog.chains[index].menu;
+        final menu = menus[index].menu;
         final nearby = optimizer.bestCombos(menu, rounded, 5);
         final fit = nearby.isNotEmpty
             ? 'GOOD'

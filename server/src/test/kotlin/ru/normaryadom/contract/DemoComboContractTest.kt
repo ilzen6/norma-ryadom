@@ -93,10 +93,13 @@ class DemoComboContractTest {
 
     private fun demoMenus(): List<Pair<String, List<MenuItem>>> {
         var nextId = 1L
-        return DEMO_CHAINS.map { (chain, file) ->
+        val sources =
+            DEMO_CHAINS.map { (chain, file) -> Triple(chain, file, SourceKind.A) } +
+                DEMO_TEMPLATES.map { (template, file) -> Triple(template, file, SourceKind.C) }
+        return sources.map { (name, file, kind) ->
             val csv = requireNotNull(javaClass.getResource("/demo/$file-menu.csv")).readBytes()
             val drafts = (MenuCsvParser().parse(csv) as CsvParseResult.Parsed).rows
-            chain to
+            name to
                 drafts.map { draft ->
                     MenuItem(
                         id = nextId++,
@@ -106,7 +109,7 @@ class DemoComboContractTest {
                         nutrients = draft.nutrients,
                         priceMinor = draft.priceMinor,
                         tags = draft.tags,
-                        source = DataSource(SourceKind.A, null, null, null),
+                        source = DataSource(kind, null, null, draft.kcalRange),
                     )
                 }
         }
@@ -125,6 +128,12 @@ class DemoComboContractTest {
 
         val DEMO_CHAINS =
             Regex("""- name: "(.+?)"\n(?:\s+[a-z-]+: .+\n)*?\s+menu: classpath:demo/(\S+)-menu\.csv""")
+                .findAll(requireNotNull(DemoComboContractTest::class.java.getResource("/application-demo.yml")).readText())
+                .map { it.groupValues[1] to it.groupValues[2] }
+                .toList()
+
+        val DEMO_TEMPLATES =
+            Regex("""- code: \S+\n\s+name: "(.+?)"\n(?:\s+[a-z-]+: .+\n)*?\s+menu: classpath:demo/(\S+)-menu\.csv""")
                 .findAll(requireNotNull(DemoComboContractTest::class.java.getResource("/application-demo.yml")).readText())
                 .map { it.groupValues[1] to it.groupValues[2] }
                 .toList()

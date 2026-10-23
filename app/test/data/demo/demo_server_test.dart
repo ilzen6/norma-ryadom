@@ -127,6 +127,49 @@ void main() {
     expect((await api.reportVenue(999999, VenueReportReason.moved) as Err<void>).failure, AppFailure.notFound);
   });
 
+  test('подбирает в заведениях без своего меню по типичному меню, у каждого отдельно и с оценкой калорий', () async {
+    final typical = NormaApi(
+      NormaApi.createDio('http://demo')
+        ..httpClientAdapter = DemoServerAdapter(
+          () async =>
+              '{"verifiedAt": "2026-09-30T00:00:00Z", "templates": [{"code": "cafe", "name": "Типичное меню кафе",'
+              ' "sourceUrl": "https://example.org/typical", "items": ['
+              '{"name": "Куриная грудка", "category": "main", "portionGrams": 150, "kcal": 220, "protein": 36,'
+              ' "fat": 7, "carbs": 2, "priceMinor": 29000, "tags": ["chicken", "meat"], "kcalLow": 187, "kcalHigh": 253},'
+              '{"name": "Рис отварной", "category": "side", "portionGrams": 150, "kcal": 190, "protein": 4, "fat": 2,'
+              ' "carbs": 40, "priceMinor": 12000, "tags": [], "kcalLow": 160, "kcalHigh": 230}]}],'
+              ' "chains": [], "places": ['
+              '{"name": "Кафе у моста", "address": "наб. Пресненская, 6", "lat": 55.7490, "lon": 37.5380, "template": "cafe"},'
+              '{"name": "Кафе на углу", "address": "наб. Пресненская, 8", "lat": 55.7488, "lon": 37.5385, "template": "cafe"},'
+              '{"name": "Буфет без вида", "address": "наб. Пресненская, 12", "lat": 55.7492, "lon": 37.5370}]}',
+        ),
+    );
+
+    final venues = valueOf(
+      await typical.nearbyVenues(location: center, radiusMeters: 1000, includeWithoutMenu: false),
+    );
+    final result = valueOf(
+      await typical.searchNearby(
+        location: center,
+        radiusMeters: 1000,
+        target: TestData.lunchTarget,
+        price: PricePreference.any,
+      ),
+    );
+    final menu = valueOf(await typical.venueMenu(1, TestData.lunchTarget));
+
+    expect(venues.map((venue) => venue.venue.name), ['Кафе у моста', 'Кафе на углу']);
+    expect(venues.map((venue) => venue.dataQuality), everyElement(SourceKind.estimate));
+    expect(result.options.map((option) => option.venue.name), unorderedEquals(['Кафе у моста', 'Кафе на углу']));
+    expect(result.options.map((option) => option.combo.sourceKind), everyElement(SourceKind.estimate));
+    expect(menu.items.map((item) => item.source.kind), everyElement(SourceKind.estimate));
+    expect(menu.items.firstWhere((item) => item.name == 'Рис отварной').source.kcalLow, 160);
+    expect(
+      menu.items.expand((item) => item.assessment?.reasons ?? const <AssessmentReason>[]).map((reason) => reason.code),
+      contains(ReasonCode.estimatedData),
+    );
+  });
+
   test('заведения без меню видны только по запросу «показать все» и без цвета соответствия', () async {
     final places = NormaApi(
       NormaApi.createDio('http://demo')
