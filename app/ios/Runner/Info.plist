@@ -6,6 +6,11 @@
 	<string>Чтобы остаток нормы на сегодня учитывал еду, записанную в других приложениях.</string>
 	<key>NSHealthUpdateUsageDescription</key>
 	<string>Чтобы приёмы пищи из «Нормы рядом» попадали в Здоровье вместе с остальным питанием.</string>
+	<key>NSLocationTemporaryUsageDescriptionDictionary</key>
+	<dict>
+		<key>NearbyVenues</key>
+		<string>Точная геопозиция нужна, чтобы показывать заведения в пешей доступности, а не за километр.</string>
+	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Геолокация нужна, чтобы найти заведения рядом. Координаты не сохраняются на сервере.</string>
 	<key>NSCameraUsageDescription</key>
