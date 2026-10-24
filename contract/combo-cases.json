@@ -15559,6 +15559,14 @@
         "verdict" : "PARTIAL",
         "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
       }, {
+        "dish" : "Творожная запеканка",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Йогурт с гранолой и ягодами",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
         "dish" : "Круассан классический",
         "verdict" : "PARTIAL",
         "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
@@ -15599,6 +15607,10 @@
         "verdict" : "NOT_FITS",
         "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
       }, {
+        "dish" : "Омлет",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
         "dish" : "Чизкейк",
         "verdict" : "NOT_FITS",
         "reasons" : [ "FAT_ABOVE" ]
@@ -15610,11 +15622,19 @@
       "atVenue" : [ ],
       "replaceFirst" : [ ],
       "assessment" : [ {
+        "dish" : "Творожная запеканка",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
         "dish" : "Пирог с курицей",
         "verdict" : "PARTIAL",
         "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
       }, {
         "dish" : "Булочка с корицей",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Йогурт с гранолой и ягодами",
         "verdict" : "PARTIAL",
         "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
       }, {
@@ -15653,6 +15673,10 @@
         "dish" : "Круассан с ветчиной и сыром",
         "verdict" : "NOT_FITS",
         "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Омлет",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
       }, {
         "dish" : "Киш",
         "verdict" : "NOT_FITS",
@@ -15704,12 +15728,25 @@
         "dish" : "Салат Цезарь с курицей",
         "verdict" : "NOT_FITS",
         "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Греческий салат",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
       } ]
     }, {
       "chain" : "Типичное меню суши-бара",
-      "fit" : "COMPROMISE",
-      "nearby" : [ ],
-      "atVenue" : [ ],
+      "fit" : "GOOD",
+      "nearby" : [ {
+        "dishes" : [ "Эдамаме", "Лапша вок с курицей" ],
+        "score" : 1.794092
+      } ],
+      "atVenue" : [ {
+        "dishes" : [ "Эдамаме", "Лапша вок с курицей" ],
+        "score" : 1.708475
+      }, {
+        "dishes" : [ "Чай чёрный или зелёный", "Эдамаме", "Ролл Филадельфия" ],
+        "score" : 1.711445
+      } ],
       "replaceFirst" : [ ],
       "assessment" : [ {
         "dish" : "Лапша вок с курицей",
@@ -15728,7 +15765,15 @@
         "verdict" : "PARTIAL",
         "reasons" : [ "ESTIMATED_DATA" ]
       }, {
+        "dish" : "Ролл с авокадо",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
         "dish" : "Суши с лососем, 2 шт.",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Эдамаме",
         "verdict" : "PARTIAL",
         "reasons" : [ "ESTIMATED_DATA" ]
       }, {
@@ -15754,9 +15799,18 @@
       } ]
     }, {
       "chain" : "Типичное меню паназиатского кафе",
-      "fit" : "COMPROMISE",
-      "nearby" : [ ],
-      "atVenue" : [ ],
+      "fit" : "GOOD",
+      "nearby" : [ {
+        "dishes" : [ "Эдамаме", "Лапша вок с курицей" ],
+        "score" : 1.794092
+      } ],
+      "atVenue" : [ {
+        "dishes" : [ "Эдамаме", "Лапша вок с курицей" ],
+        "score" : 1.708475
+      }, {
+        "dishes" : [ "Чай чёрный или зелёный", "Эдамаме", "Ролл Филадельфия" ],
+        "score" : 1.711445
+      } ],
       "replaceFirst" : [ ],
       "assessment" : [ {
         "dish" : "Рис с курицей и овощами",
@@ -15780,6 +15834,14 @@
         "reasons" : [ "ESTIMATED_DATA" ]
       }, {
         "dish" : "Гёдза или дим-самы",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Ролл с авокадо",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Эдамаме",
         "verdict" : "PARTIAL",
         "reasons" : [ "ESTIMATED_DATA" ]
       }, {
@@ -15849,6 +15911,10 @@
         "dish" : "Бургер с говядиной",
         "verdict" : "NOT_FITS",
         "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Греческий салат",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
       } ]
     }, {
       "chain" : "Типичное меню шаурмичной",
@@ -15864,6 +15930,10 @@
         "dish" : "Ролл с курицей в лаваше",
         "verdict" : "PARTIAL",
         "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Фалафель",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
       }, {
         "dish" : "Лепёшка",
         "verdict" : "PARTIAL",
@@ -15916,6 +15986,10 @@
         "verdict" : "PARTIAL",
         "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
       }, {
+        "dish" : "Овощи гриль",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
         "dish" : "Салат из овощей с орехами",
         "verdict" : "PARTIAL",
         "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
@@ -15959,6 +16033,10 @@
         "verdict" : "PARTIAL",
         "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
       }, {
+        "dish" : "Овощи гриль",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
         "dish" : "Салат Ачичук из томатов",
         "verdict" : "PARTIAL",
         "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
@@ -15998,11 +16076,19 @@
         "verdict" : "PARTIAL",
         "reasons" : [ "ESTIMATED_DATA" ]
       }, {
+        "dish" : "Крем-суп овощной или грибной",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
         "dish" : "Капучино, около 300 мл",
         "verdict" : "PARTIAL",
         "reasons" : [ "ESTIMATED_DATA" ]
       }, {
         "dish" : "Минестроне или томатный суп",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Овощи гриль",
         "verdict" : "PARTIAL",
         "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
       }, {
@@ -16071,7 +16157,19 @@
         "verdict" : "PARTIAL",
         "reasons" : [ "ESTIMATED_DATA" ]
       }, {
+        "dish" : "Творожная запеканка",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
         "dish" : "Рис отварной",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Овсяная каша",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Крем-суп овощной или грибной",
         "verdict" : "PARTIAL",
         "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
       }, {
@@ -16119,6 +16217,10 @@
         "verdict" : "NOT_FITS",
         "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
       }, {
+        "dish" : "Омлет",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
         "dish" : "Пельмени",
         "verdict" : "NOT_FITS",
         "reasons" : [ "EXCLUDED_TAG" ]
@@ -16135,6 +16237,10 @@
       "replaceFirst" : [ ],
       "assessment" : [ {
         "dish" : "Блин с творогом",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Творожная запеканка",
         "verdict" : "PARTIAL",
         "reasons" : [ "ESTIMATED_DATA" ]
       }, {
@@ -16157,6 +16263,10 @@
         "dish" : "Чай чёрный или зелёный",
         "verdict" : "PARTIAL",
         "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Омлет",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
       }, {
         "dish" : "Блин с ветчиной и сыром",
         "verdict" : "NOT_FITS",
@@ -16189,11 +16299,23 @@
       } ],
       "replaceFirst" : [ ],
       "assessment" : [ {
+        "dish" : "Творожная запеканка",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
         "dish" : "Рис отварной",
         "verdict" : "PARTIAL",
         "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
       }, {
         "dish" : "Картофель фри",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Овсяная каша",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Крем-суп овощной или грибной",
         "verdict" : "PARTIAL",
         "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
       }, {
@@ -16221,6 +16343,10 @@
         "verdict" : "PARTIAL",
         "reasons" : [ "ESTIMATED_DATA" ]
       }, {
+        "dish" : "Овощи гриль",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
         "dish" : "Салат из свежих овощей",
         "verdict" : "PARTIAL",
         "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
@@ -16245,11 +16371,19 @@
         "verdict" : "NOT_FITS",
         "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
       }, {
+        "dish" : "Омлет",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
         "dish" : "Чизкейк",
         "verdict" : "NOT_FITS",
         "reasons" : [ "FAT_ABOVE" ]
       }, {
         "dish" : "Салат Цезарь с курицей",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Греческий салат",
         "verdict" : "NOT_FITS",
         "reasons" : [ "FAT_ABOVE" ]
       } ]
@@ -16280,6 +16414,10 @@
         "verdict" : "PARTIAL",
         "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
       }, {
+        "dish" : "Овощи гриль",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
         "dish" : "Лимонад, около 400 мл",
         "verdict" : "PARTIAL",
         "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
@@ -16299,10 +16437,14 @@
         "dish" : "Салат Цезарь с курицей",
         "verdict" : "NOT_FITS",
         "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Греческий салат",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
       } ]
     }, {
       "chain" : "Типичная готовая еда в магазине",
-      "fit" : "NONE",
+      "fit" : "COMPROMISE",
       "nearby" : [ ],
       "atVenue" : [ ],
       "replaceFirst" : [ ],
@@ -16314,6 +16456,14 @@
         "dish" : "Блины с творогом",
         "verdict" : "PARTIAL",
         "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Творожная запеканка",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Йогурт с гранолой и ягодами",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
       }, {
         "dish" : "Овсяная каша",
         "verdict" : "PARTIAL",
@@ -16339,6 +16489,10 @@
         "verdict" : "NOT_FITS",
         "reasons" : [ "FAT_ABOVE" ]
       }, {
+        "dish" : "Омлет",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
         "dish" : "Салат Цезарь с курицей",
         "verdict" : "NOT_FITS",
         "reasons" : [ "FAT_ABOVE" ]
@@ -16346,6 +16500,10 @@
         "dish" : "Салат Оливье",
         "verdict" : "NOT_FITS",
         "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Греческий салат",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
       } ]
     } ]
   }, {
@@ -31911,6 +32069,14 @@
         "verdict" : "PARTIAL",
         "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
       }, {
+        "dish" : "Творожная запеканка",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Йогурт с гранолой и ягодами",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
         "dish" : "Круассан классический",
         "verdict" : "PARTIAL",
         "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
@@ -31951,6 +32117,10 @@
         "verdict" : "NOT_FITS",
         "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
       }, {
+        "dish" : "Омлет",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
         "dish" : "Чизкейк",
         "verdict" : "NOT_FITS",
         "reasons" : [ "FAT_ABOVE" ]
@@ -31962,11 +32132,19 @@
       "atVenue" : [ ],
       "replaceFirst" : [ ],
       "assessment" : [ {
+        "dish" : "Творожная запеканка",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
         "dish" : "Пирог с курицей",
         "verdict" : "PARTIAL",
         "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
       }, {
         "dish" : "Булочка с корицей",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Йогурт с гранолой и ягодами",
         "verdict" : "PARTIAL",
         "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
       }, {
@@ -32005,6 +32183,10 @@
         "dish" : "Круассан с ветчиной и сыром",
         "verdict" : "NOT_FITS",
         "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Омлет",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
       }, {
         "dish" : "Киш",
         "verdict" : "NOT_FITS",
@@ -32056,12 +32238,25 @@
         "dish" : "Салат Цезарь с курицей",
         "verdict" : "NOT_FITS",
         "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Греческий салат",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
       } ]
     }, {
       "chain" : "Типичное меню суши-бара",
-      "fit" : "COMPROMISE",
-      "nearby" : [ ],
-      "atVenue" : [ ],
+      "fit" : "GOOD",
+      "nearby" : [ {
+        "dishes" : [ "Эдамаме", "Лапша вок с курицей" ],
+        "score" : 2.194092
+      } ],
+      "atVenue" : [ {
+        "dishes" : [ "Эдамаме", "Лапша вок с курицей" ],
+        "score" : 2.108475
+      }, {
+        "dishes" : [ "Чай чёрный или зелёный", "Эдамаме", "Ролл Филадельфия" ],
+        "score" : 2.291445
+      } ],
       "replaceFirst" : [ ],
       "assessment" : [ {
         "dish" : "Лапша вок с курицей",
@@ -32080,6 +32275,10 @@
         "verdict" : "PARTIAL",
         "reasons" : [ "ESTIMATED_DATA" ]
       }, {
+        "dish" : "Ролл с авокадо",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
         "dish" : "Суши с лососем, 2 шт.",
         "verdict" : "PARTIAL",
         "reasons" : [ "ESTIMATED_DATA" ]
@@ -32087,6 +32286,10 @@
         "dish" : "Ролл с огурцом",
         "verdict" : "PARTIAL",
         "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Эдамаме",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
       }, {
         "dish" : "Мисо-суп",
         "verdict" : "PARTIAL",
@@ -32106,9 +32309,18 @@
       } ]
     }, {
       "chain" : "Типичное меню паназиатского кафе",
-      "fit" : "COMPROMISE",
-      "nearby" : [ ],
-      "atVenue" : [ ],
+      "fit" : "GOOD",
+      "nearby" : [ {
+        "dishes" : [ "Эдамаме", "Лапша вок с курицей" ],
+        "score" : 2.194092
+      } ],
+      "atVenue" : [ {
+        "dishes" : [ "Эдамаме", "Лапша вок с курицей" ],
+        "score" : 2.108475
+      }, {
+        "dishes" : [ "Чай чёрный или зелёный", "Эдамаме", "Ролл Филадельфия" ],
+        "score" : 2.291445
+      } ],
       "replaceFirst" : [ ],
       "assessment" : [ {
         "dish" : "Рис с курицей и овощами",
@@ -32132,6 +32344,14 @@
         "reasons" : [ "ESTIMATED_DATA" ]
       }, {
         "dish" : "Гёдза или дим-самы",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Ролл с авокадо",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Эдамаме",
         "verdict" : "PARTIAL",
         "reasons" : [ "ESTIMATED_DATA" ]
       }, {
@@ -32201,6 +32421,10 @@
         "dish" : "Бургер с говядиной",
         "verdict" : "NOT_FITS",
         "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Греческий салат",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
       } ]
     }, {
       "chain" : "Типичное меню шаурмичной",
@@ -32216,6 +32440,10 @@
         "dish" : "Ролл с курицей в лаваше",
         "verdict" : "PARTIAL",
         "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Фалафель",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
       }, {
         "dish" : "Лепёшка",
         "verdict" : "PARTIAL",
@@ -32268,6 +32496,10 @@
         "verdict" : "PARTIAL",
         "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
       }, {
+        "dish" : "Овощи гриль",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
         "dish" : "Салат из овощей с орехами",
         "verdict" : "PARTIAL",
         "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
@@ -32311,6 +32543,10 @@
         "verdict" : "PARTIAL",
         "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
       }, {
+        "dish" : "Овощи гриль",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
         "dish" : "Салат Ачичук из томатов",
         "verdict" : "PARTIAL",
         "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
@@ -32350,11 +32586,19 @@
         "verdict" : "PARTIAL",
         "reasons" : [ "ESTIMATED_DATA" ]
       }, {
+        "dish" : "Крем-суп овощной или грибной",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
         "dish" : "Капучино, около 300 мл",
         "verdict" : "PARTIAL",
         "reasons" : [ "ESTIMATED_DATA" ]
       }, {
         "dish" : "Минестроне или томатный суп",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Овощи гриль",
         "verdict" : "PARTIAL",
         "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
       }, {
@@ -32423,7 +32667,19 @@
         "verdict" : "PARTIAL",
         "reasons" : [ "ESTIMATED_DATA" ]
       }, {
+        "dish" : "Творожная запеканка",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
         "dish" : "Рис отварной",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Овсяная каша",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Крем-суп овощной или грибной",
         "verdict" : "PARTIAL",
         "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
       }, {
@@ -32471,6 +32727,10 @@
         "verdict" : "NOT_FITS",
         "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
       }, {
+        "dish" : "Омлет",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
         "dish" : "Пельмени",
         "verdict" : "NOT_FITS",
         "reasons" : [ "EXCLUDED_TAG" ]
@@ -32487,6 +32747,10 @@
       "replaceFirst" : [ ],
       "assessment" : [ {
         "dish" : "Блин с творогом",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Творожная запеканка",
         "verdict" : "PARTIAL",
         "reasons" : [ "ESTIMATED_DATA" ]
       }, {
@@ -32509,6 +32773,10 @@
         "dish" : "Чай чёрный или зелёный",
         "verdict" : "PARTIAL",
         "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Омлет",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
       }, {
         "dish" : "Блин с ветчиной и сыром",
         "verdict" : "NOT_FITS",
@@ -32541,11 +32809,23 @@
       } ],
       "replaceFirst" : [ ],
       "assessment" : [ {
+        "dish" : "Творожная запеканка",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
         "dish" : "Рис отварной",
         "verdict" : "PARTIAL",
         "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
       }, {
         "dish" : "Картофель фри",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Овсяная каша",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Крем-суп овощной или грибной",
         "verdict" : "PARTIAL",
         "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
       }, {
@@ -32573,6 +32853,10 @@
         "verdict" : "PARTIAL",
         "reasons" : [ "ESTIMATED_DATA" ]
       }, {
+        "dish" : "Овощи гриль",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
         "dish" : "Салат из свежих овощей",
         "verdict" : "PARTIAL",
         "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
@@ -32597,11 +32881,19 @@
         "verdict" : "NOT_FITS",
         "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
       }, {
+        "dish" : "Омлет",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
         "dish" : "Чизкейк",
         "verdict" : "NOT_FITS",
         "reasons" : [ "FAT_ABOVE" ]
       }, {
         "dish" : "Салат Цезарь с курицей",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Греческий салат",
         "verdict" : "NOT_FITS",
         "reasons" : [ "FAT_ABOVE" ]
       } ]
@@ -32632,6 +32924,10 @@
         "verdict" : "PARTIAL",
         "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
       }, {
+        "dish" : "Овощи гриль",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
         "dish" : "Лимонад, около 400 мл",
         "verdict" : "PARTIAL",
         "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
@@ -32651,10 +32947,14 @@
         "dish" : "Салат Цезарь с курицей",
         "verdict" : "NOT_FITS",
         "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Греческий салат",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
       } ]
     }, {
       "chain" : "Типичная готовая еда в магазине",
-      "fit" : "NONE",
+      "fit" : "COMPROMISE",
       "nearby" : [ ],
       "atVenue" : [ ],
       "replaceFirst" : [ ],
@@ -32666,6 +32966,14 @@
         "dish" : "Блины с творогом",
         "verdict" : "PARTIAL",
         "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Творожная запеканка",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Йогурт с гранолой и ягодами",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
       }, {
         "dish" : "Овсяная каша",
         "verdict" : "PARTIAL",
@@ -32691,6 +32999,10 @@
         "verdict" : "NOT_FITS",
         "reasons" : [ "FAT_ABOVE" ]
       }, {
+        "dish" : "Омлет",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
         "dish" : "Салат Цезарь с курицей",
         "verdict" : "NOT_FITS",
         "reasons" : [ "FAT_ABOVE" ]
@@ -32698,6 +33010,10 @@
         "dish" : "Салат Оливье",
         "verdict" : "NOT_FITS",
         "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Греческий салат",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
       } ]
     } ]
   }, {
@@ -48253,6 +48569,10 @@
       "atVenue" : [ ],
       "replaceFirst" : [ ],
       "assessment" : [ {
+        "dish" : "Йогурт с гранолой и ягодами",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
         "dish" : "Овсяная каша",
         "verdict" : "PARTIAL",
         "reasons" : [ "ESTIMATED_DATA" ]
@@ -48281,11 +48601,19 @@
         "verdict" : "NOT_FITS",
         "reasons" : [ "FAT_ABOVE" ]
       }, {
+        "dish" : "Омлет",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
         "dish" : "Чизкейк",
         "verdict" : "NOT_FITS",
         "reasons" : [ "FAT_ABOVE" ]
       }, {
         "dish" : "Круассан с ветчиной и сыром",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Творожная запеканка",
         "verdict" : "NOT_FITS",
         "reasons" : [ "FAT_ABOVE" ]
       }, {
@@ -48316,6 +48644,10 @@
         "verdict" : "PARTIAL",
         "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
       }, {
+        "dish" : "Йогурт с гранолой и ягодами",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
         "dish" : "Эклер",
         "verdict" : "PARTIAL",
         "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
@@ -48336,7 +48668,15 @@
         "verdict" : "PARTIAL",
         "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
       }, {
+        "dish" : "Омлет",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
         "dish" : "Круассан с ветчиной и сыром",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Творожная запеканка",
         "verdict" : "NOT_FITS",
         "reasons" : [ "FAT_ABOVE" ]
       }, {
@@ -48387,6 +48727,10 @@
         "verdict" : "NOT_FITS",
         "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
       }, {
+        "dish" : "Греческий салат",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
         "dish" : "Пицца с ветчиной и грибами, небольшая",
         "verdict" : "NOT_FITS",
         "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
@@ -48405,9 +48749,15 @@
       } ]
     }, {
       "chain" : "Типичное меню суши-бара",
-      "fit" : "COMPROMISE",
-      "nearby" : [ ],
-      "atVenue" : [ ],
+      "fit" : "GOOD",
+      "nearby" : [ {
+        "dishes" : [ "Эдамаме", "Эдамаме", "Ролл с огурцом" ],
+        "score" : 1.386513
+      } ],
+      "atVenue" : [ {
+        "dishes" : [ "Эдамаме", "Эдамаме", "Ролл с огурцом" ],
+        "score" : 1.357787
+      } ],
       "replaceFirst" : [ ],
       "assessment" : [ {
         "dish" : "Ролл Калифорния",
@@ -48418,7 +48768,15 @@
         "verdict" : "PARTIAL",
         "reasons" : [ "ESTIMATED_DATA" ]
       }, {
+        "dish" : "Ролл с авокадо",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
         "dish" : "Суши с лососем, 2 шт.",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Эдамаме",
         "verdict" : "PARTIAL",
         "reasons" : [ "ESTIMATED_DATA" ]
       }, {
@@ -48452,9 +48810,15 @@
       } ]
     }, {
       "chain" : "Типичное меню паназиатского кафе",
-      "fit" : "COMPROMISE",
-      "nearby" : [ ],
-      "atVenue" : [ ],
+      "fit" : "GOOD",
+      "nearby" : [ {
+        "dishes" : [ "Эдамаме", "Эдамаме", "Ролл с авокадо" ],
+        "score" : 2.029984
+      } ],
+      "atVenue" : [ {
+        "dishes" : [ "Эдамаме", "Эдамаме", "Ролл с авокадо" ],
+        "score" : 1.995058
+      } ],
       "replaceFirst" : [ ],
       "assessment" : [ {
         "dish" : "Рамен",
@@ -48462,6 +48826,14 @@
         "reasons" : [ "ESTIMATED_DATA" ]
       }, {
         "dish" : "Гёдза или дим-самы",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Ролл с авокадо",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Эдамаме",
         "verdict" : "PARTIAL",
         "reasons" : [ "ESTIMATED_DATA" ]
       }, {
@@ -48544,6 +48916,10 @@
         "verdict" : "NOT_FITS",
         "reasons" : [ "FAT_ABOVE" ]
       }, {
+        "dish" : "Греческий салат",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
         "dish" : "Бургер с говядиной",
         "verdict" : "NOT_FITS",
         "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
@@ -48590,6 +48966,10 @@
         "dish" : "Шаурма с курицей",
         "verdict" : "NOT_FITS",
         "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Фалафель",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
       } ]
     }, {
       "chain" : "Типичное меню грузинского кафе",
@@ -48614,6 +48994,10 @@
         "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
       }, {
         "dish" : "Морс, около 300 мл",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Овощи гриль",
         "verdict" : "PARTIAL",
         "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
       }, {
@@ -48653,6 +49037,10 @@
       "replaceFirst" : [ ],
       "assessment" : [ {
         "dish" : "Лепёшка",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Овощи гриль",
         "verdict" : "PARTIAL",
         "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
       }, {
@@ -48699,11 +49087,19 @@
         "verdict" : "PARTIAL",
         "reasons" : [ "ESTIMATED_DATA" ]
       }, {
+        "dish" : "Крем-суп овощной или грибной",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
         "dish" : "Капучино, около 300 мл",
         "verdict" : "PARTIAL",
         "reasons" : [ "ESTIMATED_DATA" ]
       }, {
         "dish" : "Минестроне или томатный суп",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Овощи гриль",
         "verdict" : "PARTIAL",
         "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
       }, {
@@ -48759,6 +49155,14 @@
         "verdict" : "PARTIAL",
         "reasons" : [ "ESTIMATED_DATA" ]
       }, {
+        "dish" : "Овсяная каша",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Крем-суп овощной или грибной",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
         "dish" : "Куриная грудка запечённая",
         "verdict" : "PARTIAL",
         "reasons" : [ "ESTIMATED_DATA" ]
@@ -48799,7 +49203,15 @@
         "verdict" : "NOT_FITS",
         "reasons" : [ "FAT_ABOVE" ]
       }, {
+        "dish" : "Омлет",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
         "dish" : "Котлета с картофельным пюре",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Творожная запеканка",
         "verdict" : "NOT_FITS",
         "reasons" : [ "FAT_ABOVE" ]
       }, {
@@ -48850,6 +49262,14 @@
         "verdict" : "NOT_FITS",
         "reasons" : [ "FAT_ABOVE" ]
       }, {
+        "dish" : "Омлет",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Творожная запеканка",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
         "dish" : "Блин с курицей и грибами",
         "verdict" : "NOT_FITS",
         "reasons" : [ "FAT_ABOVE" ]
@@ -48879,6 +49299,14 @@
         "verdict" : "PARTIAL",
         "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
       }, {
+        "dish" : "Овсяная каша",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Крем-суп овощной или грибной",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
         "dish" : "Куриная грудка запечённая",
         "verdict" : "PARTIAL",
         "reasons" : [ "ESTIMATED_DATA" ]
@@ -48903,6 +49331,10 @@
         "verdict" : "PARTIAL",
         "reasons" : [ "ESTIMATED_DATA" ]
       }, {
+        "dish" : "Овощи гриль",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
         "dish" : "Салат из свежих овощей",
         "verdict" : "PARTIAL",
         "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
@@ -48910,6 +49342,10 @@
         "dish" : "Чай чёрный или зелёный",
         "verdict" : "PARTIAL",
         "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Омлет",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
       }, {
         "dish" : "Чизкейк",
         "verdict" : "NOT_FITS",
@@ -48923,6 +49359,10 @@
         "verdict" : "NOT_FITS",
         "reasons" : [ "FAT_ABOVE" ]
       }, {
+        "dish" : "Творожная запеканка",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
         "dish" : "Рис отварной",
         "verdict" : "NOT_FITS",
         "reasons" : [ "CARBS_ABOVE" ]
@@ -48930,6 +49370,10 @@
         "dish" : "Сырники со сметаной",
         "verdict" : "NOT_FITS",
         "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Греческий салат",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
       }, {
         "dish" : "Паста с курицей и грибами",
         "verdict" : "NOT_FITS",
@@ -48962,6 +49406,10 @@
         "verdict" : "PARTIAL",
         "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
       }, {
+        "dish" : "Овощи гриль",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
         "dish" : "Лимонад, около 400 мл",
         "verdict" : "PARTIAL",
         "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
@@ -48982,6 +49430,10 @@
         "verdict" : "NOT_FITS",
         "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
       }, {
+        "dish" : "Греческий салат",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
         "dish" : "Бургер с говядиной",
         "verdict" : "NOT_FITS",
         "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
@@ -48993,6 +49445,10 @@
       "atVenue" : [ ],
       "replaceFirst" : [ ],
       "assessment" : [ {
+        "dish" : "Йогурт с гранолой и ягодами",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
         "dish" : "Овсяная каша",
         "verdict" : "PARTIAL",
         "reasons" : [ "ESTIMATED_DATA" ]
@@ -49009,7 +49465,15 @@
         "verdict" : "NOT_FITS",
         "reasons" : [ "FAT_ABOVE" ]
       }, {
+        "dish" : "Омлет",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
         "dish" : "Салат Цезарь с курицей",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Творожная запеканка",
         "verdict" : "NOT_FITS",
         "reasons" : [ "FAT_ABOVE" ]
       }, {
@@ -49030,6 +49494,10 @@
         "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
       }, {
         "dish" : "Салат Оливье",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Греческий салат",
         "verdict" : "NOT_FITS",
         "reasons" : [ "FAT_ABOVE" ]
       } ]
@@ -60466,31 +60934,12 @@
       } ]
     }, {
       "chain" : "Моремания",
-      "fit" : "GOOD",
-      "nearby" : [ {
-        "dishes" : [ "Овощи гриль", "Камбала в кисло-сладком соусе" ],
-        "score" : 0.670169
-      }, {
-        "dishes" : [ "Салат деревенский, с помидорами и огурцом", "Камбала в кисло-сладком соусе" ],
-        "score" : 0.792141
-      } ],
-      "atVenue" : [ {
-        "dishes" : [ "Овощи гриль", "Камбала в кисло-сладком соусе" ],
-        "score" : 0.650979
-      }, {
-        "dishes" : [ "Салат деревенский, с помидорами и огурцом", "Камбала в кисло-сладком соусе" ],
-        "score" : 0.766257
-      } ],
-      "replaceFirst" : [ {
-        "dishes" : [ "Салат деревенский, с помидорами и огурцом", "Камбала в кисло-сладком соусе" ],
-        "score" : 0.792141
-      } ],
+      "fit" : "COMPROMISE",
+      "nearby" : [ ],
+      "atVenue" : [ ],
+      "replaceFirst" : [ ],
       "assessment" : [ {
         "dish" : "Сырники ванильные со сметаной и земляникой",
-        "verdict" : "FITS",
-        "reasons" : [ ]
-      }, {
-        "dish" : "Камбала в кисло-сладком соусе",
         "verdict" : "FITS",
         "reasons" : [ ]
       }, {
@@ -60580,7 +61029,7 @@
       }, {
         "dish" : "Филе камбалы со шпинатом, молодыми кабачками и сливочным соусом",
         "verdict" : "NOT_FITS",
-        "reasons" : [ "FAT_ABOVE" ]
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
       }, {
         "dish" : "Фритто-мисто с соусом тар-тар",
         "verdict" : "NOT_FITS",
@@ -60672,9 +61121,13 @@
       }, {
         "dish" : "Пельмени из кеты с пармезаном и рукколой",
         "verdict" : "NOT_FITS",
-        "reasons" : [ "FAT_ABOVE" ]
+        "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
       }, {
         "dish" : "Том-ям для милых дам",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Камбала в кисло-сладком соусе",
         "verdict" : "NOT_FITS",
         "reasons" : [ "EXCLUDED_TAG" ]
       }, {
@@ -64218,6 +64671,10 @@
       "atVenue" : [ ],
       "replaceFirst" : [ ],
       "assessment" : [ {
+        "dish" : "Йогурт с гранолой и ягодами",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
         "dish" : "Круассан классический",
         "verdict" : "PARTIAL",
         "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
@@ -64258,11 +64715,19 @@
         "verdict" : "NOT_FITS",
         "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
       }, {
+        "dish" : "Омлет",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
         "dish" : "Маффин",
         "verdict" : "NOT_FITS",
         "reasons" : [ "FAT_ABOVE" ]
       }, {
         "dish" : "Чизкейк",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Творожная запеканка",
         "verdict" : "NOT_FITS",
         "reasons" : [ "FAT_ABOVE" ]
       } ]
@@ -64274,6 +64739,10 @@
       "replaceFirst" : [ ],
       "assessment" : [ {
         "dish" : "Булочка с корицей",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Йогурт с гранолой и ягодами",
         "verdict" : "PARTIAL",
         "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
       }, {
@@ -64308,6 +64777,14 @@
         "dish" : "Круассан с ветчиной и сыром",
         "verdict" : "NOT_FITS",
         "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Омлет",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Творожная запеканка",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
       }, {
         "dish" : "Пирог с курицей",
         "verdict" : "NOT_FITS",
@@ -64367,14 +64844,29 @@
         "dish" : "Пицца Пепперони, небольшая",
         "verdict" : "NOT_FITS",
         "reasons" : [ "EXCLUDED_TAG", "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Греческий салат",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
       } ]
     }, {
       "chain" : "Типичное меню суши-бара",
-      "fit" : "NONE",
+      "fit" : "COMPROMISE",
       "nearby" : [ ],
-      "atVenue" : [ ],
+      "atVenue" : [ {
+        "dishes" : [ "Эдамаме", "Эдамаме", "Ролл с авокадо" ],
+        "score" : 2.112023
+      } ],
       "replaceFirst" : [ ],
       "assessment" : [ {
+        "dish" : "Ролл с авокадо",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Эдамаме",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
         "dish" : "Ролл с огурцом",
         "verdict" : "PARTIAL",
         "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
@@ -64417,11 +64909,22 @@
       } ]
     }, {
       "chain" : "Типичное меню паназиатского кафе",
-      "fit" : "NONE",
+      "fit" : "COMPROMISE",
       "nearby" : [ ],
-      "atVenue" : [ ],
+      "atVenue" : [ {
+        "dishes" : [ "Эдамаме", "Эдамаме", "Ролл с авокадо" ],
+        "score" : 2.112023
+      } ],
       "replaceFirst" : [ ],
       "assessment" : [ {
+        "dish" : "Ролл с авокадо",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Эдамаме",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
         "dish" : "Чай чёрный или зелёный",
         "verdict" : "PARTIAL",
         "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
@@ -64512,6 +65015,10 @@
         "dish" : "Картофель по-деревенски",
         "verdict" : "NOT_FITS",
         "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Греческий салат",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
       } ]
     }, {
       "chain" : "Типичное меню шаурмичной",
@@ -64520,6 +65027,10 @@
       "atVenue" : [ ],
       "replaceFirst" : [ ],
       "assessment" : [ {
+        "dish" : "Фалафель",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
         "dish" : "Лепёшка",
         "verdict" : "PARTIAL",
         "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
@@ -64578,6 +65089,10 @@
         "verdict" : "PARTIAL",
         "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
       }, {
+        "dish" : "Овощи гриль",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
         "dish" : "Салат из овощей с орехами",
         "verdict" : "PARTIAL",
         "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
@@ -64618,6 +65133,10 @@
       "replaceFirst" : [ ],
       "assessment" : [ {
         "dish" : "Лепёшка",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Овощи гриль",
         "verdict" : "PARTIAL",
         "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
       }, {
@@ -64668,6 +65187,10 @@
         "verdict" : "PARTIAL",
         "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
       }, {
+        "dish" : "Овощи гриль",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
         "dish" : "Лимонад, около 400 мл",
         "verdict" : "PARTIAL",
         "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
@@ -64703,6 +65226,10 @@
         "dish" : "Пицца Пепперони, небольшая",
         "verdict" : "NOT_FITS",
         "reasons" : [ "EXCLUDED_TAG", "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Крем-суп овощной или грибной",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
       } ]
     }, {
       "chain" : "Типичное меню столовой",
@@ -64714,6 +65241,10 @@
         "dish" : "Рис отварной",
         "verdict" : "PARTIAL",
         "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Овсяная каша",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
       }, {
         "dish" : "Картофельное пюре",
         "verdict" : "PARTIAL",
@@ -64743,6 +65274,10 @@
         "verdict" : "NOT_FITS",
         "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
       }, {
+        "dish" : "Омлет",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
         "dish" : "Котлета куриная",
         "verdict" : "NOT_FITS",
         "reasons" : [ "EXCLUDED_TAG" ]
@@ -64751,11 +65286,19 @@
         "verdict" : "NOT_FITS",
         "reasons" : [ "FAT_ABOVE" ]
       }, {
+        "dish" : "Творожная запеканка",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
         "dish" : "Пельмени",
         "verdict" : "NOT_FITS",
         "reasons" : [ "EXCLUDED_TAG" ]
       }, {
         "dish" : "Салат Оливье",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Крем-суп овощной или грибной",
         "verdict" : "NOT_FITS",
         "reasons" : [ "EXCLUDED_TAG" ]
       }, {
@@ -64777,7 +65320,7 @@
       } ]
     }, {
       "chain" : "Типичное меню блинной",
-      "fit" : "NONE",
+      "fit" : "COMPROMISE",
       "nearby" : [ ],
       "atVenue" : [ ],
       "replaceFirst" : [ ],
@@ -64794,6 +65337,10 @@
         "verdict" : "PARTIAL",
         "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
       }, {
+        "dish" : "Омлет",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
         "dish" : "Блин с творогом",
         "verdict" : "NOT_FITS",
         "reasons" : [ "FAT_ABOVE" ]
@@ -64801,6 +65348,10 @@
         "dish" : "Блин с ветчиной и сыром",
         "verdict" : "NOT_FITS",
         "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Творожная запеканка",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
       }, {
         "dish" : "Блин с курицей и грибами",
         "verdict" : "NOT_FITS",
@@ -64833,6 +65384,10 @@
         "verdict" : "PARTIAL",
         "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
       }, {
+        "dish" : "Овсяная каша",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
         "dish" : "Картофельное пюре",
         "verdict" : "PARTIAL",
         "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
@@ -64844,6 +65399,10 @@
         "dish" : "Капучино, около 300 мл",
         "verdict" : "PARTIAL",
         "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Овощи гриль",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
       }, {
         "dish" : "Салат из свежих овощей",
         "verdict" : "PARTIAL",
@@ -64861,6 +65420,10 @@
         "verdict" : "NOT_FITS",
         "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
       }, {
+        "dish" : "Омлет",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
         "dish" : "Чизкейк",
         "verdict" : "NOT_FITS",
         "reasons" : [ "FAT_ABOVE" ]
@@ -64873,9 +65436,21 @@
         "verdict" : "NOT_FITS",
         "reasons" : [ "EXCLUDED_TAG", "KCAL_ABOVE", "FAT_ABOVE" ]
       }, {
+        "dish" : "Творожная запеканка",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
         "dish" : "Паста карбонара",
         "verdict" : "NOT_FITS",
         "reasons" : [ "EXCLUDED_TAG", "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Греческий салат",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Крем-суп овощной или грибной",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "EXCLUDED_TAG" ]
       }, {
         "dish" : "Куриная грудка запечённая",
         "verdict" : "NOT_FITS",
@@ -64912,6 +65487,10 @@
         "verdict" : "PARTIAL",
         "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
       }, {
+        "dish" : "Овощи гриль",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
         "dish" : "Лимонад, около 400 мл",
         "verdict" : "PARTIAL",
         "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
@@ -64935,6 +65514,10 @@
         "dish" : "Наггетсы, 6 шт.",
         "verdict" : "NOT_FITS",
         "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Греческий салат",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
       } ]
     }, {
       "chain" : "Типичная готовая еда в магазине",
@@ -64943,6 +65526,10 @@
       "atVenue" : [ ],
       "replaceFirst" : [ ],
       "assessment" : [ {
+        "dish" : "Йогурт с гранолой и ягодами",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
         "dish" : "Овсяная каша",
         "verdict" : "PARTIAL",
         "reasons" : [ "ESTIMATED_DATA" ]
@@ -64967,6 +65554,10 @@
         "verdict" : "NOT_FITS",
         "reasons" : [ "EXCLUDED_TAG", "CARBS_ABOVE" ]
       }, {
+        "dish" : "Омлет",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
         "dish" : "Блины с творогом",
         "verdict" : "NOT_FITS",
         "reasons" : [ "FAT_ABOVE" ]
@@ -64975,9 +65566,17 @@
         "verdict" : "NOT_FITS",
         "reasons" : [ "EXCLUDED_TAG", "FAT_ABOVE" ]
       }, {
+        "dish" : "Творожная запеканка",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
         "dish" : "Салат Оливье",
         "verdict" : "NOT_FITS",
         "reasons" : [ "EXCLUDED_TAG" ]
+      }, {
+        "dish" : "Греческий салат",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
       }, {
         "dish" : "Куриная грудка запечённая",
         "verdict" : "NOT_FITS",
@@ -80741,7 +81340,15 @@
         "verdict" : "NOT_FITS",
         "reasons" : [ "KCAL_ABOVE", "CARBS_ABOVE" ]
       }, {
+        "dish" : "Йогурт с гранолой и ягодами",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "CARBS_ABOVE" ]
+      }, {
         "dish" : "Круассан классический",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Творожная запеканка",
         "verdict" : "NOT_FITS",
         "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
       }, {
@@ -80752,6 +81359,10 @@
         "dish" : "Маффин",
         "verdict" : "NOT_FITS",
         "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Омлет",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
       }, {
         "dish" : "Круассан с ветчиной и сыром",
         "verdict" : "NOT_FITS",
@@ -80813,6 +81424,10 @@
         "verdict" : "NOT_FITS",
         "reasons" : [ "FAT_ABOVE" ]
       }, {
+        "dish" : "Йогурт с гранолой и ягодами",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "CARBS_ABOVE" ]
+      }, {
         "dish" : "Круассан классический",
         "verdict" : "NOT_FITS",
         "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
@@ -80826,6 +81441,14 @@
         "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
       }, {
         "dish" : "Киш",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Творожная запеканка",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Омлет",
         "verdict" : "NOT_FITS",
         "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
       }, {
@@ -80855,6 +81478,10 @@
         "dish" : "Морс, около 300 мл",
         "verdict" : "NOT_FITS",
         "reasons" : [ "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Греческий салат",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
       }, {
         "dish" : "Картофель фри",
         "verdict" : "NOT_FITS",
@@ -80894,14 +81521,33 @@
       "nearby" : [ {
         "dishes" : [ "Суши с лососем, 2 шт." ],
         "score" : 1.134286
+      }, {
+        "dishes" : [ "Чай чёрный или зелёный", "Эдамаме" ],
+        "score" : 1.379895
+      }, {
+        "dishes" : [ "Эдамаме" ],
+        "score" : 1.859895
       } ],
       "atVenue" : [ {
         "dishes" : [ "Суши с лососем, 2 шт." ],
         "score" : 1.134286
+      }, {
+        "dishes" : [ "Чай чёрный или зелёный", "Эдамаме" ],
+        "score" : 1.379895
+      }, {
+        "dishes" : [ "Эдамаме" ],
+        "score" : 1.859895
       } ],
-      "replaceFirst" : [ ],
+      "replaceFirst" : [ {
+        "dishes" : [ "Эдамаме" ],
+        "score" : 1.859895
+      } ],
       "assessment" : [ {
         "dish" : "Суши с лососем, 2 шт.",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Эдамаме",
         "verdict" : "PARTIAL",
         "reasons" : [ "ESTIMATED_DATA" ]
       }, {
@@ -80912,6 +81558,10 @@
         "dish" : "Чай чёрный или зелёный",
         "verdict" : "PARTIAL",
         "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Ролл с авокадо",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "CARBS_ABOVE" ]
       }, {
         "dish" : "Ролл с лососем",
         "verdict" : "NOT_FITS",
@@ -80943,11 +81593,27 @@
       } ]
     }, {
       "chain" : "Типичное меню паназиатского кафе",
-      "fit" : "NONE",
-      "nearby" : [ ],
-      "atVenue" : [ ],
+      "fit" : "GOOD",
+      "nearby" : [ {
+        "dishes" : [ "Чай чёрный или зелёный", "Эдамаме" ],
+        "score" : 1.379895
+      }, {
+        "dishes" : [ "Эдамаме" ],
+        "score" : 1.859895
+      } ],
+      "atVenue" : [ {
+        "dishes" : [ "Чай чёрный или зелёный", "Эдамаме" ],
+        "score" : 1.379895
+      }, {
+        "dishes" : [ "Эдамаме" ],
+        "score" : 1.859895
+      } ],
       "replaceFirst" : [ ],
       "assessment" : [ {
+        "dish" : "Эдамаме",
+        "verdict" : "PARTIAL",
+        "reasons" : [ "ESTIMATED_DATA" ]
+      }, {
         "dish" : "Мисо-суп",
         "verdict" : "PARTIAL",
         "reasons" : [ "ESTIMATED_DATA" ]
@@ -80955,6 +81621,10 @@
         "dish" : "Чай чёрный или зелёный",
         "verdict" : "PARTIAL",
         "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Ролл с авокадо",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "CARBS_ABOVE" ]
       }, {
         "dish" : "Гёдза или дим-самы",
         "verdict" : "NOT_FITS",
@@ -81011,6 +81681,10 @@
         "verdict" : "NOT_FITS",
         "reasons" : [ "KCAL_ABOVE", "CARBS_ABOVE" ]
       }, {
+        "dish" : "Греческий салат",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
         "dish" : "Картофель фри",
         "verdict" : "NOT_FITS",
         "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
@@ -81066,6 +81740,10 @@
         "verdict" : "NOT_FITS",
         "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
       }, {
+        "dish" : "Фалафель",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
         "dish" : "Люля-кебаб из говядины",
         "verdict" : "NOT_FITS",
         "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
@@ -81100,6 +81778,10 @@
         "dish" : "Морс, около 300 мл",
         "verdict" : "NOT_FITS",
         "reasons" : [ "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Овощи гриль",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
       }, {
         "dish" : "Пхали ассорти",
         "verdict" : "NOT_FITS",
@@ -81147,6 +81829,10 @@
         "dish" : "Чай чёрный или зелёный",
         "verdict" : "PARTIAL",
         "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Овощи гриль",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
       }, {
         "dish" : "Лепёшка",
         "verdict" : "NOT_FITS",
@@ -81200,6 +81886,14 @@
         "dish" : "Лимонад, около 400 мл",
         "verdict" : "PARTIAL",
         "reasons" : [ "LOW_PROTEIN", "ESTIMATED_DATA" ]
+      }, {
+        "dish" : "Овощи гриль",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Крем-суп овощной или грибной",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
       }, {
         "dish" : "Тирамису",
         "verdict" : "NOT_FITS",
@@ -81278,6 +81972,14 @@
         "verdict" : "NOT_FITS",
         "reasons" : [ "FAT_ABOVE" ]
       }, {
+        "dish" : "Крем-суп овощной или грибной",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Овсяная каша",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "CARBS_ABOVE" ]
+      }, {
         "dish" : "Салат Оливье",
         "verdict" : "NOT_FITS",
         "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
@@ -81290,6 +81992,10 @@
         "verdict" : "NOT_FITS",
         "reasons" : [ "KCAL_ABOVE", "CARBS_ABOVE" ]
       }, {
+        "dish" : "Творожная запеканка",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
         "dish" : "Котлета куриная",
         "verdict" : "NOT_FITS",
         "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
@@ -81297,6 +82003,10 @@
         "dish" : "Блины с творогом",
         "verdict" : "NOT_FITS",
         "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Омлет",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
       }, {
         "dish" : "Котлета с картофельным пюре",
         "verdict" : "NOT_FITS",
@@ -81345,11 +82055,19 @@
         "verdict" : "NOT_FITS",
         "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
       }, {
+        "dish" : "Творожная запеканка",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
         "dish" : "Блин с творогом",
         "verdict" : "NOT_FITS",
         "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
       }, {
         "dish" : "Блин с ветчиной и сыром",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Омлет",
         "verdict" : "NOT_FITS",
         "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
       } ]
@@ -81402,6 +82120,10 @@
         "verdict" : "NOT_FITS",
         "reasons" : [ "KCAL_ABOVE" ]
       }, {
+        "dish" : "Овощи гриль",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
         "dish" : "Борщ со сметаной",
         "verdict" : "NOT_FITS",
         "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
@@ -81409,6 +82131,18 @@
         "dish" : "Салат из свежих овощей",
         "verdict" : "NOT_FITS",
         "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Крем-суп овощной или грибной",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Овсяная каша",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Греческий салат",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
       }, {
         "dish" : "Картофель фри",
         "verdict" : "NOT_FITS",
@@ -81418,6 +82152,10 @@
         "verdict" : "NOT_FITS",
         "reasons" : [ "KCAL_ABOVE", "CARBS_ABOVE" ]
       }, {
+        "dish" : "Творожная запеканка",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
         "dish" : "Салат Цезарь с курицей",
         "verdict" : "NOT_FITS",
         "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
@@ -81425,6 +82163,10 @@
         "dish" : "Чизкейк",
         "verdict" : "NOT_FITS",
         "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Омлет",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
       }, {
         "dish" : "Котлета с картофельным пюре",
         "verdict" : "NOT_FITS",
@@ -81456,6 +82198,14 @@
         "dish" : "Морс, около 300 мл",
         "verdict" : "NOT_FITS",
         "reasons" : [ "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Овощи гриль",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "FAT_ABOVE" ]
+      }, {
+        "dish" : "Греческий салат",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
       }, {
         "dish" : "Луковые кольца",
         "verdict" : "NOT_FITS",
@@ -81512,6 +82262,18 @@
         "verdict" : "NOT_FITS",
         "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
       }, {
+        "dish" : "Греческий салат",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
+      }, {
+        "dish" : "Йогурт с гранолой и ягодами",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Творожная запеканка",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
         "dish" : "Салат Цезарь с курицей",
         "verdict" : "NOT_FITS",
         "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
@@ -81519,6 +82281,10 @@
         "dish" : "Блины с творогом",
         "verdict" : "NOT_FITS",
         "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE", "CARBS_ABOVE" ]
+      }, {
+        "dish" : "Омлет",
+        "verdict" : "NOT_FITS",
+        "reasons" : [ "KCAL_ABOVE", "FAT_ABOVE" ]
       }, {
         "dish" : "Гречка с курицей или овощами",
         "verdict" : "NOT_FITS",

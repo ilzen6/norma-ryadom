@@ -134,6 +134,7 @@ extension MealLabels on AppLocalizations {
     AppFailure.photoTooLarge => errorPhotoTooLarge,
     AppFailure.serviceUnavailable => errorUnavailable,
     AppFailure.locationDenied => errorLocationDenied,
+    AppFailure.locationOff => errorLocationOff,
     AppFailure.locationUnavailable => errorLocationUnavailable,
     AppFailure.outsideCoverage => errorOutsideCoverage,
     AppFailure.photoAccessDenied => errorPhotoAccessDenied,

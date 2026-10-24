@@ -46,7 +46,7 @@ class DemoCatalogIT : IntegrationTest() {
         ).isEqualTo(3682)
         assertThat(
             jdbc.sql("SELECT count(*) FROM menu_item WHERE is_available AND source_kind = 'C'").query(Int::class.java).single(),
-        ).isEqualTo(166)
+        ).isEqualTo(201)
     }
 
     @Test

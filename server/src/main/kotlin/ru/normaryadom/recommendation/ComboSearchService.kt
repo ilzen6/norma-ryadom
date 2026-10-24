@@ -12,6 +12,7 @@ import ru.normaryadom.geo.NearbyVenueRepository
 import ru.normaryadom.optimizer.Combo
 import ru.normaryadom.optimizer.ComboOptimizer
 import ru.normaryadom.optimizer.SearchCriteria
+import ru.normaryadom.optimizer.TargetRelaxation
 import ru.normaryadom.recommendation.config.NearbyProperties
 
 @Service
@@ -21,6 +22,7 @@ class ComboSearchService(
     private val optimizer: ComboOptimizer,
     private val comboCache: MenuComboCache,
     private val nearby: NearbyProperties,
+    private val relaxation: TargetRelaxation,
 ) {
     fun searchAtVenue(
         venueId: Long,
@@ -28,7 +30,8 @@ class ComboSearchService(
         limit: Int,
     ): ComboSearchResult {
         val venue = menus.venue(venueId)
-        val combos = optimizer.bestCombos(menus.menu(venue.menuScope), criteria, limit)
+        val menu = menus.menu(venue.menuScope)
+        val combos = firstNonEmpty(criteria) { tier -> optimizer.bestCombos(menu, tier, limit) }
         return ComboSearchResult(
             appliedCriteria = criteria,
             options = combos.map { ComboOption(venue = venue, distanceMeters = null, combo = it) },
@@ -51,6 +54,7 @@ class ComboSearchService(
                 .map { venuesWithSameMenu -> venuesWithSameMenu.minBy(NearbyVenue::distanceMeters) }
                 .flatMap { closest -> optionsFor(closest, applied) }
                 .sortedWith(compareBy<RankedOption> { it.rank }.thenComparing({ it.option.combo }, Combo.ORDER))
+                .let(::limitRepeatedTemplates)
                 .take(limit)
                 .map(RankedOption::option)
         return ComboSearchResult(appliedCriteria = applied, options = options)
@@ -69,7 +73,7 @@ class ComboSearchService(
         val dishes = dishesFrom(menu, dishIds)
         val excluded = dishes.filterIndexed { index, dish -> index != replaceIndex && !criteria.target.allows(dish) }
         if (excluded.isNotEmpty()) throw DishExcludedException(excluded.map { it.id }.distinct())
-        val combos = optimizer.replacements(menu, criteria, dishes, replaceIndex, limit)
+        val combos = firstNonEmpty(criteria) { tier -> optimizer.replacements(menu, tier, dishes, replaceIndex, limit) }
         return ComboSearchResult(
             appliedCriteria = criteria,
             options = combos.map { ComboOption(venue = venue, distanceMeters = null, combo = it) },
@@ -86,6 +90,28 @@ class ComboSearchService(
         return dishIds.map(byId::getValue)
     }
 
+    private fun tiers(criteria: SearchCriteria): List<SearchCriteria> =
+        generateSequence(criteria) { it.copy(target = it.target.relaxed(relaxation)) }.take(COMPROMISE_STEPS + 1).toList()
+
+    private fun firstNonEmpty(
+        criteria: SearchCriteria,
+        search: (SearchCriteria) -> List<Combo>,
+    ): List<Combo> =
+        tiers(criteria)
+            .asSequence()
+            .map(search)
+            .firstOrNull { it.isNotEmpty() }
+            .orEmpty()
+
+    private fun limitRepeatedTemplates(options: List<RankedOption>): List<RankedOption> {
+        val shown = mutableMapOf<List<String>, Int>()
+        return options.filter { ranked ->
+            val option = ranked.option
+            !option.venue.usesTemplateMenu ||
+                shown.merge(option.combo.dishes.map { it.name }, 1, Int::plus)!! <= nearby.venuesPerTemplate
+        }
+    }
+
     private fun menuGroup(nearbyVenue: NearbyVenue): Any =
         if (nearbyVenue.venue.usesTemplateMenu) nearbyVenue.venue.id else nearbyVenue.venue.menuScope
 
@@ -94,15 +120,19 @@ class ComboSearchService(
         criteria: SearchCriteria,
     ): List<RankedOption> {
         val distancePenalty = nearby.distanceWeightPerKm * nearbyVenue.distanceMeters / METERS_PER_KILOMETER
-        return comboCache
-            .bestCombos(nearbyVenue.venue.menuScope, criteria)
-            .take(if (nearbyVenue.venue.usesTemplateMenu) nearby.combosPerTemplateVenue else nearby.combosPerVenue)
-            .map { combo ->
-                RankedOption(
-                    option = ComboOption(nearbyVenue.venue, nearbyVenue.distanceMeters, combo),
-                    rank = combo.score + distancePenalty,
-                )
-            }
+        val perVenue = if (nearbyVenue.venue.usesTemplateMenu) nearby.combosPerTemplateVenue else nearby.combosPerVenue
+        return tiers(criteria)
+            .asSequence()
+            .mapIndexed { step, tier -> step to comboCache.bestCombos(nearbyVenue.venue.menuScope, tier) }
+            .firstOrNull { (_, combos) -> combos.isNotEmpty() }
+            ?.let { (step, combos) ->
+                combos.take(perVenue).map { combo ->
+                    RankedOption(
+                        option = ComboOption(nearbyVenue.venue, nearbyVenue.distanceMeters, combo),
+                        rank = combo.score + distancePenalty + step * nearby.compromisePenalty,
+                    )
+                }
+            }.orEmpty()
     }
 
     private data class RankedOption(
@@ -112,6 +142,7 @@ class ComboSearchService(
 
     private companion object {
         const val METERS_PER_KILOMETER = 1000.0
+        const val COMPROMISE_STEPS = 2
     }
 }
 

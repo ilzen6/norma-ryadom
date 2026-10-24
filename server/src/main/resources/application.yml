@@ -80,6 +80,8 @@ nearby:
   distance-weight-per-km: 0.5
   combos-per-venue: 2
   combos-per-template-venue: 1
+  compromise-penalty: 1.0
+  venues-per-template: 3
 
 intake:
   photo:

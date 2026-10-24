@@ -158,6 +158,9 @@ class DemoServerAdapter implements HttpClientAdapter {
   static const _maxLimit = 500;
   static const _combosPerVenue = 2;
   static const _combosPerTemplateVenue = 1;
+  static const _compromiseSteps = 2;
+  static const _compromisePenalty = 1.0;
+  static const _venuesPerTemplate = 3;
   static const _cachedCombos = 5;
   static const _distanceWeightPerKm = 0.5;
   static const _dietTagOrder = [
@@ -273,27 +276,42 @@ class DemoServerAdapter implements HttpClientAdapter {
       final venue = catalog.venue(venueId);
       if (chain == null || venue == null) return _problem(404);
       return _searchResponse(target, [
-        for (final combo in optimizer.bestCombos(chain.menu, target, limit)) (venue, null, combo),
+        for (final combo in _firstNonEmpty(target, (tier) => optimizer.bestCombos(chain.menu, tier, limit)))
+          (venue, null, combo),
       ]);
     }
     final applied = target.rounded();
     final center = ((location['lat'] as num).toDouble(), (location['lon'] as num).toDouble());
     final ranked =
-        <(double, DemoVenue, double, DemoCombo)>[
+        <(double, DemoVenue, double, DemoCombo, DemoChain)>[
           for (final (chain, venue, distance) in _closestPerMenu(
             _within(catalog, center, (location['radiusMeters'] as num).toDouble(), limitEachMenuKind: true),
           ))
-            for (final combo
-                in optimizer
-                    .bestCombos(chain.menu, applied, _cachedCombos)
-                    .take(chain.isTemplate ? _combosPerTemplateVenue : _combosPerVenue))
-              (combo.score + _distanceWeightPerKm * distance / 1000, venue, distance, combo),
+            if (_firstTier(applied, (tier) => optimizer.bestCombos(chain.menu, tier, _cachedCombos)) case (
+              final step,
+              final combos,
+            ))
+              for (final combo in combos.take(chain.isTemplate ? _combosPerTemplateVenue : _combosPerVenue))
+                (
+                  combo.score + _distanceWeightPerKm * distance / 1000 + step * _compromisePenalty,
+                  venue,
+                  distance,
+                  combo,
+                  chain,
+                ),
         ]..sort((left, right) {
           final byRank = left.$1.compareTo(right.$1);
           return byRank != 0 ? byRank : DemoCombo.compare(left.$4, right.$4);
         });
+    final shown = <String, int>{};
+    bool notRepeated((double, DemoVenue, double, DemoCombo, DemoChain) entry) {
+      if (!entry.$5.isTemplate) return true;
+      final dishes = entry.$4.dishes.map((dish) => dish.name).join('\n');
+      return (shown[dishes] = (shown[dishes] ?? 0) + 1) <= _venuesPerTemplate;
+    }
+
     return _searchResponse(applied, [
-      for (final (_, venue, distance, combo) in ranked.take(limit)) (venue, distance, combo),
+      for (final (_, venue, distance, combo, _) in ranked.where(notRepeated).take(limit)) (venue, distance, combo),
     ]);
   }
 
@@ -316,7 +334,11 @@ class DemoServerAdapter implements HttpClientAdapter {
       return _problem(422);
     }
     final optimizer = DemoOptimizer(DemoScorer(preferCheaper: body['preferCheaper'] == true));
-    final combos = optimizer.replacements(chain.menu, target, dishes, replaceIndex, (body['limit'] as int?) ?? 5);
+    final limit = (body['limit'] as int?) ?? 5;
+    final combos = _firstNonEmpty(
+      target,
+      (tier) => optimizer.replacements(chain.menu, tier, dishes, replaceIndex, limit),
+    );
     return _searchResponse(target, [for (final combo in combos) (venue, null, combo)]);
   }
 
@@ -347,6 +369,19 @@ class DemoServerAdapter implements HttpClientAdapter {
           if ((taken[typical] = (taken[typical] ?? 0) + 1) <= limit) entry,
     ];
   }
+
+  static (int, List<DemoCombo>)? _firstTier(DemoTarget target, List<DemoCombo> Function(DemoTarget) search) {
+    var tier = target;
+    for (var step = 0; step <= _compromiseSteps; step++) {
+      final combos = search(tier);
+      if (combos.isNotEmpty) return (step, combos);
+      tier = tier.relaxed();
+    }
+    return null;
+  }
+
+  static List<DemoCombo> _firstNonEmpty(DemoTarget target, List<DemoCombo> Function(DemoTarget) search) =>
+      _firstTier(target, search)?.$2 ?? const [];
 
   static List<(DemoChain, DemoVenue, double)> _closestPerMenu(List<(DemoChain, DemoVenue, double)> venues) {
     final seen = <Object>{};

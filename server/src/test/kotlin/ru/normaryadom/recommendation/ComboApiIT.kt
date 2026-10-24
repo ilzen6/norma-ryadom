@@ -109,6 +109,38 @@ class ComboApiIT : IntegrationTest() {
     }
 
     @Test
+    fun `если точного набора нет, предлагает ближайший к цели и честно показывает отклонение`() {
+        catalog.chain("Супы", SOUP_MENU, SOUP_VENUES)
+
+        mockMvc
+            .post("/api/v1/combos/search") {
+                contentType = MediaType.APPLICATION_JSON
+                content = """{"target": $TARGET, "venueId": ${venueId("soup-01")}, "limit": 3}"""
+            }.andExpect {
+                status { isOk() }
+                jsonPath("$.options[0].combo.dishes[*].name") { value(hasItem("Суп с фасолью")) }
+                jsonPath("$.options[0].combo.checks[0].metric") { value("KCAL") }
+                jsonPath("$.options[0].combo.checks[0].status") { value("BELOW") }
+            }
+    }
+
+    @Test
+    fun `ставит точные наборы выше компромиссных, даже если компромисс ближе`() {
+        catalog.chain("Гриль", GRILL_MENU, GRILL_VENUES)
+        catalog.chain("Супы", SOUP_MENU, SOUP_VENUES)
+
+        mockMvc
+            .post("/api/v1/combos/search") {
+                contentType = MediaType.APPLICATION_JSON
+                content = """{"target": $TARGET, "location": {"lat": $CITY_LAT, "lon": $CITY_LON, "radiusMeters": 1000}, "limit": 10}"""
+            }.andExpect {
+                status { isOk() }
+                jsonPath("$.options[0].venue.name") { value("Гриль, Сити") }
+                jsonPath("$.options[*].venue.name") { value(hasItem("Супы, у моста")) }
+            }
+    }
+
+    @Test
     fun `после обновления меню сети отдаёт новый подбор, а не устаревший кэш`() {
         val chainId = catalog.chain("Гриль", GRILL_MENU, GRILL_VENUES)
         val request = """{"target": $TARGET, "location": {"lat": $CITY_LAT, "lon": $CITY_LON, "radiusMeters": 1000}}"""
@@ -285,6 +317,8 @@ class ComboApiIT : IntegrationTest() {
             .single()
 
     private companion object {
+        val SOUP_MENU = listOf("Суп с фасолью;main;350;500;31;15;45;320;", "Чай;drink;300;0;0;0;0;99;")
+        val SOUP_VENUES = listOf("Супы, у моста;Пресненская наб., 6;55.7490;37.5380;soup-01")
         const val TARGET = """{"kcal": 600, "kcalTolerance": 60, "minProtein": 30, "maxFat": 25, "maxCarbs": 90, "excludeTags": ["pork"]}"""
         const val WIDE_TARGET = """{"kcal": 600, "kcalTolerance": 150, "minProtein": 30, "maxFat": 25, "maxCarbs": 90}"""
     }

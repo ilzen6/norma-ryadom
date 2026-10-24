@@ -170,6 +170,35 @@ void main() {
     );
   });
 
+  test('если точного набора нет, предлагает ближайший к цели и показывает, что не сходится', () async {
+    final soups = NormaApi(
+      NormaApi.createDio('http://demo')
+        ..httpClientAdapter = DemoServerAdapter(
+          () async =>
+              '{"verifiedAt": "2026-09-30T00:00:00Z", "chains": [{"name": "Супы", "sourceUrl": "https://example.org",'
+              ' "items": [{"name": "Суп с фасолью", "category": "main", "portionGrams": 350, "kcal": 500,'
+              ' "protein": 31, "fat": 15, "carbs": 45, "priceMinor": 32000, "tags": []}],'
+              ' "venues": [{"name": "Супы, у моста", "address": "наб. Пресненская, 6", "lat": 55.7490, "lon": 37.5380}]}]}',
+        ),
+    );
+
+    final atVenue = valueOf(
+      await soups.searchAtVenue(venueId: 1, target: TestData.lunchTarget, price: PricePreference.any),
+    );
+    final nearby = valueOf(
+      await soups.searchNearby(
+        location: center,
+        radiusMeters: 1000,
+        target: TestData.lunchTarget,
+        price: PricePreference.any,
+      ),
+    );
+
+    expect(atVenue.options.single.combo.dishes.single.name, 'Суп с фасолью');
+    expect(atVenue.options.single.combo.checks.first.status, MetricStatus.below);
+    expect(nearby.options.map((option) => option.venue.name), ['Супы, у моста']);
+  });
+
   test('заведения без меню видны только по запросу «показать все» и без цвета соответствия', () async {
     final places = NormaApi(
       NormaApi.createDio('http://demo')

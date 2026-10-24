@@ -234,6 +234,32 @@ READY_FOOD = [
     dish("Морс, около 300 мл", "drink", PIZZA[8]["include"], None, (200, 500)),
 ]
 
+OMELET = dish("Омлет", "main", r"^(классический )?омлет\b|^омлет$", r"куриц|курин|ветчин|бекон|лосос|индейк|сосиск|мяс|рыб|кревет", (90, 260))
+CASSEROLE = dish("Творожная запеканка", "dessert", r"творожн.*запеканк|запеканка творожн|воздушная запеканка", r"мяс|куриц|рыб|картоф", (100, 260), {"main", "dessert"})
+GREEK = dish("Греческий салат", "salad", r"^греческ(ий|ий салат)$|^салат греческ|^греческий салат", None, (150, 330))
+CREAM_SOUP = dish("Крем-суп овощной или грибной", "main", r"крем-суп|суп-пюре", r"кревет|морепрод|лосос|рыб|куриц|курин|бекон|мяс|говяд", (220, 420), {"main", "side"})
+YOGURT = dish("Йогурт с гранолой и ягодами", "dessert", r"йогурт.*(гранол|мюсли|ягод)|гранол", r"напит|смузи", (100, 300), {"main", "dessert"})
+GRILLED_VEG = dish("Овощи гриль", "side", r"овощи (гриль|на гриле)|овощи-гриль|^гриль-овощи", None, (100, 300), {"side", "salad", "main"})
+EDAMAME = dish("Эдамаме", "side", r"^эдамам", r"чили|соус", (80, 250), {"side", "main", "salad"})
+AVOCADO_ROLL = dish("Ролл с авокадо", "main", r"(ролл|маки).*авокадо|авокадо.*(маки|ролл)", r"лосос|угор|краб|кревет|тунец|филадельф|калифорн|курин|куриц|рыб|сяке|унаги|тобико|масаго", (80, 260))
+FALAFEL = dish("Фалафель", "main", r"фалафел", None, (100, 350), {"main", "side"})
+
+COFFEE = COFFEE + [OMELET, YOGURT, CASSEROLE]
+BAKERY = BAKERY + [OMELET, CASSEROLE, YOGURT]
+CAFE = CAFE + [OMELET, GREEK, CREAM_SOUP, GRILLED_VEG, CASSEROLE, dish("Овсяная каша", "main", COFFEE[9]["include"], COFFEE[9]["exclude"], (180, 350), {"main", "dessert", "side"})]
+CANTEEN = CANTEEN + [OMELET, CASSEROLE, CREAM_SOUP, dish("Овсяная каша", "main", COFFEE[9]["include"], COFFEE[9]["exclude"], (180, 350), {"main", "dessert", "side"})]
+BLINI = BLINI + [OMELET, CASSEROLE]
+READY_FOOD = READY_FOOD + [GREEK, CASSEROLE, YOGURT, OMELET]
+ITALIAN = ITALIAN + [CREAM_SOUP, GRILLED_VEG]
+GEORGIAN = GEORGIAN + [GRILLED_VEG]
+CENTRAL_ASIAN = CENTRAL_ASIAN + [GRILLED_VEG]
+SUSHI = SUSHI + [EDAMAME, AVOCADO_ROLL]
+ASIAN = ASIAN + [EDAMAME, AVOCADO_ROLL]
+SHAWARMA = SHAWARMA + [FALAFEL]
+BAR = BAR + [GREEK, GRILLED_VEG]
+PIZZA = PIZZA + [GREEK]
+BURGER = BURGER + [GREEK]
+
 TEMPLATES = [
     ("coffee", "Типичное меню кофейни", COFFEE),
     ("bakery", "Типичное меню пекарни", BAKERY),

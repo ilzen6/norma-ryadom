@@ -20,4 +20,8 @@ data class NearbyProperties(
     @field:Min(1)
     @field:Max(5)
     val combosPerTemplateVenue: Int = 1,
+    @field:DecimalMin("0.0")
+    val compromisePenalty: Double = 1.0,
+    @field:Min(1)
+    val venuesPerTemplate: Int = 3,
 )

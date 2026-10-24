@@ -198,6 +198,55 @@
           ],
           "kcalLow": 351.4,
           "kcalHigh": 511.7
+        },
+        {
+          "name": "Омлет",
+          "category": "main",
+          "portionGrams": 140.0,
+          "kcal": 457.0,
+          "protein": 12.0,
+          "fat": 35.0,
+          "carbs": 3.0,
+          "priceMinor": 32000,
+          "tags": [
+            "egg",
+            "milk"
+          ],
+          "kcalLow": 223.0,
+          "kcalHigh": 525.5
+        },
+        {
+          "name": "Йогурт с гранолой и ягодами",
+          "category": "dessert",
+          "portionGrams": 250.0,
+          "kcal": 316.8,
+          "protein": 7.8,
+          "fat": 8.5,
+          "carbs": 50.5,
+          "priceMinor": 41000,
+          "tags": [
+            "gluten",
+            "milk",
+            "nuts"
+          ],
+          "kcalLow": 176.0,
+          "kcalHigh": 364.3
+        },
+        {
+          "name": "Творожная запеканка",
+          "category": "dessert",
+          "portionGrams": 220.0,
+          "kcal": 400.4,
+          "protein": 20.5,
+          "fat": 20.7,
+          "carbs": 31.0,
+          "priceMinor": 22000,
+          "tags": [
+            "egg",
+            "milk"
+          ],
+          "kcalLow": 338.6,
+          "kcalHigh": 490.1
         }
       ]
     },
@@ -408,6 +457,55 @@
           "tags": [],
           "kcalLow": 12.8,
           "kcalHigh": 26.4
+        },
+        {
+          "name": "Омлет",
+          "category": "main",
+          "portionGrams": 140.0,
+          "kcal": 457.0,
+          "protein": 12.0,
+          "fat": 35.0,
+          "carbs": 3.0,
+          "priceMinor": 32000,
+          "tags": [
+            "egg",
+            "milk"
+          ],
+          "kcalLow": 223.0,
+          "kcalHigh": 525.5
+        },
+        {
+          "name": "Творожная запеканка",
+          "category": "dessert",
+          "portionGrams": 220.0,
+          "kcal": 400.4,
+          "protein": 20.5,
+          "fat": 20.7,
+          "carbs": 31.0,
+          "priceMinor": 22000,
+          "tags": [
+            "egg",
+            "milk"
+          ],
+          "kcalLow": 338.6,
+          "kcalHigh": 490.1
+        },
+        {
+          "name": "Йогурт с гранолой и ягодами",
+          "category": "dessert",
+          "portionGrams": 250.0,
+          "kcal": 316.8,
+          "protein": 7.8,
+          "fat": 8.5,
+          "carbs": 50.5,
+          "priceMinor": 41000,
+          "tags": [
+            "gluten",
+            "milk",
+            "nuts"
+          ],
+          "kcalLow": 176.0,
+          "kcalHigh": 364.3
         }
       ]
     },
@@ -574,6 +672,21 @@
           ],
           "kcalLow": 369.2,
           "kcalHigh": 499.4
+        },
+        {
+          "name": "Греческий салат",
+          "category": "salad",
+          "portionGrams": 260.0,
+          "kcal": 286.0,
+          "protein": 5.2,
+          "fat": 24.7,
+          "carbs": 7.8,
+          "priceMinor": 38000,
+          "tags": [
+            "milk"
+          ],
+          "kcalLow": 243.1,
+          "kcalHigh": 385.0
         }
       ]
     },
@@ -738,6 +851,36 @@
           "tags": [],
           "kcalLow": 12.8,
           "kcalHigh": 26.4
+        },
+        {
+          "name": "Эдамаме",
+          "category": "side",
+          "portionGrams": 134.0,
+          "kcal": 153.0,
+          "protein": 14.0,
+          "fat": 5.4,
+          "carbs": 12.0,
+          "priceMinor": 37000,
+          "tags": [
+            "soy"
+          ],
+          "kcalLow": 130.0,
+          "kcalHigh": 175.9
+        },
+        {
+          "name": "Ролл с авокадо",
+          "category": "main",
+          "portionGrams": 100.0,
+          "kcal": 181.3,
+          "protein": 4.1,
+          "fat": 3.3,
+          "carbs": 33.7,
+          "priceMinor": 26000,
+          "tags": [
+            "gluten"
+          ],
+          "kcalLow": 120.8,
+          "kcalHigh": 208.5
         }
       ]
     },
@@ -914,6 +1057,36 @@
           "tags": [],
           "kcalLow": 12.8,
           "kcalHigh": 26.4
+        },
+        {
+          "name": "Эдамаме",
+          "category": "side",
+          "portionGrams": 134.0,
+          "kcal": 153.0,
+          "protein": 14.0,
+          "fat": 5.4,
+          "carbs": 12.0,
+          "priceMinor": 37000,
+          "tags": [
+            "soy"
+          ],
+          "kcalLow": 130.0,
+          "kcalHigh": 175.9
+        },
+        {
+          "name": "Ролл с авокадо",
+          "category": "main",
+          "portionGrams": 100.0,
+          "kcal": 181.3,
+          "protein": 4.1,
+          "fat": 3.3,
+          "carbs": 33.7,
+          "priceMinor": 26000,
+          "tags": [
+            "gluten"
+          ],
+          "kcalLow": 120.8,
+          "kcalHigh": 208.5
         }
       ]
     },
@@ -1104,6 +1277,21 @@
           ],
           "kcalLow": 185.0,
           "kcalHigh": 280.0
+        },
+        {
+          "name": "Греческий салат",
+          "category": "salad",
+          "portionGrams": 260.0,
+          "kcal": 286.0,
+          "protein": 5.2,
+          "fat": 24.7,
+          "carbs": 7.8,
+          "priceMinor": 38000,
+          "tags": [
+            "milk"
+          ],
+          "kcalLow": 243.1,
+          "kcalHigh": 385.0
         }
       ]
     },
@@ -1246,6 +1434,21 @@
           "tags": [],
           "kcalLow": 138.6,
           "kcalHigh": 241.5
+        },
+        {
+          "name": "Фалафель",
+          "category": "main",
+          "portionGrams": 185.0,
+          "kcal": 394.8,
+          "protein": 11.8,
+          "fat": 17.4,
+          "carbs": 47.9,
+          "priceMinor": 33000,
+          "tags": [
+            "gluten"
+          ],
+          "kcalLow": 335.6,
+          "kcalHigh": 454.0
         }
       ]
     },
@@ -1418,6 +1621,19 @@
           "tags": [],
           "kcalLow": 12.8,
           "kcalHigh": 26.4
+        },
+        {
+          "name": "Овощи гриль",
+          "category": "side",
+          "portionGrams": 120.0,
+          "kcal": 152.0,
+          "protein": 3.0,
+          "fat": 12.0,
+          "carbs": 9.0,
+          "priceMinor": 36000,
+          "tags": [],
+          "kcalLow": 100.0,
+          "kcalHigh": 201.0
         }
       ]
     },
@@ -1570,6 +1786,19 @@
           "tags": [],
           "kcalLow": 12.8,
           "kcalHigh": 26.4
+        },
+        {
+          "name": "Овощи гриль",
+          "category": "side",
+          "portionGrams": 120.0,
+          "kcal": 152.0,
+          "protein": 3.0,
+          "fat": 12.0,
+          "carbs": 9.0,
+          "priceMinor": 36000,
+          "tags": [],
+          "kcalLow": 100.0,
+          "kcalHigh": 201.0
         }
       ]
     },
@@ -1762,6 +1991,36 @@
           ],
           "kcalLow": 112.0,
           "kcalHigh": 216.0
+        },
+        {
+          "name": "Крем-суп овощной или грибной",
+          "category": "main",
+          "portionGrams": null,
+          "kcal": 260.0,
+          "protein": 8.0,
+          "fat": 16.0,
+          "carbs": 23.0,
+          "priceMinor": 34000,
+          "tags": [
+            "chicken",
+            "meat",
+            "milk"
+          ],
+          "kcalLow": 221.0,
+          "kcalHigh": 318.6
+        },
+        {
+          "name": "Овощи гриль",
+          "category": "side",
+          "portionGrams": 120.0,
+          "kcal": 152.0,
+          "protein": 3.0,
+          "fat": 12.0,
+          "carbs": 9.0,
+          "priceMinor": 36000,
+          "tags": [],
+          "kcalLow": 100.0,
+          "kcalHigh": 201.0
         }
       ]
     },
@@ -2023,6 +2282,71 @@
           "tags": [],
           "kcalLow": 60.2,
           "kcalHigh": 120.4
+        },
+        {
+          "name": "Омлет",
+          "category": "main",
+          "portionGrams": 140.0,
+          "kcal": 457.0,
+          "protein": 12.0,
+          "fat": 35.0,
+          "carbs": 3.0,
+          "priceMinor": 32000,
+          "tags": [
+            "egg",
+            "milk"
+          ],
+          "kcalLow": 223.0,
+          "kcalHigh": 525.5
+        },
+        {
+          "name": "Творожная запеканка",
+          "category": "dessert",
+          "portionGrams": 220.0,
+          "kcal": 400.4,
+          "protein": 20.5,
+          "fat": 20.7,
+          "carbs": 31.0,
+          "priceMinor": 22000,
+          "tags": [
+            "egg",
+            "milk"
+          ],
+          "kcalLow": 338.6,
+          "kcalHigh": 490.1
+        },
+        {
+          "name": "Крем-суп овощной или грибной",
+          "category": "main",
+          "portionGrams": null,
+          "kcal": 260.0,
+          "protein": 8.0,
+          "fat": 16.0,
+          "carbs": 23.0,
+          "priceMinor": 34000,
+          "tags": [
+            "chicken",
+            "meat",
+            "milk"
+          ],
+          "kcalLow": 221.0,
+          "kcalHigh": 318.6
+        },
+        {
+          "name": "Овсяная каша",
+          "category": "main",
+          "portionGrams": 310.0,
+          "kcal": 281.8,
+          "protein": 9.9,
+          "fat": 9.0,
+          "carbs": 40.0,
+          "priceMinor": 22000,
+          "tags": [
+            "gluten",
+            "milk"
+          ],
+          "kcalLow": 229.2,
+          "kcalHigh": 326.4
         }
       ]
     },
@@ -2181,6 +2505,38 @@
           "tags": [],
           "kcalLow": 144.5,
           "kcalHigh": 213.6
+        },
+        {
+          "name": "Омлет",
+          "category": "main",
+          "portionGrams": 140.0,
+          "kcal": 457.0,
+          "protein": 12.0,
+          "fat": 35.0,
+          "carbs": 3.0,
+          "priceMinor": 32000,
+          "tags": [
+            "egg",
+            "milk"
+          ],
+          "kcalLow": 223.0,
+          "kcalHigh": 525.5
+        },
+        {
+          "name": "Творожная запеканка",
+          "category": "dessert",
+          "portionGrams": 220.0,
+          "kcal": 400.4,
+          "protein": 20.5,
+          "fat": 20.7,
+          "carbs": 31.0,
+          "priceMinor": 22000,
+          "tags": [
+            "egg",
+            "milk"
+          ],
+          "kcalLow": 338.6,
+          "kcalHigh": 490.1
         }
       ]
     },
@@ -2440,6 +2796,99 @@
           "tags": [],
           "kcalLow": 144.5,
           "kcalHigh": 213.6
+        },
+        {
+          "name": "Омлет",
+          "category": "main",
+          "portionGrams": 140.0,
+          "kcal": 457.0,
+          "protein": 12.0,
+          "fat": 35.0,
+          "carbs": 3.0,
+          "priceMinor": 32000,
+          "tags": [
+            "egg",
+            "milk"
+          ],
+          "kcalLow": 223.0,
+          "kcalHigh": 525.5
+        },
+        {
+          "name": "Греческий салат",
+          "category": "salad",
+          "portionGrams": 260.0,
+          "kcal": 286.0,
+          "protein": 5.2,
+          "fat": 24.7,
+          "carbs": 7.8,
+          "priceMinor": 38000,
+          "tags": [
+            "milk"
+          ],
+          "kcalLow": 243.1,
+          "kcalHigh": 385.0
+        },
+        {
+          "name": "Крем-суп овощной или грибной",
+          "category": "main",
+          "portionGrams": null,
+          "kcal": 260.0,
+          "protein": 8.0,
+          "fat": 16.0,
+          "carbs": 23.0,
+          "priceMinor": 34000,
+          "tags": [
+            "chicken",
+            "meat",
+            "milk"
+          ],
+          "kcalLow": 221.0,
+          "kcalHigh": 318.6
+        },
+        {
+          "name": "Овощи гриль",
+          "category": "side",
+          "portionGrams": 120.0,
+          "kcal": 152.0,
+          "protein": 3.0,
+          "fat": 12.0,
+          "carbs": 9.0,
+          "priceMinor": 36000,
+          "tags": [],
+          "kcalLow": 100.0,
+          "kcalHigh": 201.0
+        },
+        {
+          "name": "Творожная запеканка",
+          "category": "dessert",
+          "portionGrams": 220.0,
+          "kcal": 400.4,
+          "protein": 20.5,
+          "fat": 20.7,
+          "carbs": 31.0,
+          "priceMinor": 22000,
+          "tags": [
+            "egg",
+            "milk"
+          ],
+          "kcalLow": 338.6,
+          "kcalHigh": 490.1
+        },
+        {
+          "name": "Овсяная каша",
+          "category": "main",
+          "portionGrams": 310.0,
+          "kcal": 281.8,
+          "protein": 9.9,
+          "fat": 9.0,
+          "carbs": 40.0,
+          "priceMinor": 22000,
+          "tags": [
+            "gluten",
+            "milk"
+          ],
+          "kcalLow": 229.2,
+          "kcalHigh": 326.4
         }
       ]
     },
@@ -2611,6 +3060,34 @@
           "tags": [],
           "kcalLow": 144.5,
           "kcalHigh": 213.6
+        },
+        {
+          "name": "Греческий салат",
+          "category": "salad",
+          "portionGrams": 260.0,
+          "kcal": 286.0,
+          "protein": 5.2,
+          "fat": 24.7,
+          "carbs": 7.8,
+          "priceMinor": 38000,
+          "tags": [
+            "milk"
+          ],
+          "kcalLow": 243.1,
+          "kcalHigh": 385.0
+        },
+        {
+          "name": "Овощи гриль",
+          "category": "side",
+          "portionGrams": 120.0,
+          "kcal": 152.0,
+          "protein": 3.0,
+          "fat": 12.0,
+          "carbs": 9.0,
+          "priceMinor": 36000,
+          "tags": [],
+          "kcalLow": 100.0,
+          "kcalHigh": 201.0
         }
       ]
     },
@@ -2790,6 +3267,70 @@
           "tags": [],
           "kcalLow": 144.5,
           "kcalHigh": 213.6
+        },
+        {
+          "name": "Греческий салат",
+          "category": "salad",
+          "portionGrams": 260.0,
+          "kcal": 286.0,
+          "protein": 5.2,
+          "fat": 24.7,
+          "carbs": 7.8,
+          "priceMinor": 38000,
+          "tags": [
+            "milk"
+          ],
+          "kcalLow": 243.1,
+          "kcalHigh": 385.0
+        },
+        {
+          "name": "Творожная запеканка",
+          "category": "dessert",
+          "portionGrams": 220.0,
+          "kcal": 400.4,
+          "protein": 20.5,
+          "fat": 20.7,
+          "carbs": 31.0,
+          "priceMinor": 22000,
+          "tags": [
+            "egg",
+            "milk"
+          ],
+          "kcalLow": 338.6,
+          "kcalHigh": 490.1
+        },
+        {
+          "name": "Йогурт с гранолой и ягодами",
+          "category": "dessert",
+          "portionGrams": 250.0,
+          "kcal": 316.8,
+          "protein": 7.8,
+          "fat": 8.5,
+          "carbs": 50.5,
+          "priceMinor": 41000,
+          "tags": [
+            "gluten",
+            "milk",
+            "nuts"
+          ],
+          "kcalLow": 176.0,
+          "kcalHigh": 364.3
+        },
+        {
+          "name": "Омлет",
+          "category": "main",
+          "portionGrams": 140.0,
+          "kcal": 457.0,
+          "protein": 12.0,
+          "fat": 35.0,
+          "carbs": 3.0,
+          "priceMinor": 32000,
+          "tags": [
+            "egg",
+            "milk"
+          ],
+          "kcalLow": 223.0,
+          "kcalHigh": 525.5
         }
       ]
     }
@@ -52113,6 +52654,7 @@
           "carbs": 40.8,
           "priceMinor": 39900,
           "tags": [
+            "fish",
             "gluten",
             "milk"
           ]
@@ -52314,7 +52856,9 @@
           "fat": 6.0,
           "carbs": 45.0,
           "priceMinor": 52900,
-          "tags": []
+          "tags": [
+            "fish"
+          ]
         },
         {
           "name": "Креветки Лангустино на гриле",
@@ -52382,6 +52926,7 @@
           "carbs": 8.3,
           "priceMinor": 54900,
           "tags": [
+            "fish",
             "milk"
           ]
         },

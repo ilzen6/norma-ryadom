@@ -23,6 +23,7 @@ enum AppFailure {
   photoTooLarge,
   serviceUnavailable,
   locationDenied,
+  locationOff,
   locationUnavailable,
   outsideCoverage,
   photoAccessDenied,

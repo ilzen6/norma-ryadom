@@ -11,3 +11,6 @@ name;category;portion_g;kcal;protein_g;fat_g;carbs_g;price_rub;tags;kcal_low;kca
 Овсяная каша;main;310;281.8;9.9;9;40;220;gluten,milk;229.2;326.4
 Чизкейк;dessert;155;434.3;6.2;28.7;37.7;290;egg,gluten,milk;369.2;499.4
 Маффин;dessert;130;445;5;23;53;160;egg,gluten,milk,nuts;351.4;511.7
+Омлет;main;140;457;12;35;3;320;egg,milk;223;525.5
+Йогурт с гранолой и ягодами;dessert;250;316.8;7.8;8.5;50.5;410;gluten,milk,nuts;176;364.3
+Творожная запеканка;dessert;220;400.4;20.5;20.7;31;220;egg,milk;338.6;490.1
