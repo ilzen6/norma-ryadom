@@ -6,6 +6,8 @@ import '../../domain/models/geo_location.dart';
 import '../../utils/result.dart';
 
 abstract interface class LocationService {
+  Future<AppFailure?> ensureAccess();
+
   Future<Result<GeoLocation>> currentLocation();
 }
 
@@ -17,19 +19,27 @@ class DeviceLocationService implements LocationService {
   static const _fullAccuracyPurpose = 'NearbyVenues';
 
   @override
-  Future<Result<GeoLocation>> currentLocation() async {
+  Future<AppFailure?> ensureAccess() async {
     try {
-      if (!await Geolocator.isLocationServiceEnabled()) {
-        return const Err(AppFailure.locationOff);
-      }
+      if (!await Geolocator.isLocationServiceEnabled()) return AppFailure.locationOff;
       var permission = await Geolocator.checkPermission();
       if (permission == LocationPermission.denied) {
         permission = await Geolocator.requestPermission();
       }
       if (permission == LocationPermission.denied || permission == LocationPermission.deniedForever) {
-        return const Err(AppFailure.locationDenied);
+        return AppFailure.locationDenied;
       }
       await _askForFullAccuracy();
+      return null;
+    } on Exception {
+      return AppFailure.locationUnavailable;
+    }
+  }
+
+  @override
+  Future<Result<GeoLocation>> currentLocation() async {
+    try {
+      if (await ensureAccess() case final failure?) return Err(failure);
       final position = await _mostAccurate() ?? await Geolocator.getLastKnownPosition();
       if (position == null) return const Err(AppFailure.locationUnavailable);
       return Ok(GeoLocation(lat: position.latitude, lon: position.longitude, source: LocationSource.device));

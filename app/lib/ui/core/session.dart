@@ -26,8 +26,7 @@ class ProfileController extends AsyncNotifier<UserProfile?> {
     final profile = state.value;
     if (profile == null) return null;
     if (consent) {
-      final location = await ref.read(locationServiceProvider).currentLocation();
-      if (location case Err(:final failure)) return failure;
+      if (await ref.read(locationServiceProvider).ensureAccess() case final failure?) return failure;
     }
     await save(profile.copyWith(locationConsent: consent));
     return null;

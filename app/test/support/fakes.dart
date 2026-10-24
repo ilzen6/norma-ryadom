@@ -273,6 +273,15 @@ class FakeLocationService implements LocationService {
   int calls = 0;
 
   @override
+  Future<AppFailure?> ensureAccess() async {
+    calls++;
+    return switch (result) {
+      Err(:final failure) when failure != AppFailure.locationUnavailable => failure,
+      _ => null,
+    };
+  }
+
+  @override
   Future<Result<GeoLocation>> currentLocation() async {
     calls++;
     return result;
