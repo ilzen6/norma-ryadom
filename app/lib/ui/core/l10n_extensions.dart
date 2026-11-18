@@ -6,6 +6,7 @@ import '../../domain/models/diet_preference.dart';
 import '../../domain/models/district.dart';
 import '../../domain/models/meal.dart';
 import '../../domain/models/profile.dart';
+import '../../domain/models/search_filters.dart';
 import '../../l10n/generated/app_localizations.dart';
 import '../../utils/result.dart';
 import 'formatting.dart';
@@ -20,6 +21,31 @@ extension MealLabels on AppLocalizations {
     MealType.lunch => mealLunch,
     MealType.dinner => mealDinner,
     MealType.snack => mealSnack,
+  };
+
+  String comboSort(ComboSort sort) => switch (sort) {
+    ComboSort.recommended => sortRecommended,
+    ComboSort.nearest => sortNearest,
+    ComboSort.cheapest => sortCheapest,
+    ComboSort.accurate => sortAccurate,
+  };
+
+  String venueKind(VenueKind kind) => switch (kind) {
+    VenueKind.cafe => kindCafe,
+    VenueKind.coffee => kindCoffee,
+    VenueKind.georgian => kindGeorgian,
+    VenueKind.asian => kindAsian,
+    VenueKind.canteen => kindCanteen,
+    VenueKind.bakery => kindBakery,
+    VenueKind.centralAsian => kindCentralAsian,
+    VenueKind.italian => kindItalian,
+    VenueKind.sushi => kindSushi,
+    VenueKind.blini => kindBlini,
+    VenueKind.bar => kindBar,
+    VenueKind.readyFood => kindReadyFood,
+    VenueKind.pizza => kindPizza,
+    VenueKind.burger => kindBurger,
+    VenueKind.shawarma => kindShawarma,
   };
 
   String districtName(District district) => switch (district) {

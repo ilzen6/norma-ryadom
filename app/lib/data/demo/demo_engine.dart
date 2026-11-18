@@ -202,15 +202,20 @@ class DemoScorer {
 }
 
 class DemoOptimizer {
-  const DemoOptimizer(this._scorer);
+  const DemoOptimizer(this._scorer, {this.maxPriceMinor});
 
   static const maxItems = 3;
   static const heapFactor = 4;
 
   final DemoScorer _scorer;
+  final int? maxPriceMinor;
+
+  bool _affordable(DemoDish dish) => maxPriceMinor == null || (dish.priceMinor ?? maxPriceMinor! + 1) <= maxPriceMinor!;
+
+  bool _withinBudget(int? priceMinor) => maxPriceMinor == null || (priceMinor != null && priceMinor <= maxPriceMinor!);
 
   List<DemoCombo> bestCombos(List<DemoDish> menu, DemoTarget target, int limit) {
-    final allowed = menu.where(target.allows).toList()
+    final allowed = menu.where((dish) => target.allows(dish) && _affordable(dish)).toList()
       ..sort((left, right) {
         final byKcal = left.nutrients.kcal.compareTo(right.nutrients.kcal);
         return byKcal != 0 ? byKcal : left.id.compareTo(right.id);
@@ -219,7 +224,7 @@ class DemoOptimizer {
     final picked = <DemoDish>[];
     final upperKcal = target.maxKcal + _epsilon;
 
-    void visit(int start, DemoNutrients totals) {
+    void visit(int start, DemoNutrients totals, int priceMinor) {
       if (picked.isNotEmpty && target.isSatisfiedBy(totals) && DemoMealStructure.isComplete(picked)) {
         best.offer(_scorer.combo(List.of(picked), target));
       }
@@ -227,16 +232,17 @@ class DemoOptimizer {
       var index = start;
       while (index < allowed.length && totals.kcal + allowed[index].nutrients.kcal <= upperKcal) {
         final dish = allowed[index];
-        if (DemoMealStructure.canAdd(picked, dish)) {
+        final nextPrice = priceMinor + (dish.priceMinor ?? 0);
+        if (DemoMealStructure.canAdd(picked, dish) && (maxPriceMinor == null || nextPrice <= maxPriceMinor!)) {
           picked.add(dish);
-          visit(index, totals + dish.nutrients);
+          visit(index, totals + dish.nutrients, nextPrice);
           picked.removeLast();
         }
         index++;
       }
     }
 
-    visit(0, DemoNutrients.zero);
+    visit(0, DemoNutrients.zero, 0);
     return diversify(best.ranked(), limit);
   }
 
@@ -254,7 +260,7 @@ class DemoOptimizer {
             .map((candidate) => [...dishes]..[replacedIndex] = candidate)
             .where(DemoMealStructure.isValid)
             .map((candidateDishes) => _scorer.combo(candidateDishes, target))
-            .where((combo) => target.isSatisfiedBy(combo.totals))
+            .where((combo) => target.isSatisfiedBy(combo.totals) && _withinBudget(combo.priceMinor))
             .toList()
           ..sort(DemoCombo.compare);
     return combos.take(limit).toList();

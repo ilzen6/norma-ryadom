@@ -6,6 +6,7 @@ import 'package:norma_ryadom/data/services/norma_api.dart';
 import 'package:norma_ryadom/domain/models/catalog.dart';
 import 'package:norma_ryadom/domain/models/combo.dart';
 import 'package:norma_ryadom/domain/models/geo_location.dart';
+import 'package:norma_ryadom/domain/models/search_filters.dart';
 import 'package:norma_ryadom/utils/result.dart';
 
 import '../../support/fakes.dart';
@@ -21,6 +22,18 @@ void main() {
     Ok(:final value) => value,
     Err(:final failure) => throw StateError('$failure'),
   };
+  final catalog = DemoCatalog.fromJson(File('assets/demo/catalog.json').readAsStringSync());
+  String? kindOf(ComboOption option) => catalog.venue(option.venue.id)?.kind;
+  bool exact(ComboOption option) => option.combo.checks.every((check) => check.status == MetricStatus.ok);
+  Future<List<ComboOption>> nearby(SearchFilters filters, {int radiusMeters = 1500}) async => valueOf(
+    await api.searchNearby(
+      location: center,
+      radiusMeters: radiusMeters,
+      target: TestData.lunchTarget,
+      price: filters.prefersCheaper ? PricePreference.cheaper : PricePreference.any,
+      filters: filters,
+    ),
+  ).options;
 
   test('показывает заведения рядом с цветом соответствия цели', () async {
     final venues = valueOf(
@@ -221,5 +234,67 @@ void main() {
     expect(all.map((venue) => venue.venue.name), containsAll(['Якитория', 'Кафе Ромашка']));
     expect(all.every((venue) => !venue.hasMenu && venue.fit == null), isTrue);
     expect(all.firstWhere((venue) => venue.venue.chainName == null).venue.confirmedOn, DateTime(2026, 3, 14));
+  });
+
+  test('в режиме «Рекомендуем» не начинает с фастфуда и показывает местное кафе в первой тройке', () async {
+    final options = await nearby(const SearchFilters());
+
+    expect(options, hasLength(greaterThan(3)));
+    expect(options.take(5).map(kindOf), everyElement(isNot(isIn(['pizza', 'burger', 'shawarma']))));
+    expect(options.take(3).map((option) => option.venue.chainName), contains(isNull));
+  });
+
+  test('подбирает только в заведениях выбранных видов', () async {
+    final options = await nearby(
+      const SearchFilters(kinds: {VenueKind.georgian, VenueKind.coffee}),
+      radiusMeters: 3000,
+    );
+
+    expect(options, isNotEmpty);
+    expect(options.map(kindOf), everyElement(isIn(['georgian', 'coffee'])));
+  });
+
+  test('«Скрыть фастфуд» убирает бургерные, шаурму и пиццерии', () async {
+    final options = await nearby(const SearchFilters(hideFastFood: true), radiusMeters: 3000);
+
+    expect(options, isNotEmpty);
+    expect(options.map(kindOf), everyElement(isNot(isIn(['pizza', 'burger', 'shawarma']))));
+  });
+
+  test('в режиме «Ближе» точные наборы идут от ближнего к дальнему', () async {
+    final distances = [
+      for (final option in await nearby(const SearchFilters(sort: ComboSort.nearest)))
+        if (exact(option)) option.distanceMeters!,
+    ];
+
+    expect(distances, hasLength(greaterThan(1)));
+    expect(distances, orderedEquals([...distances]..sort()));
+  });
+
+  test('в режиме «Дешевле» точные наборы идут от дешёвого к дорогому', () async {
+    final prices = [
+      for (final option in await nearby(const SearchFilters(sort: ComboSort.cheapest)))
+        if (exact(option) && option.combo.priceMinor != null) option.combo.priceMinor!,
+    ];
+
+    expect(prices, hasLength(greaterThan(1)));
+    expect(prices, orderedEquals([...prices]..sort()));
+  });
+
+  test('в режиме «Точные данные» наборы из официальных меню идут раньше примерных', () async {
+    final kinds = [
+      for (final option in await nearby(const SearchFilters(sort: ComboSort.accurate), radiusMeters: 3000))
+        if (exact(option)) option.combo.sourceKind,
+    ];
+
+    expect(kinds, contains(SourceKind.verified));
+    expect(kinds.map((kind) => kind.index), orderedEquals([...kinds.map((kind) => kind.index)]..sort()));
+  });
+
+  test('не предлагает наборы дороже заданной цены', () async {
+    final options = await nearby(const SearchFilters(maxPriceRub: 400), radiusMeters: 3000);
+
+    expect(options, isNotEmpty);
+    expect(options.map((option) => option.combo.priceMinor), everyElement(lessThanOrEqualTo(40000)));
   });
 }

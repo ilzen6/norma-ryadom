@@ -95,4 +95,5 @@ Map<String, Object?> _venue(Map<String, String> row) => {
   'lon': double.parse(row['lon']!),
   if (row['confirmed_on'] case final confirmed? when confirmed.isNotEmpty) 'confirmedOn': confirmed,
   if (row['template'] case final template? when template.isNotEmpty) 'template': template,
+  if (row['kind'] case final kind? when kind.isNotEmpty) 'kind': kind,
 };

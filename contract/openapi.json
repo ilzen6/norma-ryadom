@@ -138,6 +138,16 @@
       },
       "ComboSearchRequest" : {
         "properties" : {
+          "kinds" : {
+            "items" : {
+              "enum" : [ "cafe", "coffee", "bakery", "canteen", "georgian", "central-asian", "asian", "sushi", "italian", "blini", "bar", "ready-food", "pizza", "burger", "shawarma" ],
+              "type" : "string"
+            },
+            "maxItems" : 15,
+            "minItems" : 0,
+            "type" : "array",
+            "uniqueItems" : true
+          },
           "limit" : {
             "format" : "int32",
             "maximum" : 30,
@@ -153,6 +163,10 @@
           },
           "preferCheaper" : {
             "type" : "boolean"
+          },
+          "sort" : {
+            "enum" : [ "RECOMMENDED", "NEAREST", "CHEAPEST", "ACCURATE" ],
+            "type" : "string"
           },
           "target" : {
             "$ref" : "#/components/schemas/MealTargetRequest"

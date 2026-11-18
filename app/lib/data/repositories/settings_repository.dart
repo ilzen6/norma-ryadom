@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import '../../domain/models/search_filters.dart';
 import '../local/app_database.dart';
 
 abstract interface class SettingsRepository {
@@ -12,6 +15,10 @@ abstract interface class SettingsRepository {
   Future<String?> theme();
 
   Future<void> saveTheme(String theme);
+
+  Future<SearchFilters> searchFilters();
+
+  Future<void> saveSearchFilters(SearchFilters filters);
 }
 
 class LocalSettingsRepository implements SettingsRepository {
@@ -20,6 +27,7 @@ class LocalSettingsRepository implements SettingsRepository {
   static const _serverAddressKey = 'server_address';
   static const _healthSyncKey = 'health_sync';
   static const _themeKey = 'theme';
+  static const _searchFiltersKey = 'search_filters';
 
   final AppDatabase _db;
 
@@ -58,4 +66,24 @@ class LocalSettingsRepository implements SettingsRepository {
   @override
   Future<void> saveTheme(String theme) =>
       _db.into(_db.settingRecords).insertOnConflictUpdate(SettingRecordsCompanion.insert(key: _themeKey, value: theme));
+
+  @override
+  Future<SearchFilters> searchFilters() async {
+    final record = await (_db.select(
+      _db.settingRecords,
+    )..where((row) => row.key.equals(_searchFiltersKey))).getSingleOrNull();
+    if (record == null) return const SearchFilters();
+    try {
+      return SearchFilters.fromJson(jsonDecode(record.value) as Map<String, dynamic>);
+    } on Object {
+      return const SearchFilters();
+    }
+  }
+
+  @override
+  Future<void> saveSearchFilters(SearchFilters filters) => _db
+      .into(_db.settingRecords)
+      .insertOnConflictUpdate(
+        SettingRecordsCompanion.insert(key: _searchFiltersKey, value: jsonEncode(filters.toJson())),
+      );
 }

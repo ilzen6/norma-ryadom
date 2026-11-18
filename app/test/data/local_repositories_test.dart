@@ -12,6 +12,7 @@ import 'package:norma_ryadom/domain/models/diet_preference.dart';
 import 'package:norma_ryadom/domain/models/district.dart';
 import 'package:norma_ryadom/domain/models/meal.dart';
 import 'package:norma_ryadom/domain/models/nutrition_norm.dart';
+import 'package:norma_ryadom/domain/models/search_filters.dart';
 
 import '../support/fakes.dart';
 
@@ -100,6 +101,20 @@ void main() {
     await repository.saveServerAddress('https://norma.example.ru');
 
     expect(await repository.serverAddress(), 'https://norma.example.ru');
+  });
+
+  test('запоминает фильтры подбора и при испорченной записи возвращает значения по умолчанию', () async {
+    final repository = LocalSettingsRepository(database);
+    const filters = SearchFilters(sort: ComboSort.nearest, kinds: {VenueKind.coffee}, maxPriceRub: 500);
+
+    expect(await repository.searchFilters(), const SearchFilters());
+    await repository.saveSearchFilters(filters);
+    expect(await repository.searchFilters(), filters);
+
+    await database
+        .into(database.settingRecords)
+        .insertOnConflictUpdate(SettingRecordsCompanion.insert(key: 'search_filters', value: '{"sort": 7}'));
+    expect(await repository.searchFilters(), const SearchFilters());
   });
 
   test('обновляет базу первой версии, не теряя профиль', () async {

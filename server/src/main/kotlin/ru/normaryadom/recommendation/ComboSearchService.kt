@@ -43,9 +43,18 @@ class ComboSearchService(
         radiusMeters: Int,
         criteria: SearchCriteria,
         limit: Int,
+        preferences: NearbyPreferences = NearbyPreferences(),
     ): ComboSearchResult {
         val applied = criteria.copy(target = TargetRounding.round(criteria.target))
-        val query = NearbyQuery(center, radiusMeters, MenuCoverage.WITH_MENU_ONLY, nearby.maxResults, limitEachMenuKind = true)
+        val query =
+            NearbyQuery(
+                center,
+                radiusMeters,
+                MenuCoverage.WITH_MENU_ONLY,
+                nearby.maxResults,
+                limitEachMenuKind = true,
+                kinds = preferences.kinds,
+            )
         val options =
             nearbyVenues
                 .findNearby(query)
@@ -53,7 +62,7 @@ class ComboSearchService(
                 .values
                 .map { venuesWithSameMenu -> venuesWithSameMenu.minBy(NearbyVenue::distanceMeters) }
                 .flatMap { closest -> optionsFor(closest, applied) }
-                .sortedWith(compareBy<RankedOption> { it.rank }.thenComparing({ it.option.combo }, Combo.ORDER))
+                .sortedWith(order(preferences.sort))
                 .let(::limitRepeatedTemplates)
                 .take(limit)
                 .map(RankedOption::option)
@@ -103,6 +112,16 @@ class ComboSearchService(
             .firstOrNull { it.isNotEmpty() }
             .orEmpty()
 
+    private fun order(sort: ComboSort): Comparator<RankedOption> {
+        val recommended = compareBy<RankedOption> { it.rank }.thenComparing({ it.option.combo }, Combo.ORDER)
+        return when (sort) {
+            ComboSort.RECOMMENDED -> recommended
+            ComboSort.NEAREST -> compareBy<RankedOption>({ it.step }, { it.option.distanceMeters }).then(recommended)
+            ComboSort.CHEAPEST -> compareBy<RankedOption>({ it.step }, { it.option.combo.priceMinor ?: Int.MAX_VALUE }).then(recommended)
+            ComboSort.ACCURATE -> compareBy<RankedOption>({ it.step }, { it.option.combo.sourceKind }).then(recommended)
+        }
+    }
+
     private fun limitRepeatedTemplates(options: List<RankedOption>): List<RankedOption> {
         val shown = mutableMapOf<List<String>, Int>()
         return options.filter { ranked ->
@@ -119,7 +138,10 @@ class ComboSearchService(
         nearbyVenue: NearbyVenue,
         criteria: SearchCriteria,
     ): List<RankedOption> {
+        val venue = nearbyVenue.venue
         val distancePenalty = nearby.distanceWeightPerKm * nearbyVenue.distanceMeters / METERS_PER_KILOMETER
+        val kindPenalty = if (venue.kind?.isFastFood == true) nearby.fastFoodPenalty else 0.0
+        val localBonus = if (venue.chainId == null) nearby.localBonus else 0.0
         val perVenue = if (nearbyVenue.venue.usesTemplateMenu) nearby.combosPerTemplateVenue else nearby.combosPerVenue
         return tiers(criteria)
             .asSequence()
@@ -129,7 +151,8 @@ class ComboSearchService(
                 combos.take(perVenue).map { combo ->
                     RankedOption(
                         option = ComboOption(nearbyVenue.venue, nearbyVenue.distanceMeters, combo),
-                        rank = combo.score + distancePenalty + step * nearby.compromisePenalty,
+                        rank = combo.score + distancePenalty + step * nearby.compromisePenalty + kindPenalty - localBonus,
+                        step = step,
                     )
                 }
             }.orEmpty()
@@ -138,6 +161,7 @@ class ComboSearchService(
     private data class RankedOption(
         val option: ComboOption,
         val rank: Double,
+        val step: Int,
     )
 
     private companion object {

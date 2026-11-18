@@ -3,6 +3,7 @@ package ru.normaryadom.catalog
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import ru.normaryadom.catalog.domain.GeoPoint
+import ru.normaryadom.catalog.domain.VenueKind
 import ru.normaryadom.catalog.importing.CsvError
 import ru.normaryadom.catalog.importing.CsvErrorCode
 import ru.normaryadom.catalog.importing.CsvParseResult
@@ -68,6 +69,21 @@ class VenueCsvParserTest {
 
         val drafts = (result as CsvParseResult.Parsed<VenueDraft>).rows
         assertThat(drafts.map { it.templateId }).containsExactly(7L, null)
+    }
+
+    @Test
+    fun `читает вид заведения`() {
+        val result = parser.parse("$HEADER;confirmed_on;template;kind\nА;адрес;55;37;a-1;;;central-asian\nБ;адрес;55;37;a-2;;;\n")
+
+        val drafts = (result as CsvParseResult.Parsed<VenueDraft>).rows
+        assertThat(drafts.map { it.kind }).containsExactly(VenueKind.CENTRAL_ASIAN, null)
+    }
+
+    @Test
+    fun `отклоняет неизвестный вид заведения и называет колонку`() {
+        val result = parser.parse("$HEADER;confirmed_on;template;kind\nА;адрес;55;37;a-1;;;steakhouse\n")
+
+        assertThat((result as CsvParseResult.Invalid).errors).containsExactly(CsvError(2, CsvErrorCode.UNKNOWN_KIND, "kind"))
     }
 
     @Test

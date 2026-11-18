@@ -17,4 +17,5 @@ data class Venue(
     val underReview: Boolean = false,
     val dataQuality: SourceKind? = null,
     val usesTemplateMenu: Boolean = false,
+    val kind: VenueKind? = null,
 )

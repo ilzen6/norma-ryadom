@@ -24,4 +24,8 @@ data class NearbyProperties(
     val compromisePenalty: Double = 1.0,
     @field:Min(1)
     val venuesPerTemplate: Int = 3,
+    @field:DecimalMin("0.0")
+    val fastFoodPenalty: Double = 0.8,
+    @field:DecimalMin("0.0")
+    val localBonus: Double = 1.0,
 )

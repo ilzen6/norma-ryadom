@@ -16,10 +16,11 @@ class CatalogFixtures(
         name: String,
         menu: List<String>,
         venues: List<String>,
+        venueColumns: List<String> = emptyList(),
     ): Long {
         val chainId = chains.create(name, SOURCE_URL)
         val menuOutcome = imports.importChainMenu(chainId, menuCsv(menu), SOURCE_URL)
-        val venueOutcome = imports.importChainVenues(chainId, venueCsv(venues))
+        val venueOutcome = imports.importChainVenues(chainId, venueCsv(venues, venueColumns))
         check(menuOutcome is ImportOutcome.Imported && venueOutcome is ImportOutcome.Imported) { "Fixture catalog is invalid" }
         return chainId
     }
@@ -94,9 +95,11 @@ class CatalogFixtures(
 
         val CAFE_PLACES =
             listOf(
-                "Кафе у моста;Пресненская наб., 6;55.7490;37.5380;osm-cafe-1;2026-05-01;cafe",
-                "Кафе на углу;Пресненская наб., 8;55.7488;37.5385;osm-cafe-2;2026-05-01;cafe",
-                "Буфет без вида;Пресненская наб., 12;55.7492;37.5370;osm-cafe-3;2026-05-01;",
+                "Кафе у моста;Пресненская наб., 6;55.7490;37.5380;osm-cafe-1;2026-05-01;cafe;cafe",
+                "Кафе на углу;Пресненская наб., 8;55.7488;37.5385;osm-cafe-2;2026-05-01;cafe;cafe",
+                "Буфет без вида;Пресненская наб., 12;55.7492;37.5370;osm-cafe-3;2026-05-01;;",
             )
+
+        val BURGER_VENUES = listOf("Бургерная, Сити;Пресненская наб., 2;55.7496;37.5397;burger-01;2026-05-01;;burger")
     }
 }

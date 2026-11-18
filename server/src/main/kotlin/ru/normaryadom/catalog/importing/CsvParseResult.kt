@@ -30,4 +30,5 @@ enum class CsvErrorCode {
     DUPLICATE,
     RANGE_MISMATCH,
     UNKNOWN_TEMPLATE,
+    UNKNOWN_KIND,
 }

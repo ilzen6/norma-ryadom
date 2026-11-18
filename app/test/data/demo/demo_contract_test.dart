@@ -50,7 +50,8 @@ void main() {
       final exact = targetOf(contractCase['target'] as Map<String, dynamic>);
       final rounded = exact.rounded();
       final scorer = DemoScorer(preferCheaper: contractCase['preferCheaper'] == true);
-      final optimizer = DemoOptimizer(scorer);
+      final maxPriceRub = contractCase['maxPriceRub'] as int?;
+      final optimizer = DemoOptimizer(scorer, maxPriceMinor: maxPriceRub == null ? null : maxPriceRub * 100);
       expect(_targetJson(rounded), contractCase['roundedTarget']);
 
       for (final (index, expected) in (contractCase['chains'] as List<dynamic>).cast<Map<String, dynamic>>().indexed) {

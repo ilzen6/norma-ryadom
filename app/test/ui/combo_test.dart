@@ -48,6 +48,7 @@ void main() {
     await tester.tap(find.byKey(const Key('find-nearby')));
     await tester.pumpAndSettle();
 
+    await scrollTo(tester, find.byKey(const Key('wider-search')));
     expect(find.byKey(const Key('wider-search')), findsOneWidget);
     expect(find.text('Рядом было мало вариантов — расширили поиск до 3 км'), findsOneWidget);
   });

@@ -4,13 +4,14 @@ import ru.normaryadom.catalog.domain.GeoPoint
 import ru.normaryadom.catalog.domain.MenuScope
 import ru.normaryadom.catalog.domain.SourceKind
 import ru.normaryadom.catalog.domain.Venue
+import ru.normaryadom.catalog.domain.VenueKind
 import java.sql.ResultSet
 import java.time.LocalDate
 
 object VenueRows {
     const val SELECT_COLUMNS = """
         v.id, v.chain_id, c.name AS chain_name, v.name, v.address, v.is_active, v.menu_version,
-        v.confirmed_on, v.under_review,
+        v.confirmed_on, v.under_review, v.kind,
         coalesce(c.currency, 'RUB') AS currency,
         coalesce(c.menu_version, 0) AS chain_menu_version,
         v.template_id, coalesce(t.menu_version, 0) AS template_menu_version,
@@ -76,6 +77,7 @@ object VenueRows {
             underReview = rs.getBoolean("under_review"),
             dataQuality = rs.getString("data_quality")?.let(SourceKind::fromCode),
             usesTemplateMenu = usesTemplate,
+            kind = rs.getString("kind")?.let(VenueKind::fromCode),
         )
     }
 

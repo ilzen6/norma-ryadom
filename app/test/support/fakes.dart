@@ -15,6 +15,7 @@ import 'package:norma_ryadom/domain/models/combo.dart';
 import 'package:norma_ryadom/domain/models/diary.dart';
 import 'package:norma_ryadom/domain/models/geo_location.dart';
 import 'package:norma_ryadom/domain/models/meal.dart';
+import 'package:norma_ryadom/domain/models/search_filters.dart';
 import 'package:norma_ryadom/domain/models/nutrition_norm.dart';
 import 'package:norma_ryadom/domain/models/profile.dart';
 import 'package:norma_ryadom/utils/result.dart';
@@ -130,6 +131,14 @@ class InMemorySettingsRepository implements SettingsRepository {
 
   @override
   Future<void> saveTheme(String theme) async => savedTheme = theme;
+
+  SearchFilters? savedFilters;
+
+  @override
+  Future<SearchFilters> searchFilters() async => savedFilters ?? const SearchFilters();
+
+  @override
+  Future<void> saveSearchFilters(SearchFilters filters) async => savedFilters = filters;
 }
 
 class FakeHealthSyncService implements HealthSyncService {
@@ -166,6 +175,7 @@ class FakeComboRepository implements ComboRepository {
   Result<ComboSearchResult> replaceResult = const Ok(ComboSearchResult(appliedTarget: TestData.lunchTarget));
   final List<MealTarget> requestedTargets = [];
   final List<PricePreference> requestedPrices = [];
+  final List<SearchFilters> requestedFilters = [];
   final List<GeoLocation> requestedLocations = [];
   final List<int> requestedVenues = [];
   final List<(List<int>, int)> replaceRequests = [];
@@ -177,9 +187,11 @@ class FakeComboRepository implements ComboRepository {
     required GeoLocation location,
     required MealTarget target,
     required PricePreference price,
+    SearchFilters filters = const SearchFilters(),
   }) async {
     requestedTargets.add(target);
     requestedPrices.add(price);
+    requestedFilters.add(filters);
     requestedLocations.add(location);
     final result = nearbyResult;
     await gate?.future;

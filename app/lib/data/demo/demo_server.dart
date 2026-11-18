@@ -18,6 +18,7 @@ class DemoVenue {
     required this.lon,
     this.confirmedOn,
     this.template,
+    this.kind,
   });
 
   final int id;
@@ -28,6 +29,7 @@ class DemoVenue {
   final double lon;
   final String? confirmedOn;
   final String? template;
+  final String? kind;
 }
 
 class DemoChain {
@@ -96,6 +98,7 @@ class DemoCatalog {
                 lon: (venue['lon'] as num).toDouble(),
                 confirmedOn: venue['confirmedOn'] as String?,
                 template: venue['template'] as String?,
+                kind: venue['kind'] as String?,
               ),
           ],
         ),
@@ -113,6 +116,7 @@ class DemoCatalog {
               lon: (venue['lon'] as num).toDouble(),
               confirmedOn: venue['confirmedOn'] as String?,
               template: venue['template'] as String?,
+              kind: venue['kind'] as String?,
             ),
         ],
       ),
@@ -163,6 +167,10 @@ class DemoServerAdapter implements HttpClientAdapter {
   static const _venuesPerTemplate = 3;
   static const _cachedCombos = 5;
   static const _distanceWeightPerKm = 0.5;
+  static const _fastFoodPenalty = 0.8;
+  static const _localBonus = 1.0;
+  static const _fastFoodKinds = {'pizza', 'burger', 'shawarma'};
+  static const _noPrice = 1 << 31;
   static const _dietTagOrder = [
     'meat',
     'pork',
@@ -267,7 +275,8 @@ class DemoServerAdapter implements HttpClientAdapter {
   ResponseBody _search(DemoCatalog catalog, Map<String, dynamic> body) {
     final target = _bodyTarget(body['target'] as Map<String, dynamic>);
     final scorer = DemoScorer(preferCheaper: body['preferCheaper'] == true);
-    final optimizer = DemoOptimizer(scorer);
+    final maxPriceRub = body['maxPriceRub'] as int?;
+    final optimizer = DemoOptimizer(scorer, maxPriceMinor: maxPriceRub == null ? null : maxPriceRub * 100);
     final limit = (body['limit'] as int?) ?? 5;
     final location = body['location'] as Map<String, dynamic>?;
     if (location == null) {
@@ -282,37 +291,67 @@ class DemoServerAdapter implements HttpClientAdapter {
     }
     final applied = target.rounded();
     final center = ((location['lat'] as num).toDouble(), (location['lon'] as num).toDouble());
-    final ranked =
-        <(double, DemoVenue, double, DemoCombo, DemoChain)>[
-          for (final (chain, venue, distance) in _closestPerMenu(
-            _within(catalog, center, (location['radiusMeters'] as num).toDouble(), limitEachMenuKind: true),
-          ))
-            if (_firstTier(applied, (tier) => optimizer.bestCombos(chain.menu, tier, _cachedCombos)) case (
-              final step,
-              final combos,
-            ))
-              for (final combo in combos.take(chain.isTemplate ? _combosPerTemplateVenue : _combosPerVenue))
-                (
-                  combo.score + _distanceWeightPerKm * distance / 1000 + step * _compromisePenalty,
-                  venue,
-                  distance,
-                  combo,
-                  chain,
-                ),
-        ]..sort((left, right) {
-          final byRank = left.$1.compareTo(right.$1);
-          return byRank != 0 ? byRank : DemoCombo.compare(left.$4, right.$4);
-        });
+    final kinds = {...((body['kinds'] as List<dynamic>?) ?? const []).cast<String>()};
+    final ranked = <_RankedOption>[
+      for (final (chain, venue, distance) in _closestPerMenu(
+        _within(
+          catalog,
+          center,
+          (location['radiusMeters'] as num).toDouble(),
+          limitEachMenuKind: true,
+          kinds: kinds,
+        ),
+      ))
+        if (_firstTier(applied, (tier) => optimizer.bestCombos(chain.menu, tier, _cachedCombos)) case (
+          final step,
+          final combos,
+        ))
+          for (final combo in combos.take(chain.isTemplate ? _combosPerTemplateVenue : _combosPerVenue))
+            _RankedOption(
+              rank:
+                  combo.score +
+                  _distanceWeightPerKm * distance / 1000 +
+                  step * _compromisePenalty +
+                  (_fastFoodKinds.contains(venue.kind) ? _fastFoodPenalty : 0) -
+                  (venue.chainName == null ? _localBonus : 0),
+              step: step,
+              venue: venue,
+              distance: distance,
+              combo: combo,
+              menu: chain,
+            ),
+    ]..sort(_order(body['sort'] as String? ?? 'RECOMMENDED'));
     final shown = <String, int>{};
-    bool notRepeated((double, DemoVenue, double, DemoCombo, DemoChain) entry) {
-      if (!entry.$5.isTemplate) return true;
-      final dishes = entry.$4.dishes.map((dish) => dish.name).join('\n');
+    bool notRepeated(_RankedOption option) {
+      if (!option.menu.isTemplate) return true;
+      final dishes = option.combo.dishes.map((dish) => dish.name).join('\n');
       return (shown[dishes] = (shown[dishes] ?? 0) + 1) <= _venuesPerTemplate;
     }
 
     return _searchResponse(applied, [
-      for (final (_, venue, distance, combo, _) in ranked.where(notRepeated).take(limit)) (venue, distance, combo),
+      for (final option in ranked.where(notRepeated).take(limit)) (option.venue, option.distance, option.combo),
     ]);
+  }
+
+  static Comparator<_RankedOption> _order(String sort) {
+    int recommended(_RankedOption left, _RankedOption right) {
+      final byRank = left.rank.compareTo(right.rank);
+      return byRank != 0 ? byRank : DemoCombo.compare(left.combo, right.combo);
+    }
+
+    Comparator<_RankedOption> sameTierBy<T extends Comparable<T>>(T Function(_RankedOption) key) => (left, right) {
+      final byStep = left.step.compareTo(right.step);
+      if (byStep != 0) return byStep;
+      final byKey = key(left).compareTo(key(right));
+      return byKey != 0 ? byKey : recommended(left, right);
+    };
+
+    return switch (sort) {
+      'NEAREST' => sameTierBy<num>((option) => option.distance),
+      'CHEAPEST' => sameTierBy<num>((option) => option.combo.priceMinor ?? _noPrice),
+      'ACCURATE' => sameTierBy<String>((option) => option.combo.sourceKind),
+      _ => recommended,
+    };
   }
 
   ResponseBody _replace(DemoCatalog catalog, Map<String, dynamic> body) {
@@ -349,14 +388,16 @@ class DemoServerAdapter implements HttpClientAdapter {
     int limit = _maxNearby,
     bool withMenuOnly = true,
     bool limitEachMenuKind = false,
+    Set<String> kinds = const {},
   }) {
     final found =
         [
           for (final chain in catalog.chains)
             for (final venue in chain.venues)
-              if (catalog.menuSource(chain, venue) case final source when !withMenuOnly || source.menu.isNotEmpty)
-                if (_distanceMeters(center, (venue.lat, venue.lon)) case final distance when distance <= radius)
-                  (source, venue, distance),
+              if (kinds.isEmpty || kinds.contains(venue.kind))
+                if (catalog.menuSource(chain, venue) case final source when !withMenuOnly || source.menu.isNotEmpty)
+                  if (_distanceMeters(center, (venue.lat, venue.lon)) case final distance when distance <= radius)
+                    (source, venue, distance),
         ]..sort((left, right) {
           final byDistance = left.$3.compareTo(right.$3);
           return byDistance != 0 ? byDistance : left.$2.id.compareTo(right.$2.id);
@@ -560,4 +601,22 @@ class DemoServerAdapter implements HttpClientAdapter {
       Headers.contentTypeHeader: ['application/problem+json'],
     },
   );
+}
+
+class _RankedOption {
+  const _RankedOption({
+    required this.rank,
+    required this.step,
+    required this.venue,
+    required this.distance,
+    required this.combo,
+    required this.menu,
+  });
+
+  final double rank;
+  final int step;
+  final DemoVenue venue;
+  final double distance;
+  final DemoCombo combo;
+  final DemoChain menu;
 }

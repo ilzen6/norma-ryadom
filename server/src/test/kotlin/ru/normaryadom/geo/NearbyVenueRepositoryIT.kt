@@ -4,8 +4,11 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import ru.normaryadom.catalog.domain.GeoPoint
+import ru.normaryadom.catalog.domain.VenueKind
+import ru.normaryadom.catalog.importing.VenueCsvParser
 import ru.normaryadom.support.CatalogFixtures.Companion.BOWL_MENU
 import ru.normaryadom.support.CatalogFixtures.Companion.BOWL_VENUES
+import ru.normaryadom.support.CatalogFixtures.Companion.BURGER_VENUES
 import ru.normaryadom.support.CatalogFixtures.Companion.CAFE_PLACES
 import ru.normaryadom.support.CatalogFixtures.Companion.CAFE_TEMPLATE
 import ru.normaryadom.support.CatalogFixtures.Companion.CITY_LAT
@@ -58,6 +61,20 @@ class NearbyVenueRepositoryIT : IntegrationTest() {
         assertThat(nearest.map { it.venue.name }).containsExactly("Кафе у моста")
         assertThat(eachKind.map { it.venue.name }).containsExactly("Кафе у моста", "Гриль, Сити")
         assertThat(eachKind.map { it.venue.usesTemplateMenu }).containsExactly(true, false)
+    }
+
+    @Test
+    fun `отбирает только точки выбранных видов`() {
+        catalog.chain("Бургерная", GRILL_MENU, BURGER_VENUES, VenueCsvParser.OPTIONAL)
+        catalog.template("cafe", CAFE_TEMPLATE)
+        catalog.places(CAFE_PLACES)
+
+        val cafes = repository.findNearby(NearbyQuery(city, 5000, MenuCoverage.ALL, 50, kinds = setOf(VenueKind.CAFE)))
+        val burgers = repository.findNearby(NearbyQuery(city, 5000, MenuCoverage.ALL, 50, kinds = setOf(VenueKind.BURGER)))
+
+        assertThat(cafes.map { it.venue.name }).containsExactlyInAnyOrder("Кафе у моста", "Кафе на углу")
+        assertThat(burgers.map { it.venue.name }).containsExactly("Бургерная, Сити")
+        assertThat(burgers.single().venue.kind).isEqualTo(VenueKind.BURGER)
     }
 
     @Test

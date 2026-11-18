@@ -112,6 +112,10 @@ void main() {
       issues.addAll(await LayoutAudit.inspectScrolling(tester, 'цель приёма пищи'));
       Navigator.of(tester.element(find.byKey(const Key('target-save')))).pop();
       await tester.pumpAndSettle();
+      await tapVisible(tester, find.byKey(const Key('open-filters')));
+      issues.addAll(await LayoutAudit.inspectScrolling(tester, 'фильтры и порядок'));
+      Navigator.of(tester.element(find.byKey(const Key('apply-filters')))).pop();
+      await tester.pumpAndSettle();
       await tapVisible(tester, find.byKey(const Key('find-nearby')));
       issues.addAll(await LayoutAudit.inspectScrolling(tester, 'варианты рядом'));
       await tapVisible(tester, find.text('Сэндвич с курицей и песто на чиабатте'));

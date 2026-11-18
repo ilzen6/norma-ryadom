@@ -23,7 +23,13 @@ class ComboController(
     ): ComboSearchResponse {
         val result =
             request.location?.let { location ->
-                search.searchNearby(GeoPoint(location.lat, location.lon), location.radiusMeters, request.criteria(), request.limit)
+                search.searchNearby(
+                    GeoPoint(location.lat, location.lon),
+                    location.radiusMeters,
+                    request.criteria(),
+                    request.limit,
+                    request.preferences(),
+                )
             } ?: search.searchAtVenue(requireNotNull(request.venueId), request.criteria(), request.limit)
         return RecommendationMapper.searchResponse(result)
     }

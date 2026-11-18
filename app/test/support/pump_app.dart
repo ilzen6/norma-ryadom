@@ -10,6 +10,7 @@ import 'package:norma_ryadom/config/app_config.dart';
 import 'package:norma_ryadom/data/map/basemap.dart';
 import 'package:norma_ryadom/data/providers.dart';
 import 'package:norma_ryadom/domain/models/profile.dart';
+import 'package:norma_ryadom/domain/models/search_filters.dart';
 import 'package:norma_ryadom/l10n/generated/app_localizations.dart';
 import 'package:norma_ryadom/ui/core/theme.dart';
 
@@ -31,6 +32,7 @@ class TestHarness {
   bool healthSync = false;
   bool allowCleartextServer = false;
   bool demoServer = false;
+  SearchFilters filters = const SearchFilters();
   DateTime now = DateTime(2026, 10, 2, 13, 5);
 
   List<Override> get overrides => [
@@ -47,6 +49,7 @@ class TestHarness {
     serverProbeProvider.overrideWithValue(probe.call),
     healthSyncServiceProvider.overrideWithValue(health),
     initialHealthSyncProvider.overrideWithValue(healthSync),
+    initialSearchFiltersProvider.overrideWithValue(filters),
     clockProvider.overrideWithValue(() => now),
     profileRepositoryProvider.overrideWithValue(profiles),
     diaryRepositoryProvider.overrideWithValue(diary),
@@ -96,15 +99,24 @@ class TestHarness {
 }
 
 Future<void> scrollTo(WidgetTester tester, Finder finder) async {
-  await tester.scrollUntilVisible(finder, 300, scrollable: find.byType(Scrollable).first);
+  final scrollable = find.byType(Scrollable).first;
+  if (finder.evaluate().isEmpty) {
+    tester.state<ScrollableState>(scrollable).position.jumpTo(0);
+    await tester.pumpAndSettle();
+  }
+  await tester.scrollUntilVisible(finder, 300, scrollable: scrollable);
   await tester.pumpAndSettle();
 }
 
 Future<void> tapVisible(WidgetTester tester, Finder finder) async {
   await scrollTo(tester, finder);
   final screen = tester.view.physicalSize.height / tester.view.devicePixelRatio;
+  final top = tester.getTopLeft(finder.first).dy;
   final bottom = tester.getBottomLeft(finder.first).dy;
-  if (bottom > screen - 140) {
+  if (top < 100) {
+    await tester.drag(find.byType(Scrollable).first, Offset(0, 120 - top));
+    await tester.pumpAndSettle();
+  } else if (bottom > screen - 140) {
     await tester.drag(find.byType(Scrollable).first, Offset(0, screen - 160 - bottom));
     await tester.pumpAndSettle();
   }

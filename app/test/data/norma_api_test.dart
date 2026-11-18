@@ -11,6 +11,7 @@ import 'package:norma_ryadom/data/services/norma_api.dart';
 import 'package:norma_ryadom/domain/models/catalog.dart';
 import 'package:norma_ryadom/domain/models/combo.dart';
 import 'package:norma_ryadom/domain/models/geo_location.dart';
+import 'package:norma_ryadom/domain/models/search_filters.dart';
 import 'package:norma_ryadom/utils/result.dart';
 
 import '../support/fakes.dart';
@@ -116,7 +117,8 @@ void main() {
     expect((result as Ok<ComboSearchResult>).value.appliedTarget.kcal, 650);
     final request = adapter.requests.single;
     final body = request.data as Map<String, dynamic>;
-    expect(body.keys, unorderedEquals(['target', 'location', 'preferCheaper', 'limit']));
+    expect(body.keys, unorderedEquals(['target', 'location', 'preferCheaper', 'limit', 'sort']));
+    expect(body['sort'], 'RECOMMENDED');
     expect(
       (body['target'] as Map<String, dynamic>).keys,
       unorderedEquals(['kcal', 'kcalTolerance', 'minProtein', 'maxFat', 'maxCarbs', 'excludeTags']),
@@ -126,6 +128,44 @@ void main() {
     expect(body['preferCheaper'], isTrue);
     expect(body['location'], {'lat': 55.75, 'lon': 37.54, 'radiusMeters': 1500});
     expect((body['target'] as Map<String, dynamic>)['excludeTags'], ['pork']);
+  });
+
+  test('передаёт порядок, виды заведений и цену набора из фильтров', () async {
+    api = apiWith((_) => json({'appliedTarget': TestData.lunchTarget.toJson(), 'options': <Object>[]}));
+
+    await api.searchNearby(
+      location: TestData.deviceLocation,
+      radiusMeters: 1500,
+      target: TestData.lunchTarget,
+      price: PricePreference.cheaper,
+      filters: const SearchFilters(
+        sort: ComboSort.cheapest,
+        kinds: {VenueKind.georgian, VenueKind.centralAsian},
+        maxPriceRub: 700,
+      ),
+    );
+
+    final body = adapter.requests.single.data as Map<String, dynamic>;
+    expect(body['sort'], 'CHEAPEST');
+    expect(body['kinds'], ['central-asian', 'georgian']);
+    expect(body['maxPriceRub'], 700);
+  });
+
+  test('«Скрыть фастфуд» отправляет все виды, кроме фастфуда', () async {
+    api = apiWith((_) => json({'appliedTarget': TestData.lunchTarget.toJson(), 'options': <Object>[]}));
+
+    await api.searchNearby(
+      location: TestData.deviceLocation,
+      radiusMeters: 1500,
+      target: TestData.lunchTarget,
+      price: PricePreference.any,
+      filters: const SearchFilters(hideFastFood: true),
+    );
+
+    final body = adapter.requests.single.data as Map<String, dynamic>;
+    expect(body['kinds'], hasLength(12));
+    expect(body['kinds'], isNot(contains('burger')));
+    expect(body.containsKey('maxPriceRub'), isFalse);
   });
 
   test('отправляет замену блюда с порядком блюд и индексом', () async {

@@ -2,7 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:latlong2/latlong.dart';
 
 import '../../data/providers.dart';
-import '../../data/services/norma_api.dart';
 import '../../domain/models/diary.dart';
 import '../../domain/models/district.dart';
 import '../../domain/models/geo_location.dart';
@@ -46,18 +45,15 @@ final normProvider = Provider<NutritionNorm?>((ref) {
 });
 
 class MealSelection {
-  const MealSelection({required this.meal, this.customTarget, this.price = PricePreference.any});
+  const MealSelection({required this.meal, this.customTarget});
 
   final MealType meal;
   final MealTarget? customTarget;
-  final PricePreference price;
 
-  MealSelection copyWith({MealType? meal, MealTarget? Function()? customTarget, PricePreference? price}) =>
-      MealSelection(
-        meal: meal ?? this.meal,
-        customTarget: customTarget == null ? this.customTarget : customTarget(),
-        price: price ?? this.price,
-      );
+  MealSelection copyWith({MealType? meal, MealTarget? Function()? customTarget}) => MealSelection(
+    meal: meal ?? this.meal,
+    customTarget: customTarget == null ? this.customTarget : customTarget(),
+  );
 }
 
 final currentDayProvider = NotifierProvider<CurrentDayController, DateTime>(CurrentDayController.new);
@@ -100,8 +96,6 @@ class MealSelectionController extends Notifier<MealSelection> {
   void selectMeal(MealType meal) => state = state.copyWith(meal: meal, customTarget: () => null);
 
   void setCustomTarget(MealTarget? target) => state = state.copyWith(customTarget: () => target);
-
-  void setPrice(PricePreference price) => state = state.copyWith(price: price);
 }
 
 final currentTargetProvider = Provider<MealTarget?>((ref) {

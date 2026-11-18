@@ -10,6 +10,8 @@ import 'package:norma_ryadom/domain/models/district.dart';
 import 'package:norma_ryadom/domain/models/geo_location.dart';
 import 'package:norma_ryadom/domain/models/meal.dart';
 import 'package:norma_ryadom/domain/models/nutrition_norm.dart';
+import 'package:norma_ryadom/domain/models/search_filters.dart';
+import 'package:norma_ryadom/ui/home/filters_sheet.dart';
 import 'package:norma_ryadom/utils/result.dart';
 
 import '../support/fakes.dart';
@@ -52,9 +54,10 @@ void main() {
       ..combos.nearbyResult = Ok(ComboSearchResult(appliedTarget: TestData.lunchTarget, options: options));
     await harness.pump(tester);
 
+    await scrollTo(tester, find.byKey(const Key('how-it-works')));
     expect(find.byKey(const Key('how-it-works')), findsOneWidget);
-    await tester.tap(find.byKey(const Key('prefer-cheaper')));
-    await tester.tap(find.byKey(const Key('find-nearby')));
+    await tapVisible(tester, find.byKey(const Key('sort-cheapest')));
+    await tapVisible(tester, find.byKey(const Key('find-nearby')));
     await tester.pumpAndSettle();
 
     await scrollTo(tester, find.text('167 м · 3 мин'));
@@ -66,6 +69,118 @@ void main() {
     await tapVisible(tester, find.text('Боул с курицей'));
     await scrollTo(tester, find.text('Попадание в цель'));
     expect(find.text('Попадание в цель'), findsOneWidget);
+  });
+
+  testWidgets('в режиме «Дешевле» просит дешёвые наборы и запоминает выбор', (tester) async {
+    final harness = TestHarness(profile: TestData.profile);
+    await harness.pump(tester);
+
+    await tapVisible(tester, find.byKey(const Key('sort-cheapest')));
+    await tapVisible(tester, find.byKey(const Key('find-nearby')));
+    await tester.pumpAndSettle();
+
+    expect(harness.combos.requestedFilters.single.sort, ComboSort.cheapest);
+    expect(harness.combos.requestedPrices.single, PricePreference.cheaper);
+    expect(harness.settings.savedFilters?.sort, ComboSort.cheapest);
+  });
+
+  testWidgets('чип «Скрыть фастфуд» сразу пересчитывает показанную выдачу', (tester) async {
+    final harness = TestHarness(profile: TestData.profile)
+      ..combos.nearbyResult = Ok(ComboSearchResult(appliedTarget: TestData.lunchTarget, options: options));
+    await harness.pump(tester);
+
+    await tapVisible(tester, find.byKey(const Key('find-nearby')));
+    await tester.pumpAndSettle();
+    await tapVisible(tester, find.byKey(const Key('hide-fast-food')));
+    await tester.pumpAndSettle();
+
+    expect(harness.combos.requestedFilters, hasLength(2));
+    expect(harness.combos.requestedFilters.last.hideFastFood, isTrue);
+    expect(harness.combos.requestedFilters.last.effectiveKinds, isNot(contains(VenueKind.burger)));
+  });
+
+  testWidgets('не ищет заново при смене порядка, пока подбор ещё не запускали', (tester) async {
+    final harness = TestHarness(profile: TestData.profile);
+    await harness.pump(tester);
+
+    await tapVisible(tester, find.byKey(const Key('sort-nearest')));
+    await tester.pumpAndSettle();
+
+    expect(harness.combos.requestedFilters, isEmpty);
+    await scrollTo(tester, find.byKey(const Key('how-it-works')));
+    expect(find.byKey(const Key('how-it-works')), findsOneWidget);
+  });
+
+  testWidgets('шторка фильтров пишет, сколько будет вариантов, и применяет выбор', (tester) async {
+    final harness = TestHarness(profile: TestData.profile)
+      ..combos.nearbyResult = Ok(ComboSearchResult(appliedTarget: TestData.lunchTarget, options: options));
+    await harness.pump(tester);
+
+    await tapVisible(tester, find.byKey(const Key('open-filters')));
+    await tester.pumpAndSettle();
+    expect(find.text('Фильтры и порядок'), findsOneWidget);
+    await tapVisible(tester, find.byKey(const Key('sheet-kind-georgian')));
+    await tester.pump(FiltersSheet.countDelay);
+    await tester.pumpAndSettle();
+
+    expect(find.text('Показать 3 варианта'), findsOneWidget);
+    expect(harness.combos.requestedFilters.last.kinds, {VenueKind.georgian});
+    await tapVisible(tester, find.byKey(const Key('apply-filters')));
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const Key('filters-sheet')), findsNothing);
+    expect(find.byKey(const Key('kind-chip-georgian')), findsOneWidget);
+    expect(harness.settings.savedFilters?.kinds, {VenueKind.georgian});
+    await scrollTo(tester, find.byKey(const Key('search-results')));
+    expect(find.byKey(const Key('search-results')), findsOneWidget);
+  });
+
+  testWidgets('кнопка «Сбросить» в шторке возвращает фильтры по умолчанию', (tester) async {
+    final harness = TestHarness(profile: TestData.profile)
+      ..filters = const SearchFilters(sort: ComboSort.accurate, maxPriceRub: 600);
+    await harness.pump(tester);
+
+    expect(find.byKey(const Key('price-chip')), findsOneWidget);
+    await tapVisible(tester, find.byKey(const Key('open-filters')));
+    await tester.pumpAndSettle();
+    expect(find.text('Цена набора до · 600 ₽'), findsOneWidget);
+    await tapVisible(tester, find.byKey(const Key('reset-filters')));
+    await tester.pumpAndSettle();
+    expect(find.text('Цена набора · любая'), findsOneWidget);
+    await tapVisible(tester, find.byKey(const Key('apply-filters')));
+    await tester.pumpAndSettle();
+
+    expect(harness.settings.savedFilters, const SearchFilters());
+    expect(find.byKey(const Key('price-chip')), findsNothing);
+  });
+
+  testWidgets('при пустой выдаче с фильтрами предлагает сбросить фильтры', (tester) async {
+    final harness = TestHarness(profile: TestData.profile)..filters = const SearchFilters(kinds: {VenueKind.sushi});
+    await harness.pump(tester);
+
+    await tapVisible(tester, find.byKey(const Key('find-nearby')));
+    await tester.pumpAndSettle();
+    await scrollTo(tester, find.byKey(const Key('reset-filters-empty')));
+    expect(find.text('С этими фильтрами рядом пусто'), findsOneWidget);
+
+    harness.combos.nearbyResult = Ok(ComboSearchResult(appliedTarget: TestData.lunchTarget, options: options));
+    await tapVisible(tester, find.byKey(const Key('reset-filters-empty')));
+    await tester.pumpAndSettle();
+
+    expect(harness.combos.requestedFilters.last, const SearchFilters());
+    expect(find.byKey(const Key('kind-chip-sushi')), findsNothing);
+  });
+
+  testWidgets('восстанавливает сохранённые фильтры при запуске', (tester) async {
+    final harness = TestHarness(profile: TestData.profile)
+      ..filters = const SearchFilters(sort: ComboSort.nearest, hideFastFood: true);
+    await harness.pump(tester);
+
+    await tapVisible(tester, find.byKey(const Key('find-nearby')));
+    await tester.pumpAndSettle();
+
+    expect(harness.combos.requestedFilters.single, const SearchFilters(sort: ComboSort.nearest, hideFastFood: true));
+    expect(tester.widget<FilterChip>(find.byKey(const Key('hide-fast-food'))).selected, isTrue);
   });
 
   testWidgets('помечает набор из примерного меню плашкой «Меню примерное»', (tester) async {
@@ -85,6 +200,7 @@ void main() {
     await tester.tap(find.byKey(const Key('find-nearby')));
     await tester.pumpAndSettle();
 
+    await scrollTo(tester, find.byKey(const Key('combo-estimate-menu')));
     expect(find.byKey(const Key('combo-estimate-menu')), findsOneWidget);
     expect(find.text('Меню примерное'), findsOneWidget);
   });
@@ -165,6 +281,7 @@ void main() {
     gate.complete();
     await tester.pumpAndSettle();
 
+    await scrollTo(tester, find.byKey(const Key('how-it-works')));
     expect(find.byKey(const Key('search-results')), findsNothing);
     expect(find.byKey(const Key('how-it-works')), findsOneWidget);
   });

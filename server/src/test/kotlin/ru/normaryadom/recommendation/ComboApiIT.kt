@@ -1,5 +1,6 @@
 package ru.normaryadom.recommendation
 
+import com.jayway.jsonpath.JsonPath
 import org.assertj.core.api.Assertions.assertThat
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.Matchers.containsInAnyOrder
@@ -14,9 +15,11 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.cache.CacheManager
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.post
+import ru.normaryadom.catalog.importing.VenueCsvParser
 import ru.normaryadom.catalog.service.CatalogImportService
 import ru.normaryadom.support.CatalogFixtures.Companion.BOWL_MENU
 import ru.normaryadom.support.CatalogFixtures.Companion.BOWL_VENUES
+import ru.normaryadom.support.CatalogFixtures.Companion.BURGER_VENUES
 import ru.normaryadom.support.CatalogFixtures.Companion.CAFE_PLACES
 import ru.normaryadom.support.CatalogFixtures.Companion.CAFE_TEMPLATE
 import ru.normaryadom.support.CatalogFixtures.Companion.CITY_LAT
@@ -92,7 +95,7 @@ class ComboApiIT : IntegrationTest() {
     }
 
     @Test
-    fun `ставит официальное меню выше типичного у соседнего заведения`() {
+    fun `в режиме «Точные данные» ставит официальное меню выше типичного у соседнего заведения`() {
         catalog.chain("Гриль", GRILL_MENU, GRILL_VENUES)
         catalog.template("cafe", GRILL_MENU.map { "$it;0;5000" })
         catalog.places(CAFE_PLACES)
@@ -100,7 +103,9 @@ class ComboApiIT : IntegrationTest() {
         mockMvc
             .post("/api/v1/combos/search") {
                 contentType = MediaType.APPLICATION_JSON
-                content = """{"target": $TARGET, "location": {"lat": $CITY_LAT, "lon": $CITY_LON, "radiusMeters": 1000}, "limit": 10}"""
+                content =
+                    """{"target": $TARGET, "location": {"lat": $CITY_LAT, "lon": $CITY_LON, "radiusMeters": 1000}, "limit": 10,
+                    "sort": "ACCURATE"}"""
             }.andExpect {
                 status { isOk() }
                 jsonPath("$.options[0].venue.name") { value("Гриль, Сити") }
@@ -138,6 +143,109 @@ class ComboApiIT : IntegrationTest() {
                 jsonPath("$.options[0].venue.name") { value("Гриль, Сити") }
                 jsonPath("$.options[*].venue.name") { value(hasItem("Супы, у моста")) }
             }
+    }
+
+    @Test
+    fun `в режиме «Рекомендуем» ставит местное кафе выше соседней бургерной сети`() {
+        catalog.chain("Бургерная", GRILL_MENU, BURGER_VENUES, VenueCsvParser.OPTIONAL)
+        catalog.template("cafe", GRILL_MENU.map { "$it;0;5000" })
+        catalog.places(CAFE_PLACES)
+
+        mockMvc
+            .post("/api/v1/combos/search") {
+                contentType = MediaType.APPLICATION_JSON
+                content = """{"target": $TARGET, "location": {"lat": $CITY_LAT, "lon": $CITY_LON, "radiusMeters": 1000}, "limit": 10}"""
+            }.andExpect {
+                status { isOk() }
+                jsonPath("$.options[0].venue.name") { value("Кафе у моста") }
+                jsonPath("$.options[-1].venue.name") { value("Бургерная, Сити") }
+            }
+    }
+
+    @Test
+    fun `в режиме «Ближе» ставит наборы ближайшего заведения первыми`() {
+        catalog.chain("Гриль", GRILL_MENU, GRILL_VENUES)
+        catalog.chain("Боулы", BOWL_MENU, BOWL_VENUES)
+
+        mockMvc
+            .post("/api/v1/combos/search") {
+                contentType = MediaType.APPLICATION_JSON
+                content =
+                    """{"target": $TARGET, "location": {"lat": $CITY_LAT, "lon": $CITY_LON, "radiusMeters": 1000}, "limit": 10,
+                    "sort": "NEAREST"}"""
+            }.andExpect {
+                status { isOk() }
+                jsonPath("$.options[0].venue.name") { value("Гриль, Сити") }
+                jsonPath("$.options[-1].venue.name") { value("Боулы, Сити") }
+            }
+    }
+
+    @Test
+    fun `в режиме «Дешевле» ставит самый дешёвый набор первым`() {
+        catalog.chain("Гриль", GRILL_MENU, GRILL_VENUES)
+        catalog.template("cafe", GRILL_MENU.map { "$it;0;5000" })
+        catalog.places(CAFE_PLACES)
+
+        val response =
+            mockMvc
+                .post("/api/v1/combos/search") {
+                    contentType = MediaType.APPLICATION_JSON
+                    content =
+                        """{"target": $TARGET, "location": {"lat": $CITY_LAT, "lon": $CITY_LON, "radiusMeters": 1000}, "limit": 10,
+                        "sort": "CHEAPEST"}"""
+                }.andExpect { status { isOk() } }
+                .andReturn()
+                .response.contentAsString
+        val prices = JsonPath.read<List<Int>>(response, "$.options[*].combo.priceMinor")
+
+        assertThat(prices).hasSizeGreaterThan(1).isSorted()
+    }
+
+    @Test
+    fun `в режиме «Дешевле» не ставит компромиссный набор выше точного`() {
+        catalog.chain("Гриль", GRILL_MENU, GRILL_VENUES)
+        catalog.chain("Боулы", BOWL_MENU, BOWL_VENUES)
+
+        mockMvc
+            .post("/api/v1/combos/search") {
+                contentType = MediaType.APPLICATION_JSON
+                content =
+                    """{"target": $TARGET, "location": {"lat": $CITY_LAT, "lon": $CITY_LON, "radiusMeters": 1000}, "limit": 10,
+                    "sort": "CHEAPEST"}"""
+            }.andExpect {
+                status { isOk() }
+                jsonPath("$.options[0].combo.checks[*].status") { value(everyItem(equalTo("OK"))) }
+                jsonPath("$.options[-1].venue.name") { value("Боулы, Сити") }
+                jsonPath("$.options[-1].combo.checks[*].status") { value(hasItem(not(equalTo("OK")))) }
+            }
+    }
+
+    @Test
+    fun `подбирает только в заведениях выбранного вида`() {
+        catalog.chain("Бургерная", GRILL_MENU, BURGER_VENUES, VenueCsvParser.OPTIONAL)
+        catalog.template("cafe", CAFE_TEMPLATE)
+        catalog.places(CAFE_PLACES)
+
+        mockMvc
+            .post("/api/v1/combos/search") {
+                contentType = MediaType.APPLICATION_JSON
+                content =
+                    """{"target": $TARGET, "location": {"lat": $CITY_LAT, "lon": $CITY_LON, "radiusMeters": 1000}, "limit": 10,
+                    "kinds": ["burger"]}"""
+            }.andExpect {
+                status { isOk() }
+                jsonPath("$.options[*].venue.name") { value(everyItem(equalTo("Бургерная, Сити"))) }
+            }
+    }
+
+    @Test
+    fun `отклоняет неизвестный вид заведения в фильтре`() {
+        mockMvc
+            .post("/api/v1/combos/search") {
+                contentType = MediaType.APPLICATION_JSON
+                content =
+                    """{"target": $TARGET, "location": {"lat": $CITY_LAT, "lon": $CITY_LON, "radiusMeters": 1000}, "kinds": ["steakhouse"]}"""
+            }.andExpect { status { isBadRequest() } }
     }
 
     @Test

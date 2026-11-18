@@ -34,15 +34,16 @@ class VenueRepository(
     ) {
         batchJdbc.batchUpdate(
             """
-            INSERT INTO venue (chain_id, name, address, location, external_id, confirmed_on, template_id)
+            INSERT INTO venue (chain_id, name, address, location, external_id, confirmed_on, template_id, kind)
             VALUES (:chainId, :name, :address, ST_SetSRID(ST_MakePoint(:lon, :lat), 4326)::geography, :externalId,
-                    :confirmedOn, :templateId)
+                    :confirmedOn, :templateId, :kind)
             ON CONFLICT (chain_id, external_id) WHERE external_id IS NOT NULL DO UPDATE SET
                 name = EXCLUDED.name, address = EXCLUDED.address, location = EXCLUDED.location,
                 is_active = venue.closed_on IS NULL OR coalesce(EXCLUDED.confirmed_on > venue.closed_on, FALSE),
                 closed_on = CASE WHEN EXCLUDED.confirmed_on > venue.closed_on THEN NULL ELSE venue.closed_on END,
                 confirmed_on = coalesce(EXCLUDED.confirmed_on, venue.confirmed_on),
-                template_id = EXCLUDED.template_id
+                template_id = EXCLUDED.template_id,
+                kind = EXCLUDED.kind
             """,
             drafts
                 .map { draft ->
@@ -55,6 +56,7 @@ class VenueRepository(
                         .addValue("externalId", draft.externalId)
                         .addValue("confirmedOn", draft.confirmedOn, Types.DATE)
                         .addValue("templateId", draft.templateId, Types.BIGINT)
+                        .addValue("kind", draft.kind?.code, Types.VARCHAR)
                 }.toTypedArray(),
         )
     }
@@ -62,15 +64,16 @@ class VenueRepository(
     fun upsertStandalone(drafts: List<VenueDraft>) {
         batchJdbc.batchUpdate(
             """
-            INSERT INTO venue (chain_id, name, address, location, external_id, confirmed_on, template_id)
+            INSERT INTO venue (chain_id, name, address, location, external_id, confirmed_on, template_id, kind)
             VALUES (NULL, :name, :address, ST_SetSRID(ST_MakePoint(:lon, :lat), 4326)::geography, :externalId,
-                    :confirmedOn, :templateId)
+                    :confirmedOn, :templateId, :kind)
             ON CONFLICT (external_id) WHERE chain_id IS NULL AND external_id IS NOT NULL DO UPDATE SET
                 name = EXCLUDED.name, address = EXCLUDED.address, location = EXCLUDED.location,
                 is_active = venue.closed_on IS NULL OR coalesce(EXCLUDED.confirmed_on > venue.closed_on, FALSE),
                 closed_on = CASE WHEN EXCLUDED.confirmed_on > venue.closed_on THEN NULL ELSE venue.closed_on END,
                 confirmed_on = coalesce(EXCLUDED.confirmed_on, venue.confirmed_on),
-                template_id = EXCLUDED.template_id
+                template_id = EXCLUDED.template_id,
+                kind = EXCLUDED.kind
             """,
             drafts
                 .map { draft ->
@@ -82,6 +85,7 @@ class VenueRepository(
                         .addValue("externalId", draft.externalId)
                         .addValue("confirmedOn", draft.confirmedOn, Types.DATE)
                         .addValue("templateId", draft.templateId, Types.BIGINT)
+                        .addValue("kind", draft.kind?.code, Types.VARCHAR)
                 }.toTypedArray(),
         )
     }

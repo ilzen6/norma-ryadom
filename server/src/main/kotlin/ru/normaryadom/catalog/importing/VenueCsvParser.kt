@@ -2,6 +2,7 @@ package ru.normaryadom.catalog.importing
 
 import org.springframework.stereotype.Component
 import ru.normaryadom.catalog.domain.GeoPoint
+import ru.normaryadom.catalog.domain.VenueKind
 import ru.normaryadom.catalog.persistence.VenueDraft
 import java.math.BigDecimal
 
@@ -31,6 +32,7 @@ class VenueCsvParser {
         val externalId = row.requiredText(EXTERNAL_ID, MAX_TEXT_LENGTH)
         val confirmedOn = row.optionalDate(CONFIRMED_ON)
         val templateId = row.optionalCode(TEMPLATE, CsvErrorCode.UNKNOWN_TEMPLATE, templates::get)
+        val kind = row.optionalCode(KIND, CsvErrorCode.UNKNOWN_KIND, VenueKind::fromCode)
         return if (row.isValid) {
             VenueDraft(
                 name = name,
@@ -39,6 +41,7 @@ class VenueCsvParser {
                 externalId = externalId,
                 confirmedOn = confirmedOn,
                 templateId = templateId,
+                kind = kind,
             )
         } else {
             null
@@ -53,8 +56,9 @@ class VenueCsvParser {
         const val EXTERNAL_ID = "external_id"
         const val CONFIRMED_ON = "confirmed_on"
         const val TEMPLATE = "template"
+        const val KIND = "kind"
         val HEADER = listOf(NAME, ADDRESS, LAT, LON, EXTERNAL_ID)
-        val OPTIONAL = listOf(CONFIRMED_ON, TEMPLATE)
+        val OPTIONAL = listOf(CONFIRMED_ON, TEMPLATE, KIND)
 
         private const val MAX_TEXT_LENGTH = 300
         private val LAT_RANGE = BigDecimal("-90")..BigDecimal("90")

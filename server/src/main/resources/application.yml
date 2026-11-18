@@ -82,6 +82,8 @@ nearby:
   combos-per-template-venue: 1
   compromise-penalty: 1.0
   venues-per-template: 3
+  fast-food-penalty: 0.8
+  local-bonus: 1.0
 
 intake:
   photo:

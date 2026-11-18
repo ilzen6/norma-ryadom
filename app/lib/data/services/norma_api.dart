@@ -4,6 +4,7 @@ import '../../domain/models/catalog.dart';
 import '../../domain/models/combo.dart';
 import '../../domain/models/geo_location.dart';
 import '../../domain/models/meal.dart';
+import '../../domain/models/search_filters.dart';
 import '../../utils/result.dart';
 
 enum PricePreference { any, cheaper }
@@ -56,6 +57,7 @@ class NormaApi {
     required int radiusMeters,
     required MealTarget target,
     required PricePreference price,
+    SearchFilters filters = const SearchFilters(),
   }) => _call(
     () => _dio.post<Map<String, dynamic>>(
       '/api/v1/combos/search',
@@ -64,6 +66,9 @@ class NormaApi {
         'location': {'lat': location.lat, 'lon': location.lon, 'radiusMeters': radiusMeters},
         'preferCheaper': price == PricePreference.cheaper,
         'limit': nearbyLimit,
+        'sort': filters.sort.code,
+        if (filters.effectiveKinds.isNotEmpty) 'kinds': [for (final kind in filters.effectiveKinds) kind.code]..sort(),
+        'maxPriceRub': ?filters.maxPriceRub,
       },
     ),
     ComboSearchResult.fromJson,

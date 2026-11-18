@@ -118,7 +118,8 @@ def main():
         if key in chains:
             members[key].append(place)
     with_menu = {key for key, name in chains.items() if (OUT / f"{slug_of(name)}-menu.csv").exists()}
-    chain_kinds = {key: majority_kind(name, places) for key, places in members.items() if key not in with_menu}
+    chain_kinds = {key: majority_kind(chains[key], places) for key, places in members.items()}
+    print("chains with menu", {chains[key]: chain_kinds.get(key) for key in sorted(with_menu)}, file=sys.stderr)
     for place, town in kept:
         key = key_of(place.get("brand")) or key_of(place["name"])
         chain = key if key in chains else None
@@ -136,10 +137,11 @@ def main():
             "lon": f"{place['lon']:.6f}",
             "external_id": f"osm-{place['lat']:.5f}-{place['lon']:.5f}",
             "confirmed_on": place["confirmed"],
-            "template": chain_kinds.get(chain, "") if chain else kind_of(place),
+            "template": "" if chain in with_menu else chain_kinds[chain] if chain else kind_of(place),
+            "kind": chain_kinds[chain] if chain else kind_of(place),
         })
     OUT.mkdir(parents=True, exist_ok=True)
-    print("kinds", dict(Counter(row["template"] for venues in rows.values() for row in venues)), file=sys.stderr)
+    print("kinds", dict(Counter(row["kind"] for venues in rows.values() for row in venues)), file=sys.stderr)
     for old in OUT.glob("*-venues.csv"):
         old.unlink()
     brands = []

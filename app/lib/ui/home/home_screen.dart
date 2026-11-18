@@ -4,9 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../data/providers.dart';
-import '../../data/services/norma_api.dart';
 import '../../domain/models/geo_location.dart';
 import '../../domain/models/meal.dart';
+import '../../domain/models/search_filters.dart';
 import '../../routing/routes.dart';
 import '../core/formatting.dart';
 import '../core/l10n_extensions.dart';
@@ -16,6 +16,7 @@ import '../core/theme.dart';
 import '../core/widgets/combo_card.dart';
 import '../core/widgets/state_views.dart';
 import '../core/widgets/visuals.dart';
+import 'filters_sheet.dart';
 import 'home_view_model.dart';
 import 'target_sheet.dart';
 
@@ -40,6 +41,8 @@ class HomeScreen extends ConsumerWidget {
             const _TargetPanel(),
             const SizedBox(height: Layout.gap),
             const _SearchControls(),
+            const SizedBox(height: Layout.gap),
+            const _FilterBar(),
             const SizedBox(height: Layout.section),
             const _SearchResults(),
             const SizedBox(height: Layout.section),
@@ -369,7 +372,6 @@ class _SearchControls extends ConsumerWidget {
     final l10n = context.l10n;
     final palette = context.palette;
     final textTheme = Theme.of(context).textTheme;
-    final selection = ref.watch(mealSelectionProvider);
     final location = ref.watch(locationProvider).value;
     final profile = ref.watch(profileProvider).value;
     final running = ref.watch(nearbySearchProvider) is SearchRunning;
@@ -381,38 +383,17 @@ class _SearchControls extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Row(
-          children: [
-            if (locationLabel != null)
-              Expanded(
-                child: Row(
-                  children: [
-                    Icon(Icons.near_me_rounded, size: 18, color: palette.brand),
-                    const SizedBox(width: 6),
-                    Flexible(child: Text(locationLabel, style: textTheme.labelLarge)),
-                  ],
-                ),
-              )
-            else
-              const Spacer(),
-            MergeSemantics(
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(l10n.preferCheaper, style: textTheme.labelLarge),
-                  const SizedBox(width: 4),
-                  Switch(
-                    key: const Key('prefer-cheaper'),
-                    value: selection.price == PricePreference.cheaper,
-                    onChanged: (cheaper) => ref
-                        .read(mealSelectionProvider.notifier)
-                        .setPrice(cheaper ? PricePreference.cheaper : PricePreference.any),
-                  ),
-                ],
-              ),
+        if (locationLabel != null)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 10),
+            child: Row(
+              children: [
+                Icon(Icons.near_me_rounded, size: 18, color: palette.brand),
+                const SizedBox(width: 6),
+                Flexible(child: Text(locationLabel, style: textTheme.labelLarge)),
+              ],
             ),
-          ],
-        ),
+          ),
         if (location?.notice case final notice?)
           Padding(
             padding: const EdgeInsets.only(bottom: 8),
@@ -435,6 +416,66 @@ class _SearchControls extends ConsumerWidget {
   }
 }
 
+class _FilterBar extends ConsumerWidget {
+  const _FilterBar();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = context.l10n;
+    final filters = ref.watch(searchFiltersProvider);
+    void apply(SearchFilters next) => ref.read(nearbySearchProvider.notifier).applyFilters(next);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        SortSelector(
+          value: filters.sort,
+          onChanged: (sort) => apply(filters.copyWith(sort: sort)),
+        ),
+        const SizedBox(height: 10),
+        Wrap(
+          spacing: 8,
+          runSpacing: 8,
+          children: [
+            for (final kind in VenueKind.values)
+              if (filters.kinds.contains(kind))
+                FilterChip(
+                  key: Key('kind-chip-${kind.code}'),
+                  label: Text(l10n.venueKind(kind)),
+                  selected: true,
+                  onSelected: (_) => apply(filters.toggleKind(kind)),
+                ),
+            FilterChip(
+              key: const Key('hide-fast-food'),
+              label: Text(l10n.hideFastFood),
+              selected: filters.hideFastFood,
+              onSelected: (hidden) => apply(filters.withHiddenFastFood(hidden: hidden)),
+            ),
+            if (filters.maxPriceRub case final price?)
+              FilterChip(
+                key: const Key('price-chip'),
+                label: Text(l10n.priceChip(price)),
+                selected: true,
+                onSelected: (_) => apply(filters.copyWith(maxPriceRub: null)),
+              ),
+            ActionChip(
+              key: const Key('open-filters'),
+              avatar: const Icon(Icons.filter_list_rounded, size: 18),
+              label: Text(l10n.filtersButton),
+              onPressed: () => showModalBottomSheet<void>(
+                context: context,
+                useRootNavigator: true,
+                isScrollControlled: true,
+                showDragHandle: true,
+                builder: (_) => const FiltersSheet(),
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
 class _SearchResults extends ConsumerWidget {
   const _SearchResults();
 
@@ -447,6 +488,17 @@ class _SearchResults extends ConsumerWidget {
       SearchFailed(:final failure) => FailureView(
         failure: failure,
         onRetry: () => ref.read(nearbySearchProvider.notifier).search(),
+      ),
+      SearchDone(:final result) when result.options.isEmpty && !ref.watch(searchFiltersProvider).isDefault => Column(
+        key: const Key('filtered-empty'),
+        children: [
+          MessageView(message: l10n.filteredEmpty, icon: Icons.filter_alt_off_rounded),
+          OutlinedButton(
+            key: const Key('reset-filters-empty'),
+            onPressed: () => ref.read(nearbySearchProvider.notifier).applyFilters(const SearchFilters()),
+            child: Text(l10n.resetAllFilters),
+          ),
+        ],
       ),
       SearchDone(:final result) when result.options.isEmpty => MessageView(
         message: l10n.noCombosNearby,

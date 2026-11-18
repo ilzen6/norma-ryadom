@@ -1,6 +1,7 @@
 package ru.normaryadom.geo
 
 import ru.normaryadom.catalog.domain.GeoPoint
+import ru.normaryadom.catalog.domain.VenueKind
 
 data class NearbyQuery(
     val center: GeoPoint,
@@ -8,6 +9,7 @@ data class NearbyQuery(
     val coverage: MenuCoverage,
     val limit: Int,
     val limitEachMenuKind: Boolean = false,
+    val kinds: Set<VenueKind> = emptySet(),
 )
 
 enum class MenuCoverage {

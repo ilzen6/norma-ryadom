@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../config/app_config.dart';
+import '../domain/models/search_filters.dart';
 import '../domain/nutrition/meal_planner.dart';
 import '../domain/nutrition/norm_calculator.dart';
 import '../utils/result.dart';
@@ -64,6 +65,21 @@ class ThemeModeController extends Notifier<ThemeMode> {
   Future<void> select(ThemeMode mode) async {
     state = mode;
     await ref.read(settingsRepositoryProvider).saveTheme(mode.name);
+  }
+}
+
+final initialSearchFiltersProvider = Provider<SearchFilters>((ref) => const SearchFilters());
+
+final searchFiltersProvider = NotifierProvider<SearchFiltersController, SearchFilters>(SearchFiltersController.new);
+
+class SearchFiltersController extends Notifier<SearchFilters> {
+  @override
+  SearchFilters build() => ref.watch(initialSearchFiltersProvider);
+
+  Future<void> apply(SearchFilters filters) async {
+    if (filters == state) return;
+    state = filters;
+    await ref.read(settingsRepositoryProvider).saveSearchFilters(filters);
   }
 }
 

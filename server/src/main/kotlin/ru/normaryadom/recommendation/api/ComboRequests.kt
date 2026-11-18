@@ -10,8 +10,11 @@ import jakarta.validation.constraints.Max
 import jakarta.validation.constraints.Min
 import jakarta.validation.constraints.Positive
 import jakarta.validation.constraints.Size
+import ru.normaryadom.catalog.domain.VenueKind
 import ru.normaryadom.optimizer.PricePreference
 import ru.normaryadom.optimizer.SearchCriteria
+import ru.normaryadom.recommendation.ComboSort
+import ru.normaryadom.recommendation.NearbyPreferences
 
 data class LocationRequest(
     @field:DecimalMin("-90")
@@ -38,8 +41,15 @@ data class ComboSearchRequest(
     @field:Min(1)
     @field:Max(MAX_NEARBY_COMBOS)
     val limit: Int = 5,
+    @field:Schema(requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+    val sort: ComboSort = ComboSort.RECOMMENDED,
+    @field:Schema(requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+    @field:Size(max = MAX_VENUE_KINDS)
+    val kinds: Set<VenueKind> = emptySet(),
 ) {
     fun criteria(): SearchCriteria = SearchCriteria(target.toTarget(), PricePreferences.of(preferCheaper))
+
+    fun preferences(): NearbyPreferences = NearbyPreferences(sort = sort, kinds = kinds)
 
     @get:JsonIgnore
     @get:Schema(hidden = true)
@@ -72,3 +82,4 @@ object PricePreferences {
 
 const val MAX_SEARCH_RADIUS_METERS = 10_000L
 const val MAX_NEARBY_COMBOS = 30L
+const val MAX_VENUE_KINDS = 15

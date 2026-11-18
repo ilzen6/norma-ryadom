@@ -1,6 +1,7 @@
 package ru.normaryadom.catalog.persistence
 
 import ru.normaryadom.catalog.domain.GeoPoint
+import ru.normaryadom.catalog.domain.VenueKind
 import java.time.LocalDate
 
 data class VenueDraft(
@@ -10,4 +11,5 @@ data class VenueDraft(
     val externalId: String,
     val confirmedOn: LocalDate? = null,
     val templateId: Long? = null,
+    val kind: VenueKind? = null,
 )
