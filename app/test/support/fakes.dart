@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/services.dart';
 import 'package:norma_ryadom/data/repositories/combo_repository.dart';
 import 'package:norma_ryadom/data/repositories/diary_repository.dart';
 import 'package:norma_ryadom/data/repositories/feedback_repository.dart';
@@ -10,6 +11,7 @@ import 'package:norma_ryadom/data/services/health_sync_service.dart';
 import 'package:norma_ryadom/data/services/location_service.dart';
 import 'package:norma_ryadom/data/services/norma_api.dart';
 import 'package:norma_ryadom/data/services/photo_picker_service.dart';
+import 'package:norma_ryadom/data/services/share_service.dart';
 import 'package:norma_ryadom/domain/models/catalog.dart';
 import 'package:norma_ryadom/domain/models/combo.dart';
 import 'package:norma_ryadom/domain/models/diary.dart';
@@ -370,5 +372,18 @@ abstract final class TestData {
         ],
       ),
     );
+  }
+}
+
+class FakeShareService implements ShareService {
+  final List<String> shared = [];
+  final List<String?> subjects = [];
+  bool fails = false;
+
+  @override
+  Future<void> shareText(String text, {String? subject, Rect? origin}) async {
+    if (fails) throw PlatformException(code: 'share', message: 'Некуда отправить');
+    shared.add(text);
+    subjects.add(subject);
   }
 }

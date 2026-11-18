@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../domain/models/catalog.dart' show SourceKind;
+import '../../data/providers.dart';
 import '../../domain/models/combo.dart';
 import '../../routing/routes.dart';
 import '../../utils/result.dart';
@@ -18,6 +20,7 @@ import '../core/widgets/trust_badge.dart';
 import '../core/widgets/visuals.dart';
 import '../map/venue_mini_map.dart';
 import '../diary/diary_view_model.dart';
+import 'combo_share_text.dart';
 import 'combo_view_model.dart';
 import 'selected_combo.dart';
 
@@ -38,7 +41,13 @@ class ComboScreen extends ConsumerWidget {
     final combo = option.combo;
     return Scaffold(
       extendBody: true,
-      appBar: AppBar(title: Text(l10n.comboTitle)),
+      appBar: AppBar(
+        title: Text(l10n.comboTitle),
+        actions: [
+          _ShareButton(selected: selected),
+          const SizedBox(width: 12),
+        ],
+      ),
       body: ListView(
         padding: Layout.page(context, top: 0).copyWith(bottom: 120 + MediaQuery.paddingOf(context).bottom),
         children: [
@@ -71,6 +80,8 @@ class ComboScreen extends ConsumerWidget {
               ],
             ),
           ),
+          const SizedBox(height: Layout.section),
+          _SharePreview(text: ComboShareText.of(l10n, selected)),
         ],
       ),
       bottomNavigationBar: SafeArea(
@@ -96,6 +107,64 @@ class ComboScreen extends ConsumerWidget {
               onPressed: onPressed,
             ),
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class _ShareButton extends ConsumerWidget {
+  const _ShareButton({required this.selected});
+
+  final SelectedCombo selected;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) => FilledButton.tonalIcon(
+    key: const Key('share-combo'),
+    icon: const Icon(Icons.ios_share_rounded, size: 18),
+    label: Text(context.l10n.shareCombo),
+    onPressed: () => _share(context, ref),
+  );
+
+  Future<void> _share(BuildContext context, WidgetRef ref) async {
+    final l10n = context.l10n;
+    final text = ComboShareText.of(l10n, selected);
+    final box = context.findRenderObject() as RenderBox?;
+    final origin = box == null || !box.hasSize ? null : box.localToGlobal(Offset.zero) & box.size;
+    try {
+      await ref
+          .read(shareServiceProvider)
+          .shareText(text, subject: l10n.shareSubject(l10n.meal(selected.meal)), origin: origin);
+    } on Exception {
+      await Clipboard.setData(ClipboardData(text: text));
+      if (context.mounted) showMessage(context, l10n.shareFailedCopied);
+    }
+  }
+}
+
+class _SharePreview extends StatelessWidget {
+  const _SharePreview({required this.text});
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    final palette = context.palette;
+    return DecoratedBox(
+      key: const Key('share-preview'),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(24),
+        border: Border.all(color: palette.inkSubtle.withValues(alpha: 0.4)),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Eyebrow(context.l10n.sharePreviewTitle),
+            const SizedBox(height: 10),
+            SelectableText(text, style: Theme.of(context).textTheme.bodyMedium?.copyWith(height: 1.5)),
+          ],
         ),
       ),
     );

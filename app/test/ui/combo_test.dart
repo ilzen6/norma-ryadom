@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:norma_ryadom/domain/models/catalog.dart';
 import 'package:norma_ryadom/domain/models/combo.dart';
@@ -109,6 +110,7 @@ void main() {
     await tapVisible(tester, find.text('Сок яблочный'));
 
     expect(find.text('Чем заменить'), findsNothing);
+    await scrollTo(tester, find.text('Сок яблочный'));
     expect(find.text('Сок яблочный'), findsOneWidget);
     expect(find.text('Морс'), findsNothing);
     expect(find.text('Куриная грудка гриль'), findsOneWidget);
@@ -165,5 +167,71 @@ void main() {
     expect(find.text('Что-то пошло не так. Повторите попытку.'), findsOneWidget);
     await scrollTo(tester, find.text('Попадание в цель'));
     expect(find.text('Попадание в цель'), findsOneWidget);
+  });
+
+  testWidgets('делится набором: в тексте заведение, блюда, КБЖУ и цена', (tester) async {
+    final harness = await openCombo(tester);
+
+    await tester.tap(find.byKey(const Key('share-combo')));
+    await tester.pumpAndSettle();
+
+    expect(
+      harness.share.shared.single,
+      'Обед в «Гриль Хаус, Москва-Сити» (Пресненская наб., 2), 2 мин пешком\n'
+      '• Куриная грудка гриль — 374 ккал\n'
+      '• Морс — 96 ккал\n'
+      'Итого: 470 ккал · Б 40 · Ж 18 · У 70 · ≈ 537 ₽\n'
+      'Подобрано в «Норма рядом»',
+    );
+    expect(harness.share.subjects.single, 'Обед в «Норма рядом»');
+  });
+
+  testWidgets('помечает в тексте для друга, что КБЖУ примерные', (tester) async {
+    final soup = TestData.dish(5, 'Борщ со сметаной', 227).copyWith(sourceKind: SourceKind.estimate);
+    final harness = TestHarness(profile: TestData.profile)
+      ..combos.nearbyResult = Ok(
+        ComboSearchResult(
+          appliedTarget: TestData.lunchTarget,
+          options: [
+            TestData.option([soup, mors]),
+          ],
+        ),
+      );
+    await harness.pump(tester);
+    await tester.tap(find.byKey(const Key('find-nearby')));
+    await tester.pumpAndSettle();
+    await tapVisible(tester, find.bySemanticsLabel(RegExp(r'Борщ со сметаной \+ Морс')));
+
+    await tester.tap(find.byKey(const Key('share-combo')));
+    await tester.pumpAndSettle();
+
+    expect(harness.share.shared.single, endsWith('КБЖУ примерные · подобрано в «Норма рядом»'));
+  });
+
+  testWidgets('показывает под набором, как текст увидит друг', (tester) async {
+    await openCombo(tester);
+
+    await scrollTo(tester, find.byKey(const Key('share-preview')));
+
+    expect(find.bySemanticsLabel('Так увидит друг'), findsOneWidget);
+    expect(find.textContaining('• Куриная грудка гриль — 374 ккал'), findsOneWidget);
+  });
+
+  testWidgets('если поделиться не получилось, копирует текст и сообщает об этом', (tester) async {
+    final copied = <String>[];
+    tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(SystemChannels.platform, (call) async {
+      if (call.method == 'Clipboard.setData') copied.add((call.arguments as Map<Object?, Object?>)['text']! as String);
+      return null;
+    });
+    addTearDown(() => tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(SystemChannels.platform, null));
+    final harness = await openCombo(tester);
+    harness.share.fails = true;
+
+    await tester.tap(find.byKey(const Key('share-combo')));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Не получилось открыть «Поделиться» — текст набора скопирован'), findsOneWidget);
+    expect(copied.single, startsWith('Обед в «Гриль Хаус, Москва-Сити»'));
+    expect(harness.share.shared, isEmpty);
   });
 }

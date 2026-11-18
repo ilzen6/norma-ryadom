@@ -894,5 +894,22 @@
   "kindReadyFood": "Магазины с готовой едой",
   "kindPizza": "Пиццерии",
   "kindBurger": "Бургерные и фастфуд",
-  "kindShawarma": "Шаурма"
+  "kindShawarma": "Шаурма",
+  "shareCombo": "Поделиться",
+  "shareSubject": "{meal} в «Норма рядом»",
+  "@shareSubject": {"placeholders": {"meal": {"type": "String"}}},
+  "shareHeading": "{meal} в «{venue}» ({address})",
+  "@shareHeading": {"placeholders": {"meal": {"type": "String"}, "venue": {"type": "String"}, "address": {"type": "String"}}},
+  "shareWalk": "{minutes} мин пешком",
+  "@shareWalk": {"placeholders": {"minutes": {"type": "int"}}},
+  "shareDish": "• {dish} — {kcal} ккал",
+  "@shareDish": {"placeholders": {"dish": {"type": "String"}, "kcal": {"type": "String"}}},
+  "shareTotals": "Итого: {kcal} ккал · Б {protein} · Ж {fat} · У {carbs}",
+  "@shareTotals": {"placeholders": {"kcal": {"type": "String"}, "protein": {"type": "String"}, "fat": {"type": "String"}, "carbs": {"type": "String"}}},
+  "sharePrice": "≈ {price} ₽",
+  "@sharePrice": {"placeholders": {"price": {"type": "String"}}},
+  "shareFooter": "Подобрано в «Норма рядом»",
+  "shareFooterEstimate": "КБЖУ примерные · подобрано в «Норма рядом»",
+  "sharePreviewTitle": "Так увидит друг",
+  "shareFailedCopied": "Не получилось открыть «Поделиться» — текст набора скопирован"
 }

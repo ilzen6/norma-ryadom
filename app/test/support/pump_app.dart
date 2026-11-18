@@ -29,6 +29,7 @@ class TestHarness {
   final settings = InMemorySettingsRepository();
   final probe = FakeServerProbe();
   final health = FakeHealthSyncService();
+  final share = FakeShareService();
   bool healthSync = false;
   bool allowCleartextServer = false;
   bool demoServer = false;
@@ -58,6 +59,7 @@ class TestHarness {
     feedbackRepositoryProvider.overrideWithValue(feedback),
     locationServiceProvider.overrideWithValue(location),
     photoPickerProvider.overrideWithValue(picker),
+    shareServiceProvider.overrideWithValue(share),
     mapAssetLoaderProvider.overrideWithValue((path) async => File('assets/map/$path').readAsStringSync()),
     mapParsersProvider.overrideWithValue((
       (source) async => Basemap.packFromJson(source),

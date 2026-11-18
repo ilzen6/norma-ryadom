@@ -21,6 +21,7 @@ import 'services/location_service.dart';
 import 'services/health_sync_service.dart';
 import 'services/norma_api.dart';
 import 'services/photo_picker_service.dart';
+import 'services/share_service.dart';
 
 final appConfigProvider = Provider<AppConfig>((ref) => AppConfig.fromEnvironment());
 
@@ -191,3 +192,5 @@ final feedbackRepositoryProvider = Provider<FeedbackRepository>(
 final locationServiceProvider = Provider<LocationService>((ref) => const DeviceLocationService());
 
 final photoPickerProvider = Provider<PhotoPickerService>((ref) => DevicePhotoPickerService());
+
+final shareServiceProvider = Provider<ShareService>((ref) => const DeviceShareService());
