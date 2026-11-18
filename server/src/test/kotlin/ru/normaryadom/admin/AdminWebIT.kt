@@ -16,6 +16,7 @@ import org.springframework.test.web.servlet.multipart
 import org.springframework.test.web.servlet.post
 import org.springframework.test.web.servlet.request.RequestPostProcessor
 import ru.normaryadom.intake.photo.MenuPhotoService
+import ru.normaryadom.support.CatalogFixtures.Companion.CAFE_TEMPLATE
 import ru.normaryadom.support.CatalogFixtures.Companion.GRILL_MENU
 import ru.normaryadom.support.CatalogFixtures.Companion.GRILL_VENUES
 import ru.normaryadom.support.IntegrationTest
@@ -114,6 +115,29 @@ class AdminWebIT : IntegrationTest() {
         }
         mockMvc.get("/admin") { with(admin) }.andExpect {
             content { string(containsString("data-testid=\"chain-count\">1<")) }
+        }
+    }
+
+    @Test
+    fun `показывает диапазон калорий у блюд типичного меню`() {
+        val templateId = catalog.template("cafe", CAFE_TEMPLATE)
+
+        mockMvc.get("/admin/chains/$templateId") { with(admin) }.andExpect {
+            status { isOk() }
+            content { string(containsString("<th scope=\"col\">Диапазон ккал</th>")) }
+            content { string(containsString("data-testid=\"kcal-range\">90–130<")) }
+            content { string(containsString("data-testid=\"kcal-range\">187–253<")) }
+        }
+    }
+
+    @Test
+    fun `ставит прочерк вместо диапазона у блюд из официального меню`() {
+        val chainId = catalog.chain("Гриль", GRILL_MENU, GRILL_VENUES)
+
+        mockMvc.get("/admin/chains/$chainId") { with(admin) }.andExpect {
+            status { isOk() }
+            content { string(containsString("data-testid=\"kcal-range\">—<")) }
+            content { string(not(containsString("data-testid=\"kcal-range\">1"))) }
         }
     }
 
