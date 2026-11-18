@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:geolocator/geolocator.dart';
 
 import '../../domain/models/geo_location.dart';
@@ -40,7 +41,7 @@ class DeviceLocationService implements LocationService {
   Future<Result<GeoLocation>> currentLocation() async {
     try {
       if (await ensureAccess() case final failure?) return Err(failure);
-      final position = await _mostAccurate() ?? await Geolocator.getLastKnownPosition();
+      final position = await _mostAccurate() ?? (kIsWeb ? null : await Geolocator.getLastKnownPosition());
       if (position == null) return const Err(AppFailure.locationUnavailable);
       return Ok(GeoLocation(lat: position.latitude, lon: position.longitude, source: LocationSource.device));
     } on Exception {
@@ -49,6 +50,7 @@ class DeviceLocationService implements LocationService {
   }
 
   static Future<void> _askForFullAccuracy() async {
+    if (kIsWeb) return;
     try {
       if (await Geolocator.getLocationAccuracy() == LocationAccuracyStatus.reduced) {
         await Geolocator.requestTemporaryFullAccuracy(purposeKey: _fullAccuracyPurpose);
