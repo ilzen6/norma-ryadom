@@ -42,20 +42,21 @@
     <h2>Меню</h2>
     <table data-testid="menu-table">
         <thead>
-        <tr><th scope="col">Блюдо</th><th scope="col">Категория</th><th scope="col">Ккал</th><th scope="col">Б</th><th scope="col">Ж</th><th scope="col">У</th><th scope="col">Цена</th><th scope="col">Состояние</th></tr>
+        <tr><th scope="col">Блюдо</th><th scope="col">Категория</th><th scope="col">Ккал</th><th scope="col">Диапазон ккал</th><th scope="col">Б</th><th scope="col">Ж</th><th scope="col">У</th><th scope="col">Цена</th><th scope="col">Состояние</th></tr>
         </thead>
         <tbody>
         <tr th:each="r : ${items}" th:classappend="${!r.isAvailable} ? 'withdrawn'">
             <td th:text="${r.item.name}">Блюдо</td>
             <td th:text="#{'category.' + ${r.item.category.code}}">Основное</td>
             <td th:text="${r.item.nutrients.kcal}">0</td>
+            <td data-testid="kcal-range" th:text="${r.item.source.kcalRange != null} ? ${#numbers.formatDecimal(r.item.source.kcalRange.low, 1, 0)} + '–' + ${#numbers.formatDecimal(r.item.source.kcalRange.high, 1, 0)} : '—'">—</td>
             <td th:text="${r.item.nutrients.protein}">0</td>
             <td th:text="${r.item.nutrients.fat}">0</td>
             <td th:text="${r.item.nutrients.carbs}">0</td>
             <td th:text="${r.item.priceMinor != null} ? ${#numbers.formatDecimal(r.item.priceMinor / 100.0, 1, 2, 'POINT')} + ' ₽' : '—'">0</td>
             <td th:text="${!r.isAvailable} ? 'снято' : (${r.underReview} ? 'на перепроверке' : 'в продаже')">в продаже</td>
         </tr>
-        <tr th:if="${#lists.isEmpty(items)}"><td colspan="8">Меню ещё не загружено</td></tr>
+        <tr th:if="${#lists.isEmpty(items)}"><td colspan="9">Меню ещё не загружено</td></tr>
         </tbody>
     </table>
     <h2 th:unless="${chain.isTemplate}">Точки</h2>
