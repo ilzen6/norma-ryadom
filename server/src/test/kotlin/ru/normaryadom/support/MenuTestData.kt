@@ -76,5 +76,6 @@ object MenuTestData {
     fun criteria(
         target: MealTarget = target(),
         price: PricePreference = PricePreference.IGNORE,
-    ): SearchCriteria = SearchCriteria(target, price)
+        maxPriceMinor: Int? = null,
+    ): SearchCriteria = SearchCriteria(target, price, maxPriceMinor)
 }

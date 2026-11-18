@@ -161,6 +161,13 @@
               "type" : "null"
             } ]
           },
+          "maxPriceRub" : {
+            "description" : "Цена набора до, ₽",
+            "format" : "int32",
+            "maximum" : 2000,
+            "minimum" : 200,
+            "type" : [ "integer", "null" ]
+          },
           "preferCheaper" : {
             "type" : "boolean"
           },

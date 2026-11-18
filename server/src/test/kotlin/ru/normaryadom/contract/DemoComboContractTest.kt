@@ -37,45 +37,47 @@ class DemoComboContractTest {
     }
 
     private fun caseOf(case: ContractCase): Map<String, Any> {
-        val exact = SearchCriteria(case.target, case.price)
+        val exact = SearchCriteria(case.target, case.price, case.maxPriceRub?.times(KOPECKS_PER_RUBLE))
         val rounded = exact.copy(target = TargetRounding.round(case.target))
         val relaxed = rounded.copy(target = rounded.target.relaxed(relaxation))
         return mapOf(
             "name" to case.name,
             "target" to targetOf(case.target),
             "preferCheaper" to (case.price == PricePreference.PREFER_CHEAPER),
-            "roundedTarget" to targetOf(rounded.target),
-            "chains" to
-                demoMenus().map { (chain, menu) ->
-                    val nearby = optimizer.bestCombos(menu, rounded, COMBOS)
-                    val fit =
-                        when {
-                            nearby.isNotEmpty() -> "GOOD"
-                            optimizer.bestCombos(menu, relaxed, COMBOS).isNotEmpty() -> "COMPROMISE"
-                            else -> "NONE"
-                        }
-                    mapOf(
-                        "chain" to chain,
-                        "fit" to fit,
-                        "nearby" to nearby.map(::comboOf),
-                        "atVenue" to optimizer.bestCombos(menu, exact, COMBOS).map(::comboOf),
-                        "replaceFirst" to
-                            nearby
-                                .firstOrNull()
-                                ?.let { best ->
-                                    optimizer.replacements(menu, rounded, best.dishes, 0, REPLACEMENTS).map(::comboOf)
-                                }.orEmpty(),
-                        "assessment" to
-                            assessor.assessMenu(menu, exact).map { assessment ->
-                                mapOf(
-                                    "dish" to assessment.item.name,
-                                    "verdict" to assessment.verdict.name,
-                                    "reasons" to assessment.reasons.map { it.code.name },
-                                )
-                            },
-                    )
-                },
-        )
+        ) + case.maxPriceRub?.let { mapOf("maxPriceRub" to it) }.orEmpty() +
+            mapOf(
+                "roundedTarget" to targetOf(rounded.target),
+                "chains" to
+                    demoMenus().map { (chain, menu) ->
+                        val nearby = optimizer.bestCombos(menu, rounded, COMBOS)
+                        val fit =
+                            when {
+                                nearby.isNotEmpty() -> "GOOD"
+                                optimizer.bestCombos(menu, relaxed, COMBOS).isNotEmpty() -> "COMPROMISE"
+                                else -> "NONE"
+                            }
+                        mapOf(
+                            "chain" to chain,
+                            "fit" to fit,
+                            "nearby" to nearby.map(::comboOf),
+                            "atVenue" to optimizer.bestCombos(menu, exact, COMBOS).map(::comboOf),
+                            "replaceFirst" to
+                                nearby
+                                    .firstOrNull()
+                                    ?.let { best ->
+                                        optimizer.replacements(menu, rounded, best.dishes, 0, REPLACEMENTS).map(::comboOf)
+                                    }.orEmpty(),
+                            "assessment" to
+                                assessor.assessMenu(menu, exact).map { assessment ->
+                                    mapOf(
+                                        "dish" to assessment.item.name,
+                                        "verdict" to assessment.verdict.name,
+                                        "reasons" to assessment.reasons.map { it.code.name },
+                                    )
+                                },
+                        )
+                    },
+            )
     }
 
     private fun comboOf(combo: Combo): Map<String, Any> =
@@ -119,12 +121,14 @@ class DemoComboContractTest {
         val name: String,
         val target: MealTarget,
         val price: PricePreference = PricePreference.IGNORE,
+        val maxPriceRub: Int? = null,
     )
 
     private companion object {
         const val COMBOS = 5
         const val REPLACEMENTS = 3
         const val SCORE_SCALE = 1_000_000.0
+        const val KOPECKS_PER_RUBLE = 100
 
         val DEMO_CHAINS =
             Regex("""- name: "(.+?)"\n(?:\s+[a-z-]+: .+\n)*?\s+menu: classpath:demo/(\S+)-menu\.csv""")
@@ -145,6 +149,11 @@ class DemoComboContractTest {
                     "обед без свинины подешевле",
                     MealTarget(630.0, 63.0, 27.7, 23.5, 94.5, setOf(DietTag.PORK)),
                     PricePreference.PREFER_CHEAPER,
+                ),
+                ContractCase(
+                    "обед без свинины до 450 ₽",
+                    MealTarget(630.0, 63.0, 27.7, 23.5, 94.5, setOf(DietTag.PORK)),
+                    maxPriceRub = 450,
                 ),
                 ContractCase("завтрак", MealTarget(450.0, 45.0, 19.8, 16.8, 67.5, emptySet())),
                 ContractCase(

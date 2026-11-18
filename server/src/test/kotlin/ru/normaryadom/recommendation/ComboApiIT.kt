@@ -249,6 +249,53 @@ class ComboApiIT : IntegrationTest() {
     }
 
     @Test
+    fun `подбирает рядом только наборы не дороже заданной цены`() {
+        catalog.chain("Гриль", GRILL_MENU, GRILL_VENUES)
+        catalog.chain("Боулы", BOWL_MENU, BOWL_VENUES)
+
+        val response =
+            mockMvc
+                .post("/api/v1/combos/search") {
+                    contentType = MediaType.APPLICATION_JSON
+                    content =
+                        """{"target": $TARGET, "location": {"lat": $CITY_LAT, "lon": $CITY_LON, "radiusMeters": 1000}, "limit": 10,
+                        "maxPriceRub": 450}"""
+                }.andExpect { status { isOk() } }
+                .andReturn()
+                .response.contentAsString
+        val prices = JsonPath.read<List<Int?>>(response, "$.options[*].combo.priceMinor")
+
+        assertThat(prices).isNotEmpty().allMatch { it != null && it <= 45_000 }
+    }
+
+    @Test
+    fun `подбирает в заведении в пределах цены набора`() {
+        catalog.chain("Гриль", GRILL_MENU, GRILL_VENUES)
+
+        mockMvc
+            .post("/api/v1/combos/search") {
+                contentType = MediaType.APPLICATION_JSON
+                content = """{"target": $TARGET, "venueId": ${venueId("grill-01")}, "limit": 5, "maxPriceRub": 450}"""
+            }.andExpect {
+                status { isOk() }
+                jsonPath("$.options[*].combo.priceMinor") { value(everyItem(lessThanOrEqualTo(45_000))) }
+            }
+    }
+
+    @Test
+    fun `отклоняет цену набора за пределами 200–2000 ₽`() {
+        for (price in listOf(199, 2001)) {
+            mockMvc
+                .post("/api/v1/combos/search") {
+                    contentType = MediaType.APPLICATION_JSON
+                    content =
+                        """{"target": $TARGET, "location": {"lat": $CITY_LAT, "lon": $CITY_LON, "radiusMeters": 1000},
+                        "maxPriceRub": $price}"""
+                }.andExpect { status { isBadRequest() } }
+        }
+    }
+
+    @Test
     fun `после обновления меню сети отдаёт новый подбор, а не устаревший кэш`() {
         val chainId = catalog.chain("Гриль", GRILL_MENU, GRILL_VENUES)
         val request = """{"target": $TARGET, "location": {"lat": $CITY_LAT, "lon": $CITY_LON, "radiusMeters": 1000}}"""

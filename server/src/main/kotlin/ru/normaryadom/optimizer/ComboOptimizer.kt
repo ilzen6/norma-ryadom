@@ -15,7 +15,7 @@ class ComboOptimizer(
     ): List<Combo> {
         val allowed =
             menu
-                .filter(criteria.target::allows)
+                .filter { criteria.target.allows(it) && criteria.affordable(it) }
                 .sortedWith(compareBy<MenuItem>({ it.nutrients.kcal }, { it.id }))
         val best = BoundedBest(limit * settings.heapFactor)
         Enumeration(allowed, criteria, best).run()
@@ -36,7 +36,7 @@ class ComboOptimizer(
             .map { candidate -> dishes.toMutableList().apply { set(replacedIndex, candidate) }.toList() }
             .filter(MealStructure::isValid)
             .map { scorer.combo(it, criteria) }
-            .filter { criteria.target.isSatisfiedBy(it.totals) }
+            .filter { criteria.target.isSatisfiedBy(it.totals) && criteria.withinBudget(it.priceMinor) }
             .sortedWith(Combo.ORDER)
             .take(limit)
             .toList()
@@ -50,11 +50,12 @@ class ComboOptimizer(
         private val picked = ArrayList<MenuItem>(settings.maxItems)
         private val upperKcal = criteria.target.maxKcal + MealTarget.EPSILON
 
-        fun run() = visit(start = 0, totals = Nutrients.ZERO)
+        fun run() = visit(start = 0, totals = Nutrients.ZERO, priceMinor = 0)
 
         private fun visit(
             start: Int,
             totals: Nutrients,
+            priceMinor: Int,
         ) {
             if (picked.isNotEmpty() && criteria.target.isSatisfiedBy(totals) && MealStructure.isComplete(picked)) {
                 best.offer(scorer.combo(picked.toList(), criteria))
@@ -63,9 +64,10 @@ class ComboOptimizer(
             var index = start
             while (index < allowed.size && totals.kcal + allowed[index].nutrients.kcal <= upperKcal) {
                 val dish = allowed[index]
-                if (MealStructure.canAdd(picked, dish)) {
+                val nextPrice = priceMinor + (dish.priceMinor ?: 0)
+                if (MealStructure.canAdd(picked, dish) && criteria.withinBudget(nextPrice)) {
                     picked += dish
-                    visit(index, totals + dish.nutrients)
+                    visit(index, totals + dish.nutrients, nextPrice)
                     picked.removeLast()
                 }
                 index++

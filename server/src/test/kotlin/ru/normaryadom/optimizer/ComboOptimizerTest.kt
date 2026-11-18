@@ -1,6 +1,7 @@
 package ru.normaryadom.optimizer
 
 import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
 import ru.normaryadom.catalog.domain.DietTag
 import ru.normaryadom.catalog.domain.DishCategory
@@ -181,5 +182,53 @@ class ComboOptimizerTest {
         val replacements = optimizer.replacements(listOf(main, drink, otherMain, side), criteria(), listOf(main, drink), 1, 5)
 
         assertThat(replacements.map { it.dishIds }).containsExactly(listOf(1L, 4L))
+    }
+
+    @Test
+    fun `не предлагает наборы дороже заданной цены`() {
+        val steak = dish(1, kcal = 600.0, protein = 40.0, fat = 20.0, priceMinor = 90_000)
+        val bowl = dish(2, kcal = 450.0, protein = 30.0, fat = 12.0, priceMinor = 35_000)
+        val soup = dish(3, DishCategory.SALAD, kcal = 150.0, protein = 6.0, fat = 5.0, carbs = 20.0, priceMinor = 15_000)
+
+        val combos = optimizer.bestCombos(listOf(steak, bowl, soup), criteria(maxPriceMinor = 60_000), limit = 5)
+
+        assertThat(combos).isNotEmpty()
+        assertThat(combos.map { it.priceMinor }).allMatch { it != null && it <= 60_000 }
+        assertThat(combos.flatMap { it.dishIds }).doesNotContain(1L)
+    }
+
+    @Test
+    fun `не берёт в набор блюда без цены, если цена набора ограничена`() {
+        val unknownPrice = dish(1, kcal = 600.0, protein = 40.0, fat = 20.0, priceMinor = null)
+        val priced = dish(2, kcal = 580.0, protein = 35.0, fat = 15.0, priceMinor = 40_000)
+
+        val combos = optimizer.bestCombos(listOf(unknownPrice, priced), criteria(maxPriceMinor = 50_000), limit = 5)
+
+        assertThat(combos.map { it.dishIds }).containsExactly(listOf(2L))
+    }
+
+    @Test
+    fun `без предела цены подбирает и дорогие наборы`() {
+        val steak = dish(1, kcal = 600.0, protein = 40.0, fat = 20.0, priceMinor = 90_000)
+
+        assertThat(optimizer.bestCombos(listOf(steak), criteria(), limit = 5).map { it.dishIds }).containsExactly(listOf(1L))
+    }
+
+    @Test
+    fun `замены не выходят за цену набора`() {
+        val chicken = dish(1, kcal = 450.0, protein = 38.0, fat = 12.0, carbs = 40.0, priceMinor = 30_000)
+        val salad = dish(2, DishCategory.SALAD, kcal = 150.0, protein = 3.0, fat = 9.0, carbs = 9.0, priceMinor = 10_000)
+        val cheapSalad = dish(3, DishCategory.SALAD, kcal = 160.0, protein = 3.0, fat = 8.0, carbs = 10.0, priceMinor = 9_000)
+        val luxurySalad = dish(4, DishCategory.SALAD, kcal = 140.0, protein = 5.0, fat = 7.0, carbs = 8.0, priceMinor = 60_000)
+        val menu = listOf(chicken, salad, cheapSalad, luxurySalad)
+
+        val replacements = optimizer.replacements(menu, criteria(maxPriceMinor = 45_000), listOf(chicken, salad), 1, limit = 5)
+
+        assertThat(replacements.map { it.dishIds }).containsExactly(listOf(1L, 3L))
+    }
+
+    @Test
+    fun `не принимает нулевой предел цены`() {
+        assertThatThrownBy { criteria(maxPriceMinor = 0) }.isInstanceOf(IllegalArgumentException::class.java)
     }
 }

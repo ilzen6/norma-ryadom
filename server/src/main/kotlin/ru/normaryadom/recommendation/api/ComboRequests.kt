@@ -46,8 +46,13 @@ data class ComboSearchRequest(
     @field:Schema(requiredMode = Schema.RequiredMode.NOT_REQUIRED)
     @field:Size(max = MAX_VENUE_KINDS)
     val kinds: Set<VenueKind> = emptySet(),
+    @field:Schema(requiredMode = Schema.RequiredMode.NOT_REQUIRED, description = "Цена набора до, ₽")
+    @field:Min(MIN_PRICE_LIMIT_RUB)
+    @field:Max(MAX_PRICE_LIMIT_RUB)
+    val maxPriceRub: Int? = null,
 ) {
-    fun criteria(): SearchCriteria = SearchCriteria(target.toTarget(), PricePreferences.of(preferCheaper))
+    fun criteria(): SearchCriteria =
+        SearchCriteria(target.toTarget(), PricePreferences.of(preferCheaper), maxPriceRub?.times(KOPECKS_PER_RUBLE))
 
     fun preferences(): NearbyPreferences = NearbyPreferences(sort = sort, kinds = kinds)
 
@@ -83,3 +88,6 @@ object PricePreferences {
 const val MAX_SEARCH_RADIUS_METERS = 10_000L
 const val MAX_NEARBY_COMBOS = 30L
 const val MAX_VENUE_KINDS = 15
+const val MIN_PRICE_LIMIT_RUB = 200L
+const val MAX_PRICE_LIMIT_RUB = 2000L
+private const val KOPECKS_PER_RUBLE = 100
