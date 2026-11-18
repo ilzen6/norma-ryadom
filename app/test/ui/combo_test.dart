@@ -52,6 +52,29 @@ void main() {
     expect(find.text('Рядом было мало вариантов — расширили поиск до 3 км'), findsOneWidget);
   });
 
+  testWidgets('на экране набора из примерного меню показывает плашку «Меню примерное»', (tester) async {
+    final option = TestData.option([chicken, mors]);
+    final harness = TestHarness(profile: TestData.profile)
+      ..combos.nearbyResult = Ok(
+        ComboSearchResult(
+          appliedTarget: TestData.lunchTarget,
+          options: [option.copyWith(combo: option.combo.copyWith(sourceKind: SourceKind.estimate))],
+        ),
+      );
+    await harness.pump(tester);
+    await tester.tap(find.byKey(const Key('find-nearby')));
+    await tester.pumpAndSettle();
+    await tapVisible(tester, find.bySemanticsLabel(RegExp(r'Куриная грудка гриль \+ Морс')));
+
+    expect(find.byKey(const Key('combo-screen-estimate-menu')), findsOneWidget);
+  });
+
+  testWidgets('не показывает плашку «Меню примерное» у набора с данными сети', (tester) async {
+    await openCombo(tester);
+
+    expect(find.byKey(const Key('combo-screen-estimate-menu')), findsNothing);
+  });
+
   testWidgets('объясняет попадание в цель по каждому показателю', (tester) async {
     await openCombo(tester);
 

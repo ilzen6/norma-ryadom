@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:norma_ryadom/data/services/norma_api.dart';
+import 'package:norma_ryadom/domain/models/catalog.dart';
 import 'package:norma_ryadom/domain/models/combo.dart';
 import 'package:norma_ryadom/domain/models/diary.dart';
 import 'package:norma_ryadom/domain/models/district.dart';
@@ -65,6 +66,27 @@ void main() {
     await tapVisible(tester, find.text('Боул с курицей'));
     await scrollTo(tester, find.text('Попадание в цель'));
     expect(find.text('Попадание в цель'), findsOneWidget);
+  });
+
+  testWidgets('помечает набор из примерного меню плашкой «Меню примерное»', (tester) async {
+    final estimate = TestData.option([TestData.dish(6, 'Борщ со сметаной', 227)], distance: 120);
+    final harness = TestHarness(profile: TestData.profile)
+      ..combos.nearbyResult = Ok(
+        ComboSearchResult(
+          appliedTarget: TestData.lunchTarget,
+          options: [
+            estimate.copyWith(combo: estimate.combo.copyWith(sourceKind: SourceKind.estimate)),
+            options.first,
+          ],
+        ),
+      );
+    await harness.pump(tester);
+
+    await tester.tap(find.byKey(const Key('find-nearby')));
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const Key('combo-estimate-menu')), findsOneWidget);
+    expect(find.text('Меню примерное'), findsOneWidget);
   });
 
   testWidgets('честно говорит, когда рядом нет подходящих наборов', (tester) async {

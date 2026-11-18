@@ -693,6 +693,7 @@
   "@resultsWiderRadius": {"placeholders": {"distance": {"type": "String"}}},
   "fitOnTarget": "В цели",
   "fitCompromise": "Компромисс",
+  "comboEstimateMenu": "Меню примерное",
   "eatenOfNorm": "съедено {eaten} из {norm} ккал",
   "@eatenOfNorm": {
     "placeholders": {

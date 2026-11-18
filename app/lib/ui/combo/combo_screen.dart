@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../domain/models/catalog.dart' show SourceKind;
 import '../../domain/models/combo.dart';
 import '../../routing/routes.dart';
 import '../../utils/result.dart';
@@ -192,10 +193,24 @@ class _Summary extends StatelessWidget {
                   ],
                 ),
               ),
-              StatusPill(
-                label: onTarget ? l10n.fitOnTarget : l10n.fitCompromise,
-                tone: onTarget ? Tone.good : Tone.warn,
-                icon: onTarget ? Icons.check_circle_rounded : Icons.balance_rounded,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  StatusPill(
+                    label: onTarget ? l10n.fitOnTarget : l10n.fitCompromise,
+                    tone: onTarget ? Tone.good : Tone.warn,
+                    icon: onTarget ? Icons.check_circle_rounded : Icons.balance_rounded,
+                  ),
+                  if (combo.sourceKind == SourceKind.estimate) ...[
+                    const SizedBox(height: 6),
+                    StatusPill(
+                      key: const Key('combo-screen-estimate-menu'),
+                      label: l10n.comboEstimateMenu,
+                      tone: Tone.neutral,
+                      icon: Icons.restaurant_menu_rounded,
+                    ),
+                  ],
+                ],
               ),
             ],
           ),

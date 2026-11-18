@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../domain/models/catalog.dart' show SourceKind;
 import '../../../domain/models/combo.dart';
 import '../formatting.dart';
 import '../l10n_extensions.dart';
@@ -134,7 +135,15 @@ class ComboCard extends StatelessWidget {
                 tone: onTarget ? Tone.good : Tone.warn,
                 icon: onTarget ? Icons.check_circle_rounded : Icons.balance_rounded,
               ),
-              TrustBadge(kind: combo.sourceKind),
+              if (combo.sourceKind == SourceKind.estimate)
+                StatusPill(
+                  key: const Key('combo-estimate-menu'),
+                  label: l10n.comboEstimateMenu,
+                  tone: Tone.neutral,
+                  icon: Icons.restaurant_menu_rounded,
+                )
+              else
+                TrustBadge(kind: combo.sourceKind),
             ],
           ),
         ],
