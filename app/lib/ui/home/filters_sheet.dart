@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -13,6 +14,8 @@ import 'home_view_model.dart';
 class SortSelector extends StatelessWidget {
   const SortSelector({super.key, required this.value, required this.onChanged, this.keyPrefix = 'sort'});
 
+  static const _padding = 4.0;
+
   final ComboSort value;
   final ValueChanged<ComboSort> onChanged;
   final String keyPrefix;
@@ -21,60 +24,83 @@ class SortSelector extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final palette = context.palette;
-    return Container(
-      padding: const EdgeInsets.all(4),
-      decoration: ShapeDecoration(color: palette.surfaceMuted, shape: const StadiumBorder()),
-      child: Row(
-        children: [
-          for (final sort in ComboSort.values)
-            Expanded(
-              child: Semantics(
-                selected: sort == value,
-                button: true,
-                child: GestureDetector(
-                  key: Key('$keyPrefix-${sort.name}'),
-                  behavior: HitTestBehavior.opaque,
-                  onTap: () {
-                    if (sort == value) return;
-                    HapticFeedback.selectionClick();
-                    onChanged(sort);
-                  },
-                  child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 220),
-                    curve: Curves.easeOutCubic,
-                    constraints: const BoxConstraints(minHeight: 48),
-                    alignment: Alignment.center,
-                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
-                    decoration: ShapeDecoration(
-                      color: sort == value ? palette.surface : Colors.transparent,
-                      shape: const StadiumBorder(),
-                      shadows: sort == value
-                          ? [
-                              BoxShadow(
-                                color: palette.ink.withValues(alpha: 0.08),
-                                blurRadius: 12,
-                                offset: const Offset(0, 3),
-                              ),
-                            ]
-                          : const [],
-                    ),
-                    child: FittedBox(
-                      fit: BoxFit.scaleDown,
-                      child: Text(
-                        l10n.comboSort(sort),
-                        style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                          color: palette.ink,
-                          fontWeight: sort == value ? FontWeight.w700 : FontWeight.w500,
+    final base = Theme.of(context).textTheme.labelMedium ?? const TextStyle(fontSize: 13);
+    final scaler = MediaQuery.textScalerOf(context);
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final segment = (constraints.maxWidth - 2 * _padding) / ComboSort.values.length - 2 * _padding;
+        final widest = [
+          for (final sort in ComboSort.values) ...l10n.comboSort(sort).split(' '),
+        ].map((word) => _widthOf(word, base.copyWith(fontWeight: FontWeight.w800), scaler)).reduce(math.max);
+        final labels = TextScaler.linear(scaler.scale(1) * (widest <= segment ? 1 : segment / widest));
+        return Container(
+          padding: const EdgeInsets.all(_padding),
+          decoration: ShapeDecoration(color: palette.surfaceMuted, shape: const StadiumBorder()),
+          child: Row(
+            children: [
+              for (final sort in ComboSort.values)
+                Expanded(
+                  child: Semantics(
+                    selected: sort == value,
+                    button: true,
+                    child: GestureDetector(
+                      key: Key('$keyPrefix-${sort.name}'),
+                      behavior: HitTestBehavior.opaque,
+                      onTap: () {
+                        if (sort == value) return;
+                        HapticFeedback.selectionClick();
+                        onChanged(sort);
+                      },
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 220),
+                        curve: Curves.easeOutCubic,
+                        constraints: const BoxConstraints(minHeight: 48),
+                        alignment: Alignment.center,
+                        padding: const EdgeInsets.symmetric(horizontal: _padding, vertical: 6),
+                        decoration: ShapeDecoration(
+                          color: sort == value ? palette.surface : Colors.transparent,
+                          shape: const StadiumBorder(),
+                          shadows: sort == value
+                              ? [
+                                  BoxShadow(
+                                    color: palette.ink.withValues(alpha: 0.08),
+                                    blurRadius: 12,
+                                    offset: const Offset(0, 3),
+                                  ),
+                                ]
+                              : const [],
+                        ),
+                        child: Text(
+                          l10n.comboSort(sort),
+                          textAlign: TextAlign.center,
+                          maxLines: 2,
+                          textScaler: labels,
+                          style: base.copyWith(
+                            color: palette.ink,
+                            height: 1.15,
+                            fontWeight: sort == value ? FontWeight.w800 : FontWeight.w600,
+                          ),
                         ),
                       ),
                     ),
                   ),
                 ),
-              ),
-            ),
-        ],
-      ),
+            ],
+          ),
+        );
+      },
     );
+  }
+
+  static double _widthOf(String word, TextStyle style, TextScaler scaler) {
+    final painter = TextPainter(
+      text: TextSpan(text: word, style: style),
+      textDirection: TextDirection.ltr,
+      textScaler: scaler,
+    )..layout();
+    final width = painter.width;
+    painter.dispose();
+    return width;
   }
 }
 

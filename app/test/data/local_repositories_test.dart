@@ -13,6 +13,7 @@ import 'package:norma_ryadom/domain/models/district.dart';
 import 'package:norma_ryadom/domain/models/meal.dart';
 import 'package:norma_ryadom/domain/models/nutrition_norm.dart';
 import 'package:norma_ryadom/domain/models/search_filters.dart';
+import 'package:norma_ryadom/domain/models/combo.dart';
 
 import '../support/fakes.dart';
 
@@ -130,6 +131,29 @@ void main() {
         .into(database.settingRecords)
         .insertOnConflictUpdate(SettingRecordsCompanion.insert(key: 'search_filters', value: '{"sort": 7}'));
     expect(await repository.searchFilters(), const SearchFilters());
+  });
+
+  test('запоминает последний удачный подбор и не падает на испорченной записи', () async {
+    final repository = LocalSettingsRepository(database);
+    final search = SavedSearch(
+      result: ComboSearchResult(
+        appliedTarget: TestData.lunchTarget,
+        options: [
+          TestData.option([TestData.dish(1, 'Куриная грудка гриль', 374)]),
+        ],
+      ),
+      meal: MealType.dinner,
+      savedAt: DateTime.utc(2026, 12, 8, 17, 30),
+    );
+
+    expect(await repository.lastSearch(), isNull);
+    await repository.saveLastSearch(search);
+    expect(await repository.lastSearch(), search);
+
+    await database
+        .into(database.settingRecords)
+        .insertOnConflictUpdate(SettingRecordsCompanion.insert(key: 'last_search', value: '[]'));
+    expect(await repository.lastSearch(), isNull);
   });
 
   test('обновляет базу первой версии, не теряя профиль', () async {

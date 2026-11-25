@@ -29,3 +29,6 @@ __pycache__/
 
 menus-inbox/
 *.har
+app/android/key.properties
+*.jks
+*.keystore

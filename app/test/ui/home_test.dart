@@ -285,4 +285,64 @@ void main() {
     expect(find.byKey(const Key('search-results')), findsNothing);
     expect(find.byKey(const Key('how-it-works')), findsOneWidget);
   });
+
+  testWidgets('без связи показывает последний удачный подбор со временем и кнопкой «Повторить»', (tester) async {
+    final harness = TestHarness(profile: TestData.profile)
+      ..combos.nearbyResult = Ok(ComboSearchResult(appliedTarget: TestData.lunchTarget, options: options));
+    await harness.pump(tester);
+    await tapVisible(tester, find.byKey(const Key('find-nearby')));
+    expect(harness.settings.savedSearch?.result.options, hasLength(3));
+
+    harness.combos.nearbyResult = const Err(AppFailure.offline);
+    await tapVisible(tester, find.byKey(const Key('find-nearby')));
+    await scrollTo(tester, find.byKey(const Key('offline-banner')));
+
+    expect(find.text('Показан последний подбор от сегодня, 13:05'), findsOneWidget);
+    expect(find.byKey(const Key('search-results')), findsOneWidget);
+    harness.combos.nearbyResult = Ok(ComboSearchResult(appliedTarget: TestData.lunchTarget, options: options));
+    await tapVisible(tester, find.byKey(const Key('offline-retry')));
+
+    expect(find.byKey(const Key('offline-banner')), findsNothing);
+    expect(harness.combos.requestedTargets, hasLength(3));
+  });
+
+  testWidgets('показывает дату сохранённого подбора, если он не сегодняшний', (tester) async {
+    final harness = TestHarness(profile: TestData.profile)
+      ..combos.nearbyResult = const Err(AppFailure.serviceUnavailable);
+    harness.settings.savedSearch = SavedSearch(
+      result: ComboSearchResult(appliedTarget: TestData.lunchTarget, options: options),
+      meal: MealType.lunch,
+      savedAt: DateTime(2026, 9, 30, 19, 40),
+    );
+    await harness.pump(tester);
+
+    await tapVisible(tester, find.byKey(const Key('find-nearby')));
+    await scrollTo(tester, find.byKey(const Key('offline-banner')));
+
+    expect(find.text('Показан последний подбор от 30 сентября, 19:40'), findsOneWidget);
+  });
+
+  testWidgets('ошибку запроса не подменяет сохранённым подбором', (tester) async {
+    final harness = TestHarness(profile: TestData.profile)..combos.nearbyResult = const Err(AppFailure.invalidRequest);
+    harness.settings.savedSearch = SavedSearch(
+      result: ComboSearchResult(appliedTarget: TestData.lunchTarget, options: options),
+      meal: MealType.lunch,
+      savedAt: DateTime(2026, 10, 2, 12),
+    );
+    await harness.pump(tester);
+
+    await tapVisible(tester, find.byKey(const Key('find-nearby')));
+
+    expect(find.byKey(const Key('offline-banner')), findsNothing);
+    expect(find.byKey(const Key('search-results')), findsNothing);
+  });
+
+  testWidgets('пустую выдачу не запоминает', (tester) async {
+    final harness = TestHarness(profile: TestData.profile);
+    await harness.pump(tester);
+
+    await tapVisible(tester, find.byKey(const Key('find-nearby')));
+
+    expect(harness.settings.savedSearch, isNull);
+  });
 }

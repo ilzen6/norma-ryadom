@@ -889,21 +889,49 @@ class BrandMark extends StatelessWidget {
           ],
         ),
         alignment: Alignment.center,
-        child: Container(
-          width: size * 0.52,
-          height: size * 0.52,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            border: Border.all(color: palette.onBrand, width: size * 0.07),
-          ),
-          alignment: Alignment.center,
-          child: Container(
-            width: size * 0.16,
-            height: size * 0.16,
-            decoration: BoxDecoration(color: palette.onBrand, shape: BoxShape.circle),
-          ),
+        child: CustomPaint(
+          size: Size.square(size * 0.58),
+          painter: _PinForkPainter(palette.onBrand),
         ),
       ),
     );
   }
+}
+
+class _PinForkPainter extends CustomPainter {
+  const _PinForkPainter(this.color);
+
+  final Color color;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    canvas.scale(size.width / 24);
+    final paint = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.7
+      ..strokeCap = StrokeCap.round
+      ..strokeJoin = StrokeJoin.round
+      ..color = color;
+    final pin = Path()
+      ..moveTo(12, 21)
+      ..cubicTo(12, 21, 6, 15.8, 6, 11)
+      ..arcTo(Rect.fromCircle(center: const Offset(12, 11), radius: 6), math.pi, math.pi, false)
+      ..cubicTo(18, 15.8, 12, 21, 12, 21)
+      ..close();
+    final fork = Path()
+      ..moveTo(10, 8)
+      ..lineTo(10, 11.5)
+      ..moveTo(12, 8)
+      ..lineTo(12, 14)
+      ..moveTo(14, 8)
+      ..lineTo(14, 11.5)
+      ..moveTo(10, 11.5)
+      ..lineTo(14, 11.5);
+    canvas
+      ..drawPath(pin, paint)
+      ..drawPath(fork, paint);
+  }
+
+  @override
+  bool shouldRepaint(_PinForkPainter oldDelegate) => oldDelegate.color != color;
 }

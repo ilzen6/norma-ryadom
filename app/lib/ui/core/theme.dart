@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 @immutable
 class Palette extends ThemeExtension<Palette> {
@@ -210,6 +211,11 @@ ThemeData buildTheme(Brightness brightness) {
     splashFactory: InkRipple.splashFactory,
     dividerTheme: DividerThemeData(color: palette.hairline, space: 1, thickness: 1),
     appBarTheme: AppBarTheme(
+      systemOverlayStyle: SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        statusBarIconBrightness: brightness == Brightness.light ? Brightness.dark : Brightness.light,
+        statusBarBrightness: brightness,
+      ),
       backgroundColor: WidgetStateColor.resolveWith(
         (states) =>
             states.contains(WidgetState.scrolledUnder) ? palette.canvas.withValues(alpha: 0.94) : Colors.transparent,

@@ -505,10 +505,11 @@ class _SearchResults extends ConsumerWidget {
         message: l10n.noCombosNearby,
         icon: Icons.search_off_rounded,
       ),
-      SearchDone(:final result) => Column(
+      SearchDone(:final result, :final savedAt) => Column(
         key: const Key('search-results'),
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          if (savedAt != null) _OfflineBanner(savedAt: savedAt),
           SectionTitle(title: l10n.resultsTitle, trailing: '${result.options.length}'),
           if (ref.watch(searchTastesProvider) case final tastes when tastes.isNotEmpty) _TastesBanner(tastes: tastes),
           if (result.radiusMeters case final radius? when radius > ref.watch(appConfigProvider).searchRadiusMeters)
@@ -533,6 +534,61 @@ class _SearchResults extends ConsumerWidget {
         ],
       ),
     };
+  }
+}
+
+class _OfflineBanner extends ConsumerWidget {
+  const _OfflineBanner({required this.savedAt});
+
+  final DateTime savedAt;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = context.l10n;
+    final palette = context.palette;
+    final now = ref.watch(clockProvider)();
+    final time = Formatting.time(savedAt);
+    final when = DateUtils.isSameDay(savedAt, now)
+        ? l10n.offlineSavedToday(time)
+        : l10n.offlineSavedOn(Formatting.dayMonth(savedAt), time);
+    return Padding(
+      padding: const EdgeInsets.only(bottom: Layout.gap),
+      child: Semantics(
+        key: const Key('offline-banner'),
+        container: true,
+        liveRegion: true,
+        child: Panel(
+          color: palette.warnSoft,
+          padding: const EdgeInsets.fromLTRB(16, 12, 12, 12),
+          child: Row(
+            children: [
+              Icon(Icons.wifi_off_rounded, color: palette.warn),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      l10n.offlineTitle,
+                      style: Theme.of(context).textTheme.titleSmall?.copyWith(color: palette.warn),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(l10n.offlineResults(when), style: Theme.of(context).textTheme.bodySmall),
+                  ],
+                ),
+              ),
+              const SizedBox(width: 8),
+              FilledButton(
+                key: const Key('offline-retry'),
+                style: FilledButton.styleFrom(backgroundColor: palette.warn, foregroundColor: palette.onBrand),
+                onPressed: () => ref.read(nearbySearchProvider.notifier).search(restart: true),
+                child: Text(l10n.retry),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
 

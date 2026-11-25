@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../data/providers.dart';
@@ -22,11 +24,12 @@ final class SearchRunning extends NearbySearchState {
 }
 
 final class SearchDone extends NearbySearchState {
-  const SearchDone(this.result, {required this.meal, required this.price});
+  const SearchDone(this.result, {required this.meal, required this.price, this.savedAt});
 
   final ComboSearchResult result;
   final MealType meal;
   final PricePreference price;
+  final DateTime? savedAt;
 
   SelectedCombo select(ComboOption option) =>
       SelectedCombo(option: option, target: result.appliedTarget, meal: meal, price: price);
@@ -60,11 +63,18 @@ abstract class ComboSearchController extends Notifier<NearbySearchState> {
     state = const SearchRunning();
     final result = await _guarded(() => find(target, price));
     if (!ref.mounted || generation != _generation) return;
-    state = switch (result) {
+    final next = switch (result) {
       Ok(:final value) => SearchDone(value, meal: meal, price: price),
-      Err(:final failure) => SearchFailed(failure),
+      Err(:final failure) => await fallback(failure, price) ?? SearchFailed(failure),
     };
+    if (!ref.mounted || generation != _generation) return;
+    state = next;
+    if (result case Ok(:final value)) unawaited(remember(value, meal));
   }
+
+  Future<NearbySearchState?> fallback(AppFailure failure, PricePreference price) async => null;
+
+  Future<void> remember(ComboSearchResult result, MealType meal) async {}
 
   static PricePreference priceOf(SearchFilters filters) =>
       filters.prefersCheaper ? PricePreference.cheaper : PricePreference.any;
@@ -86,6 +96,27 @@ abstract class ComboSearchController extends Notifier<NearbySearchState> {
 final nearbySearchProvider = NotifierProvider<NearbySearchController, NearbySearchState>(NearbySearchController.new);
 
 class NearbySearchController extends ComboSearchController {
+  static const _unreachable = {AppFailure.offline, AppFailure.serviceUnavailable};
+
+  @override
+  Future<NearbySearchState?> fallback(AppFailure failure, PricePreference price) async {
+    if (!_unreachable.contains(failure)) return null;
+    final saved = await ref.read(settingsRepositoryProvider).lastSearch();
+    return saved == null ? null : SearchDone(saved.result, meal: saved.meal, price: price, savedAt: saved.savedAt);
+  }
+
+  @override
+  Future<void> remember(ComboSearchResult result, MealType meal) async {
+    if (result.options.isEmpty) return;
+    try {
+      await ref
+          .read(settingsRepositoryProvider)
+          .saveLastSearch(SavedSearch(result: result, meal: meal, savedAt: ref.read(clockProvider)()));
+    } on Exception {
+      return;
+    }
+  }
+
   @override
   NearbySearchState build() {
     ref.listen(searchTastesProvider, (_, _) {});

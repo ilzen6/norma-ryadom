@@ -6,6 +6,10 @@ import 'package:go_router/go_router.dart';
 import 'package:norma_ryadom/domain/models/catalog.dart';
 import 'package:norma_ryadom/domain/models/combo.dart';
 import 'package:norma_ryadom/utils/result.dart';
+import 'package:norma_ryadom/domain/models/diary.dart';
+import 'package:norma_ryadom/domain/models/meal.dart';
+import 'package:norma_ryadom/domain/models/nutrition_norm.dart';
+import 'package:norma_ryadom/domain/models/taste.dart';
 
 import '../support/fakes.dart';
 import '../support/pump_app.dart';
@@ -168,6 +172,69 @@ void main() {
       tester.getSemantics(find.byKey(const Key('district-field'))),
       isSemantics(isButton: true, hasTapAction: true, label: 'Или выберите район: Москва-Сити. Изменить'),
     );
+    handle.dispose();
+  });
+
+  testWidgets('шторка фильтров доступна', (tester) async {
+    final handle = tester.ensureSemantics();
+    await TestHarness(profile: TestData.profile).pump(tester);
+
+    await tapVisible(tester, find.byKey(const Key('open-filters')));
+
+    await expectAccessible(tester);
+    handle.dispose();
+  });
+
+  testWidgets('экран «Ваши вкусы» доступен', (tester) async {
+    final handle = tester.ensureSemantics();
+    await TestHarness(profile: TestData.profile.copyWith(likedTastes: {TasteTag.soup})).pump(tester);
+    unawaited(GoRouter.of(tester.element(find.byType(Scaffold).first)).push('/profile/tastes'));
+    await tester.pumpAndSettle();
+
+    await expectAccessible(tester);
+    handle.dispose();
+  });
+
+  testWidgets('неделя в дневнике доступна и подписывает каждый день для диктора', (tester) async {
+    final handle = tester.ensureSemantics();
+    final harness = TestHarness(profile: TestData.profile);
+    await harness.diary.add(
+      const NewDiaryEntry(
+        meal: MealType.lunch,
+        title: 'Борщ',
+        intake: Intake(kcal: 520, protein: 20, fat: 15, carbs: 60),
+      ),
+      harness.now,
+    );
+    await harness.pump(tester);
+    await tester.tap(find.descendant(of: find.byType(NavigationBar), matching: find.text('Дневник')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('diary-mode-week')));
+    await tester.pumpAndSettle();
+
+    expect(find.bySemanticsLabel(RegExp(r'^пт: 520 ккал$')), findsOneWidget);
+    await expectAccessible(tester);
+    handle.dispose();
+  });
+
+  testWidgets('плашка «нет связи» доступна', (tester) async {
+    final handle = tester.ensureSemantics();
+    final harness = TestHarness(profile: TestData.profile)..combos.nearbyResult = const Err(AppFailure.offline);
+    harness.settings.savedSearch = SavedSearch(
+      result: ComboSearchResult(
+        appliedTarget: TestData.lunchTarget,
+        options: [
+          TestData.option([TestData.dish(1, 'Куриная грудка гриль', 374)]),
+        ],
+      ),
+      meal: MealType.lunch,
+      savedAt: DateTime(2026, 10, 2, 12),
+    );
+    await harness.pump(tester);
+    await tapVisible(tester, find.byKey(const Key('find-nearby')));
+    await scrollTo(tester, find.byKey(const Key('offline-banner')));
+
+    await expectAccessible(tester);
     handle.dispose();
   });
 }

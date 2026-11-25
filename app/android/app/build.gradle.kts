@@ -1,7 +1,16 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("dev.flutter.flutter-gradle-plugin")
 }
+
+val releaseKey =
+    Properties().apply {
+        val file = rootProject.file("key.properties")
+        if (file.exists()) FileInputStream(file).use { load(it) }
+    }
 
 android {
     namespace = "ru.normaryadom.norma_ryadom"
@@ -33,9 +42,20 @@ android {
         }
     }
 
+    signingConfigs {
+        if (!releaseKey.isEmpty()) {
+            create("release") {
+                keyAlias = releaseKey.getProperty("keyAlias")
+                keyPassword = releaseKey.getProperty("keyPassword")
+                storeFile = file(releaseKey.getProperty("storeFile"))
+                storePassword = releaseKey.getProperty("storePassword")
+            }
+        }
+    }
+
     buildTypes {
         release {
-            signingConfig = signingConfigs.getByName("debug")
+            signingConfig = signingConfigs.getByName(if (releaseKey.isEmpty()) "debug" else "release")
         }
     }
 }

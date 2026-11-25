@@ -154,6 +154,14 @@ class InMemorySettingsRepository implements SettingsRepository {
 
   @override
   Future<void> saveSearchFilters(SearchFilters filters) async => savedFilters = filters;
+
+  SavedSearch? savedSearch;
+
+  @override
+  Future<SavedSearch?> lastSearch() async => savedSearch;
+
+  @override
+  Future<void> saveLastSearch(SavedSearch search) async => savedSearch = search;
 }
 
 class FakeHealthSyncService implements HealthSyncService {

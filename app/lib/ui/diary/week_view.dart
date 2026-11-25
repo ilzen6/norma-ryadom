@@ -103,6 +103,7 @@ class _WeekBars extends StatelessWidget {
                   for (final day in week.days)
                     Expanded(
                       child: Semantics(
+                        container: true,
                         label: l10n.weekBar(weekday.format(day.day), day.kcal.round()),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 5),

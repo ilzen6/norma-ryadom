@@ -957,5 +957,12 @@
   "diaryRepeatYesterday": "Повторить вчерашний {meal} · {kcal} ккал",
   "@diaryRepeatYesterday": {"placeholders": {"meal": {"type": "String"}, "kcal": {"type": "int"}}},
   "diaryRepeated": "Записано",
-  "diaryUndo": "Отменить"
+  "diaryUndo": "Отменить",
+  "offlineTitle": "Нет связи с сервером",
+  "offlineResults": "Показан последний подбор от {when}",
+  "@offlineResults": {"placeholders": {"when": {"type": "String"}}},
+  "offlineSavedToday": "сегодня, {time}",
+  "@offlineSavedToday": {"placeholders": {"time": {"type": "String"}}},
+  "offlineSavedOn": "{date}, {time}",
+  "@offlineSavedOn": {"placeholders": {"date": {"type": "String"}, "time": {"type": "String"}}}
 }

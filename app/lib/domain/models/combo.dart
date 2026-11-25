@@ -90,3 +90,11 @@ abstract class ComboSearchResult with _$ComboSearchResult {
 
   factory ComboSearchResult.fromJson(Map<String, dynamic> json) => _$ComboSearchResultFromJson(json);
 }
+
+@freezed
+abstract class SavedSearch with _$SavedSearch {
+  const factory SavedSearch({required ComboSearchResult result, required MealType meal, required DateTime savedAt}) =
+      _SavedSearch;
+
+  factory SavedSearch.fromJson(Map<String, dynamic> json) => _$SavedSearchFromJson(json);
+}
