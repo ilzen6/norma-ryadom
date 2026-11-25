@@ -524,6 +524,7 @@ class ChoiceCard extends StatelessWidget {
                           ],
                         ),
                       ),
+                      const SizedBox(width: 12),
                       AnimatedSwitcher(
                         duration: const Duration(milliseconds: 200),
                         child: Icon(
