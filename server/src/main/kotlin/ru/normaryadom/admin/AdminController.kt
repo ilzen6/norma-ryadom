@@ -8,6 +8,7 @@ import ru.normaryadom.catalog.service.ChainService
 import ru.normaryadom.intake.photo.ModerationService
 import ru.normaryadom.intake.report.ReviewService
 import ru.normaryadom.intake.report.VenueReviewService
+import ru.normaryadom.intake.report.WeeklySummaryService
 
 @Controller
 @RequestMapping("/admin")
@@ -16,6 +17,7 @@ class AdminController(
     private val moderation: ModerationService,
     private val reviews: ReviewService,
     private val venueReviews: VenueReviewService,
+    private val weekly: WeeklySummaryService,
 ) {
     @GetMapping("/login")
     fun login(): String = "admin/login"
@@ -29,6 +31,7 @@ class AdminController(
         model.addAttribute("openSubmissions", moderation.openCount())
         model.addAttribute("reviewCases", reviews.cases().size)
         model.addAttribute("venueCases", venueReviews.cases().size)
+        model.addAttribute("week", weekly.lastWeek())
         return "admin/dashboard"
     }
 }

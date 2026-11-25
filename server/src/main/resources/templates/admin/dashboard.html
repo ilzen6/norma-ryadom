@@ -13,6 +13,24 @@
         <a class="tile" th:classappend="${reviewCases > 0} ? 'attention'" th:href="@{/admin/reviews}"><span class="value" th:text="${reviewCases}" data-testid="review-cases">0</span><span>блюд на перепроверке</span></a>
         <a class="tile" th:classappend="${venueCases > 0} ? 'attention'" th:href="@{/admin/venue-reviews}"><span class="value" th:text="${venueCases}" data-testid="venue-cases">0</span><span>точек под подозрением на закрытие</span></a>
     </div>
+    <h2>За 7 дней</h2>
+    <div class="tiles">
+        <a class="tile" th:href="@{/admin/reviews}"><span class="value" th:text="${week.itemReports}" data-testid="week-item-reports">0</span><span>жалоб на блюда</span></a>
+        <a class="tile" th:href="@{/admin/venue-reviews}"><span class="value" th:text="${week.venueReports}" data-testid="week-venue-reports">0</span><span>сообщений о точках</span></a>
+        <a class="tile" th:classappend="${week.closedReports > 0} ? 'attention'" th:href="@{/admin/venue-reviews}"><span class="value" th:text="${week.closedReports}" data-testid="week-closed-reports">0</span><span>из них «закрыто»</span></a>
+        <a class="tile" th:href="@{/admin/moderation}"><span class="value" th:text="${week.photos}" data-testid="week-photos">0</span><span>фото меню прислали</span></a>
+    </div>
+    <h2>Чаще всего жалуются</h2>
+    <p th:if="${#lists.isEmpty(week.topPlaces)}" data-testid="week-top-empty">За неделю жалоб не было.</p>
+    <table th:unless="${#lists.isEmpty(week.topPlaces)}">
+        <thead><tr><th scope="col">Заведение или сеть</th><th scope="col">Жалоб за неделю</th></tr></thead>
+        <tbody>
+        <tr th:each="place : ${week.topPlaces}" data-testid="week-top-row">
+            <td th:text="${place.name}">—</td>
+            <td th:text="${place.complaints}">0</td>
+        </tr>
+        </tbody>
+    </table>
 </main>
 </body>
 </html>

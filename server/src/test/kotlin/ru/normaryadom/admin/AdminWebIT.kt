@@ -16,6 +16,8 @@ import org.springframework.test.web.servlet.multipart
 import org.springframework.test.web.servlet.post
 import org.springframework.test.web.servlet.request.RequestPostProcessor
 import ru.normaryadom.intake.photo.MenuPhotoService
+import ru.normaryadom.support.CatalogFixtures.Companion.BOWL_MENU
+import ru.normaryadom.support.CatalogFixtures.Companion.BOWL_VENUES
 import ru.normaryadom.support.CatalogFixtures.Companion.CAFE_TEMPLATE
 import ru.normaryadom.support.CatalogFixtures.Companion.GRILL_MENU
 import ru.normaryadom.support.CatalogFixtures.Companion.GRILL_VENUES
@@ -337,6 +339,106 @@ class AdminWebIT : IntegrationTest() {
         assertThat(rows.getValue("Гриль, Сити")["confirmed_on"]).isNotNull()
         assertThat(rows.getValue("Гриль, Тверская")["is_active"]).isEqualTo(false)
         assertThat(jdbc.sql("SELECT count(*) FROM venue_report WHERE resolved_at IS NULL").query(Int::class.java).single()).isZero()
+    }
+
+    @Test
+    fun `сводка недели считает жалобы, сообщения «закрыто» и фото за последние 7 дней`() {
+        catalog.chain("Гриль", GRILL_MENU, GRILL_VENUES)
+        itemReport("Куриная грудка гриль", daysAgo = 1)
+        itemReport("Морс", daysAgo = 2)
+        itemReport("Чай", daysAgo = 9)
+        venueReport("Гриль, Сити", "closed", daysAgo = 1)
+        venueReport("Гриль, Тверская", "moved", daysAgo = 3)
+        venueReport("Гриль, Тверская", "closed", daysAgo = 10)
+        menuPhoto("Гриль, Сити", daysAgo = 0)
+
+        mockMvc.get("/admin") { with(admin) }.andExpect {
+            status { isOk() }
+            content { string(containsString("data-testid=\"week-item-reports\">2<")) }
+            content { string(containsString("data-testid=\"week-venue-reports\">2<")) }
+            content { string(containsString("data-testid=\"week-closed-reports\">1<")) }
+            content { string(containsString("data-testid=\"week-photos\">1<")) }
+        }
+    }
+
+    @Test
+    fun `сводка показывает, на кого чаще всего жаловались за неделю`() {
+        catalog.chain("Гриль", GRILL_MENU, GRILL_VENUES)
+        catalog.chain("Боулы", BOWL_MENU, BOWL_VENUES)
+        itemReport("Куриная грудка гриль", daysAgo = 1)
+        itemReport("Морс", daysAgo = 2)
+        venueReport("Боулы, Сити", "closed", daysAgo = 1)
+        itemReport("Боул с тофу", daysAgo = 20)
+
+        val html =
+            mockMvc
+                .get("/admin") { with(admin) }
+                .andReturn()
+                .response.contentAsString
+        val rows =
+            Regex("""data-testid="week-top-row">\s*<td>(.*?)</td>\s*<td>(\d+)</td>""")
+                .findAll(html)
+                .map { it.groupValues[1] to it.groupValues[2].toInt() }
+                .toList()
+
+        assertThat(rows).containsExactly("Гриль" to 2, "Боулы, Сити" to 1)
+    }
+
+    @Test
+    fun `без жалоб за неделю пишет, что их не было`() {
+        mockMvc.get("/admin") { with(admin) }.andExpect {
+            content { string(containsString("data-testid=\"week-top-empty\">За неделю жалоб не было.<")) }
+            content { string(containsString("data-testid=\"week-item-reports\">0<")) }
+        }
+    }
+
+    private fun itemReport(
+        item: String,
+        daysAgo: Int,
+    ) {
+        jdbc
+            .sql(
+                """
+                INSERT INTO item_report (item_id, reason, created_at)
+                SELECT id, 'Цифры не совпадают', now() - make_interval(days => :days) FROM menu_item WHERE name = :name
+                """.trimIndent(),
+            ).param("name", item)
+            .param("days", daysAgo)
+            .update()
+    }
+
+    private fun venueReport(
+        venue: String,
+        reason: String,
+        daysAgo: Int,
+    ) {
+        jdbc
+            .sql(
+                """
+                INSERT INTO venue_report (venue_id, reason, reporter_hash, created_at)
+                SELECT id, :reason, :hash, now() - make_interval(days => :days) FROM venue WHERE name = :name
+                """.trimIndent(),
+            ).param("name", venue)
+            .param("reason", reason)
+            .param("hash", "$reason-$daysAgo")
+            .param("days", daysAgo)
+            .update()
+    }
+
+    private fun menuPhoto(
+        venue: String,
+        daysAgo: Int,
+    ) {
+        jdbc
+            .sql(
+                """
+                INSERT INTO menu_submission (venue_id, photo_key, content_type, created_at)
+                SELECT id, :key, 'image/jpeg', now() - make_interval(days => :days) FROM venue WHERE name = :name
+                """.trimIndent(),
+            ).param("name", venue)
+            .param("key", "test/$venue-$daysAgo.jpg")
+            .param("days", daysAgo)
+            .update()
     }
 
     private fun suspectedClosed(name: String): Long {
