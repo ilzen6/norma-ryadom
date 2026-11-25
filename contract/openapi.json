@@ -148,6 +148,17 @@
             "type" : "array",
             "uniqueItems" : true
           },
+          "likedTastes" : {
+            "description" : "Любимые вкусы: поднимают такие наборы выше",
+            "items" : {
+              "enum" : [ "SOUP", "SALAD", "PORRIDGE", "PASTRY", "FISH", "GEORGIAN", "ASIAN", "PIZZA", "BURGER", "SUSHI" ],
+              "type" : "string"
+            },
+            "maxItems" : 10,
+            "minItems" : 0,
+            "type" : "array",
+            "uniqueItems" : true
+          },
           "limit" : {
             "format" : "int32",
             "maximum" : 30,

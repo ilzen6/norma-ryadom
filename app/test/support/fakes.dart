@@ -20,6 +20,7 @@ import 'package:norma_ryadom/domain/models/meal.dart';
 import 'package:norma_ryadom/domain/models/search_filters.dart';
 import 'package:norma_ryadom/domain/models/nutrition_norm.dart';
 import 'package:norma_ryadom/domain/models/profile.dart';
+import 'package:norma_ryadom/domain/models/taste.dart';
 import 'package:norma_ryadom/utils/result.dart';
 
 class InMemoryProfileRepository implements ProfileRepository {
@@ -58,6 +59,16 @@ class InMemoryDiaryRepository implements DiaryRepository {
   Stream<List<DiaryEntry>> watchDay(DateTime day) => _watch(
     () => entries.where((entry) => LocalDiaryRepository.dayKey(entry.day) == LocalDiaryRepository.dayKey(day)).toList(),
   );
+
+  @override
+  Stream<List<DiaryEntry>> watchRange(DateTime from, DateTime to) => _watch(() {
+    final first = LocalDiaryRepository.dayKey(from);
+    final last = LocalDiaryRepository.dayKey(to);
+    return entries.where((entry) {
+      final key = LocalDiaryRepository.dayKey(entry.day);
+      return key.compareTo(first) >= 0 && key.compareTo(last) <= 0;
+    }).toList();
+  });
 
   @override
   Stream<List<DiaryEntry>> watchQuickAdd({int limit = 10}) => _watch(() {
@@ -178,6 +189,7 @@ class FakeComboRepository implements ComboRepository {
   final List<MealTarget> requestedTargets = [];
   final List<PricePreference> requestedPrices = [];
   final List<SearchFilters> requestedFilters = [];
+  final List<Set<TasteTag>> requestedTastes = [];
   final List<GeoLocation> requestedLocations = [];
   final List<int> requestedVenues = [];
   final List<(List<int>, int)> replaceRequests = [];
@@ -190,10 +202,12 @@ class FakeComboRepository implements ComboRepository {
     required MealTarget target,
     required PricePreference price,
     SearchFilters filters = const SearchFilters(),
+    Set<TasteTag> tastes = const {},
   }) async {
     requestedTargets.add(target);
     requestedPrices.add(price);
     requestedFilters.add(filters);
+    requestedTastes.add(tastes);
     requestedLocations.add(location);
     final result = nearbyResult;
     await gate?.future;

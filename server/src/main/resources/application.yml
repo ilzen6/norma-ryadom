@@ -84,6 +84,7 @@ nearby:
   venues-per-template: 3
   fast-food-penalty: 0.8
   local-bonus: 1.0
+  taste-bonus: 0.5
 
 intake:
   photo:

@@ -6,6 +6,7 @@ import '../../domain/models/diet_preference.dart';
 import '../../domain/models/district.dart';
 import '../../domain/models/nutrition_norm.dart';
 import '../../domain/models/profile.dart';
+import '../../domain/models/taste.dart';
 import '../../domain/nutrition/norm_calculator.dart';
 import '../../utils/result.dart';
 import '../core/session.dart';
@@ -27,6 +28,8 @@ abstract class OnboardingState with _$OnboardingState {
     @Default(Goal.lose) Goal goal,
     NutritionNorm? manualNorm,
     @Default(<DietPreference>{}) Set<DietPreference> preferences,
+    @Default(<TasteTag>{}) Set<TasteTag> likedTastes,
+    @Default(true) bool learnTastes,
     @Default(false) bool locationConsent,
     @Default(District.moscowCity) District district,
     AppFailure? locationFailure,
@@ -56,6 +59,8 @@ abstract class OnboardingState with _$OnboardingState {
       manualNorm: manualNorm,
       locationConsent: locationConsent,
       district: district,
+      likedTastes: likedTastes,
+      learnTastes: learnTastes,
     );
   }
 
@@ -86,6 +91,8 @@ class OnboardingController extends Notifier<OnboardingState> {
       goal: existing.goal,
       manualNorm: existing.manualNorm,
       preferences: existing.preferences,
+      likedTastes: existing.likedTastes,
+      learnTastes: existing.learnTastes,
       locationConsent: existing.locationConsent,
       district: existing.district ?? District.moscowCity,
     );
@@ -123,6 +130,12 @@ class OnboardingController extends Notifier<OnboardingState> {
     if (!updated.remove(preference)) updated.add(preference);
     state = state.copyWith(preferences: updated);
   }
+
+  void toggleTaste(TasteTag taste) => state = state.copyWith(
+    likedTastes: state.likedTastes.contains(taste)
+        ? ({...state.likedTastes}..remove(taste))
+        : {...state.likedTastes, taste},
+  );
 
   void setDistrict(District district) => state = state.copyWith(district: district);
 

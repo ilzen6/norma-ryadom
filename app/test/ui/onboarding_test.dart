@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:norma_ryadom/domain/models/diet_preference.dart';
 import 'package:norma_ryadom/domain/models/profile.dart';
 import 'package:norma_ryadom/utils/result.dart';
+import 'package:norma_ryadom/domain/models/taste.dart';
 
 import '../support/pump_app.dart';
 
@@ -18,7 +19,7 @@ void main() {
     final harness = TestHarness();
     await harness.pump(tester);
 
-    expect(find.text('ШАГ 1 ИЗ 3'), findsOneWidget);
+    expect(find.text('ШАГ 1 ИЗ 4'), findsOneWidget);
     expect(tester.widget<FilledButton>(find.byKey(const Key('onboarding-next'))).onPressed, isNull);
     await tester.enterText(find.byKey(const Key('age-field')), '7');
     await tester.pumpAndSettle();
@@ -93,7 +94,7 @@ void main() {
     );
   });
 
-  testWidgets('проходит три шага и сохраняет профиль на устройстве', (tester) async {
+  testWidgets('проходит четыре шага и сохраняет профиль с любимой едой на устройстве', (tester) async {
     final harness = TestHarness();
     await harness.pump(tester);
     await fillBody(tester);
@@ -102,6 +103,12 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.text('Без свинины'));
     await tester.tap(find.text('Без орехов'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('onboarding-next')));
+    await tester.pumpAndSettle();
+    expect(find.text('Что вы любите'), findsOneWidget);
+    await tester.tap(find.byKey(const Key('taste-SOUP')));
+    await tester.tap(find.byKey(const Key('taste-GEORGIAN')));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const Key('onboarding-next')));
     await tester.pumpAndSettle();
@@ -116,6 +123,7 @@ void main() {
     expect(saved?.goal, Goal.lose);
     expect(saved?.preferences, {DietPreference.noPork, DietPreference.noNuts});
     expect(saved?.locationConsent, isTrue);
+    expect(saved?.likedTastes, {TasteTag.soup, TasteTag.georgian});
     expect(find.text('ОСТАЛОСЬ НА СЕГОДНЯ'), findsOneWidget);
   });
 
@@ -140,6 +148,8 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const Key('onboarding-next')));
     await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('onboarding-next')));
+    await tester.pumpAndSettle();
 
     expect(find.byKey(const Key('district-field')), findsOneWidget);
     await tester.tap(find.byKey(const Key('allow-location')));
@@ -151,6 +161,8 @@ void main() {
     final harness = TestHarness()..location.result = const Err(AppFailure.locationDenied);
     await harness.pump(tester);
     await fillBody(tester);
+    await tester.tap(find.byKey(const Key('onboarding-next')));
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const Key('onboarding-next')));
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const Key('onboarding-next')));
@@ -180,6 +192,22 @@ void main() {
     await tester.tap(find.byTooltip('Назад'));
     await tester.pumpAndSettle();
 
-    expect(find.text('ШАГ 1 ИЗ 3'), findsOneWidget);
+    expect(find.text('ШАГ 1 ИЗ 4'), findsOneWidget);
+  });
+
+  testWidgets('шаг «Что вы любите» можно пропустить', (tester) async {
+    final harness = TestHarness();
+    await harness.pump(tester);
+    await fillBody(tester);
+    for (var step = 0; step < 3; step++) {
+      await tester.tap(find.byKey(const Key('onboarding-next')));
+      await tester.pumpAndSettle();
+    }
+
+    await tester.tap(find.byKey(const Key('onboarding-next')));
+    await tester.pumpAndSettle();
+
+    expect(harness.profiles.profile?.likedTastes, isEmpty);
+    expect(harness.profiles.profile?.learnTastes, isTrue);
   });
 }

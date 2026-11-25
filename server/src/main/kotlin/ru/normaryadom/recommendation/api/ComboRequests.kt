@@ -10,6 +10,7 @@ import jakarta.validation.constraints.Max
 import jakarta.validation.constraints.Min
 import jakarta.validation.constraints.Positive
 import jakarta.validation.constraints.Size
+import ru.normaryadom.catalog.domain.TasteTag
 import ru.normaryadom.catalog.domain.VenueKind
 import ru.normaryadom.optimizer.PricePreference
 import ru.normaryadom.optimizer.SearchCriteria
@@ -50,11 +51,14 @@ data class ComboSearchRequest(
     @field:Min(MIN_PRICE_LIMIT_RUB)
     @field:Max(MAX_PRICE_LIMIT_RUB)
     val maxPriceRub: Int? = null,
+    @field:Schema(requiredMode = Schema.RequiredMode.NOT_REQUIRED, description = "Любимые вкусы: поднимают такие наборы выше")
+    @field:Size(max = MAX_LIKED_TASTES)
+    val likedTastes: Set<TasteTag> = emptySet(),
 ) {
     fun criteria(): SearchCriteria =
         SearchCriteria(target.toTarget(), PricePreferences.of(preferCheaper), maxPriceRub?.times(KOPECKS_PER_RUBLE))
 
-    fun preferences(): NearbyPreferences = NearbyPreferences(sort = sort, kinds = kinds)
+    fun preferences(): NearbyPreferences = NearbyPreferences(sort = sort, kinds = kinds, likedTastes = likedTastes)
 
     @get:JsonIgnore
     @get:Schema(hidden = true)
@@ -88,6 +92,7 @@ object PricePreferences {
 const val MAX_SEARCH_RADIUS_METERS = 10_000L
 const val MAX_NEARBY_COMBOS = 30L
 const val MAX_VENUE_KINDS = 15
+const val MAX_LIKED_TASTES = 10
 const val MIN_PRICE_LIMIT_RUB = 200L
 const val MAX_PRICE_LIMIT_RUB = 2000L
 private const val KOPECKS_PER_RUBLE = 100

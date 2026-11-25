@@ -318,7 +318,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(harness.profiles.deleted, isTrue);
-    expect(find.text('ШАГ 1 ИЗ 3'), findsOneWidget);
+    expect(find.text('ШАГ 1 ИЗ 4'), findsOneWidget);
   });
 
   testWidgets('профиль сохраняет согласие на геолокацию и редактирует параметры', (tester) async {
@@ -449,9 +449,7 @@ void main() {
     final harness = TestHarness(profile: TestData.profile);
     await harness.pump(tester);
     await openTab(tester, 'Профиль');
-    await tester.scrollUntilVisible(find.byKey(const Key('district-field')), 120);
-    await tester.tap(find.byKey(const Key('district-field')));
-    await tester.pumpAndSettle();
+    await tapVisible(tester, find.byKey(const Key('district-field')));
 
     expect(find.text('МОСКВА'), findsOneWidget);
     expect(find.text('МОСКОВСКАЯ ОБЛАСТЬ'), findsOneWidget);
@@ -470,9 +468,7 @@ void main() {
     final harness = TestHarness(profile: TestData.profile);
     await harness.pump(tester);
     await openTab(tester, 'Профиль');
-    await tester.scrollUntilVisible(find.byKey(const Key('district-field')), 120);
-    await tester.tap(find.byKey(const Key('district-field')));
-    await tester.pumpAndSettle();
+    await tapVisible(tester, find.byKey(const Key('district-field')));
 
     await tester.enterText(find.byKey(const Key('district-search')), 'Владивосток');
     await tester.pumpAndSettle();
@@ -483,9 +479,7 @@ void main() {
     final harness = TestHarness(profile: TestData.profile);
     await harness.pump(tester);
     await openTab(tester, 'Профиль');
-    await tester.scrollUntilVisible(find.byKey(const Key('district-field')), 120);
-    await tester.tap(find.byKey(const Key('district-field')));
-    await tester.pumpAndSettle();
+    await tapVisible(tester, find.byKey(const Key('district-field')));
 
     await tester.enterText(find.byKey(const Key('district-search')), 'королев');
     await tester.pumpAndSettle();

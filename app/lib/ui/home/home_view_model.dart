@@ -87,6 +87,12 @@ final nearbySearchProvider = NotifierProvider<NearbySearchController, NearbySear
 
 class NearbySearchController extends ComboSearchController {
   @override
+  NearbySearchState build() {
+    ref.listen(searchTastesProvider, (_, _) {});
+    return super.build();
+  }
+
+  @override
   Future<Result<ComboSearchResult>> find(MealTarget target, PricePreference price) async {
     final repository = ref.read(comboRepositoryProvider);
     final location = await ref.read(locationProvider.future);
@@ -95,6 +101,7 @@ class NearbySearchController extends ComboSearchController {
       target: target,
       price: price,
       filters: ref.read(searchFiltersProvider),
+      tastes: ref.read(searchTastesProvider),
     );
   }
 
@@ -116,6 +123,7 @@ final filterPreviewProvider = FutureProvider.autoDispose.family<int?, SearchFilt
         target: target,
         price: ComboSearchController.priceOf(filters),
         filters: filters,
+        tastes: ref.read(searchTastesProvider),
       );
   return switch (result) {
     Ok(:final value) => value.options.length,

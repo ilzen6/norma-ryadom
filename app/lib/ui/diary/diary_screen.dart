@@ -17,6 +17,7 @@ import '../core/widgets/state_views.dart';
 import '../core/widgets/visuals.dart';
 import 'diary_view_model.dart';
 import 'manual_entry_sheet.dart';
+import 'week_view.dart';
 
 class DiaryScreen extends ConsumerWidget {
   const DiaryScreen({super.key});
@@ -43,6 +44,7 @@ class DiaryScreen extends ConsumerWidget {
     }
     final eaten = summary.eaten;
     final norm = summary.norm;
+    final mode = ref.watch(diaryModeProvider);
     double share(double value, int goal) => goal <= 0 ? 0 : value / goal;
     return Scaffold(
       body: SafeArea(
@@ -51,134 +53,154 @@ class DiaryScreen extends ConsumerWidget {
           padding: Layout.page(context),
           children: [
             ScreenHeader(eyebrow: Formatting.longDate(day), title: l10n.diaryTitle),
-            Panel(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Eyebrow(l10n.diaryEaten),
-                  const SizedBox(height: 14),
-                  Row(
-                    children: [
-                      ProgressRings(
-                        size: 116,
-                        stroke: 10,
-                        gap: 3,
-                        rings: [
-                          RingSpec(value: share(eaten.kcal, norm.kcal), color: palette.brand),
-                          RingSpec(value: share(eaten.protein, norm.protein), color: palette.protein),
-                          RingSpec(value: share(eaten.fat, norm.fat), color: palette.fat),
-                          RingSpec(value: share(eaten.carbs, norm.carbs), color: palette.carbs),
-                        ],
-                      ),
-                      const SizedBox(width: 18),
-                      Expanded(
-                        child: Column(
-                          children: [
-                            NutrientProgress(
-                              label: l10n.kcalLabel,
-                              eaten: eaten.kcal,
-                              norm: norm.kcal,
-                              color: palette.brand,
-                            ),
-                            NutrientProgress(
-                              label: l10n.proteinLabel,
-                              eaten: eaten.protein,
-                              norm: norm.protein,
-                              color: palette.protein,
-                            ),
-                            NutrientProgress(
-                              label: l10n.fatLabel,
-                              eaten: eaten.fat,
-                              norm: norm.fat,
-                              color: palette.fat,
-                            ),
-                            NutrientProgress(
-                              label: l10n.carbsLabel,
-                              eaten: eaten.carbs,
-                              norm: norm.carbs,
-                              color: palette.carbs,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  if (summary.external.kcal > 0) ...[
+            SegmentedButton<DiaryMode>(
+              showSelectedIcon: false,
+              segments: [
+                ButtonSegment(
+                  value: DiaryMode.day,
+                  label: Text(l10n.diaryModeDay, key: const Key('diary-mode-day')),
+                ),
+                ButtonSegment(
+                  value: DiaryMode.week,
+                  label: Text(l10n.diaryModeWeek, key: const Key('diary-mode-week')),
+                ),
+              ],
+              selected: {mode},
+              onSelectionChanged: (selected) => ref.read(diaryModeProvider.notifier).select(selected.single),
+            ),
+            const SizedBox(height: Layout.gap),
+            if (mode == DiaryMode.week)
+              const WeekView()
+            else ...[
+              Panel(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Eyebrow(l10n.diaryEaten),
                     const SizedBox(height: 14),
                     Row(
-                      key: const Key('diary-external'),
                       children: [
-                        Icon(Icons.favorite_rounded, size: 18, color: palette.brand),
-                        const SizedBox(width: 8),
+                        ProgressRings(
+                          size: 116,
+                          stroke: 10,
+                          gap: 3,
+                          rings: [
+                            RingSpec(value: share(eaten.kcal, norm.kcal), color: palette.brand),
+                            RingSpec(value: share(eaten.protein, norm.protein), color: palette.protein),
+                            RingSpec(value: share(eaten.fat, norm.fat), color: palette.fat),
+                            RingSpec(value: share(eaten.carbs, norm.carbs), color: palette.carbs),
+                          ],
+                        ),
+                        const SizedBox(width: 18),
                         Expanded(
-                          child: Text(
-                            l10n.diaryExternal(summary.external.kcal.round()),
-                            style: Theme.of(context).textTheme.bodySmall,
+                          child: Column(
+                            children: [
+                              NutrientProgress(
+                                label: l10n.kcalLabel,
+                                eaten: eaten.kcal,
+                                norm: norm.kcal,
+                                color: palette.brand,
+                              ),
+                              NutrientProgress(
+                                label: l10n.proteinLabel,
+                                eaten: eaten.protein,
+                                norm: norm.protein,
+                                color: palette.protein,
+                              ),
+                              NutrientProgress(
+                                label: l10n.fatLabel,
+                                eaten: eaten.fat,
+                                norm: norm.fat,
+                                color: palette.fat,
+                              ),
+                              NutrientProgress(
+                                label: l10n.carbsLabel,
+                                eaten: eaten.carbs,
+                                norm: norm.carbs,
+                                color: palette.carbs,
+                              ),
+                            ],
                           ),
                         ),
                       ],
                     ),
-                  ],
-                ],
-              ),
-            ),
-            const SizedBox(height: Layout.gap),
-            OutlinedButton.icon(
-              key: const Key('diary-add-manual'),
-              onPressed: () => ManualEntrySheet.show(context),
-              icon: const Icon(Icons.edit_note_rounded),
-              label: Text(l10n.diaryAddManual),
-            ),
-            const SizedBox(height: Layout.section),
-            if (summary.entries.isEmpty)
-              Panel(
-                child: MessageView(message: l10n.diaryEmpty, icon: Icons.menu_book_rounded),
-              ),
-            for (final meal in MealType.values) ..._mealSection(context, ref, meal, summary.entries),
-            if (quickAdd.isNotEmpty) ...[
-              const SizedBox(height: Layout.section - Layout.gap),
-              SectionTitle(title: l10n.diaryQuickAdd),
-              Panel(
-                padding: const EdgeInsets.symmetric(vertical: 6),
-                child: Column(
-                  children: [
-                    for (final (index, entry) in quickAdd.indexed) ...[
-                      if (index > 0) const Divider(indent: 68, endIndent: 16),
-                      ListTile(
-                        contentPadding: const EdgeInsets.fromLTRB(16, 4, 8, 4),
-                        leading: Container(
-                          width: 40,
-                          height: 40,
-                          decoration: BoxDecoration(
-                            color: entry.favorite ? palette.warnSoft : palette.surfaceMuted,
-                            borderRadius: BorderRadius.circular(14),
+                    if (summary.external.kcal > 0) ...[
+                      const SizedBox(height: 14),
+                      Row(
+                        key: const Key('diary-external'),
+                        children: [
+                          Icon(Icons.favorite_rounded, size: 18, color: palette.brand),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: Text(
+                              l10n.diaryExternal(summary.external.kcal.round()),
+                              style: Theme.of(context).textTheme.bodySmall,
+                            ),
                           ),
-                          child: Icon(
-                            entry.favorite ? Icons.star_rounded : Icons.history_rounded,
-                            color: entry.favorite ? palette.warn : palette.inkMuted,
-                          ),
-                        ),
-                        title: Text(entry.title, style: Theme.of(context).textTheme.titleSmall),
-                        subtitle: Text(l10n.kcalValue(entry.intake.kcal.round())),
-                        trailing: BusyAction<void>(
-                          run: (_) async {
-                            final meal = ref.read(mealSelectionProvider).meal;
-                            final result = await ref.read(diaryActionsProvider).addAgain(entry, meal);
-                            if (result case Err(:final failure) when context.mounted) {
-                              showMessage(context, l10n.failure(failure));
-                            }
-                          },
-                          builder: (context, onPressed, busy) => IconButton.filledTonal(
-                            tooltip: l10n.diaryAddAgain(entry.title),
-                            icon: BusyAction.icon(Icons.add_rounded, busy: busy),
-                            onPressed: onPressed,
-                          ),
-                        ),
+                        ],
                       ),
                     ],
                   ],
                 ),
               ),
+              const SizedBox(height: Layout.gap),
+              OutlinedButton.icon(
+                key: const Key('diary-add-manual'),
+                onPressed: () => ManualEntrySheet.show(context),
+                icon: const Icon(Icons.edit_note_rounded),
+                label: Text(l10n.diaryAddManual),
+              ),
+              const SizedBox(height: Layout.section),
+              if (summary.entries.isEmpty)
+                Panel(
+                  child: MessageView(message: l10n.diaryEmpty, icon: Icons.menu_book_rounded),
+                ),
+              for (final meal in MealType.values) ..._mealSection(context, ref, meal, summary.entries),
+              if (quickAdd.isNotEmpty) ...[
+                const SizedBox(height: Layout.section - Layout.gap),
+                SectionTitle(title: l10n.diaryQuickAdd),
+                Panel(
+                  padding: const EdgeInsets.symmetric(vertical: 6),
+                  child: Column(
+                    children: [
+                      for (final (index, entry) in quickAdd.indexed) ...[
+                        if (index > 0) const Divider(indent: 68, endIndent: 16),
+                        ListTile(
+                          contentPadding: const EdgeInsets.fromLTRB(16, 4, 8, 4),
+                          leading: Container(
+                            width: 40,
+                            height: 40,
+                            decoration: BoxDecoration(
+                              color: entry.favorite ? palette.warnSoft : palette.surfaceMuted,
+                              borderRadius: BorderRadius.circular(14),
+                            ),
+                            child: Icon(
+                              entry.favorite ? Icons.star_rounded : Icons.history_rounded,
+                              color: entry.favorite ? palette.warn : palette.inkMuted,
+                            ),
+                          ),
+                          title: Text(entry.title, style: Theme.of(context).textTheme.titleSmall),
+                          subtitle: Text(l10n.kcalValue(entry.intake.kcal.round())),
+                          trailing: BusyAction<void>(
+                            run: (_) async {
+                              final meal = ref.read(mealSelectionProvider).meal;
+                              final result = await ref.read(diaryActionsProvider).addAgain(entry, meal);
+                              if (result case Err(:final failure) when context.mounted) {
+                                showMessage(context, l10n.failure(failure));
+                              }
+                            },
+                            builder: (context, onPressed, busy) => IconButton.filledTonal(
+                              tooltip: l10n.diaryAddAgain(entry.title),
+                              icon: BusyAction.icon(Icons.add_rounded, busy: busy),
+                              onPressed: onPressed,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ],
+                  ),
+                ),
+              ],
             ],
           ],
         ),

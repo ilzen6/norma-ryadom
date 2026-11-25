@@ -8,6 +8,8 @@ import '../local/app_database.dart';
 abstract interface class DiaryRepository {
   Stream<List<DiaryEntry>> watchDay(DateTime day);
 
+  Stream<List<DiaryEntry>> watchRange(DateTime from, DateTime to);
+
   Stream<List<DiaryEntry>> watchQuickAdd({int limit});
 
   Future<void> add(NewDiaryEntry entry, DateTime now);
@@ -27,6 +29,14 @@ class LocalDiaryRepository implements DiaryRepository {
       (_db.select(_db.diaryRecords)
             ..where((row) => row.day.equals(dayKey(day)))
             ..orderBy([(row) => OrderingTerm.asc(row.createdAt)]))
+          .watch()
+          .map((rows) => rows.map(_toEntry).toList());
+
+  @override
+  Stream<List<DiaryEntry>> watchRange(DateTime from, DateTime to) =>
+      (_db.select(_db.diaryRecords)
+            ..where((row) => row.day.isBetweenValues(dayKey(from), dayKey(to)))
+            ..orderBy([(row) => OrderingTerm.asc(row.day), (row) => OrderingTerm.asc(row.createdAt)]))
           .watch()
           .map((rows) => rows.map(_toEntry).toList());
 

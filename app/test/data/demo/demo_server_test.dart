@@ -7,6 +7,7 @@ import 'package:norma_ryadom/domain/models/catalog.dart';
 import 'package:norma_ryadom/domain/models/combo.dart';
 import 'package:norma_ryadom/domain/models/geo_location.dart';
 import 'package:norma_ryadom/domain/models/search_filters.dart';
+import 'package:norma_ryadom/domain/models/taste.dart';
 import 'package:norma_ryadom/utils/result.dart';
 
 import '../../support/fakes.dart';
@@ -296,5 +297,29 @@ void main() {
 
     expect(options, isNotEmpty);
     expect(options.map((option) => option.combo.priceMinor), everyElement(lessThanOrEqualTo(40000)));
+  });
+
+  test('поднимает выше наборы с любимой едой, если они попадают в норму', () async {
+    bool soup(ComboOption option) =>
+        option.combo.dishes.any((dish) => TasteTag.ofDish(dish.name).contains(TasteTag.soup));
+    Future<int> firstSoup(Set<TasteTag> tastes) async {
+      final options = valueOf(
+        await api.searchNearby(
+          location: center,
+          radiusMeters: 1500,
+          target: TestData.lunchTarget,
+          price: PricePreference.any,
+          tastes: tastes,
+        ),
+      ).options;
+      final index = options.indexWhere(soup);
+      return index < 0 ? options.length : index;
+    }
+
+    final liked = await firstSoup({TasteTag.soup});
+    final usual = await firstSoup(const {});
+
+    expect(liked, 0);
+    expect(usual, greaterThan(0));
   });
 }

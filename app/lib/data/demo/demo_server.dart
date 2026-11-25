@@ -6,6 +6,7 @@ import 'dart:typed_data';
 import 'package:dio/dio.dart';
 
 import '../../domain/models/catalog.dart' show VenueReportReason;
+import '../../domain/models/taste.dart';
 import 'demo_engine.dart';
 
 class DemoVenue {
@@ -170,6 +171,7 @@ class DemoServerAdapter implements HttpClientAdapter {
   static const _fastFoodPenalty = 0.8;
   static const _localBonus = 1.0;
   static const _fastFoodKinds = {'pizza', 'burger', 'shawarma'};
+  static const _tasteBonus = 0.5;
   static const _noPrice = 1 << 31;
   static const _dietTagOrder = [
     'meat',
@@ -292,6 +294,10 @@ class DemoServerAdapter implements HttpClientAdapter {
     final applied = target.rounded();
     final center = ((location['lat'] as num).toDouble(), (location['lon'] as num).toDouble());
     final kinds = {...((body['kinds'] as List<dynamic>?) ?? const []).cast<String>()};
+    final likedTastes = {
+      for (final code in ((body['likedTastes'] as List<dynamic>?) ?? const []).cast<String>())
+        ...TasteTag.values.where((taste) => taste.code == code),
+    };
     final ranked = <_RankedOption>[
       for (final (chain, venue, distance) in _closestPerMenu(
         _within(
@@ -313,7 +319,8 @@ class DemoServerAdapter implements HttpClientAdapter {
                   _distanceWeightPerKm * distance / 1000 +
                   step * _compromisePenalty +
                   (_fastFoodKinds.contains(venue.kind) ? _fastFoodPenalty : 0) -
-                  (venue.chainName == null ? _localBonus : 0),
+                  (venue.chainName == null ? _localBonus : 0) -
+                  (_liked(likedTastes, venue, combo) ? _tasteBonus : 0),
               step: step,
               venue: venue,
               distance: distance,
@@ -332,6 +339,13 @@ class DemoServerAdapter implements HttpClientAdapter {
       for (final option in ranked.where(notRepeated).take(limit)) (option.venue, option.distance, option.combo),
     ]);
   }
+
+  static bool _liked(Set<TasteTag> likedTastes, DemoVenue venue, DemoCombo combo) =>
+      likedTastes.isNotEmpty &&
+      {
+        ...TasteTag.ofVenueKind(venue.kind),
+        for (final dish in combo.dishes) ...TasteTag.ofDish(dish.name, category: dish.category, tags: dish.tags),
+      }.any(likedTastes.contains);
 
   static Comparator<_RankedOption> _order(String sort) {
     int recommended(_RankedOption left, _RankedOption right) {

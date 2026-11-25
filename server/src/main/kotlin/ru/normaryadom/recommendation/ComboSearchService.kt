@@ -3,6 +3,7 @@ package ru.normaryadom.recommendation
 import org.springframework.stereotype.Service
 import ru.normaryadom.catalog.domain.GeoPoint
 import ru.normaryadom.catalog.domain.MenuItem
+import ru.normaryadom.catalog.domain.TasteTag
 import ru.normaryadom.catalog.domain.Venue
 import ru.normaryadom.catalog.service.VenueMenuService
 import ru.normaryadom.geo.MenuCoverage
@@ -61,7 +62,7 @@ class ComboSearchService(
                 .groupBy(::menuGroup)
                 .values
                 .map { venuesWithSameMenu -> venuesWithSameMenu.minBy(NearbyVenue::distanceMeters) }
-                .flatMap { closest -> optionsFor(closest, applied) }
+                .flatMap { closest -> optionsFor(closest, applied, preferences.likedTastes) }
                 .sortedWith(order(preferences.sort))
                 .let(::limitRepeatedTemplates)
                 .take(limit)
@@ -137,11 +138,13 @@ class ComboSearchService(
     private fun optionsFor(
         nearbyVenue: NearbyVenue,
         criteria: SearchCriteria,
+        likedTastes: Set<TasteTag>,
     ): List<RankedOption> {
         val venue = nearbyVenue.venue
         val distancePenalty = nearby.distanceWeightPerKm * nearbyVenue.distanceMeters / METERS_PER_KILOMETER
         val kindPenalty = if (venue.kind?.isFastFood == true) nearby.fastFoodPenalty else 0.0
         val localBonus = if (venue.chainId == null) nearby.localBonus else 0.0
+        val venueTastes = TasteTag.ofVenue(venue.kind)
         val perVenue = if (nearbyVenue.venue.usesTemplateMenu) nearby.combosPerTemplateVenue else nearby.combosPerVenue
         return tiers(criteria)
             .asSequence()
@@ -151,11 +154,22 @@ class ComboSearchService(
                 combos.take(perVenue).map { combo ->
                     RankedOption(
                         option = ComboOption(nearbyVenue.venue, nearbyVenue.distanceMeters, combo),
-                        rank = combo.score + distancePenalty + step * nearby.compromisePenalty + kindPenalty - localBonus,
+                        rank =
+                            combo.score + distancePenalty + step * nearby.compromisePenalty + kindPenalty - localBonus -
+                                tasteBonus(combo, venueTastes, likedTastes),
                         step = step,
                     )
                 }
             }.orEmpty()
+    }
+
+    private fun tasteBonus(
+        combo: Combo,
+        venueTastes: Set<TasteTag>,
+        likedTastes: Set<TasteTag>,
+    ): Double {
+        val liked = likedTastes.isNotEmpty() && (venueTastes + combo.dishes.flatMap(TasteTag::ofDish)).any(likedTastes::contains)
+        return if (liked) nearby.tasteBonus else 0.0
     }
 
     private data class RankedOption(

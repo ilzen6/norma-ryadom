@@ -2,6 +2,7 @@ import '../../domain/models/combo.dart';
 import '../../domain/models/geo_location.dart';
 import '../../domain/models/meal.dart';
 import '../../domain/models/search_filters.dart';
+import '../../domain/models/taste.dart';
 import '../../utils/result.dart';
 import '../services/norma_api.dart';
 
@@ -11,6 +12,7 @@ abstract interface class ComboRepository {
     required MealTarget target,
     required PricePreference price,
     SearchFilters filters,
+    Set<TasteTag> tastes,
   });
 
   Future<Result<ComboSearchResult>> atVenue({
@@ -43,6 +45,7 @@ class RemoteComboRepository implements ComboRepository {
     required MealTarget target,
     required PricePreference price,
     SearchFilters filters = const SearchFilters(),
+    Set<TasteTag> tastes = const {},
   }) async {
     final radii = [radiusMeters, ...wideRadiiMeters.where((radius) => radius > radiusMeters)];
     late Result<ComboSearchResult> found;
@@ -53,6 +56,7 @@ class RemoteComboRepository implements ComboRepository {
         target: target,
         price: price,
         filters: filters,
+        tastes: tastes,
       );
       switch (found) {
         case Ok(:final value) when value.options.length >= enoughOptions || radius == radii.last:

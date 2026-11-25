@@ -8,6 +8,7 @@ import '../../domain/models/geo_location.dart';
 import '../../domain/models/meal.dart';
 import '../../domain/models/nutrition_norm.dart';
 import '../../domain/models/profile.dart';
+import '../../domain/models/taste.dart';
 import '../../utils/result.dart';
 
 final profileProvider = AsyncNotifierProvider<ProfileController, UserProfile?>(ProfileController.new);
@@ -29,6 +30,16 @@ class ProfileController extends AsyncNotifier<UserProfile?> {
     }
     await save(profile.copyWith(locationConsent: consent));
     return null;
+  }
+
+  Future<void> setTastes(Set<TasteTag> tastes) async {
+    final profile = state.value;
+    if (profile != null) await save(profile.copyWith(likedTastes: tastes));
+  }
+
+  Future<void> setLearnTastes({required bool learn}) async {
+    final profile = state.value;
+    if (profile != null) await save(profile.copyWith(learnTastes: learn));
   }
 
   Future<void> deleteAllData() async {
@@ -97,6 +108,25 @@ class MealSelectionController extends Notifier<MealSelection> {
 
   void setCustomTarget(MealTarget? target) => state = state.copyWith(customTarget: () => target);
 }
+
+final recentDiaryProvider = StreamProvider<List<DiaryEntry>>((ref) {
+  final today = ref.watch(currentDayProvider);
+  final from = DateTime(today.year, today.month, today.day - (TasteLearning.days - 1));
+  return ref.watch(diaryRepositoryProvider).watchRange(from, today);
+});
+
+final learnedTastesProvider = Provider<Map<TasteTag, int>>(
+  (ref) => TasteLearning.countByTaste(ref.watch(recentDiaryProvider).value ?? const []),
+);
+
+final searchTastesProvider = Provider<Set<TasteTag>>((ref) {
+  final profile = ref.watch(profileProvider).value;
+  if (profile == null) return const {};
+  return {
+    ...profile.likedTastes,
+    if (profile.learnTastes) ...TasteLearning.learned(ref.watch(learnedTastesProvider)),
+  };
+});
 
 final currentTargetProvider = Provider<MealTarget?>((ref) {
   final profile = ref.watch(profileProvider).value;

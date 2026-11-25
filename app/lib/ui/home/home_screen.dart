@@ -7,6 +7,7 @@ import '../../data/providers.dart';
 import '../../domain/models/geo_location.dart';
 import '../../domain/models/meal.dart';
 import '../../domain/models/search_filters.dart';
+import '../../domain/models/taste.dart';
 import '../../routing/routes.dart';
 import '../core/formatting.dart';
 import '../core/l10n_extensions.dart';
@@ -509,6 +510,7 @@ class _SearchResults extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           SectionTitle(title: l10n.resultsTitle, trailing: '${result.options.length}'),
+          if (ref.watch(searchTastesProvider) case final tastes when tastes.isNotEmpty) _TastesBanner(tastes: tastes),
           if (result.radiusMeters case final radius? when radius > ref.watch(appConfigProvider).searchRadiusMeters)
             Padding(
               key: const Key('wider-search'),
@@ -531,6 +533,42 @@ class _SearchResults extends ConsumerWidget {
         ],
       ),
     };
+  }
+}
+
+class _TastesBanner extends StatelessWidget {
+  const _TastesBanner({required this.tastes});
+
+  final Set<TasteTag> tastes;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final palette = context.palette;
+    final names = [
+      for (final taste in TasteTag.values)
+        if (tastes.contains(taste)) l10n.taste(taste).toLowerCase(),
+    ].join(', ');
+    return Padding(
+      padding: const EdgeInsets.only(bottom: Layout.gap),
+      child: Panel(
+        key: const Key('tastes-banner'),
+        color: palette.brandSoft,
+        padding: const EdgeInsets.fromLTRB(16, 8, 8, 8),
+        child: Row(
+          children: [
+            Icon(Icons.favorite_rounded, size: 18, color: palette.brand),
+            const SizedBox(width: 10),
+            Expanded(child: Text(l10n.tastesBanner(names), style: Theme.of(context).textTheme.bodyMedium)),
+            TextButton(
+              key: const Key('tastes-edit'),
+              onPressed: () => context.push(Routes.tastes),
+              child: Text(l10n.tastesEdit),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
 

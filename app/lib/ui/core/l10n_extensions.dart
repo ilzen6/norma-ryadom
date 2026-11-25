@@ -7,6 +7,7 @@ import '../../domain/models/district.dart';
 import '../../domain/models/meal.dart';
 import '../../domain/models/profile.dart';
 import '../../domain/models/search_filters.dart';
+import '../../domain/models/taste.dart';
 import '../../l10n/generated/app_localizations.dart';
 import '../../utils/result.dart';
 import 'formatting.dart';
@@ -28,6 +29,19 @@ extension MealLabels on AppLocalizations {
     ComboSort.nearest => sortNearest,
     ComboSort.cheapest => sortCheapest,
     ComboSort.accurate => sortAccurate,
+  };
+
+  String taste(TasteTag taste) => switch (taste) {
+    TasteTag.soup => tasteSoup,
+    TasteTag.salad => tasteSalad,
+    TasteTag.porridge => tastePorridge,
+    TasteTag.pastry => tastePastry,
+    TasteTag.fish => tasteFish,
+    TasteTag.georgian => tasteGeorgian,
+    TasteTag.asian => tasteAsian,
+    TasteTag.pizza => tastePizza,
+    TasteTag.burger => tasteBurger,
+    TasteTag.sushi => tasteSushi,
   };
 
   String venueKind(VenueKind kind) => switch (kind) {

@@ -3,6 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'diet_preference.dart';
 import 'district.dart';
 import 'nutrition_norm.dart';
+import 'taste.dart';
 
 part 'profile.freezed.dart';
 part 'profile.g.dart';
@@ -44,6 +45,8 @@ abstract class UserProfile with _$UserProfile {
     NutritionNorm? manualNorm,
     @Default(false) bool locationConsent,
     @JsonKey(unknownEnumValue: JsonKey.nullForUndefinedEnumValue) District? district,
+    @Default(<TasteTag>{}) Set<TasteTag> likedTastes,
+    @Default(true) bool learnTastes,
   }) = _UserProfile;
 
   factory UserProfile.fromJson(Map<String, dynamic> json) => _$UserProfileFromJson(json);

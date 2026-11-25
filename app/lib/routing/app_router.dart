@@ -14,6 +14,7 @@ import '../ui/map/map_screen.dart';
 import '../ui/onboarding/onboarding_screen.dart';
 import '../ui/onboarding/profile_edit_screen.dart';
 import '../ui/profile/profile_screen.dart';
+import '../ui/tastes/tastes_screen.dart';
 import '../ui/venue/venue_screen.dart';
 import 'routes.dart';
 
@@ -84,6 +85,10 @@ final routerProvider = Provider<GoRouter>((ref) {
                   GoRoute(
                     path: 'edit',
                     builder: (_, _) => const Backdrop(child: ProfileEditScreen()),
+                  ),
+                  GoRoute(
+                    path: 'tastes',
+                    builder: (_, _) => const Backdrop(child: TastesScreen()),
                   ),
                 ],
               ),

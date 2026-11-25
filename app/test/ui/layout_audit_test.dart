@@ -136,9 +136,7 @@ void main() {
       issues.addAll(await LayoutAudit.inspectScrolling(tester, 'дневник'));
       await openTab(tester, 'Профиль');
       issues.addAll(await LayoutAudit.inspectScrolling(tester, 'профиль'));
-      await tester.scrollUntilVisible(find.byKey(const Key('district-field')), 120);
-      await tester.tap(find.byKey(const Key('district-field')));
-      await tester.pumpAndSettle();
+      await tapVisible(tester, find.byKey(const Key('district-field')));
       issues.addAll(await LayoutAudit.inspectScrolling(tester, 'выбор района'));
       await tester.tapAt(const Offset(8, 8));
       await tester.pumpAndSettle();

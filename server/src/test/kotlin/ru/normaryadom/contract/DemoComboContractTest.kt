@@ -6,6 +6,8 @@ import ru.normaryadom.catalog.domain.DataSource
 import ru.normaryadom.catalog.domain.DietTag
 import ru.normaryadom.catalog.domain.MenuItem
 import ru.normaryadom.catalog.domain.SourceKind
+import ru.normaryadom.catalog.domain.TasteTag
+import ru.normaryadom.catalog.domain.VenueKind
 import ru.normaryadom.catalog.importing.CsvParseResult
 import ru.normaryadom.catalog.importing.MenuCsvParser
 import ru.normaryadom.optimizer.Combo
@@ -31,6 +33,32 @@ class DemoComboContractTest {
     fun `подбор на демо-каталоге совпадает с эталоном, по которому проверяется демо-режим клиента`() {
         val generated = mapper.writeValueAsString(mapOf("cases" to CASES.map(::caseOf))) + "\n"
         val file = Path.of(System.getProperty("contract.dir"), "combo-cases.json")
+        if (System.getProperty("contract.update").toBoolean()) Files.writeString(file, generated)
+
+        assertThat(Files.readString(file)).isEqualTo(generated)
+    }
+
+    @Test
+    fun `вкусы блюд демо-каталога совпадают с эталоном, по которому проверяется клиент`() {
+        val dishes =
+            demoMenus()
+                .flatMap { (_, menu) -> menu }
+                .distinctBy { Triple(it.name, it.category, it.tags) }
+                .sortedWith(compareBy({ it.name }, { it.category.code }))
+                .map { item ->
+                    mapOf(
+                        "name" to item.name,
+                        "category" to item.category.code,
+                        "tags" to item.tags.map(DietTag::code).sorted(),
+                        "tastes" to TasteTag.ofDish(item).map(TasteTag::name),
+                    )
+                }
+        val venueKinds = VenueKind.entries.associate { it.code to TasteTag.ofVenue(it).map(TasteTag::name) }
+        val compact = JsonMapper.builder().build()
+        val generated =
+            "{\"dishes\": [\n" + dishes.joinToString(",\n", transform = compact::writeValueAsString) +
+                "\n], \"venueKinds\": " + compact.writeValueAsString(venueKinds) + "}\n"
+        val file = Path.of(System.getProperty("contract.dir"), "taste-cases.json")
         if (System.getProperty("contract.update").toBoolean()) Files.writeString(file, generated)
 
         assertThat(Files.readString(file)).isEqualTo(generated)

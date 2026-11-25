@@ -28,4 +28,6 @@ data class NearbyProperties(
     val fastFoodPenalty: Double = 0.8,
     @field:DecimalMin("0.0")
     val localBonus: Double = 1.0,
+    @field:DecimalMin("0.0")
+    val tasteBonus: Double = 0.5,
 )

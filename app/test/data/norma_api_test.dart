@@ -12,6 +12,7 @@ import 'package:norma_ryadom/domain/models/catalog.dart';
 import 'package:norma_ryadom/domain/models/combo.dart';
 import 'package:norma_ryadom/domain/models/geo_location.dart';
 import 'package:norma_ryadom/domain/models/search_filters.dart';
+import 'package:norma_ryadom/domain/models/taste.dart';
 import 'package:norma_ryadom/utils/result.dart';
 
 import '../support/fakes.dart';
@@ -149,6 +150,27 @@ void main() {
     expect(body['sort'], 'CHEAPEST');
     expect(body['kinds'], ['central-asian', 'georgian']);
     expect(body['maxPriceRub'], 700);
+  });
+
+  test('отправляет любимые вкусы кодами сервера и не отправляет пустой список', () async {
+    api = apiWith((_) => json({'appliedTarget': TestData.lunchTarget.toJson(), 'options': <Object>[]}));
+
+    await api.searchNearby(
+      location: TestData.deviceLocation,
+      radiusMeters: 1500,
+      target: TestData.lunchTarget,
+      price: PricePreference.any,
+      tastes: {TasteTag.sushi, TasteTag.georgian},
+    );
+    await api.searchNearby(
+      location: TestData.deviceLocation,
+      radiusMeters: 1500,
+      target: TestData.lunchTarget,
+      price: PricePreference.any,
+    );
+
+    expect((adapter.requests.first.data as Map<String, dynamic>)['likedTastes'], ['GEORGIAN', 'SUSHI']);
+    expect((adapter.requests.last.data as Map<String, dynamic>).containsKey('likedTastes'), isFalse);
   });
 
   test('«Скрыть фастфуд» отправляет все виды, кроме фастфуда', () async {

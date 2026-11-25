@@ -296,6 +296,43 @@ class ComboApiIT : IntegrationTest() {
     }
 
     @Test
+    fun `поднимает выше заведение с любимой кухней`() {
+        catalog.chain("Гриль", GRILL_MENU, GRILL_VENUES)
+        catalog.chain(
+            "Хинкальная",
+            GRILL_MENU,
+            listOf("Хинкальная, Сити;Пресненская наб., 10;55.7480;37.5376;khinkali-01;2026-05-01;;georgian"),
+            VenueCsvParser.OPTIONAL,
+        )
+        val search = """{"target": $TARGET, "location": {"lat": $CITY_LAT, "lon": $CITY_LON, "radiusMeters": 1000}, "limit": 10"""
+
+        mockMvc
+            .post("/api/v1/combos/search") {
+                contentType = MediaType.APPLICATION_JSON
+                content = "$search}"
+            }.andExpect { jsonPath("$.options[0].venue.name") { value("Гриль, Сити") } }
+        mockMvc
+            .post("/api/v1/combos/search") {
+                contentType = MediaType.APPLICATION_JSON
+                content = """$search, "likedTastes": ["GEORGIAN"]}"""
+            }.andExpect {
+                status { isOk() }
+                jsonPath("$.options[0].venue.name") { value("Хинкальная, Сити") }
+            }
+    }
+
+    @Test
+    fun `отклоняет неизвестный вкус`() {
+        mockMvc
+            .post("/api/v1/combos/search") {
+                contentType = MediaType.APPLICATION_JSON
+                content =
+                    """{"target": $TARGET, "location": {"lat": $CITY_LAT, "lon": $CITY_LON, "radiusMeters": 1000},
+                    "likedTastes": ["STEAK"]}"""
+            }.andExpect { status { isBadRequest() } }
+    }
+
+    @Test
     fun `после обновления меню сети отдаёт новый подбор, а не устаревший кэш`() {
         val chainId = catalog.chain("Гриль", GRILL_MENU, GRILL_VENUES)
         val request = """{"target": $TARGET, "location": {"lat": $CITY_LAT, "lon": $CITY_LON, "radiusMeters": 1000}}"""

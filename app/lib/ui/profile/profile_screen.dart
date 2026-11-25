@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../data/providers.dart';
 import '../../domain/models/district.dart';
+import '../../domain/models/taste.dart';
 import '../../routing/routes.dart';
 import '../core/formatting.dart';
 import '../core/l10n_extensions.dart';
@@ -134,6 +135,26 @@ class ProfileScreen extends ConsumerWidget {
                     ),
                   ],
                 ],
+              ),
+            ),
+            const SizedBox(height: Layout.gap),
+            Panel(
+              key: const Key('open-tastes'),
+              padding: EdgeInsets.zero,
+              onTap: () => context.push(Routes.tastes),
+              child: ListTile(
+                contentPadding: const EdgeInsets.fromLTRB(18, 6, 14, 6),
+                leading: Icon(Icons.favorite_border_rounded, color: palette.brand),
+                title: Text(l10n.tastesTitle, style: textTheme.titleSmall),
+                subtitle: Text(
+                  profile.likedTastes.isEmpty
+                      ? l10n.tastesNotChosen
+                      : [
+                          for (final taste in TasteTag.values)
+                            if (profile.likedTastes.contains(taste)) l10n.taste(taste),
+                        ].join(', '),
+                ),
+                trailing: Icon(Icons.chevron_right_rounded, color: palette.inkMuted),
               ),
             ),
             const SizedBox(height: Layout.section),

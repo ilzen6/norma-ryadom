@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:norma_ryadom/data/providers.dart';
 import 'package:norma_ryadom/domain/models/nutrition_norm.dart';
 import 'package:norma_ryadom/domain/models/profile.dart';
+import 'package:norma_ryadom/domain/models/taste.dart';
 import 'package:norma_ryadom/ui/core/session.dart';
 import 'package:norma_ryadom/ui/onboarding/onboarding_view_model.dart';
 
@@ -66,6 +67,15 @@ void main() {
     await expectLater(controller.complete(), throwsException);
 
     expect(container.read(onboardingProvider).saving, isFalse);
+  });
+
+  test('при редактировании профиля не теряет любимую еду и настройку дневника', () async {
+    final container = await containerWith(TestData.profile.copyWith(likedTastes: {TasteTag.sushi}, learnTastes: false));
+
+    final profile = container.read(onboardingProvider).toProfile();
+
+    expect(profile?.likedTastes, {TasteTag.sushi});
+    expect(profile?.learnTastes, isFalse);
   });
 }
 

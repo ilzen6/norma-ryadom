@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../core/l10n_extensions.dart';
 import '../core/theme.dart';
 import '../core/widgets/visuals.dart';
+import '../tastes/tastes_picker.dart';
 import 'body_parameters_form.dart';
 import 'location_picker.dart';
 import 'norm_card.dart';
@@ -18,7 +19,7 @@ class OnboardingScreen extends ConsumerStatefulWidget {
 }
 
 class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
-  static const _steps = 3;
+  static const _steps = 4;
   int _step = 0;
 
   @override
@@ -28,6 +29,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     final title = switch (_step) {
       0 => l10n.onboardingBodyTitle,
       1 => l10n.onboardingPreferencesTitle,
+      2 => l10n.onboardingTastesTitle,
       _ => l10n.onboardingLocationTitle,
     };
     final canContinue = _step != 0 || state.bodyValid;
@@ -84,6 +86,14 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                   l10n.preferencesAllergyNote,
                   key: const Key('preferences-allergy-note'),
                   style: textTheme.bodyMedium?.copyWith(color: context.palette.inkMuted),
+                ),
+              ],
+              2 => [
+                Text(l10n.onboardingTastesHint, style: textTheme.bodyLarge?.copyWith(color: context.palette.inkMuted)),
+                const SizedBox(height: 20),
+                TastesPicker(
+                  selected: state.likedTastes,
+                  onToggle: ref.read(onboardingProvider.notifier).toggleTaste,
                 ),
               ],
               _ => const [LocationPicker()],

@@ -11,6 +11,17 @@ import '../../domain/models/nutrition_norm.dart';
 import '../../utils/result.dart';
 import '../combo/selected_combo.dart';
 
+enum DiaryMode { day, week }
+
+final diaryModeProvider = NotifierProvider<DiaryModeController, DiaryMode>(DiaryModeController.new);
+
+class DiaryModeController extends Notifier<DiaryMode> {
+  @override
+  DiaryMode build() => DiaryMode.day;
+
+  void select(DiaryMode mode) => state = mode;
+}
+
 final quickAddProvider = StreamProvider.autoDispose<List<DiaryEntry>>(
   (ref) => ref.watch(diaryRepositoryProvider).watchQuickAdd(),
 );

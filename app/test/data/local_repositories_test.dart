@@ -79,6 +79,21 @@ void main() {
     expect(quick.first.favorite, isTrue);
   });
 
+  test('отдаёт записи дневника за период включительно', () async {
+    final repository = LocalDiaryRepository(database);
+    const intake = Intake(kcal: 300, protein: 10, fat: 10, carbs: 30);
+    for (final day in [10, 11, 17, 18]) {
+      await repository.add(
+        NewDiaryEntry(meal: MealType.lunch, title: 'Обед $day', intake: intake),
+        DateTime(2026, 11, day, 13),
+      );
+    }
+
+    final entries = await repository.watchRange(DateTime(2026, 11, 11), DateTime(2026, 11, 17)).first;
+
+    expect(entries.map((entry) => entry.title), ['Обед 11', 'Обед 17']);
+  });
+
   test('удаляет запись дневника', () async {
     final diary = LocalDiaryRepository(database);
     await diary.add(_entry('Обед'), DateTime(2026, 10, 2, 13));
