@@ -8,6 +8,8 @@ import jakarta.validation.constraints.DecimalMin
 import jakarta.validation.constraints.Max
 import jakarta.validation.constraints.Min
 import org.springdoc.core.annotations.ParameterObject
+import org.springframework.http.CacheControl
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
@@ -21,6 +23,7 @@ import ru.normaryadom.recommendation.DishAssessor
 import ru.normaryadom.recommendation.VenueDirectoryService
 import ru.normaryadom.recommendation.VenueFit
 import ru.normaryadom.recommendation.config.NearbyProperties
+import java.time.Duration
 
 @Tag(name = "venues")
 @RestController
@@ -54,15 +57,18 @@ class VenueController(
     fun menu(
         @PathVariable @Min(1) venueId: Long,
         @Valid @ParameterObject target: MealTargetQuery,
-    ): VenueMenuResponse {
+    ): ResponseEntity<VenueMenuResponse> {
         val venue = menus.venue(venueId)
         val items = menus.menu(venue.menuScope)
-        return target.toCriteriaOrNull()?.let { RecommendationMapper.assessedMenuResponse(venue, assessor.assessMenu(items, it)) }
-            ?: RecommendationMapper.menuResponse(venue, items)
+        val body =
+            target.toCriteriaOrNull()?.let { RecommendationMapper.assessedMenuResponse(venue, assessor.assessMenu(items, it)) }
+                ?: RecommendationMapper.menuResponse(venue, items)
+        return ResponseEntity.ok().cacheControl(MENU_CACHE).body(body)
     }
 
     private companion object {
         const val MAX_RADIUS_METERS = 30_000L
         const val MAX_LIMIT = 500L
+        val MENU_CACHE: CacheControl = CacheControl.maxAge(Duration.ofMinutes(5)).mustRevalidate()
     }
 }

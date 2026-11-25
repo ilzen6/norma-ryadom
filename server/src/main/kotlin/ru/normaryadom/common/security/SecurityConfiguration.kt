@@ -41,7 +41,7 @@ class SecurityConfiguration {
             .addFilterBefore(AdminLoginRateLimitFilter(rateLimiter), UsernamePasswordAuthenticationFilter::class.java)
             .authorizeHttpRequests {
                 it
-                    .requestMatchers("/admin/login", "/admin/assets/**", "/error")
+                    .requestMatchers("/admin/login", "/admin/assets/**", "/error", "/privacy")
                     .permitAll()
                     .requestMatchers("/admin/**")
                     .hasRole(ADMIN_ROLE)

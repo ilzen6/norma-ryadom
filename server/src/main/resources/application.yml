@@ -75,6 +75,10 @@ optimizer:
     protein-factor: 0.8
     limit-factor: 1.2
 
+privacy:
+  published-on: "[ДАТА ПУБЛИКАЦИИ]"
+  contact-email: "[ПОЧТА ДЛЯ СВЯЗИ]"
+
 nearby:
   max-results: 100
   distance-weight-per-km: 0.5

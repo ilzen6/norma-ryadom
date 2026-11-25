@@ -38,7 +38,7 @@ class ArchitectureTest {
     }
 
     @Test
-    fun `REST-контроллеры живут в пакетах api, а страницы админки - в admin`() {
+    fun `REST-контроллеры живут в пакетах api, а страницы - в admin и site`() {
         classes()
             .that()
             .areAnnotatedWith(RestController::class.java)
@@ -49,7 +49,7 @@ class ArchitectureTest {
             .that()
             .areAnnotatedWith(Controller::class.java)
             .should()
-            .resideInAPackage("..admin..")
+            .resideInAnyPackage("..admin..", "..site..")
             .check(classes)
     }
 

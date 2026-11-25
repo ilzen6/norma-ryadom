@@ -1,11 +1,14 @@
 package ru.normaryadom.recommendation
 
+import org.assertj.core.api.Assertions.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.everyItem
 import org.hamcrest.Matchers.hasItem
 import org.hamcrest.Matchers.not
 import org.junit.jupiter.api.Test
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.web.servlet.get
+import ru.normaryadom.catalog.service.CatalogImportService
 import ru.normaryadom.support.CatalogFixtures.Companion.BOWL_MENU
 import ru.normaryadom.support.CatalogFixtures.Companion.BOWL_VENUES
 import ru.normaryadom.support.CatalogFixtures.Companion.CAFE_PLACES
@@ -14,9 +17,13 @@ import ru.normaryadom.support.CatalogFixtures.Companion.CITY_LAT
 import ru.normaryadom.support.CatalogFixtures.Companion.CITY_LON
 import ru.normaryadom.support.CatalogFixtures.Companion.GRILL_MENU
 import ru.normaryadom.support.CatalogFixtures.Companion.GRILL_VENUES
+import ru.normaryadom.support.CatalogFixtures.Companion.SOURCE_URL
 import ru.normaryadom.support.IntegrationTest
 
 class VenueApiIT : IntegrationTest() {
+    @Autowired
+    private lateinit var imports: CatalogImportService
+
     @Test
     fun `отдаёт заведения рядом с отметкой о наличии меню`() {
         catalog.chain("Гриль", GRILL_MENU, GRILL_VENUES)
@@ -313,4 +320,69 @@ class VenueApiIT : IntegrationTest() {
             .param("externalId", externalId)
             .query(Long::class.java)
             .single()
+
+    @Test
+    fun `отдаёт меню с ETag и правилами кэширования`() {
+        catalog.chain("Гриль", GRILL_MENU, GRILL_VENUES)
+
+        mockMvc.get("/api/v1/venues/${venueId("grill-01")}/menu").andExpect {
+            status { isOk() }
+            header { exists("ETag") }
+            header { string("Cache-Control", "max-age=300, must-revalidate") }
+        }
+    }
+
+    @Test
+    fun `на повторный запрос с тем же ETag отвечает 304 без тела`() {
+        catalog.chain("Гриль", GRILL_MENU, GRILL_VENUES)
+        val path = "/api/v1/venues/${venueId("grill-01")}/menu"
+        val etag =
+            mockMvc
+                .get(path)
+                .andReturn()
+                .response
+                .getHeader("ETag")
+
+        mockMvc.get(path) { header("If-None-Match", etag!!) }.andExpect {
+            status { isNotModified() }
+            content { string("") }
+        }
+    }
+
+    @Test
+    fun `после обновления меню отдаёт новый ETag`() {
+        val chainId = catalog.chain("Гриль", GRILL_MENU, GRILL_VENUES)
+        val path = "/api/v1/venues/${venueId("grill-01")}/menu"
+        val before =
+            mockMvc
+                .get(path)
+                .andReturn()
+                .response
+                .getHeader("ETag")
+
+        imports.importChainMenu(chainId, catalog.menuCsv(GRILL_MENU.filterNot { it.startsWith("Чай") }), SOURCE_URL)
+        val after =
+            mockMvc
+                .get(path)
+                .andReturn()
+                .response
+                .getHeader("ETag")
+
+        assertThat(after).isNotNull().isNotEqualTo(before)
+    }
+
+    @Test
+    fun `список заведений рядом ETag не получает`() {
+        catalog.chain("Гриль", GRILL_MENU, GRILL_VENUES)
+
+        mockMvc
+            .get("/api/v1/venues") {
+                param("lat", CITY_LAT.toString())
+                param("lon", CITY_LON.toString())
+                param("radius", "1000")
+            }.andExpect {
+                status { isOk() }
+                header { doesNotExist("ETag") }
+            }
+    }
 }
