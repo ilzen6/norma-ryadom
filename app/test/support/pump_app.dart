@@ -33,6 +33,7 @@ class TestHarness {
   bool healthSync = false;
   bool allowCleartextServer = false;
   bool demoServer = false;
+  String supportEmail = '';
   SearchFilters filters = const SearchFilters();
   DateTime now = DateTime(2026, 10, 2, 13, 5);
 
@@ -44,6 +45,7 @@ class TestHarness {
         searchRadiusMeters: 1500,
         allowCleartextServer: allowCleartextServer,
         demoServer: demoServer,
+        supportEmail: supportEmail,
       ),
     ),
     settingsRepositoryProvider.overrideWithValue(settings),

@@ -37,7 +37,7 @@ void main() {
     await tester.tap(find.byKey(const Key('data-reset')));
     await tester.pumpAndSettle();
     expect(harness.profiles.deleted, isTrue);
-    expect(find.text('ШАГ 1 ИЗ 4'), findsOneWidget);
+    expect(find.text('ШАГ 1 ИЗ 5'), findsOneWidget);
   });
 
   testWidgets('неизвестный адрес заведения ведёт на понятный экран, а не к падению', (tester) async {

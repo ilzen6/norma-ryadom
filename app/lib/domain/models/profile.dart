@@ -47,6 +47,7 @@ abstract class UserProfile with _$UserProfile {
     @JsonKey(unknownEnumValue: JsonKey.nullForUndefinedEnumValue) District? district,
     @Default(<TasteTag>{}) Set<TasteTag> likedTastes,
     @Default(true) bool learnTastes,
+    DateTime? privacyAcceptedAt,
   }) = _UserProfile;
 
   factory UserProfile.fromJson(Map<String, dynamic> json) => _$UserProfileFromJson(json);

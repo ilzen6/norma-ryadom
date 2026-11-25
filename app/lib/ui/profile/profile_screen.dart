@@ -15,6 +15,7 @@ import '../core/theme.dart';
 import '../core/widgets/district_field.dart';
 import '../core/widgets/visuals.dart';
 import '../core/widgets/state_views.dart';
+import '../about/privacy_sheet.dart';
 import 'server_dialog.dart';
 
 class ProfileScreen extends ConsumerWidget {
@@ -218,6 +219,20 @@ class ProfileScreen extends ConsumerWidget {
                     subtitle: Text(l10n.themeName(ref.watch(themeModeProvider))),
                     trailing: Icon(Icons.chevron_right_rounded, color: palette.inkSubtle),
                     onTap: () => _chooseTheme(context, ref),
+                  ),
+                  ListTile(
+                    key: const Key('open-privacy'),
+                    leading: Icon(Icons.privacy_tip_outlined, color: palette.brand),
+                    title: Text(l10n.aboutPrivacy),
+                    trailing: Icon(Icons.chevron_right_rounded, color: palette.inkSubtle),
+                    onTap: () => PrivacySheet.show(context),
+                  ),
+                  ListTile(
+                    key: const Key('open-about'),
+                    leading: Icon(Icons.info_outline_rounded, color: palette.brand),
+                    title: Text(l10n.aboutTitle),
+                    trailing: Icon(Icons.chevron_right_rounded, color: palette.inkSubtle),
+                    onTap: () => context.push(Routes.about),
                   ),
                 ],
               ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart' show ThemeMode;
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 import '../config/app_config.dart';
 import '../domain/models/search_filters.dart';
@@ -26,6 +27,11 @@ import 'services/share_service.dart';
 final appConfigProvider = Provider<AppConfig>((ref) => AppConfig.fromEnvironment());
 
 final clockProvider = Provider<DateTime Function()>((ref) => DateTime.now);
+
+final appVersionProvider = FutureProvider<String>((ref) async {
+  final info = await PackageInfo.fromPlatform();
+  return info.buildNumber.isEmpty ? info.version : '${info.version} (${info.buildNumber})';
+});
 
 final normCalculatorProvider = Provider<NormCalculator>((ref) => const NormCalculator());
 

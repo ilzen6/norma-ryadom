@@ -7,6 +7,7 @@ abstract final class Routes {
   static const profile = '/profile';
   static const profileEdit = '/profile/edit';
   static const tastes = '/profile/tastes';
+  static const about = '/profile/about';
   static const combo = '/combo';
 
   static String venue(int id) => '/venue/$id';

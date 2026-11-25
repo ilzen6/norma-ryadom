@@ -8,18 +8,45 @@ import 'package:norma_ryadom/domain/models/taste.dart';
 import '../support/pump_app.dart';
 
 void main() {
+  Future<void> acceptPrivacy(WidgetTester tester) async {
+    await tapVisible(tester, find.byKey(const Key('privacy-accept')));
+    await tester.tap(find.byKey(const Key('onboarding-next')));
+    await tester.pumpAndSettle();
+  }
+
   Future<void> fillBody(WidgetTester tester) async {
+    await acceptPrivacy(tester);
     await tester.enterText(find.byKey(const Key('age-field')), '25');
     await tester.enterText(find.byKey(const Key('height-field')), '165');
     await tester.enterText(find.byKey(const Key('weight-field')), '62');
     await tester.pumpAndSettle();
   }
 
-  testWidgets('без профиля открывает онбординг и не пускает дальше без параметров', (tester) async {
+  testWidgets('без согласия с политикой не пускает дальше и даёт её прочитать', (tester) async {
     final harness = TestHarness();
     await harness.pump(tester);
 
-    expect(find.text('ШАГ 1 ИЗ 4'), findsOneWidget);
+    expect(find.text('ШАГ 1 ИЗ 5'), findsOneWidget);
+    expect(find.text('Ваши данные остаются у вас'), findsOneWidget);
+    expect(tester.widget<FilledButton>(find.byKey(const Key('onboarding-next'))).onPressed, isNull);
+    await tester.tap(find.byKey(const Key('privacy-read')));
+    await tester.pumpAndSettle();
+    expect(find.text('Что хранится только на телефоне'), findsOneWidget);
+    await tester.tapAt(const Offset(20, 20));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(const Key('privacy-accept')));
+    await tester.pumpAndSettle();
+
+    expect(tester.widget<FilledButton>(find.byKey(const Key('onboarding-next'))).onPressed, isNotNull);
+  });
+
+  testWidgets('без профиля открывает онбординг и не пускает дальше без параметров', (tester) async {
+    final harness = TestHarness();
+    await harness.pump(tester);
+    await acceptPrivacy(tester);
+
+    expect(find.text('ШАГ 2 ИЗ 5'), findsOneWidget);
     expect(tester.widget<FilledButton>(find.byKey(const Key('onboarding-next'))).onPressed, isNull);
     await tester.enterText(find.byKey(const Key('age-field')), '7');
     await tester.pumpAndSettle();
@@ -94,7 +121,7 @@ void main() {
     );
   });
 
-  testWidgets('проходит четыре шага и сохраняет профиль с любимой едой на устройстве', (tester) async {
+  testWidgets('проходит все шаги и сохраняет профиль с любимой едой и согласием на устройстве', (tester) async {
     final harness = TestHarness();
     await harness.pump(tester);
     await fillBody(tester);
@@ -124,12 +151,14 @@ void main() {
     expect(saved?.preferences, {DietPreference.noPork, DietPreference.noNuts});
     expect(saved?.locationConsent, isTrue);
     expect(saved?.likedTastes, {TasteTag.soup, TasteTag.georgian});
+    expect(saved?.privacyAcceptedAt, harness.now);
     expect(find.text('ОСТАЛОСЬ НА СЕГОДНЯ'), findsOneWidget);
   });
 
   testWidgets('прячет клавиатуру по нажатию мимо поля ввода', (tester) async {
     final harness = TestHarness();
     await harness.pump(tester);
+    await acceptPrivacy(tester);
 
     await tester.tap(find.widgetWithText(TextFormField, 'Возраст, лет'));
     await tester.pumpAndSettle();
@@ -192,7 +221,7 @@ void main() {
     await tester.tap(find.byTooltip('Назад'));
     await tester.pumpAndSettle();
 
-    expect(find.text('ШАГ 1 ИЗ 4'), findsOneWidget);
+    expect(find.text('ШАГ 2 ИЗ 5'), findsOneWidget);
   });
 
   testWidgets('шаг «Что вы любите» можно пропустить', (tester) async {

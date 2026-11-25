@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../about/privacy_sheet.dart';
 import '../core/l10n_extensions.dart';
 import '../core/theme.dart';
 import '../core/widgets/visuals.dart';
@@ -19,7 +20,7 @@ class OnboardingScreen extends ConsumerStatefulWidget {
 }
 
 class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
-  static const _steps = 4;
+  static const _steps = 5;
   int _step = 0;
 
   @override
@@ -27,12 +28,17 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     final l10n = context.l10n;
     final state = ref.watch(onboardingProvider);
     final title = switch (_step) {
-      0 => l10n.onboardingBodyTitle,
-      1 => l10n.onboardingPreferencesTitle,
-      2 => l10n.onboardingTastesTitle,
+      0 => l10n.onboardingPrivacyTitle,
+      1 => l10n.onboardingBodyTitle,
+      2 => l10n.onboardingPreferencesTitle,
+      3 => l10n.onboardingTastesTitle,
       _ => l10n.onboardingLocationTitle,
     };
-    final canContinue = _step != 0 || state.bodyValid;
+    final canContinue = switch (_step) {
+      0 => state.privacyAcceptedAt != null,
+      1 => state.bodyValid,
+      _ => true,
+    };
     final textTheme = Theme.of(context).textTheme;
     return Scaffold(
       appBar: AppBar(
@@ -76,8 +82,30 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
             Semantics(header: true, child: Text(title, style: textTheme.headlineMedium)),
             const SizedBox(height: 20),
             ...switch (_step) {
-              0 => const [BodyParametersForm(), SizedBox(height: 16), NormCard()],
-              1 => [
+              0 => [
+                Text(l10n.onboardingPrivacyText, style: textTheme.bodyLarge?.copyWith(color: context.palette.inkMuted)),
+                const SizedBox(height: 16),
+                CheckboxListTile(
+                  key: const Key('privacy-accept'),
+                  contentPadding: EdgeInsets.zero,
+                  controlAffinity: ListTileControlAffinity.leading,
+                  title: Text(l10n.privacyAccept),
+                  value: state.privacyAcceptedAt != null,
+                  onChanged: (accepted) =>
+                      ref.read(onboardingProvider.notifier).setPrivacyAccepted(accepted: accepted ?? false),
+                ),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: TextButton.icon(
+                    key: const Key('privacy-read'),
+                    icon: const Icon(Icons.description_outlined),
+                    label: Text(l10n.privacyRead),
+                    onPressed: () => PrivacySheet.show(context),
+                  ),
+                ),
+              ],
+              1 => const [BodyParametersForm(), SizedBox(height: 16), NormCard()],
+              2 => [
                 Text(l10n.preferencesHint, style: textTheme.bodyLarge?.copyWith(color: context.palette.inkMuted)),
                 const SizedBox(height: 20),
                 const PreferencesPicker(),
@@ -88,7 +116,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                   style: textTheme.bodyMedium?.copyWith(color: context.palette.inkMuted),
                 ),
               ],
-              2 => [
+              3 => [
                 Text(l10n.onboardingTastesHint, style: textTheme.bodyLarge?.copyWith(color: context.palette.inkMuted)),
                 const SizedBox(height: 20),
                 TastesPicker(

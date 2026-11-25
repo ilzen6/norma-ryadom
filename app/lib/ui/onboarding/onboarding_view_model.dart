@@ -30,6 +30,7 @@ abstract class OnboardingState with _$OnboardingState {
     @Default(<DietPreference>{}) Set<DietPreference> preferences,
     @Default(<TasteTag>{}) Set<TasteTag> likedTastes,
     @Default(true) bool learnTastes,
+    DateTime? privacyAcceptedAt,
     @Default(false) bool locationConsent,
     @Default(District.moscowCity) District district,
     AppFailure? locationFailure,
@@ -61,6 +62,7 @@ abstract class OnboardingState with _$OnboardingState {
       district: district,
       likedTastes: likedTastes,
       learnTastes: learnTastes,
+      privacyAcceptedAt: privacyAcceptedAt,
     );
   }
 
@@ -93,6 +95,7 @@ class OnboardingController extends Notifier<OnboardingState> {
       preferences: existing.preferences,
       likedTastes: existing.likedTastes,
       learnTastes: existing.learnTastes,
+      privacyAcceptedAt: existing.privacyAcceptedAt,
       locationConsent: existing.locationConsent,
       district: existing.district ?? District.moscowCity,
     );
@@ -130,6 +133,9 @@ class OnboardingController extends Notifier<OnboardingState> {
     if (!updated.remove(preference)) updated.add(preference);
     state = state.copyWith(preferences: updated);
   }
+
+  void setPrivacyAccepted({required bool accepted}) =>
+      state = state.copyWith(privacyAcceptedAt: accepted ? ref.read(clockProvider)() : null);
 
   void toggleTaste(TasteTag taste) => state = state.copyWith(
     likedTastes: state.likedTastes.contains(taste)

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:norma_ryadom/domain/models/catalog.dart';
 import 'package:norma_ryadom/domain/models/combo.dart';
 import 'package:norma_ryadom/utils/result.dart';
@@ -233,6 +234,23 @@ void main() {
     await harness.pump(tester);
     await tapVisible(tester, find.byKey(const Key('find-nearby')));
     await scrollTo(tester, find.byKey(const Key('offline-banner')));
+
+    await expectAccessible(tester);
+    handle.dispose();
+  });
+
+  testWidgets('экран «О приложении» доступен', (tester) async {
+    PackageInfo.setMockInitialValues(
+      appName: 'Норма рядом',
+      packageName: 'ru.normaryadom.norma_ryadom',
+      version: '1.0.0',
+      buildNumber: '10',
+      buildSignature: '',
+    );
+    final handle = tester.ensureSemantics();
+    await TestHarness(profile: TestData.profile).pump(tester);
+    unawaited(GoRouter.of(tester.element(find.byType(Scaffold).first)).push('/profile/about'));
+    await tester.pumpAndSettle();
 
     await expectAccessible(tester);
     handle.dispose();

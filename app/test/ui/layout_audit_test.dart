@@ -79,7 +79,11 @@ void main() {
       addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
       final harness = TestHarness()..screen = Size(width, 780);
       await harness.pump(tester);
-      final issues = <String>[...await LayoutAudit.inspectScrolling(tester, 'шаг 1')];
+      final issues = <String>[...await LayoutAudit.inspectScrolling(tester, 'согласие')];
+      await tapVisible(tester, find.byKey(const Key('privacy-accept')));
+      await tester.tap(find.byKey(const Key('onboarding-next')));
+      await tester.pumpAndSettle();
+      issues.addAll(await LayoutAudit.inspectScrolling(tester, 'шаг 1'));
       await tester.enterText(find.byKey(const Key('age-field')), '25');
       await tester.enterText(find.byKey(const Key('height-field')), '165');
       await tester.enterText(find.byKey(const Key('weight-field')), '62');
@@ -91,6 +95,9 @@ void main() {
       await tester.tap(find.byKey(const Key('onboarding-next')));
       await tester.pumpAndSettle();
       issues.addAll(await LayoutAudit.inspectScrolling(tester, 'шаг 3'));
+      await tester.tap(find.byKey(const Key('onboarding-next')));
+      await tester.pumpAndSettle();
+      issues.addAll(await LayoutAudit.inspectScrolling(tester, 'шаг 4'));
 
       expect(issues, isEmpty, reason: issues.join('\n'));
     });

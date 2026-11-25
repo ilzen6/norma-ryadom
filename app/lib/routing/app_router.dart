@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../domain/models/profile.dart';
+import '../ui/about/about_screen.dart';
 import '../ui/combo/combo_screen.dart';
 import '../ui/core/l10n_extensions.dart';
 import '../ui/core/session.dart';
@@ -89,6 +90,10 @@ final routerProvider = Provider<GoRouter>((ref) {
                   GoRoute(
                     path: 'tastes',
                     builder: (_, _) => const Backdrop(child: TastesScreen()),
+                  ),
+                  GoRoute(
+                    path: 'about',
+                    builder: (_, _) => const Backdrop(child: AboutScreen()),
                   ),
                 ],
               ),

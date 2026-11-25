@@ -6,6 +6,7 @@ class AppConfig {
     this.mapRadiusMeters = 3000,
     this.allowCleartextServer = false,
     this.demoServer = false,
+    this.supportEmail = '',
   });
 
   factory AppConfig.fromEnvironment() => const AppConfig(
@@ -18,6 +19,7 @@ class AppConfig {
     mapRadiusMeters: int.fromEnvironment('MAP_RADIUS_METERS', defaultValue: 3000),
     allowCleartextServer: String.fromEnvironment('FLUTTER_APP_FLAVOR') == demoFlavor,
     demoServer: bool.fromEnvironment('DEMO_SERVER'),
+    supportEmail: String.fromEnvironment('SUPPORT_EMAIL'),
   );
 
   static const demoFlavor = 'demo';
@@ -28,4 +30,5 @@ class AppConfig {
   final int mapRadiusMeters;
   final bool allowCleartextServer;
   final bool demoServer;
+  final String supportEmail;
 }

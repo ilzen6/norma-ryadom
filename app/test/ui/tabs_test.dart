@@ -318,7 +318,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(harness.profiles.deleted, isTrue);
-    expect(find.text('ШАГ 1 ИЗ 4'), findsOneWidget);
+    expect(find.text('ШАГ 1 ИЗ 5'), findsOneWidget);
   });
 
   testWidgets('профиль сохраняет согласие на геолокацию и редактирует параметры', (tester) async {
