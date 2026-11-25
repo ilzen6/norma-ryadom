@@ -953,5 +953,9 @@
   "weekProtein": "Белок в среднем {protein} г из {norm} г",
   "@weekProtein": {"placeholders": {"protein": {"type": "String"}, "norm": {"type": "int"}}},
   "weekFavorite": "Чаще всего: {title} ({times, plural, one{{times} раз} few{{times} раза} other{{times} раз}})",
-  "@weekFavorite": {"placeholders": {"title": {"type": "String"}, "times": {"type": "int"}}}
+  "@weekFavorite": {"placeholders": {"title": {"type": "String"}, "times": {"type": "int"}}},
+  "diaryRepeatYesterday": "Повторить вчерашний {meal} · {kcal} ккал",
+  "@diaryRepeatYesterday": {"placeholders": {"meal": {"type": "String"}, "kcal": {"type": "int"}}},
+  "diaryRepeated": "Записано",
+  "diaryUndo": "Отменить"
 }

@@ -12,7 +12,7 @@ abstract interface class DiaryRepository {
 
   Stream<List<DiaryEntry>> watchQuickAdd({int limit});
 
-  Future<void> add(NewDiaryEntry entry, DateTime now);
+  Future<int> add(NewDiaryEntry entry, DateTime now);
 
   Future<void> remove(int id);
 
@@ -51,7 +51,7 @@ class LocalDiaryRepository implements DiaryRepository {
           });
 
   @override
-  Future<void> add(NewDiaryEntry entry, DateTime now) => _db
+  Future<int> add(NewDiaryEntry entry, DateTime now) => _db
       .into(_db.diaryRecords)
       .insert(
         DiaryRecordsCompanion.insert(

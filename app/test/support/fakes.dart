@@ -82,13 +82,14 @@ class InMemoryDiaryRepository implements DiaryRepository {
   });
 
   @override
-  Future<void> add(NewDiaryEntry entry, DateTime now) async {
+  Future<int> add(NewDiaryEntry entry, DateTime now) async {
     final error = writeError;
     if (error != null) throw error;
     await gate?.future;
+    final id = _nextId++;
     entries.add(
       DiaryEntry(
-        id: _nextId++,
+        id: id,
         day: now,
         meal: entry.meal,
         title: entry.title,
@@ -98,6 +99,7 @@ class InMemoryDiaryRepository implements DiaryRepository {
       ),
     );
     _changes.add(null);
+    return id;
   }
 
   @override

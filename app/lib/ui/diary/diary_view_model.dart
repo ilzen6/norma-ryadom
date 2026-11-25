@@ -51,6 +51,33 @@ class DiaryActions {
 
   Future<Result<void>> addManual(NewDiaryEntry entry) => _record(entry);
 
+  Future<Result<List<int>>> repeat(Iterable<DiaryEntry> entries) async {
+    final now = _now();
+    final added = <int>[];
+    try {
+      for (final entry in entries) {
+        final copy = NewDiaryEntry(
+          meal: entry.meal,
+          title: entry.title,
+          venueName: entry.venueName,
+          intake: entry.intake,
+        );
+        added.add(await _diary.add(copy, now));
+        unawaited(_export(copy, now));
+      }
+      return Ok(added);
+    } on Exception {
+      await undoRepeat(added);
+      return const Err(AppFailure.unexpected);
+    }
+  }
+
+  Future<void> undoRepeat(List<int> ids) async {
+    for (final id in ids) {
+      await _diary.remove(id);
+    }
+  }
+
   Future<Result<void>> addCombo(SelectedCombo selected) {
     final combo = selected.option.combo;
     return _record(

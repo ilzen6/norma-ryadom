@@ -45,6 +45,12 @@ class DiaryScreen extends ConsumerWidget {
     final eaten = summary.eaten;
     final norm = summary.norm;
     final mode = ref.watch(diaryModeProvider);
+    final yesterday = DateTime(day.year, day.month, day.day - 1);
+    final yesterdayEntries = [
+      for (final entry in ref.watch(recentDiaryProvider).value ?? const <DiaryEntry>[])
+        if (entry.day.year == yesterday.year && entry.day.month == yesterday.month && entry.day.day == yesterday.day)
+          entry,
+    ];
     double share(double value, int goal) => goal <= 0 ? 0 : value / goal;
     return Scaffold(
       body: SafeArea(
@@ -155,7 +161,8 @@ class DiaryScreen extends ConsumerWidget {
                 Panel(
                   child: MessageView(message: l10n.diaryEmpty, icon: Icons.menu_book_rounded),
                 ),
-              for (final meal in MealType.values) ..._mealSection(context, ref, meal, summary.entries),
+              for (final meal in MealType.values)
+                ..._mealSection(context, ref, meal, summary.entries, yesterdayEntries),
               if (quickAdd.isNotEmpty) ...[
                 const SizedBox(height: Layout.section - Layout.gap),
                 SectionTitle(title: l10n.diaryQuickAdd),
@@ -208,12 +215,22 @@ class DiaryScreen extends ConsumerWidget {
     );
   }
 
-  List<Widget> _mealSection(BuildContext context, WidgetRef ref, MealType meal, List<DiaryEntry> entries) {
+  List<Widget> _mealSection(
+    BuildContext context,
+    WidgetRef ref,
+    MealType meal,
+    List<DiaryEntry> entries,
+    List<DiaryEntry> yesterday,
+  ) {
     final l10n = context.l10n;
     final palette = context.palette;
     final textTheme = Theme.of(context).textTheme;
     final mealEntries = entries.where((entry) => entry.meal == meal).toList();
-    if (mealEntries.isEmpty) return const [];
+    if (mealEntries.isEmpty) {
+      final previous = yesterday.where((entry) => entry.meal == meal).toList();
+      if (previous.isEmpty) return const [];
+      return [_RepeatYesterday(meal: meal, entries: previous), const SizedBox(height: Layout.section)];
+    }
     final actions = ref.read(diaryActionsProvider);
     final mealKcal = mealEntries.fold<double>(0, (sum, entry) => sum + entry.intake.kcal);
     return [
@@ -284,5 +301,42 @@ class DiaryScreen extends ConsumerWidget {
       ],
       const SizedBox(height: Layout.gap),
     ];
+  }
+}
+
+class _RepeatYesterday extends ConsumerWidget {
+  const _RepeatYesterday({required this.meal, required this.entries});
+
+  final MealType meal;
+  final List<DiaryEntry> entries;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = context.l10n;
+    final kcal = entries.fold<double>(0, (sum, entry) => sum + entry.intake.kcal);
+    return BusyAction<void>(
+      run: (_) async {
+        final actions = ref.read(diaryActionsProvider);
+        final result = await actions.repeat(entries);
+        if (!context.mounted) return;
+        switch (result) {
+          case Ok(:final value):
+            showMessage(
+              context,
+              l10n.diaryRepeated,
+              actionLabel: l10n.diaryUndo,
+              onAction: () => actions.undoRepeat(value),
+            );
+          case Err(:final failure):
+            showMessage(context, l10n.failure(failure));
+        }
+      },
+      builder: (context, onPressed, busy) => OutlinedButton.icon(
+        key: Key('repeat-${meal.name}'),
+        onPressed: onPressed,
+        icon: BusyAction.icon(Icons.replay_rounded, busy: busy),
+        label: Text(l10n.diaryRepeatYesterday(l10n.meal(meal).toLowerCase(), kcal.round())),
+      ),
+    );
   }
 }
